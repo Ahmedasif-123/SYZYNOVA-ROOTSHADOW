@@ -22,3 +22,11 @@ jobs:
       - name: Typecheck and production build
         run: npm run build
         working-directory: frontend
+      - name: Save frontend build for browser verification
+        uses: actions/upload-artifact@v4
+        with:
+          name: rootshadow-frontend-dist
+          path: |
+            frontend/dist
+            frontend/package-lock.json
+          retention-days: 3
