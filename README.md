@@ -29,6 +29,18 @@ After an identified drought, how long does root-zone wetness stay below the seas
 - Network-restricted authoring environment could not independently exercise the live API end-to-end after this correction, though the standalone NASA acquisition already succeeded on the user's Mac. Cloud integration, latency and frontend load-testing remain deployment steps.
 
 
+## Backend integration completion (14 November 2026)
+
+- All four verified NASA 1981–2025 site tables are now shipped with the Python API as deterministic gzip-compressed CSVs in `api/data/gate0/processed/`. Their original manifests remain in `api/data/gate0/manifests/`; the loader checks the SHA-256 of the **decompressed original CSV bytes** before analysis. The 20 original source JSON responses stay in the separate research evidence archive, with original NASA URLs and hashes preserved in the manifests.
+- `/api/sites` lists the four bundled locations. `/api/analyze?mode=site&site=us_sgp_goodwell` runs the analysis on verified real data without any NASA network request. `/api/analyze?mode=live` uses `community=AG` first and retries explicit alternate parameter/community profiles if NASA rejects a request; synthetic results are never substituted for missing real data.
+- Local automated tests including real-data API integration: **46 passed** on 14 November 2026. These tests do not demonstrate successful cloud deployment or scientific significance.
+- Default frontend remains in synthetic demonstration mode until redesigned; switch explicitly to a prefetched site for real evidence. Live 45-year NASA fetches may exceed cloud function timeouts, so the reliable judge-facing mode is **prefetched site**.
+- Network-restricted authoring environment could not independently exercise the live API end-to-end after this correction, though the standalone NASA acquisition already succeeded on the user's Mac. Cloud integration, latency and frontend load-testing remain deployment steps.
+
+## Backend audit status (14 November 2026)
+
+The full local backend review passed **57/57 tests**, reproduced all four published NASA analyses without changing scientific outputs, and verified 20 original NASA JSON hashes plus four CSV hashes. Live ingestion now rejects incomplete/misaligned date series and invalid soil-wetness values; Azure managed API configuration targets Python 3.11. Hosted Azure deployment and independent scientific corroboration remain unverified. See [`docs/BACKEND_AUDIT_2026-11-14.md`](docs/BACKEND_AUDIT_2026-11-14.md).
+
 ## NASA POWER HTTP 422 troubleshooting
 
 If NASA rejects a request with HTTP 422, the downloader now prints the server's actual validation message and tries a small list of explicit HY/AG configurations without changing the required soil variables. It does not repeat rejected requests or silently convert failed downloads into real results. NASA's exact diagnosis must be inspected when all profiles fail.
