@@ -16,7 +16,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes("node_modules/maplibre-gl")) return "geospatial";
           if (id.includes("node_modules/echarts") || id.includes("node_modules/zrender")) return "visualization";
         }
       }

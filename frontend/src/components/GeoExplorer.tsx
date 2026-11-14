@@ -1,171 +1,148 @@
-import { useEffect, useRef, useState } from "react";
-import * as maplibregl from "maplibre-gl";
-import { Globe2, Map as MapIcon, LocateFixed } from "lucide-react";
-import { sites, type SiteId } from "../lib/sites";
+import { useRef, useState, type PointerEvent } from "react";
+import { LocateFixed, ZoomIn, ZoomOut } from "lucide-react";
+import { sites, type SiteId, type Site } from "../lib/sites";
 
 type Props = { selected: SiteId; onSelect: (id: SiteId) => void };
-type Projection = "globe" | "mercator";
+type WindowBox = { x: number; y: number; width: number; height: number };
 
-const basemap = {
-  version: 8 as const,
-  sources: {
-    continents: {
-      type: "geojson" as const,
-      data: "/world.geojson"
-    }
-  },
-  layers: [
-    {
-      id: "ocean",
-      type: "background" as const,
-      paint: { "background-color": "#071726" }
-    },
-    {
-      id: "land",
-      type: "fill" as const,
-      source: "continents",
-      paint: {
-        "fill-color": "#214e5b",
-        "fill-opacity": 0.92
-      }
-    },
-    {
-      id: "coastlines",
-      type: "line" as const,
-      source: "continents",
-      paint: {
-        "line-color": "#8cc9cb",
-        "line-opacity": 0.66,
-        "line-width": 0.65
-      }
-    }
-  ]
-};
+const worldWidth = 1440;
+const worldHeight = 720;
+const fullWorld: WindowBox = { x: 0, y: 0, width: worldWidth, height: worldHeight };
+
+function bounded(value: number, minimum: number, maximum: number) {
+  return Math.max(minimum, Math.min(maximum, value));
+}
+
+function sitePoint(site: Site) {
+  return { x: (site.coordinates[0] + 180) * 4, y: (90 - site.coordinates[1]) * 4 };
+}
+
+function focusWindow(site: Site, zoom: number): WindowBox {
+  const point = sitePoint(site);
+  const width = worldWidth / zoom;
+  const height = worldHeight / zoom;
+  return {
+    x: bounded(point.x - width / 2, 0, worldWidth - width),
+    y: bounded(point.y - height / 2, 0, worldHeight - height),
+    width,
+    height
+  };
+}
 
 export default function GeoExplorer({ selected, onSelect }: Props) {
-  const target = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<maplibregl.Map | null>(null);
-  const markers = useRef<Map<SiteId, maplibregl.Marker>>(new Map());
-  const selectionRef = useRef(onSelect);
-  const [projection, setProjection] = useState<Projection>("globe");
-  const [state, setState] = useState<"loading" | "ready" | "unavailable">("loading");
+  const [view, setView] = useState<WindowBox>(fullWorld);
+  const [zoom, setZoom] = useState(1);
+  const drag = useRef<{ x: number; y: number; initial: WindowBox } | null>(null);
+  const selectedSite = sites.find(site => site.id === selected) ?? sites[0];
+  const viewBox = [view.x, view.y, view.width, view.height].join(" ");
 
-  useEffect(() => { selectionRef.current = onSelect; }, [onSelect]);
-
-  useEffect(() => {
-    if (!target.current || mapRef.current) return;
-    let map: maplibregl.Map;
-    try {
-      map = new maplibregl.Map({
-        container: target.current,
-        style: basemap,
-        center: [12, 16],
-        zoom: 1.25,
-        cooperativeGestures: false,
-        attributionControl: false,
-        canvasContextAttributes: { antialias: true }
-      });
-    } catch {
-      setState("unavailable");
-      return;
-    }
-    mapRef.current = map;
-    let loaded = false;
-    const fallbackTimer = window.setTimeout(() => {
-      if (!loaded) setState("unavailable");
-    }, 11000);
-
-    map.on("style.load", () => {
-      try { map.setProjection({ type: "globe" }); } catch { }
-    });
-    map.on("load", () => {
-      loaded = true;
-      window.clearTimeout(fallbackTimer);
-      setState("ready");
-      map.resize();
-    });
-    map.on("error", () => {
-      if (!loaded) setState("unavailable");
-    });
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
-
-    sites.forEach(site => {
-      const pin = document.createElement("button");
-      pin.className = `geo-pin ${site.id === selected ? "is-selected" : ""}`;
-      pin.type = "button";
-      pin.setAttribute("aria-label", `Select ${site.name}, ${site.country}`);
-      pin.innerHTML = '<span aria-hidden="true"></span>';
-      pin.addEventListener("click", () => selectionRef.current(site.id));
-      const marker = new maplibregl.Marker({ element: pin, anchor: "center" })
-        .setLngLat(site.coordinates).addTo(map);
-      markers.current.set(site.id, marker);
-    });
-
-    return () => {
-      window.clearTimeout(fallbackTimer);
-      map.remove();
-      markers.current.clear();
-      mapRef.current = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    markers.current.forEach((marker, id) =>
-      marker.getElement().classList.toggle("is-selected", id === selected)
-    );
-  }, [selected]);
-
-  function chooseProjection(next: Projection) {
-    setProjection(next);
-    try {
-      mapRef.current?.setProjection({ type: next });
-    } catch {
-      setState("unavailable");
-    }
+  function focus(id: SiteId) {
+    const site = sites.find(item => item.id === id) ?? sites[0];
+    setZoom(2.6);
+    setView(focusWindow(site, 2.6));
+    onSelect(id);
   }
 
-  function focusSelected() {
-    const site = sites.find(item => item.id === selected)!;
-    mapRef.current?.flyTo({
-      center: site.coordinates,
-      zoom: projection === "globe" ? 3.1 : 4.6,
-      speed: 0.85,
-      essential: true
+  function magnify(change: number) {
+    const nextZoom = bounded(zoom + change, 1, 5);
+    setZoom(nextZoom);
+    setView(nextZoom === 1 ? fullWorld : focusWindow(selectedSite, nextZoom));
+  }
+
+  function reset() {
+    setZoom(1);
+    setView(fullWorld);
+  }
+
+  function pointerDown(event: PointerEvent<SVGSVGElement>) {
+    if (event.button !== 0) return;
+    drag.current = { x: event.clientX, y: event.clientY, initial: view };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  function pointerMove(event: PointerEvent<SVGSVGElement>) {
+    if (!drag.current || zoom <= 1) return;
+    const area = event.currentTarget.getBoundingClientRect();
+    const fittedWidth = Math.min(area.width, area.height * 2);
+    const fittedHeight = fittedWidth / 2;
+    if (!fittedWidth || !fittedHeight) return;
+    const horizontal = (event.clientX - drag.current.x) * drag.current.initial.width / fittedWidth;
+    const vertical = (event.clientY - drag.current.y) * drag.current.initial.height / fittedHeight;
+    setView({
+      ...drag.current.initial,
+      x: bounded(drag.current.initial.x - horizontal, 0, worldWidth - drag.current.initial.width),
+      y: bounded(drag.current.initial.y - vertical, 0, worldHeight - drag.current.initial.height)
     });
   }
 
-  return (
-    <div className="geo-explorer">
-      <div className="map-inner" ref={target} aria-label="Interactive world map showing four NASA POWER study sites" />
-      {state !== "ready" && (
-        <div className="map-standby" role="status">
-          <span>{state === "loading" ? "Preparing geographic model…" : "Interactive globe unavailable; geographic reference shown below."}</span>
-        </div>
-      )}
-      <div className="map-graticule" aria-hidden="true" />
-      <div className="geo-overlay-top">
-        <span className="micro-label">GLOBAL RESEARCH / 01</span>
-        <span className="map-counter">EARTH SYSTEM INTELLIGENCE</span>
-      </div>
-      <div className="geo-tools" aria-label="Map projection controls">
-        <button type="button" className={projection === "globe" ? "active" : ""} onClick={() => chooseProjection("globe")} aria-pressed={projection === "globe"} title="Globe view"><Globe2 size={17} /></button>
-        <button type="button" className={projection === "mercator" ? "active" : ""} onClick={() => chooseProjection("mercator")} aria-pressed={projection === "mercator"} title="Flat world map"><MapIcon size={17} /></button>
-        <button type="button" onClick={focusSelected} title="Fly to selected research site"><LocateFixed size={17} /></button>
-      </div>
-      <div className="map-site-list">
-        <div className="map-list-heading">CHOOSE RESEARCH LOCATION <span>04 SITES</span></div>
-        {sites.map(site => (
-          <button type="button" key={site.id} className={`map-site ${site.id === selected ? "selected" : ""}`} onClick={() => {
-            onSelect(site.id);
-            mapRef.current?.flyTo({ center: site.coordinates, zoom: 2.6, speed: 1.1, essential: true });
-          }} aria-pressed={site.id === selected}>
-            <span className="site-index">{site.index}</span>
-            <span className="site-text"><strong>{site.name}</strong><small>{site.country}</small></span>
-            <span className="site-dot" aria-hidden="true" />
-          </button>
-        ))}
-      </div>
-      <div className="map-footer-note">Natural Earth geographic outlines · NASA POWER model-point coordinates · Not farm boundaries</div>
+  function pointerUp() {
+    drag.current = null;
+  }
+
+  return <div className="geo-explorer" role="region" aria-label="World geography and NASA study locations">
+    <div className="map-inner" role="region" aria-label="Interactive equirectangular world map">
+      <svg
+        className="world-map-svg"
+        viewBox={viewBox}
+        preserveAspectRatio="xMidYMid meet"
+        role="group"
+        aria-label="Pan and zoom geographic study-point map"
+        onPointerDown={pointerDown}
+        onPointerMove={pointerMove}
+        onPointerUp={pointerUp}
+        onPointerCancel={pointerUp}
+      >
+        <title>World map with four historical NASA POWER research locations</title>
+        <image href="/world-map.svg" x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
+        {sites.map(site => {
+          const point = sitePoint(site);
+          const active = selected === site.id;
+          return <g
+            key={site.id}
+            className={["world-map-marker", active ? "selected" : ""].join(" ")}
+            role="button"
+            tabIndex={0}
+            aria-label={"Focus " + site.name + ", " + site.country}
+            onPointerDown={event => event.stopPropagation()}
+            onClick={() => focus(site.id)}
+            onKeyDown={event => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                focus(site.id);
+              }
+            }}
+          >
+            <circle cx={point.x} cy={point.y} r={active ? 15 : 12} className="world-map-halo" />
+            <circle cx={point.x} cy={point.y} r="5" className="world-map-center" />
+            <text x={point.x + 19} y={point.y - 13} className="world-map-label">{site.name}</text>
+            <circle cx={point.x} cy={point.y} r="26" fill="transparent" />
+          </g>;
+        })}
+      </svg>
     </div>
-  );
+    <div className="geo-overlay-top">
+      <span className="micro-label">WORLD ATLAS / MODEL STUDY POINTS</span>
+      <span className="map-counter">EQUIRECTANGULAR VIEW · {zoom.toFixed(1)}×</span>
+    </div>
+    <div className="geo-tools" role="group" aria-label="Map navigation controls">
+      <button type="button" onClick={() => magnify(0.6)} aria-label="Zoom in on selected study location" disabled={zoom >= 5}><ZoomIn size={17} /></button>
+      <button type="button" onClick={() => magnify(-0.6)} aria-label="Zoom out" disabled={zoom <= 1}><ZoomOut size={17} /></button>
+      <button type="button" onClick={reset} aria-label="Show full world map"><LocateFixed size={17} /></button>
+    </div>
+    <div className="map-site-list">
+      <div className="map-list-heading">CHOOSE RESEARCH LOCATION <span>04 SITES</span></div>
+      {sites.map(site => <button
+        key={site.id}
+        type="button"
+        className={["map-site", selected === site.id ? "selected" : ""].join(" ")}
+        onClick={() => focus(site.id)}
+        aria-pressed={selected === site.id}
+      >
+        <span className="site-index">{site.index}</span>
+        <span className="site-text"><strong>{site.name}</strong><small>{site.country}</small></span>
+        <span className="site-dot" aria-hidden="true" />
+      </button>)}
+    </div>
+    <div className="map-footer-note">Bundled world outlines · NASA POWER study coordinates · Historical model points, not farm boundaries</div>
+  </div>;
 }

@@ -141,6 +141,13 @@ test("3D Earth and offline atlas both expose verified study locations", async ({
   expect((await geojson.json()).features.length).toBeGreaterThan(100);
   await page.getByRole("button", { name: "Map", exact: true }).click();
   await expect(page.locator(".geo-explorer")).toBeVisible();
+  await expect(page.locator(".world-map-svg")).toBeVisible();
+  const atlas = page.locator(".world-map-svg");
+  const extentBefore = await atlas.getAttribute("viewBox");
+  await page.getByRole("button", { name: "Zoom in on selected study location" }).click();
+  await expect(atlas).not.toHaveAttribute("viewBox", extentBefore ?? "");
+  await page.getByRole("button", { name: "Show full world map" }).click();
+  await expect(atlas).toHaveAttribute("viewBox", extentBefore ?? "");
   await expect(page.locator(".map-site-list .map-site")).toHaveCount(4);
   await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
   await expect(page.getByRole("button", { name: "Start investigating" })).toBeVisible();

@@ -122,3 +122,57 @@ input[type="range"]:focus-visible {
     min-height: 42px;
   }
 }
+
+.world-map-svg {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+.world-map-svg:active {
+  cursor: grabbing;
+}
+.world-map-marker {
+  cursor: pointer;
+}
+.world-map-halo {
+  fill: rgba(112, 209, 208, .28);
+  stroke: #9bd9d9;
+  stroke-width: 2.5;
+}
+.world-map-marker.selected .world-map-halo {
+  fill: rgba(242, 216, 166, .34);
+  stroke: #ffe0a4;
+  stroke-width: 3;
+}
+.world-map-center {
+  fill: #d9f9eb;
+  stroke: #07212c;
+  stroke-width: 2;
+}
+.world-map-label {
+  fill: #f0f7ec;
+  stroke: #061924;
+  stroke-width: 3.2;
+  paint-order: stroke;
+  font: 600 19px "IBM Plex Mono", monospace;
+  letter-spacing: .3px;
+}
+.world-map-marker:focus-visible .world-map-halo {
+  stroke: #ffffff;
+  stroke-width: 5;
+}
+.geo-tools button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+@media (max-width: 730px) {
+  .geo-tools button {
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
