@@ -34,10 +34,11 @@ export default function GeoExplorer({ selected, onSelect }: Props) {
     }
     mapRef.current = map;
     let loaded = false;
+    const fallbackTimer = window.setTimeout(() => { if (!loaded) setState("unavailable"); }, 5000);
     map.on("style.load", () => {
       try { map.setProjection({ type: "globe" }); } catch { }
     });
-    map.on("load", () => { loaded = true; setState("ready"); });
+    map.on("load", () => { loaded = true; window.clearTimeout(fallbackTimer); setState("ready"); });
     map.on("error", () => { if (!loaded) setState("unavailable"); });
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
     sites.forEach(site => {
@@ -51,6 +52,7 @@ export default function GeoExplorer({ selected, onSelect }: Props) {
       markers.current.set(site.id, marker);
     });
     return () => {
+      window.clearTimeout(fallbackTimer);
       map.remove();
       markers.current.clear();
       mapRef.current = null;
