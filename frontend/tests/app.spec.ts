@@ -33,7 +33,7 @@ test("verified Goodwell data drives farmer-facing metrics and recovery selection
   await expect(page.locator(".metric-value").nth(0)).toHaveText("31");
   await expect(page.locator(".metric-value").nth(1)).toHaveText("19");
   await expect(page.locator(".metric-value").nth(2)).toHaveText("2 d");
-  await expect(page.getByText("NASA POWER · HISTORICAL MODEL", { exact: true })).toBeVisible();
+  await expect(page.locator(".guided-reliability")).toContainText("NASA POWER");
   await page.getByRole("button", { name: /Drought events/i }).click();
   await page.locator(".guided-event-table tbody button").first().click();
   await expect(page.locator(".event-inspector")).toBeVisible();
@@ -156,7 +156,7 @@ test("3D Earth and offline atlas both expose verified study locations", async ({
   await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
   await expect(page.getByRole("button", { name: "Start investigating" })).toBeVisible();
   await page.getByRole("button", { name: "Start investigating" }).click();
-  await expect(page.getByRole("heading", { name: "Explore soil recovery" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /See what the soil is telling us/i })).toBeVisible();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
 });
 
@@ -200,7 +200,7 @@ test("guided research begins with a selectable map and navigable evidence steps"
   await page.goto("/");
   await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.getByRole("region", { name: "Choose a study location on the world map" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "World map" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "World map", exact: true })).toBeVisible();
   await expect(page.locator(".guided-finding .guided-large-number")).toContainText("19");
   await page.getByRole("button", { name: /Drought events/i }).click();
   await expect(page.locator(".guided-event-table tbody tr")).toHaveCount(12);
