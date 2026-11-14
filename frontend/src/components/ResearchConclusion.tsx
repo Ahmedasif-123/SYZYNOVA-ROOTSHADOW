@@ -24,7 +24,7 @@ const nextSteps: Record<Audience, { title: string; meaning: string; actions: str
   },
   policy: {
     title: "Use the result to prioritize verification, not to justify a regional intervention.",
-    meaning: "Four selected point series do not define a geographic prevalence rate, real-time drought status or projected water shortage.",
+    meaning: "Six selected point series do not define a geographic prevalence rate, real-time drought status or projected water shortage.",
     actions: ["Identify regions where delayed recovery warrants further study.", "Commission independent comparisons across more spatial points and historical windows.", "Only consider policy guidance after calibrated uncertainty, field validation and impact testing."]
   }
 };
@@ -75,7 +75,7 @@ export default function ResearchConclusion({ analysis, siteName, onResearch, onE
   const nominal = analysis.lag_trend.p_value;
   const trend = analysis.lag_trend.slope_days_per_decade;
   const siteLevel = nominal !== null && nominal !== undefined && nominal < 0.05;
-  const adjusted = nominal !== null && nominal !== undefined && nominal < 0.0125;
+  const adjusted = nominal !== null && nominal !== undefined && nominal < 0.05 / 6;
 
   return <section className="rs-conclusion" aria-labelledby="rs-conclusion-heading">
     <div className="rs-conclusion-head"><span>RESEARCH FINDING / {siteName.toUpperCase()}</span><span>VERIFIED NASA POWER MODEL SNAPSHOT</span></div>
@@ -84,7 +84,8 @@ export default function ResearchConclusion({ analysis, siteName, onResearch, onE
         <p className="rs-kicker">THE ANSWER, BEFORE THE CHARTS</p>
         <h2 id="rs-conclusion-heading">The surface recovered first<br/><em>in {positive} of {total} modeled drought episodes.</em></h2>
         <p className="rs-conclusion-lead">{fraction}% of the detected episodes at this study point had a completed surface-first recovery. Among those events, the median delay was <strong>{median === null ? "not estimable" : String(median) + " days"}</strong>. This is a local historical screening result, not evidence that a field is dry today.</p>
-        <p className="rs-conclusion-plain">{trend === null ? "There are too few complete events to estimate a reliable signed time trend." : siteLevel && !adjusted ? "A nominal event-level time pattern appeared, but it did not survive a simple correction for testing four sites." : siteLevel ? "The exploratory event test shows a candidate time pattern, but it still lacks independent validation." : "The event-level test did not establish a changing recovery-delay trend under the current thresholds."} {trend !== null && "The estimated signed slope is " + (trend > 0 ? "+" : "") + trend.toFixed(2) + " days per decade; this includes root-first cases and is not an estimate of crop damage."}</p>
+        {siteName === "Southern Africa" && <p className="rs-conclusion-plain">Threshold warning: the 25-day median at the default cutoff falls substantially with another recovery threshold. This is not an established agricultural deficit.</p>}
+        <p className="rs-conclusion-plain">{trend === null ? "There are too few complete events to estimate a reliable signed time trend." : siteLevel && !adjusted ? "A nominal event-level time pattern appeared, but it did not survive a simple correction for testing six sites." : siteLevel ? "The exploratory event test shows a candidate time pattern, but it still lacks independent validation." : "The event-level test did not establish a changing recovery-delay trend under the current thresholds."} {trend !== null && "The estimated signed slope is " + (trend > 0 ? "+" : "") + trend.toFixed(2) + " days per decade; this includes root-first cases and is not an estimate of crop damage."}</p>
         <div className="rs-conclusion-actions"><button type="button" onClick={onEvents}>Inspect drought episodes <ArrowDownRight size={17}/></button><button type="button" onClick={onResearch}>Examine confidence <ArrowUpRight size={17}/></button></div>
       </div>
       <div className="rs-conclusion-aside">

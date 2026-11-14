@@ -58,7 +58,9 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
     { id: "us_sgp_goodwell" as SiteId, name: "Goodwell", region: "Oklahoma · United States", total: 31, positive: 19, median: 2 },
     { id: "us_sgp_stillwater" as SiteId, name: "Stillwater", region: "Oklahoma · United States", total: 26, positive: 6, median: 1 },
     { id: "australia_narrabri" as SiteId, name: "Narrabri", region: "New South Wales · Australia", total: 28, positive: 16, median: 1 },
-    { id: "spain_cordoba" as SiteId, name: "Córdoba", region: "Andalusia · Spain", total: 25, positive: 6, median: 1 }
+    { id: "spain_cordoba" as SiteId, name: "Córdoba", region: "Andalusia · Spain", total: 25, positive: 6, median: 1 },
+    { id: "argentina_pampas" as SiteId, name: "Argentine Pampas", region: "Pampas · Argentina", total: 27, positive: 11, median: 2 },
+    { id: "southern_africa" as SiteId, name: "Southern Africa", region: "Interior · South Africa", total: 21, positive: 15, median: 25 }
   ];
   return <div className="rs-editorial">
     <section className="rs-hero">
@@ -71,7 +73,7 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
           <button type="button" className="rs-primary-link" onClick={() => navigate("explore")}>Start investigating <ArrowUpRight size={18}/></button>
           <button type="button" className="rs-secondary-link" onClick={() => document.getElementById("rs-findings")?.scrollIntoView({ behavior: "smooth" })}>See what we found <ArrowRight size={16}/></button>
         </div>
-        <div className="rs-hero-foot"><span>45 YEARS OF HISTORY</span><span>FOUR VERIFIED RESEARCH POINTS</span><span>NO SYNTHETIC FINDINGS</span></div>
+        <div className="rs-hero-foot"><span>45 YEARS OF HISTORY</span><span>SIX VERIFIED RESEARCH POINTS</span><span>NO SYNTHETIC FINDINGS</span></div>
       </div>
       <div className="rs-earth-shell">
         <div className="rs-earth-header"><span>EXPLORE THE STUDY REGIONS</span><div><button className={view === "globe" ? "is-on" : ""} type="button" onClick={() => setView("globe")}>Earth</button><button className={view === "atlas" ? "is-on" : ""} type="button" onClick={() => setView("atlas")}>Map</button></div></div>
@@ -89,8 +91,8 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
     </section>
 
     <section className="rs-findings" id="rs-findings">
-      <div className="rs-findings-header"><div><p className="rs-overline">02 — THE EVIDENCE</p><h2>Four places.<br/><em>Four different stories.</em></h2></div><p>We investigated 45 years of NASA POWER / MERRA-2 soil-wetness history at four agricultural locations. The pattern exists in the modeled records, but it is not uniform.</p></div>
-      <div className="rs-big-finding"><div className="rs-finding-ratio"><strong>47<span> / 110</span></strong><small>detected historical drought episodes had a completed surface-first recovery</small></div><div className="rs-finding-interpretation"><span>WHAT THAT NUMBER MEANS</span><p>About 42.7% of these selected modeled events recovered at the surface before the root zone. This is a descriptive finding for four sites, not a global drought rate.</p></div></div>
+      <div className="rs-findings-header"><div><p className="rs-overline">02 — THE EVIDENCE</p><h2>Six places.<br/><em>Six different stories.</em></h2></div><p>We investigated 45 years of NASA POWER / MERRA-2 soil-wetness history at six selected agricultural model locations. The pattern exists in the modeled records, but it is not uniform.</p></div>
+      <div className="rs-big-finding"><div className="rs-finding-ratio"><strong>73<span> / 158</span></strong><small>detected historical drought episodes had a completed surface-first recovery</small></div><div className="rs-finding-interpretation"><span>WHAT THAT NUMBER MEANS</span><p>About 46.2% of events at these six chosen model points recovered at the surface first. This is not a global drought rate.</p></div></div>
       <div className="rs-findings-table">
         <div className="rs-findings-labels"><span>LOCATION</span><span>COMPLETED SURFACE-FIRST / ALL EPISODES</span><span>MEDIAN GAP</span></div>
         {findings.map(item => <button key={item.id} className="rs-finding-row" type="button" onClick={() => { onSelect(item.id); navigate("explore"); }}>
@@ -99,7 +101,7 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
           <span className="rs-find-delay">{item.median} <small>{item.median === 1 ? "day" : "days"}</small><ArrowUpRight size={16}/></span>
         </button>)}
       </div>
-      <p className="rs-finding-limit"><strong>Important:</strong> No global trend has been demonstrated. Goodwell’s nominal trend did not meet a basic four-site multiple-testing correction; these records need independent corroboration.</p>
+      <p className="rs-finding-limit"><strong>Important:</strong> No global trend has been demonstrated. Goodwell’s nominal trend fails the six-site multiple-testing threshold. The Southern Africa median is highly threshold-sensitive. Independent evidence is still needed.</p>
     </section>
 
     <section className="rs-solution">
@@ -195,7 +197,7 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   function navigate(next: Page) { setPage(next); setMobileOpen(false); window.scrollTo({ top: 0, behavior: "auto" }); }
   return <div className="app-frame">
-    <aside className={`sidebar ${mobileOpen ? "is-open" : ""}`} aria-label="Primary navigation"><div className="sidebar-top"><Brand /><button className="mobile-close" type="button" onClick={() => setMobileOpen(false)} aria-label="Close navigation"><X size={20} /></button></div><div className="sidebar-overline">WORKSPACE</div><nav className="side-nav"><button type="button" className={page === "home" ? "active" : ""} onClick={() => navigate("home")}><Leaf size={19} /> Overview</button><button type="button" className={page === "explore" ? "active" : ""} onClick={() => navigate("explore")}><Globe2 size={19} /> Explore locations</button><button type="button" className={page === "method" ? "active" : ""} onClick={() => navigate("method")}><BookOpenText size={19} /> The science</button></nav><div className="sidebar-overline secondary">RESEARCH</div><div className="sidebar-research"><div className="sidebar-icon"><Search size={18} /></div><div><strong>Earth System Trend Detective</strong><small>NASA Space Apps Doha 2026</small></div></div><div className="sidebar-bottom"><div className="sidebar-verification"><CheckCircle2 size={17} /><span>Verified NASA datasets<small>4 historical site snapshots</small></span></div><div className="sidebar-credit">BUILT BY SYZYNOVA<br /><span>MUHAMMAD AHMED · SOMAYA BAKIR</span></div></div></aside>
+    <aside className={`sidebar ${mobileOpen ? "is-open" : ""}`} aria-label="Primary navigation"><div className="sidebar-top"><Brand /><button className="mobile-close" type="button" onClick={() => setMobileOpen(false)} aria-label="Close navigation"><X size={20} /></button></div><div className="sidebar-overline">WORKSPACE</div><nav className="side-nav"><button type="button" className={page === "home" ? "active" : ""} onClick={() => navigate("home")}><Leaf size={19} /> Overview</button><button type="button" className={page === "explore" ? "active" : ""} onClick={() => navigate("explore")}><Globe2 size={19} /> Explore locations</button><button type="button" className={page === "method" ? "active" : ""} onClick={() => navigate("method")}><BookOpenText size={19} /> The science</button></nav><div className="sidebar-overline secondary">RESEARCH</div><div className="sidebar-research"><div className="sidebar-icon"><Search size={18} /></div><div><strong>Earth System Trend Detective</strong><small>NASA Space Apps Doha 2026</small></div></div><div className="sidebar-bottom"><div className="sidebar-verification"><CheckCircle2 size={17} /><span>Verified NASA datasets<small>6 historical site snapshots</small></span></div><div className="sidebar-credit">BUILT BY SYZYNOVA<br /><span>MUHAMMAD AHMED · SOMAYA BAKIR</span></div></div></aside>
     {mobileOpen && <button type="button" className="mobile-scrim" aria-label="Close menu" onClick={() => setMobileOpen(false)} />}
     <div className="main-shell"><header className="top-nav"><button type="button" className="mobile-menu" onClick={() => setMobileOpen(true)} aria-label="Open navigation"><Menu size={22} /></button><span className="breadcrumb"><span>ROOTSHADOW</span><span className="crumb-divider">/</span>{page === "home" ? "Overview" : page === "explore" ? "Investigation" : "Methodology"}</span><div className="top-nav-actions"><span className="top-dataset"><span className="live-pulse" />HISTORICAL DATA · 1981—2025</span><a href="https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW" target="_blank" rel="noreferrer" aria-label="Open the ROOTSHADOW source code">SOURCE CODE <ExternalLink size={14} /></a></div></header>
       <main id="main-content">{page === "home" ? <HomePage selected={selected} onSelect={setSelected} navigate={navigate} /> : page === "explore" ? <ExplorePage selected={selected} onSelect={setSelected} /> : <MethodPage navigate={navigate} />}</main>
