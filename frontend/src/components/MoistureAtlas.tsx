@@ -86,7 +86,7 @@ export default function MoistureAtlas({ selected, onSelect, layer }: Props) {
     {!availableNow && period === "latest" && <p className="moisture-atlas-warning" role="status">Recent NASA readings are not currently verified. Displaying the labeled historical monthly archive instead; no live values have been invented.</p>}
     {historyQuery.isError && <p className="moisture-atlas-warning" role="alert">Historical atlas unavailable: {historyQuery.error.message}</p>}
     <div className="moisture-atlas-stage">
-      <svg className="moisture-atlas-map" viewBox="0 0 1440 720" role="img" aria-label={"NASA model-point "+label(layer)+" world map"}>
+      <svg className="moisture-atlas-map" viewBox="0 0 1440 720" role="group" aria-label={"Interactive NASA model-point "+label(layer)+" world map"}>
         <image href={import.meta.env.BASE_URL+"world-map.svg"} x={0} y={0} width={1440} height={720} preserveAspectRatio="none"/>
         {listed.map(site => {
           const p = coordinates(site), state = result(site.id), chosen = site.id === selected;
