@@ -25,7 +25,6 @@ export default function GeoExplorer({ selected, onSelect }: Props) {
         style: "https://tiles.openfreemap.org/styles/dark",
         center: [12, 14],
         zoom: 1.3,
-        attributionControl: true,
         cooperativeGestures: true,
         canvasContextAttributes: { antialias: true }
       });
