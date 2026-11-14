@@ -86,3 +86,11 @@ test("small screens have working navigation without horizontal overflow", async 
     expect(overflow).toBeLessThanOrEqual(2);
   }
 });
+
+test("offline geographic tiles do not block access to verified study sites", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText("Map tiles unavailable. Use the study-site selector.")).toBeVisible({ timeout: 12000 });
+  await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
+  await expect(page.getByRole("heading", { name: "Explore soil recovery" })).toBeVisible();
+  await expect(page.locator(".metric-value").first()).toHaveText("31");
+});
