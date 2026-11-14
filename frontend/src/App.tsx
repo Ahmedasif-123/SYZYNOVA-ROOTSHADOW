@@ -180,16 +180,42 @@ function ExplorePage({ selected, onSelect }: { selected: SiteId; onSelect: (id: 
 }
 
 function MethodPage({ navigate }: { navigate: (p: Page) => void }) {
-  return <div className="method-page"><div className="method-intro"><span className="eyebrow">METHODOLOGY / REPRODUCIBLE BY DESIGN</span><h1>How we see beneath<br /><em>surface recovery.</em></h1><p>Our goal isn't to produce a dramatic statistic. It's to make a testable investigation of how modeled soil moisture responds after drought.</p><button className="button-primary" onClick={() => navigate("explore")}>Explore the observations <ArrowRight size={17} /></button></div>
+  return <div className="method-page"><div className="method-intro"><span className="eyebrow">METHODOLOGY / REPRODUCIBLE BY DESIGN</span><h1>How we see beneath<br /><em>surface recovery.</em></h1><p>ROOTSHADOW applies a documented, repeatable screening method to gridded soil-moisture model data. The results are exploratory: we make the thresholds, statistical tests, source records and limits visible rather than treating a color on a map as proof.</p><button className="button-primary" onClick={() => navigate("explore")}>Explore the observations <ArrowRight size={17} /></button></div>
     <div className="method-grid">{[
-      { num: "01", icon: <Database size={24} />, title: "Collect and authenticate", desc: "NASA POWER daily gridded estimates of surface and root-zone soil wetness from 1981 through 2025. Original snapshots and source hashes are retained." },
+      { num: "01", icon: <Database size={24} />, title: "Acquire and preserve source data", desc: "NASA POWER daily model-derived surface and root-zone wetness, 1981–2025. Preserve downloaded source responses, URLs and SHA-256 digests; matching checksums establish file integrity, not independent source authentication." },
       { num: "02", icon: <BarChart3 size={24} />, title: "Make seasons comparable", desc: "Convert wetness into seasonally matched percentiles using the 1991–2020 reference and a ±15-day calendar window." },
-      { num: "03", icon: <Layers3 size={24} />, title: "Detect drought", desc: "Qualifying root-zone drought requires wetness at or below the 20th percentile for at least 30 days, with short interruptions bridged." },
+      { num: "03", icon: <Layers3 size={24} />, title: "Detect drought", desc: "Qualifying model drought is root-zone moisture at or below the 20th seasonal percentile for at least 30 days. Only interruptions of five days or fewer are eligible to be bridged between established dry spells." },
       { num: "04", icon: <Activity size={24} />, title: "Measure recovery order", desc: "Each layer must meet the same 40th-percentile threshold for seven consecutive days. Delay equals root recovery date minus surface recovery date." },
-      { num: "05", icon: <Microscope size={24} />, title: "Challenge the hypothesis", desc: "Explore Theil–Sen/Kendall trends, nine threshold settings, annual mismatch statistics and a simplified surrogate model calibrated on the source model's behavior." },
-      { num: "06", icon: <ShieldCheck size={24} />, title: "Report uncertainty", desc: "Mark incomplete recoveries as censored; report inconclusive tests and explicitly distinguish gridded model output from independent field measurements." }
+      { num: "05", icon: <Microscope size={24} />, title: "Challenge the hypothesis", desc: "Examine event-level Theil–Sen/Kendall trends, nine threshold combinations, annual mismatch statistics, and a simplified surrogate null based on the same gridded model. Each test has limitations." },
+      { num: "06", icon: <ShieldCheck size={24} />, title: "Report uncertainty", desc: "Treat incomplete recovery as censored rather than zero, disclose insufficient-event tests, and distinguish gridded MERRA-2 model estimates from independent soil and crop observations." }
     ].map(item => <div className="method-card" key={item.num}><div className="method-number">{item.num}</div><div className="method-icon">{item.icon}</div><h3>{item.title}</h3><p>{item.desc}</p></div>)}</div>
-    <section className="limitations"><div><span className="eyebrow">THE LIMITS MATTER</span><h2>What ROOTSHADOW<br />does not claim.</h2></div><div><p>NASA POWER/MERRA-2 surface and root-zone wetness are derived from a shared land-modeling system, not independently measured root sensors. Some apparent lag is expected from the model itself.</p><p>Goodwell's nominal exploratory trend does not meet a conservative six-site multiple-testing threshold. Independent SMAP, GLDAS and field corroboration is not complete.</p><p>ROOTSHADOW is a historical screening prototype. It does not recommend irrigation, diagnose crop loss or forecast next season's drought.</p><a href="https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW/blob/main/docs/EXPLORATORY_4_SITE_RESULTS.md" target="_blank" rel="noreferrer">Read the published four-site analysis <ArrowUpRight size={17} /></a></div></section>
+    <section className="method-protocol" aria-label="Reproducible screening protocol">
+      <div className="method-protocol-heading">
+        <div><span className="eyebrow">FIXED SCREENING PROTOCOL</span><h2>From daily model records to testable recovery events.</h2><p>A common method is applied separately to each location. The original six-site research results are preserved; the 91-location expansion is exploratory and has not been independently validated.</p></div>
+        <div className="method-protocol-counter"><strong>97</strong><span>MODEL STUDY POINTS<br/>6 CORE · 91 EXPANSION</span></div>
+      </div>
+      <div className="method-protocol-parameters">
+        {[
+          { label:"Historical source", value:"1981–2025", detail:"16,436 paired daily records per selected point" },
+          { label:"Seasonal baseline", value:"1991–2020", detail:"15-day window around each calendar day" },
+          { label:"Drought definition", value:"≤ 20th percentile", detail:"Root zone for at least 30 days; short gaps ≤ 5 days" },
+          { label:"Recovery definition", value:"≥ 40th percentile", detail:"Seven consecutive days for each modeled layer" },
+          { label:"Lag measurement", value:"Δt = tᵣ − tₛ", detail:"Positive days mean the surface recovered first" },
+          { label:"Robustness review", value:"9 scenarios", detail:"Vary drought/recovery thresholds; report sensitivity" }
+        ].map(parameter => <div className="method-protocol-parameter" key={parameter.label}><small>{parameter.label}</small><strong>{parameter.value}</strong><span>{parameter.detail}</span></div>)}
+      </div>
+      <div className="method-protocol-evidence">
+        <div><span className="eyebrow">SOURCE LINEAGE AND REPRODUCIBILITY</span><h3>Inspectable analysis, not an untraceable score.</h3><p>Each historical location is tied to NASA POWER source data, source-response records and processed checksums. The event logic is documented in code, including seasonal reference calculations, incomplete recovery handling, trend testing and a model-based null comparison.</p><p>The three additional moisture-map categories use date-labelled NASA POWER/MERRA-2 point estimates. The latest model readings are distinct from the fixed 1981–2025 historical investigation.</p></div>
+        <nav aria-label="Research source and code links">
+          <a href="https://power.larc.nasa.gov/" target="_blank" rel="noreferrer">NASA POWER dataset <ExternalLink size={15}/></a>
+          <a href="https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW/blob/moisture-atlas-daily-2026/api/rootshadow/recovery.py" target="_blank" rel="noreferrer">Review recovery-detection source <ExternalLink size={15}/></a>
+          <a href="https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW/blob/moisture-atlas-daily-2026/api/rootshadow/analysis.py" target="_blank" rel="noreferrer">Review statistical analysis <ExternalLink size={15}/></a>
+          <a href="https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW/tree/moisture-atlas-daily-2026/product_data" target="_blank" rel="noreferrer">Inspect original-source records <ExternalLink size={15}/></a>
+        </nav>
+      </div>
+      <p className="method-protocol-warning"><strong>Scientific status: exploratory model screening.</strong> A matching checksum does not independently validate NASA's modeled wetness against measurements on the ground. Root-zone and surface estimates come from the same model; independent SMAP, GLDAS and field cross-validation remains necessary.</p>
+    </section>
+    <section className="limitations"><div><span className="eyebrow">THE LIMITS MATTER</span><h2>What ROOTSHADOW<br />does not claim.</h2></div><div><p>NASA POWER/MERRA-2 surface and root-zone wetness are derived from a shared land-modeling system, not independently measured root sensors. Some apparent lag is expected from the model itself.</p><p>Goodwell's nominal exploratory trend does not meet a conservative six-site multiple-testing threshold. Independent SMAP, GLDAS and field corroboration is not complete.</p><p>ROOTSHADOW is a historical screening prototype. It does not recommend irrigation, diagnose crop loss or forecast next season's drought.</p><a href="https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW/blob/moisture-atlas-daily-2026/docs/SIX_SITE_RELEASE_AUDIT_2026-11-14.md" target="_blank" rel="noreferrer">Read the six-site release audit <ArrowUpRight size={17} /></a></div></section>
   </div>;
 }
 

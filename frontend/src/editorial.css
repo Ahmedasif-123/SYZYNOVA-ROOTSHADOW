@@ -267,3 +267,50 @@ body { color:var(--rs-ink); }
 .summary-status { color:#2a6845; font-size:12px; }
 @media(max-width:900px) { .summary-facts { grid-template-columns:repeat(2,minmax(0,1fr)); }.summary-facts>div { padding:15px; } }
 @media(max-width:650px) { .summary-heading,.summary-location-title { flex-direction:column; align-items:start; }.summary-facts { gap:8px; }.summary-facts strong { font-size:31px; }.summary-charts>section { padding:11px; } }
+
+.method-page { background:#f4f1e9; color:#1e392a; }
+.method-page .eyebrow { color:#3e6e50; }
+.method-page .method-intro h1 { color:#1a3a29; }
+.method-page .method-intro h1 em { color:#376c4b; }
+.method-page .method-intro p { color:#3b5342; font-size:16px; line-height:1.8; max-width:760px; }
+.method-page .method-intro .button-primary { background:#2e6247; border-color:#2e6247; color:#fff; }
+.method-page .method-intro .button-primary:hover { background:#1d4d34; }
+.method-page .method-grid { gap:14px; margin-top:52px; }
+.method-page .method-card { background:#fffefa; border:1px solid #c1d0bf; box-shadow:0 4px 22px rgba(24,56,34,.045); color:#1e382a; border-radius:3px; min-height:248px; }
+.method-page .method-card .method-number { color:#466f53; }
+.method-page .method-card .method-icon { color:#267a59; margin-top:26px; }
+.method-page .method-card h3 { color:#1b3a2a; font-size:18px; font-weight:750; line-height:1.4; }
+.method-page .method-card p { color:#395041; font-size:13px; line-height:1.75; }
+.method-page .method-card:hover { border-color:#77a98b; box-shadow:0 10px 32px rgba(23,70,41,.09); }
+.method-page .limitations { border-color:#b9cbb9; }
+.method-page .limitations h2 { color:#1d3e2c; }
+.method-page .limitations p { color:#3c5143; font-size:14px; }
+.method-page .limitations a { color:#276a4a; }
+.method-protocol { background:#e8eee5; border:1px solid #b4c9b5; padding:clamp(21px,3vw,38px); margin-top:58px; border-radius:4px; }
+.method-protocol-heading { display:flex; justify-content:space-between; gap:25px; align-items:center; }
+.method-protocol-heading>div:first-child { flex:1; }
+.method-protocol-heading h2 { color:#173d28; font:500 clamp(29px,3vw,42px) Georgia,serif; line-height:1.17; margin:12px 0 16px; }
+.method-protocol-heading p { color:#3a5541; font-size:13px; line-height:1.8; max-width:780px; }
+.method-protocol-counter { min-width:150px; border-left:1px solid #afc7b1; padding-left:24px; }
+.method-protocol-counter strong { display:block; color:#205e41; font:500 70px Georgia,serif; line-height:1; }
+.method-protocol-counter span { color:#476951; font:600 10px/1.8 "IBM Plex Mono",monospace; }
+.method-protocol-parameters { margin-top:28px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; border:1px solid #bcd0be; background:#bcd0be; }
+.method-protocol-parameter { background:#fffdf8; padding:19px; display:flex; flex-direction:column; gap:9px; min-width:0; }
+.method-protocol-parameter small { color:#55715c; text-transform:uppercase; font:700 10px "IBM Plex Mono",monospace; }
+.method-protocol-parameter strong { color:#1d5135; font:700 clamp(16px,1.7vw,21px) Manrope,sans-serif; line-height:1.4; }
+.method-protocol-parameter span { color:#455a49; font:500 12px/1.7 Manrope,sans-serif; }
+.method-protocol-evidence { border-top:1px solid #b8ccb9; margin-top:29px; padding-top:27px; display:grid; grid-template-columns:minmax(0,1.4fr) minmax(210px,.6fr); gap:25px; }
+.method-protocol-evidence h3 { color:#1e452e; font:500 clamp(21px,2.4vw,28px) Georgia,serif; margin:10px 0; }
+.method-protocol-evidence p { color:#3c5544; font-size:13px; line-height:1.78; }
+.method-protocol-evidence nav { display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:13px; }
+.method-protocol-evidence nav a { display:inline-flex; gap:7px; align-items:center; font:700 12px Manrope,sans-serif; color:#226344; text-underline-offset:4px; text-decoration:underline; }
+.method-protocol-warning { border-top:1px solid #bdccba; margin:25px 0 0; padding-top:17px; font-size:12px; line-height:1.85; color:#3b5443; }
+.method-protocol-warning strong { color:#204c34; }
+@media(max-width:1000px) { .method-protocol-parameters { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:700px) {
+  .method-protocol-heading { flex-direction:column; align-items:start; }
+  .method-protocol-counter { border-left:0; border-top:1px solid #b4c9b5; padding:16px 0 0; }
+  .method-protocol-parameters { grid-template-columns:1fr; }
+  .method-protocol-evidence { grid-template-columns:1fr; }
+  .method-page .method-card { min-height:unset; }
+}
