@@ -52,7 +52,7 @@ function Chart({ option, className = "", ariaLabel, onSelectIndex, lastIndex = 0
   useEffect(() => {
     const renderer = instance.current;
     if (!renderer) return;
-    const old = renderer.getOption().dataZoom as Array<{ start?: number; end?: number }> | undefined;
+    const old = renderer.getOption()?.dataZoom as Array<{ start?: number; end?: number }> | undefined;
     const existing = old?.[0];
     const retain = priorZoom.current === zoomKey && existing?.start !== undefined && existing?.end !== undefined;
     renderer.setOption(option, { notMerge: true, lazyUpdate: false });
