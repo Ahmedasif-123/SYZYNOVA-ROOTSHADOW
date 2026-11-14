@@ -70,7 +70,8 @@ export type Analysis = z.infer<typeof AnalysisSchema>;
 export type RecoveryEvent = Analysis["events"][number];
 
 export async function getAnalysis(site: SiteId, signal?: AbortSignal): Promise<Analysis> {
-  const response = await fetch(`/api/analyze?mode=site&site=${encodeURIComponent(site)}`, {
+  const url = import.meta.env.VITE_STATIC_SNAPSHOTS === "true" ? `${import.meta.env.BASE_URL}site-results/${encodeURIComponent(site)}.json` : `/api/analyze?mode=site&site=${encodeURIComponent(site)}`;
+  const response = await fetch(url, {
     headers: { Accept: "application/json" }, signal
   });
   let body: unknown;

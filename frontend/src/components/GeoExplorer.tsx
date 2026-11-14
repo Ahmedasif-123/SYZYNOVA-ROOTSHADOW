@@ -93,7 +93,7 @@ export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Pr
         onPointerCancel={pointerUp}
       >
         <title>World map with six historical NASA POWER research locations</title>
-        <image href={variant === "light" ? "/world-map-light.svg" : "/world-map.svg"} x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
+        <image href={variant === "light" ? `${import.meta.env.BASE_URL}world-map-light.svg` : `${import.meta.env.BASE_URL}world-map.svg`} x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
         {sites.map(site => {
           const point = sitePoint(site);
           const active = selected === site.id;
