@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07111d">
+  <title>ROOTSHADOW — The Drought Beneath the Rain</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="topbar"><div class="brand"><span class="symbol">◉</span> ROOTSHADOW <small>BY SYZYNOVA</small></div><a class="top-link" href="https://power.larc.nasa.gov/docs/services/api/temporal/daily/" target="_blank" rel="noopener noreferrer">NASA POWER ↗</a></header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">NASA SPACE APPS DOHA 2026 / EARTH SYSTEM TREND DETECTIVE</div>
+      <h1>The drought beneath <em>the rain.</em></h1>
+      <p>Rain can return while the soil beneath stays dry. Investigate incomplete recovery using surface and root-zone wetness observations, reproducible statistics, and verifiable data provenance.</p>
+    </section>
+    <div class="safety" id="mode-banner"><strong>SIMULATED DEMONSTRATION</strong> This initial view uses synthetic data. Select Live NASA observations to retrieve environmental measurements. Do not cite simulated results.</div>
+    <section class="controls panel">
+      <div class="section-head"><div><div class="eyebrow">01 / INVESTIGATION</div><h2>Choose the evidence</h2></div><div class="status" id="status">Ready</div></div>
+      <div class="form-grid">
+        <label>Data source<select id="mode"><option value="demo">Simulated demonstration</option><option value="site">Prefetched NASA site (verified snapshot)</option><option value="live">Live NASA POWER data (single point)</option></select></label>
+        <label>Prefetched site<select id="site"><option value="">No snapshots found — run scripts/gate0_fetch.py</option></select></label>
+        <label>Study location<select id="location"><option value="36.118,-97.091">Oklahoma, USA (Stillwater)</option><option value="-30.325,149.783">New South Wales, Australia</option><option value="37.888,-4.779">Córdoba, Spain</option><option value="36.78,-119.42">California, USA</option><option value="2.05,45.32">Somalia</option><option value="25.29,51.53">Doha, Qatar</option><option value="-15.80,-47.86">Brasília, Brazil</option></select></label>
+        <label>Start date<input id="start" type="date" value="1981-01-01"></label>
+        <label>End date<input id="end" type="date" value="2025-12-31"></label>
+      </div>
+      <div class="control-foot"><button id="run" type="button">Run investigation <span>↗</span></button><span>Fixed 1991–2020 baseline · same-threshold recovery lag · null-model audit</span></div>
+    </section>
+    <section class="metrics" id="metrics">
+      <div class="metric panel"><div class="caption">Complete recovery cycles</div><div class="figure" id="count">—</div><div class="sub">Drought → both layers recovered</div></div>
+      <div class="metric panel"><div class="caption">Median delay</div><div class="figure" id="longest">—</div><div class="sub">Root zone behind surface (days)</div></div>
+      <div class="metric panel"><div class="caption">Delay trend</div><div class="figure" id="trend">—</div><div class="sub">Days per decade (Theil–Sen)</div></div>
+      <div class="metric panel"><div class="caption">Audit verdict</div><div class="figure small" id="significance">—</div><div class="sub">Rule-based, see Evidence Auditor</div></div>
+    </section>
+    <section class="analysis-grid">
+      <article class="panel chart-card"><div class="section-head"><div><div class="eyebrow">02 / DEPTH DISAGREEMENT</div><h2>What the surface hides</h2></div><span class="tiny">Seasonal percentile rank</span></div>
+        <div id="chart" class="chart empty">Run an investigation to visualize observations.</div>
+        <div class="legend"><span><i class="dot top"></i> Surface wetness</span><span><i class="dot root"></i> Root-zone wetness</span></div>
+      </article>
+      <article class="panel explanation"><div class="eyebrow">03 / SCIENTIFIC METHOD</div><h2>Recovery, defined fairly</h2><div class="step"><b>1</b><p><strong>Establish drought</strong><br>Root-zone wetness at or below its 1991–2020 seasonal 20th percentile for 30+ days.</p></div><div class="step"><b>2</b><p><strong>Date each recovery</strong><br>First sustained return of surface AND root zone to the same 40th percentile. Delay = root minus surface.</p></div><div class="step"><b>3</b><p><strong>Audit the conclusion</strong><br>Compare against a model-inherent surrogate null, test 9 threshold settings, and report INCONCLUSIVE when evidence is thin.</p></div><div class="method-note">This tool investigates a gridded, model-derived environmental signal. It does not diagnose an individual farm or prove crop losses.</div></article>
+    </section>
+    <section class="panel events-card"><div class="section-head"><div><div class="eyebrow">04 / EVIDENCE REGISTER</div><h2>Drought–recovery cycles</h2></div><span class="tiny" id="period">No study loaded</span></div><div class="table-scroll"><table><thead><tr><th>Drought start</th><th>Surface recovered</th><th>Root recovered</th><th>Delay</th><th>Status</th></tr></thead><tbody id="events"><tr><td colspan="5">Run an investigation to list cycles.</td></tr></tbody></table></div><p class="footnote" id="robustness"></p></section>
+    <section class="panel events-card" id="audit-card"><div class="section-head"><div><div class="eyebrow">05 / EVIDENCE AUDITOR</div><h2>Can this finding be trusted?</h2></div><span class="tiny" id="verdict">—</span></div><p class="footnote" id="verdict-text"></p><div class="table-scroll"><table><thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead><tbody id="checks"><tr><td colspan="3">Run an investigation.</td></tr></tbody></table></div><p class="footnote" id="null-text"></p><p class="footnote" id="grid-text"></p></section>
+    <section class="panel provenance-card"><div class="section-head"><div><div class="eyebrow">06 / EVIDENCE SHIELD</div><h2>Data provenance and integrity</h2></div><span class="integrity">SHA-256</span></div><div class="provenance-grid"><div><span>Source state</span><strong id="source">—</strong></div><div><span>Dataset checksum</span><code id="hash">—</code></div><div><span>NASA API latency</span><strong id="latency">—</strong></div><div><span>Observation period</span><strong id="range">—</strong></div></div><p class="footnote" id="caveat">A recorded hash detects changes relative to a stored trusted digest; it is not independent proof of NASA authorship.</p></section>
+    <footer><span>SYZYNOVA / MUHAMMAD AHMED + SOMAYA BAKIR</span><span>Research prototype. Not an operational drought warning service.</span></footer>
+  </main>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
