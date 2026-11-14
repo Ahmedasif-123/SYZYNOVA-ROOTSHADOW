@@ -1,5 +1,6 @@
 import hashlib
 import json
+import math
 import os
 import tempfile
 import time
@@ -138,7 +139,7 @@ def _fetch_chunk(latitude, longitude, first, last, cache_dir, session):
                 if "json" not in response.headers.get("content-type", "").lower():
                     raise DataUnavailable("NASA returned a non-JSON response")
                 payload = response.json()
-                validate_nasa_payload(payload)
+                validate_nasa_payload(payload, first, last)
                 metadata = _write_cache(response.content, url, raw_path, manifest_path)
                 metadata.update({"mode": "live_nasa", "community": community, "requested_parameters": list(variables)})
                 return payload, metadata, round((time.monotonic() - started) * 1000), errors
@@ -151,7 +152,7 @@ def _fetch_chunk(latitude, longitude, first, last, cache_dir, session):
         raw_path, manifest_path = _cache_paths(url, cache_dir)
         if raw_path.exists() and manifest_path.exists():
             payload, metadata = verify_cache(raw_path, manifest_path)
-            validate_nasa_payload(payload)
+            validate_nasa_payload(payload, first, last)
             metadata.update({"mode": "verified_cached_nasa", "community": community, "requested_parameters": list(variables)})
             return payload, metadata, round((time.monotonic() - started) * 1000), errors
     raise DataUnavailable("NASA observations unavailable, no verified cache: " + "; ".join(errors))
@@ -189,13 +190,28 @@ def obtain_nasa(latitude, longitude, start, end, cache_dir=None, session=None):
     return parse_nasa({"properties": {"parameter": merged}}), metadata
 
 
-def validate_nasa_payload(payload):
+def validate_nasa_payload(payload, first=None, last=None):
     container = payload.get("properties", {}).get("parameter", {}) if isinstance(payload, dict) else {}
+    if not isinstance(container, dict):
+        raise DataUnavailable("NASA response contains an invalid parameter dictionary")
     missing = [name for name in CORE_PARAMETERS if name not in container or not isinstance(container[name], dict)]
     if missing:
         raise DataUnavailable("The NASA response lacks required parameter series: " + ", ".join(missing))
     if not container["GWETTOP"] or not container["GWETROOT"]:
         raise DataUnavailable("The NASA response has no paired soil-wetness series")
+    reference_dates = set(container["GWETTOP"])
+    if set(container["GWETROOT"]) != reference_dates:
+        raise DataUnavailable("NASA surface and root-zone date keys differ")
+    if first is not None and last is not None:
+        expected_dates = set(pd.date_range(first, last, freq="D").strftime("%Y%m%d"))
+        if reference_dates != expected_dates:
+            raise DataUnavailable("NASA returned incomplete or unexpected daily date coverage")
+    for name in CORE_PARAMETERS:
+        for value in container[name].values():
+            if value is None or (isinstance(value, (int, float)) and not isinstance(value, bool) and value in MISSING):
+                continue
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not 0 <= value <= 1:
+                raise DataUnavailable("NASA returned invalid " + name + " soil-wetness values")
     return container
 
 
