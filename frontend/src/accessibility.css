@@ -87,3 +87,38 @@
 }
 
 .chart-skeleton { min-height: 320px; display: grid; place-items: center; background: rgba(12, 36, 43, .82); color: #d1e4dc; font: 500 12px "IBM Plex Mono", monospace; letter-spacing: .3px; padding: 24px; text-align: center; }
+
+@media (min-width: 731px) {
+  .brand-name span {
+    color: #735434;
+  }
+  .brand-name small,
+  .side-nav button {
+    color: #435f4b;
+  }
+  .breadcrumb,
+  .breadcrumb > span:first-child,
+  .top-dataset {
+    color: #425c49;
+  }
+}
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input[type="range"]:focus-visible {
+  outline: 3px solid #be8550;
+  outline-offset: 3px;
+}
+@media (max-width: 730px) {
+  .rs-earth-header button {
+    min-height: 40px;
+    min-width: 44px;
+  }
+  .earth-right-rail button {
+    min-width: 40px;
+    min-height: 40px;
+  }
+  .rs-audience-control button {
+    min-height: 42px;
+  }
+}

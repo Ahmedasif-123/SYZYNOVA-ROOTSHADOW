@@ -309,7 +309,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
   const active = sites.find(site => site.id === selected) ?? sites[0];
 
   return (
-    <div className="earth-stage" aria-label="Interactive three dimensional Earth research explorer">
+    <div className="earth-stage" role="region" aria-label="Interactive three dimensional Earth research explorer">
       <div className="earth-stage-top">
         <span><ScanLine size={13} /> NASA POWER / MERRA-2</span>
         <span className="earth-stage-utc">BLUE MARBLE / GEOGRAPHIC REFERENCE</span>
@@ -356,7 +356,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
         <span><Globe2 size={14} /> DRAG TO ROTATE / SCROLL TO ZOOM</span>
         <span>04 RESEARCH LOCATIONS <ArrowUpRight size={13} /></span>
       </div>
-      <div className="earth-location-strip" aria-label="Research study locations">
+      <div className="earth-location-strip" role="group" aria-label="Research study locations">
         {sites.map(site => (
           <button type="button" key={site.id} className={selected === site.id ? "earth-location-active" : ""} onClick={() => { focusSite.current(site.id); onSelectRef.current(site.id); }}>
             <small>{site.index}</small>

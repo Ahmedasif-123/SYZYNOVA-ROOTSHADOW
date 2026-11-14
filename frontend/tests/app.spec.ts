@@ -131,6 +131,8 @@ test("small screens have working navigation without horizontal overflow", async 
 test("3D Earth and offline atlas both expose verified study locations", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".earth-stage")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Interactive three dimensional Earth research explorer" })).toBeVisible();
+  await expect(page.getByRole("group", { name: "Research study locations" })).toBeVisible();
   await expect(page.locator(".earth-location-strip button")).toHaveCount(4);
   const image = await page.request.get("/earth-day-2048.jpg");
   expect(image.ok()).toBeTruthy();
