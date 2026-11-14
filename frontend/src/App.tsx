@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import {
   Activity, ArrowRight, ArrowUpRight, BarChart3, BookOpenText, CheckCircle2, ChevronDown,
   CircleHelp, Database, Download, ExternalLink, Fingerprint, Globe2, Layers3, Leaf,
-  Menu, Microscope, MousePointer2, RefreshCcw, Satellite, Search, ShieldCheck, X
+  Menu, Microscope, MousePointer2, RefreshCcw, Search, ShieldCheck, X
 } from "lucide-react";
 import { getAnalysis, medianPositiveLag, verdictLabel, type RecoveryEvent } from "./lib/api";
 import { findSite, siteCoordinates, sites, type SiteId } from "./lib/sites";
