@@ -1,0 +1,94 @@
+name: Build and refresh ROOTSHADOW atlas
+on:
+  push:
+    branches: [moisture-atlas-daily-2026]
+    paths:
+      - 'scripts/build_moisture_atlas.py'
+      - '.github/workflows/build-moisture-atlas.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: rootshadow-daily-atlas
+  cancel-in-progress: false
+jobs:
+  history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Assemble true 1981-2025 monthly wetness and rainfall archive
+        run: python scripts/build_moisture_atlas.py --history
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rootshadow-atlas-history
+          path: frontend/public/atlas/history.json
+          retention-days: 7
+  latest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        include:
+          - { region: "Original sites", key: r0 }
+          - { region: "Middle East", key: r1 }
+          - { region: "North Africa", key: r2 }
+          - { region: "Sub-Saharan Africa", key: r3 }
+          - { region: "South and East Asia", key: r4 }
+          - { region: "Central Asia", key: r5 }
+          - { region: "Europe", key: r6 }
+          - { region: "North America", key: r7 }
+          - { region: "South America", key: r8 }
+          - { region: "Oceania", key: r9 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Fetch and date-check NASA POWER latest daily model data
+        run: python scripts/build_moisture_atlas.py --region "${{ matrix.region }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rootshadow-atlas-r${{ matrix.key }}
+          path: product_data/atlas_refresh/
+          retention-days: 7
+  record:
+    needs: [history, latest]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: rootshadow-atlas-history
+          path: frontend/public/atlas/
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: rootshadow-atlas-r*
+          merge-multiple: true
+          path: product_data/atlas_refresh/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Publish verified snapshots, preserving historic research
+        run: python scripts/build_moisture_atlas.py --merge
+      - name: Commit only atlas datasets
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add frontend/public/atlas/history.json frontend/public/atlas/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh verified historical and recent NASA atlas sources'
+            git push origin HEAD:moisture-atlas-daily-2026
+          fi
