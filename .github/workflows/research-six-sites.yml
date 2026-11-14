@@ -1,0 +1,80 @@
+name: Verify and publish six-site NASA research extension
+on:
+  push:
+    branches:
+      - research-six-sites-verified
+    paths:
+      - scripts/build_six_site_extension.py
+      - .github/workflows/research-six-sites.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: nasa-six-site-research
+  cancel-in-progress: false
+jobs:
+  validate-and-publish:
+    if: github.repository == 'Ahmedasif-123/SYZYNOVA-ROOTSHADOW'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Check out research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research-six-sites-verified
+          persist-credentials: true
+      - name: Install Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install scientific dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Acquire and verify authentic NASA POWER daily records
+        run: python scripts/build_six_site_extension.py
+      - name: Run all scientific and API regression tests
+        run: python -m pytest -q
+      - name: Install Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install --no-audit --no-fund
+      - name: Check TypeScript and build the actual six-site product
+        working-directory: frontend
+        run: npm run build
+      - name: Install Chromium for desktop/mobile verification
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+      - name: Run real and missing-data browser tests
+        working-directory: frontend
+        run: npm run test:e2e
+      - name: Verify packaged research data and only commit after green checks
+        run: |
+          python - <<'PY'
+          import gzip, hashlib, json
+          from pathlib import Path
+          from api.rootshadow.data import list_sites
+          base = Path('api/data/gate0')
+          sites = set(list_sites([base]))
+          assert sites == {
+              'us_sgp_goodwell', 'us_sgp_stillwater',
+              'australia_narrabri', 'spain_cordoba',
+              'argentina_pampas', 'southern_africa'
+          }, sites
+          for site in ('argentina_pampas', 'southern_africa'):
+              manifest = json.loads((base/'manifests'/f'{site}_1981_2025.json').read_text())
+              compressed = (base/'processed'/f'{site}_1981_2025.csv.gz').read_bytes()
+              assert hashlib.sha256(gzip.decompress(compressed)).hexdigest() == manifest['processed_sha256']
+              assert len(manifest['source_chunks']) == 5
+          print('All six research points and both new compressed digests verified.')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add api/data/gate0/manifests api/data/gate0/processed docs/EXPLORATORY_6_SITE_EXTENSION.md docs/evidence README.md frontend/src frontend/tests tests/test_integration_real.py
+          if git diff --cached --quiet; then
+            echo "No generated research changes to commit."
+          else
+            git commit -m "Verify and package six-site NASA POWER screening and product"
+            git push origin HEAD:research-six-sites-verified
+          fi
