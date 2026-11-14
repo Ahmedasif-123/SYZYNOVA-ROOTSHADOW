@@ -3,10 +3,14 @@ import { readFileSync } from "node:fs";
 
 const goodwell = JSON.parse(readFileSync(new URL("./fixtures/goodwell.json", import.meta.url), "utf8"));
 const narrabri = JSON.parse(readFileSync(new URL("./fixtures/narrabri.json", import.meta.url), "utf8"));
+const argentina = JSON.parse(readFileSync(new URL("./fixtures/argentina.json", import.meta.url), "utf8"));
+const africa = JSON.parse(readFileSync(new URL("./fixtures/southern_africa.json", import.meta.url), "utf8"));
 
 const responses: Record<string, unknown> = {
   us_sgp_goodwell: goodwell,
-  australia_narrabri: narrabri
+  australia_narrabri: narrabri,
+  argentina_pampas: argentina,
+  southern_africa: africa
 };
 
 test.beforeEach(async ({ page }) => {
@@ -22,7 +26,7 @@ test.beforeEach(async ({ page }) => {
 test("homepage clearly explains model-based historical evidence", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /When rain returns/i })).toBeVisible();
-  await expect(page.getByText(/FOUR VERIFIED RESEARCH POINTS/i)).toBeVisible();
+  await expect(page.getByText(/SIX VERIFIED RESEARCH POINTS/i)).toBeVisible();
   await expect(page.getByText(/NO SYNTHETIC FINDINGS/i)).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("homepage.png"), fullPage: true });
 });
@@ -65,7 +69,7 @@ test("monthly depth explorer scrubs verified records and syncs with the chart", 
 test("research conclusions drive an audience-specific next step and export", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Start investigating" }).click();
-  await page.getByRole("button", { name: /Check the evidence/i }).click();
+  await page.getByRole("button", { name: /The takeaway/i }).click();
   await page.getByText(/Read the complete research interpretation/i).click();
   await expect(page.locator(".rs-conclusion")).toBeVisible();
   await expect(page.getByRole("heading", { name: /surface recovered first/i })).toBeVisible();
@@ -90,10 +94,12 @@ test("scientific workspace renders actual backend tests and comparisons", async 
   await page.goto("/");
   await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
-  await page.getByRole("button", { name: /Check the evidence/i }).click();
+  await page.getByRole("button", { name: /The takeaway/i }).click();
+  await page.getByText("Explore advanced graphs").click();
   await expect(page.locator(".echart")).toHaveCount(2);
+  await page.getByText(/Evidence quality and statistical checks/i).click();
   await expect(page.locator(".evidence-check")).toHaveCount(goodwell.audit.checks.length);
-  await expect(page.getByText(/It does not confirm a climate trend/i)).toBeVisible();
+  await expect(page.getByRole("region", { name: "Results at a glance" })).toBeVisible();
   await page.locator("#guided-compare-select").selectOption("australia_narrabri");
   await expect(page.getByText("28 episodes")).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("scientific.png"), fullPage: true });
@@ -137,7 +143,7 @@ test("3D Earth and offline atlas both expose verified study locations", async ({
   await expect(page.locator(".earth-stage")).toBeVisible();
   await expect(page.getByRole("region", { name: "Interactive three dimensional Earth research explorer" })).toBeVisible();
   await expect(page.getByRole("group", { name: "Research study locations" })).toBeVisible();
-  await expect(page.locator(".earth-location-strip button")).toHaveCount(4);
+  await expect(page.locator(".earth-location-strip button")).toHaveCount(6);
   const image = await page.request.get("/earth-day-2048.jpg");
   expect(image.ok()).toBeTruthy();
   const geojson = await page.request.get("/world.geojson");
@@ -152,11 +158,11 @@ test("3D Earth and offline atlas both expose verified study locations", async ({
   await expect(atlas).not.toHaveAttribute("viewBox", extentBefore ?? "");
   await page.getByRole("button", { name: "Show full world map" }).click();
   await expect(atlas).toHaveAttribute("viewBox", extentBefore ?? "");
-  await expect(page.locator(".map-site-list .map-site")).toHaveCount(4);
+  await expect(page.locator(".map-site-list .map-site")).toHaveCount(6);
   await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
   await expect(page.getByRole("button", { name: "Start investigating" })).toBeVisible();
   await page.getByRole("button", { name: "Start investigating" }).click();
-  await expect(page.getByRole("heading", { name: /See what the soil is telling us/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /What happens beneath the surface?/i })).toBeVisible();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
 });
 
@@ -170,7 +176,7 @@ test("3D Earth retains accessible location selection when WebGL is unsupported",
   });
   await page.goto("/");
   await expect(page.getByText(/3D graphics unavailable on this device/)).toBeVisible();
-  await expect(page.locator(".earth-location-strip button")).toHaveCount(4);
+  await expect(page.locator(".earth-location-strip button")).toHaveCount(6);
   await page.locator(".earth-location-strip button").filter({ hasText: "Narrabri" }).click();
   await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator("#site-select")).toHaveValue("australia_narrabri");
@@ -232,11 +238,28 @@ test("graph guidance follows historical monthly data and explains interpretation
   const slider = page.getByRole("slider", { name: "Select month in historical soil record" });
   await slider.focus();
   await slider.press("Home");
-  await expect(guide).toContainText("January 1981");
+  await expect(guide).toContainText("Jan 1981");
   await slider.press("End");
-  await expect(guide).toContainText("December 2025");
+  await expect(guide).toContainText("Dec 2025");
   await expect(page.locator(".visual-chart-key")).toContainText("Dashed: 20 dry / 40 recovery");
-  await page.getByRole("button", { name: /Check the evidence/i }).click();
+  await page.getByRole("button", { name: /The takeaway/i }).click();
+  await page.getByText("Explore advanced graphs").click();
   await expect(page.getByText(/Each bar = days in one year/)).toBeVisible();
   await expect(page.getByText(/Nine versions of the analysis/)).toBeVisible();
+});
+
+test("six-location selection, concise takeaway and event filters work", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  await expect(page.locator("#site-select option")).toHaveCount(6);
+  await page.getByRole("button", { name: /The takeaway/i }).click();
+  await expect(page.getByRole("region", { name: "Results at a glance" })).toContainText("Surface recovery doesn't always mean deeper recovery");
+  await expect(page.locator(".guided-evidence-panel")).not.toBeVisible();
+  await page.getByText(/Evidence quality and statistical checks/i).click();
+  await expect(page.locator(".evidence-check")).toHaveCount(goodwell.audit.checks.length);
+  await page.getByRole("button", { name: /Drought events/i }).click();
+  await page.getByRole("combobox", { name: "Filter drought events by decade" }).selectOption("2000");
+  expect(await page.locator(".guided-event-table tbody tr").count()).toBeLessThanOrEqual(12);
+  await page.locator("#site-select").selectOption("argentina_pampas");
+  await expect(page.locator(".guided-large-number")).toContainText("11");
 });

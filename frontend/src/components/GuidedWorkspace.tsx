@@ -62,6 +62,7 @@ export default function GuidedWorkspace({ selected, onSelect }: { selected: Site
   const [step, setStep] = useState<Step>("layers");
   const [mapMode, setMapMode] = useState<MapMode>("atlas");
   const [filter, setFilter] = useState<EventFilter>("all");
+  const [decade, setDecade] = useState("all");
   const [expanded, setExpanded] = useState(false);
   const [event, setEvent] = useState<RecoveryEvent | null>(null);
   const [month, setMonth] = useState<string | null>(null);
@@ -75,14 +76,15 @@ export default function GuidedWorkspace({ selected, onSelect }: { selected: Site
   const filteredEvents = useMemo(() => {
     if (!analysis) return [];
     return [...analysis.events]
-      .filter(item => filter === "all" || (filter === "surface" ? item.status === "COMPLETE_SURFACE_FIRST" : item.recovery_delay_days === null))
+      .filter(item => (filter === "all" || (filter === "surface" ? item.status === "COMPLETE_SURFACE_FIRST" : item.recovery_delay_days === null)) && (decade === "all" || Math.floor(Number(item.drought_start.slice(0,4)) / 10) * 10 === Number(decade)))
       .sort((a, b) => b.drought_start.localeCompare(a.drought_start));
-  }, [analysis, filter]);
+  }, [analysis, filter, decade]);
   const displayedEvents = expanded ? filteredEvents : filteredEvents.slice(0, 12);
   useEffect(() => {
     setEvent(null);
     setMonth(null);
     setFilter("all");
+    setDecade("all");
     setExpanded(false);
     setComparison("none");
   }, [selected]);
@@ -114,6 +116,7 @@ export default function GuidedWorkspace({ selected, onSelect }: { selected: Site
         {analysis && <>
           <div className="guided-headline-figure"><span className="guided-large-number">{positives.length}<small> / {analysis.events.length}</small></span><p>detected drought episodes had <strong>surface recovery before deeper soil recovery</strong>.</p></div>
           <p className="guided-explanation">The surface can look recovered while deeper soil is still recovering. <strong>Historical model only—not a live farm measurement.</strong></p>
+          {selected === "southern_africa" && <p className="guided-unique-caution">Sensitivity alert: the 25-day median at the default recovery threshold falls to 3.5 days under another threshold. Treat it as uncertain.</p>}
           <div className="guided-quick-stats">
             <div className="metric-box"><span className="metric-label">Drought episodes</span><strong className="metric-value">{analysis.events.length}</strong><small>Detected in 1981–2025</small></div>
             <div className="metric-box"><span className="metric-label">Surface-first events</span><strong className="metric-value">{positives.length}</strong><small>Completed recoveries</small></div>
@@ -147,7 +150,7 @@ export default function GuidedWorkspace({ selected, onSelect }: { selected: Site
 
       {analysis && step === "events" && <section aria-label="Drought event table" className="guided-step-content">
         <div className="guided-step-intro"><span className="guided-overline">02 / EXAMINE THE EPISODES</span><h3>Which droughts recovered differently?</h3><p>Select an event to see the recovery sequence. Positive delay means the root zone recovered later; missing dates mean recovery was not observed.</p></div>
-        <div className="guided-table-controls"><div className="guided-filters" role="group" aria-label="Filter drought events"><button type="button" className={filter === "all" ? "active" : ""} aria-pressed={filter === "all"} onClick={() => { setFilter("all"); setExpanded(false); }}>All events ({analysis.events.length})</button><button type="button" className={filter === "surface" ? "active" : ""} aria-pressed={filter === "surface"} onClick={() => { setFilter("surface"); setExpanded(false); }}>Surface first ({positives.length})</button><button type="button" className={filter === "incomplete" ? "active" : ""} aria-pressed={filter === "incomplete"} onClick={() => { setFilter("incomplete"); setExpanded(false); }}>Incomplete ({analysis.events.filter(item => item.recovery_delay_days === null).length})</button></div><span>{filteredEvents.length} matching events</span></div>
+        <div className="guided-table-controls"><div className="guided-filters" role="group" aria-label="Filter drought events"><button type="button" className={filter === "all" ? "active" : ""} aria-pressed={filter === "all"} onClick={() => { setFilter("all"); setExpanded(false); }}>All events ({analysis.events.length})</button><button type="button" className={filter === "surface" ? "active" : ""} aria-pressed={filter === "surface"} onClick={() => { setFilter("surface"); setExpanded(false); }}>Surface first ({positives.length})</button><button type="button" className={filter === "incomplete" ? "active" : ""} aria-pressed={filter === "incomplete"} onClick={() => { setFilter("incomplete"); setExpanded(false); }}>Incomplete ({analysis.events.filter(item => item.recovery_delay_days === null).length})</button></div><label className="guided-decade-filter">Period <select aria-label="Filter drought events by decade" value={decade} onChange={e => { setDecade(e.target.value); setExpanded(false); }}><option value="all">All years</option><option value="1980">1981–89</option><option value="1990">1990s</option><option value="2000">2000s</option><option value="2010">2010s</option><option value="2020">2020–25</option></select></label><span>{filteredEvents.length} matching events</span></div>
         <div className="guided-table-scroll"><table className="guided-event-table"><thead><tr><th scope="col">Drought began</th><th scope="col">Surface recovered</th><th scope="col">Root zone recovered</th><th scope="col">Difference</th><th scope="col">Interpretation</th></tr></thead><tbody>{displayedEvents.map(item => <tr key={item.drought_start + item.drought_end} className={event?.drought_start === item.drought_start ? "active" : ""}><td><button type="button" onClick={() => setEvent(item)} aria-pressed={event?.drought_start === item.drought_start}>{dateLabel(item.drought_start)} <ArrowUpRight size={13} /></button></td><td>{dateLabel(item.surface_recovery)}</td><td>{dateLabel(item.root_recovery)}</td><td><strong>{item.recovery_delay_days === null ? "Not complete" : formatLag(item.recovery_delay_days)}</strong></td><td><span className={"guided-event-status " + (item.status === "COMPLETE_SURFACE_FIRST" ? "surface-first" : "")}>{statusLabel(item)}</span></td></tr>)}</tbody></table></div>
         {filteredEvents.length > 12 && <button type="button" className="guided-expand-events" onClick={() => setExpanded(value => !value)}>{expanded ? "Show first 12 events" : "Show all " + filteredEvents.length + " events"}</button>}
         <div className="guided-event-detail"><div><span className="guided-overline">SELECTED EPISODE</span><h4>{event ? dateLabel(event.drought_start) : "Choose a row to inspect the recovery"}</h4></div><EventInspector event={event} />{event && <button type="button" className="guided-next-button" onClick={() => activate("layers")}>View this event on the timeline <ArrowRight size={16} /></button>}</div>

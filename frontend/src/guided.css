@@ -313,3 +313,29 @@
 .visual-line.selected {border-color:#e8c79b;border-top-style:dotted;}
 .visual-chart-message {font-size:11.5px;line-height:1.5;margin:8px 0 12px;color:#aec5bd;}
 .guided-science-charts .visual-chart-message {color:#b6cbc2;margin-top:2px;}
+
+.guided-simple-conclusion { display:grid;grid-template-columns:minmax(230px,.75fr) 1.25fr;gap:26px;padding:24px 28px;background:#e7eee4;border:1px solid #c5d5c2;color:#284e37;margin:7px 0 18px; }
+.guided-simple-number { border-right:1px solid #c2d3be;padding-right:26px;display:flex;flex-direction:column;gap:12px; }
+.guided-simple-number>strong { font:500 clamp(52px,6vw,82px)/1 Georgia,serif;letter-spacing:-2px;color:#2b734c; }
+.guided-simple-number>strong small { font-size:.38em;color:#718f77; }
+.guided-simple-number>small { font-size:11px;line-height:1.5;color:#6b866e; }
+.guided-proportion { height:10px;background:#cfdfca;border-radius:8px;overflow:hidden; }
+.guided-proportion>i { display:block;height:100%;background:#408962; }
+.guided-simple-meaning h4 { font:500 clamp(23px,2.7vw,34px)/1.2 Georgia,serif;color:#284b37;margin:11px 0 14px; }
+.guided-simple-meaning p { color:#506d57;line-height:1.6;font-size:13px;margin:0 0 18px; }
+.guided-next-step { border-top:1px solid #c2d1bd;padding-top:14px;color:#496a50;font-size:12px;line-height:1.6; }
+.guided-next-step strong { display:block;color:#2d5d3e; }
+.guided-audit-details { border:1px solid #cad7c7;margin:15px 0;background:#f6f8f1; }
+.guided-audit-details>summary { display:flex;align-items:center;gap:10px;padding:16px 18px;color:#365b42;font-size:12px;font-weight:700;cursor:pointer;list-style:none; }
+.guided-audit-details>summary::-webkit-details-marker { display:none; }
+.guided-audit-details>summary span { margin-left:auto;font-weight:500;color:#637d67; }
+.guided-audit-details>summary svg:last-child { flex:none; }
+.guided-audit-details .guided-evidence-panel { margin:0;padding:15px; }
+.guided-science-detail { margin-top:20px; }
+.guided-science-detail>summary { display:flex;align-items:center;gap:12px;padding:17px 3px;border-top:1px solid #b6cbbb;font-size:12px;font-weight:700;color:#34684b;cursor:pointer;list-style:none; }
+.guided-science-detail>summary::-webkit-details-marker { display:none; }
+.guided-science-detail>summary svg { margin-left:auto; }
+.guided-decade-filter { display:flex;align-items:center;gap:8px;color:#6a876d;font:600 11px Manrope,sans-serif; }
+.guided-decade-filter select { border:1px solid #b7c7b8;background:#f7faf3;color:#275037;border-radius:4px;padding:8px;max-width:140px; }
+.guided-unique-caution {font-size:12px;line-height:1.5;color:#795e39;background:#f2e9d2;padding:9px 12px;border-left:3px solid #b89754;}
+@media (max-width:730px){.guided-simple-conclusion { display:block;padding:18px; }.guided-simple-number { border-right:0;border-bottom:1px solid #c2d3be;padding:0 0 18px;margin-bottom:18px; }.guided-decade-filter { flex-basis:100%; }.guided-simple-number>strong {font-size:62px;}}
