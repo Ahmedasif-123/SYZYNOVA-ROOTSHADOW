@@ -33,7 +33,7 @@ test("verified Goodwell data drives farmer-facing metrics and recovery selection
   await expect(page.locator(".metric-value").nth(0)).toHaveText("31");
   await expect(page.locator(".metric-value").nth(1)).toHaveText("19");
   await expect(page.locator(".metric-value").nth(2)).toHaveText("2 d");
-  await expect(page.getByText("NASA POWER / MERRA-2", { exact: true })).toBeVisible();
+  await expect(page.getByText("NASA POWER · HISTORICAL MODEL", { exact: true })).toBeVisible();
   await page.locator(".event-row").first().click();
   await expect(page.locator(".event-inspector")).toBeVisible();
   await expect(page.locator(".echart")).toHaveCount(1);
