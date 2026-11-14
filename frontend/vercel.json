@@ -4,10 +4,6 @@
     {
       "source": "/api/:path*",
       "destination": "https://rootshadow-api-preview-mfh04dvmq.vercel.app/api/:path*"
-    },
-    {
-      "source": "/((?!assets/|world.geojson|world-map.svg|favicon.ico).*)",
-      "destination": "/index.html"
     }
   ]
 }
