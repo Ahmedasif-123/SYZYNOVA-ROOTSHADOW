@@ -1,0 +1,387 @@
+{
+  "new_sites": 91,
+  "original_research_sites": 6,
+  "total_sites": 97,
+  "new_site_days": 1495676,
+  "new_detected_episodes": 1972,
+  "new_completed_surface_first": 770,
+  "regions": {
+    "Middle East": 25,
+    "North Africa": 6,
+    "Sub-Saharan Africa": 10,
+    "South and East Asia": 15,
+    "Central Asia": 2,
+    "Europe": 10,
+    "North America": 9,
+    "South America": 8,
+    "Oceania": 6
+  },
+  "per_site": {
+    "qatar_doha": {
+      "events": 2,
+      "surface_first": 1
+    },
+    "qatar_dukhān": {
+      "events": 14,
+      "surface_first": 2
+    },
+    "saudi_riyadh": {
+      "events": 16,
+      "surface_first": 1
+    },
+    "saudi_jeddah": {
+      "events": 0,
+      "surface_first": 0
+    },
+    "saudi_hail": {
+      "events": 20,
+      "surface_first": 3
+    },
+    "uae_abu_dhabi": {
+      "events": 16,
+      "surface_first": 14
+    },
+    "uae_al_ain": {
+      "events": 22,
+      "surface_first": 17
+    },
+    "oman_muscat": {
+      "events": 48,
+      "surface_first": 10
+    },
+    "oman_nizwa": {
+      "events": 16,
+      "surface_first": 5
+    },
+    "kuwait_al_jahra": {
+      "events": 18,
+      "surface_first": 10
+    },
+    "bahrain_riffa": {
+      "events": 15,
+      "surface_first": 7
+    },
+    "iraq_baghdad": {
+      "events": 17,
+      "surface_first": 2
+    },
+    "iraq_mosul": {
+      "events": 18,
+      "surface_first": 6
+    },
+    "jordan_amman": {
+      "events": 14,
+      "surface_first": 4
+    },
+    "lebanon_bekaa": {
+      "events": 16,
+      "surface_first": 6
+    },
+    "syria_aleppo": {
+      "events": 19,
+      "surface_first": 5
+    },
+    "yemen_sanaa": {
+      "events": 36,
+      "surface_first": 2
+    },
+    "iran_isfahan": {
+      "events": 22,
+      "surface_first": 10
+    },
+    "iran_shiraz": {
+      "events": 25,
+      "surface_first": 6
+    },
+    "turkey_konya": {
+      "events": 31,
+      "surface_first": 17
+    },
+    "turkey_sanliurfa": {
+      "events": 18,
+      "surface_first": 5
+    },
+    "israel_beersheba": {
+      "events": 15,
+      "surface_first": 6
+    },
+    "palestine_jenin": {
+      "events": 19,
+      "surface_first": 5
+    },
+    "egypt_faiyum": {
+      "events": 4,
+      "surface_first": 2
+    },
+    "egypt_aswan": {
+      "events": 19,
+      "surface_first": 3
+    },
+    "morocco_marrakesh": {
+      "events": 26,
+      "surface_first": 14
+    },
+    "morocco_fez": {
+      "events": 37,
+      "surface_first": 14
+    },
+    "algeria_tlemcen": {
+      "events": 39,
+      "surface_first": 16
+    },
+    "tunisia_kairouan": {
+      "events": 30,
+      "surface_first": 18
+    },
+    "libya_sabha": {
+      "events": 0,
+      "surface_first": 0
+    },
+    "sudan_khartoum": {
+      "events": 3,
+      "surface_first": 2
+    },
+    "ethiopia_addis_ababa": {
+      "events": 17,
+      "surface_first": 9
+    },
+    "kenya_nakuru": {
+      "events": 23,
+      "surface_first": 16
+    },
+    "uganda_kampala": {
+      "events": 23,
+      "surface_first": 6
+    },
+    "nigeria_kano": {
+      "events": 17,
+      "surface_first": 7
+    },
+    "ghana_kumasi": {
+      "events": 30,
+      "surface_first": 18
+    },
+    "senegal_thies": {
+      "events": 14,
+      "surface_first": 6
+    },
+    "zambia_lusaka": {
+      "events": 13,
+      "surface_first": 6
+    },
+    "zimbabwe_bulawayo": {
+      "events": 14,
+      "surface_first": 5
+    },
+    "south_africa_pretoria": {
+      "events": 11,
+      "surface_first": 4
+    },
+    "madagascar_antananarivo": {
+      "events": 21,
+      "surface_first": 11
+    },
+    "india_delhi": {
+      "events": 26,
+      "surface_first": 14
+    },
+    "india_nagpur": {
+      "events": 22,
+      "surface_first": 3
+    },
+    "india_hyderabad": {
+      "events": 20,
+      "surface_first": 3
+    },
+    "pakistan_lahore": {
+      "events": 22,
+      "surface_first": 4
+    },
+    "pakistan_multan": {
+      "events": 0,
+      "surface_first": 0
+    },
+    "bangladesh_rajshahi": {
+      "events": 25,
+      "surface_first": 5
+    },
+    "nepal_kathmandu": {
+      "events": 25,
+      "surface_first": 8
+    },
+    "china_beijing": {
+      "events": 25,
+      "surface_first": 6
+    },
+    "china_chengdu": {
+      "events": 23,
+      "surface_first": 10
+    },
+    "japan_sapporo": {
+      "events": 17,
+      "surface_first": 5
+    },
+    "south_korea_daejeon": {
+      "events": 26,
+      "surface_first": 11
+    },
+    "thailand_chiang_mai": {
+      "events": 23,
+      "surface_first": 9
+    },
+    "vietnam_hanoi": {
+      "events": 16,
+      "surface_first": 3
+    },
+    "indonesia_yogyakarta": {
+      "events": 25,
+      "surface_first": 13
+    },
+    "philippines_davao": {
+      "events": 24,
+      "surface_first": 2
+    },
+    "kazakhstan_astana": {
+      "events": 21,
+      "surface_first": 15
+    },
+    "uzbekistan_samarkand": {
+      "events": 26,
+      "surface_first": 6
+    },
+    "uk_cambridge": {
+      "events": 18,
+      "surface_first": 5
+    },
+    "france_toulouse": {
+      "events": 33,
+      "surface_first": 18
+    },
+    "germany_hanover": {
+      "events": 22,
+      "surface_first": 9
+    },
+    "netherlands_wageningen": {
+      "events": 24,
+      "surface_first": 4
+    },
+    "italy_bologna": {
+      "events": 33,
+      "surface_first": 12
+    },
+    "spain_zaragoza": {
+      "events": 23,
+      "surface_first": 16
+    },
+    "portugal_evora": {
+      "events": 24,
+      "surface_first": 11
+    },
+    "greece_larissa": {
+      "events": 27,
+      "surface_first": 12
+    },
+    "poland_lublin": {
+      "events": 30,
+      "surface_first": 20
+    },
+    "romania_cluj": {
+      "events": 27,
+      "surface_first": 11
+    },
+    "us_nebraska_lincoln": {
+      "events": 29,
+      "surface_first": 15
+    },
+    "us_california_fresno": {
+      "events": 23,
+      "surface_first": 9
+    },
+    "us_iowa_ames": {
+      "events": 28,
+      "surface_first": 7
+    },
+    "us_arizona_tucson": {
+      "events": 20,
+      "surface_first": 7
+    },
+    "us_georgia_athens": {
+      "events": 33,
+      "surface_first": 14
+    },
+    "canada_saskatoon": {
+      "events": 31,
+      "surface_first": 15
+    },
+    "canada_guelph": {
+      "events": 27,
+      "surface_first": 11
+    },
+    "mexico_guanajuato": {
+      "events": 20,
+      "surface_first": 9
+    },
+    "mexico_hermosillo": {
+      "events": 25,
+      "surface_first": 8
+    },
+    "colombia_bogota": {
+      "events": 15,
+      "surface_first": 3
+    },
+    "peru_cusco": {
+      "events": 28,
+      "surface_first": 14
+    },
+    "brazil_campinas": {
+      "events": 23,
+      "surface_first": 10
+    },
+    "brazil_cuiaba": {
+      "events": 20,
+      "surface_first": 9
+    },
+    "chile_talca": {
+      "events": 20,
+      "surface_first": 6
+    },
+    "argentina_rosario": {
+      "events": 18,
+      "surface_first": 6
+    },
+    "uruguay_durazno": {
+      "events": 35,
+      "surface_first": 12
+    },
+    "bolivia_cochabamba": {
+      "events": 25,
+      "surface_first": 15
+    },
+    "australia_melbourne": {
+      "events": 29,
+      "surface_first": 11
+    },
+    "australia_perth": {
+      "events": 29,
+      "surface_first": 15
+    },
+    "australia_toowoomba": {
+      "events": 19,
+      "surface_first": 7
+    },
+    "australia_wagga_wagga": {
+      "events": 27,
+      "surface_first": 16
+    },
+    "new_zealand_hamilton": {
+      "events": 22,
+      "surface_first": 7
+    },
+    "new_zealand_christchurch": {
+      "events": 21,
+      "surface_first": 8
+    }
+  },
+  "scientific_status": "Exploratory screening of NASA POWER gridded model points only; independent scientific validation not performed",
+  "existing_six_site_results_unchanged": true
+}
