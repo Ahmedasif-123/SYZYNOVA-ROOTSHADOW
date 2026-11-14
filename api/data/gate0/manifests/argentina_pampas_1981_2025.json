@@ -1,0 +1,132 @@
+{
+  "site": "argentina_pampas",
+  "latitude": -35.0,
+  "longitude": -61.0,
+  "period": "1981–2025",
+  "reference_period_for_science": "1991–2020 (applied separately in scientific analysis)",
+  "processed_csv": "data/gate0/processed/argentina_pampas_1981_2025.csv",
+  "processed_sha256": "279f7ca593feca9b3497b29c0ee430ee247ba09b9a1a61c6ffe6caf7ca694a1b",
+  "source_chunks": [
+    {
+      "path": "data/gate0/raw/argentina_pampas/argentina_pampas_19810101_19901231.json",
+      "sha256": "57ba10aad4277dd786d0da798b1a2fea3c363663b1dea82bf6ef62e7ee63273a",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-61.00000&latitude=-35.00000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:28.421628+00:00",
+      "date_start": "19810101",
+      "date_end": "19901231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/argentina_pampas/argentina_pampas_19910101_20001231.json",
+      "sha256": "be14ee58bc93b2d071c4d7d321b869e098f2f594f02f0d1b028a9b9cdf0e44cf",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-61.00000&latitude=-35.00000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:29.285501+00:00",
+      "date_start": "19910101",
+      "date_end": "20001231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/argentina_pampas/argentina_pampas_20010101_20101231.json",
+      "sha256": "57d7b3c6242aa1118e8b9362713f5829795af6ec7366c910329f79230c363ce7",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-61.00000&latitude=-35.00000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:29.947206+00:00",
+      "date_start": "20010101",
+      "date_end": "20101231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/argentina_pampas/argentina_pampas_20110101_20201231.json",
+      "sha256": "f37db9a93d5e31810d0da9752ad8a0f494cd735b0407db94b181e90aeb54b7ae",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-61.00000&latitude=-35.00000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:30.437981+00:00",
+      "date_start": "20110101",
+      "date_end": "20201231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/argentina_pampas/argentina_pampas_20210101_20251231.json",
+      "sha256": "a39aff68c9a4de5b25ee42be3076f5681171350c3e04a2fe32bfc776e211ac3e",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-61.00000&latitude=-35.00000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:30.962887+00:00",
+      "date_start": "20210101",
+      "date_end": "20251231",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    }
+  ],
+  "scientific_status": "RAW DATA INGESTED; NO DROUGHT-RECOVERY FINDING VERIFIED"
+}

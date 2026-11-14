@@ -1,0 +1,132 @@
+{
+  "site": "southern_africa",
+  "latitude": -27.0,
+  "longitude": 25.0,
+  "period": "1981–2025",
+  "reference_period_for_science": "1991–2020 (applied separately in scientific analysis)",
+  "processed_csv": "data/gate0/processed/southern_africa_1981_2025.csv",
+  "processed_sha256": "cd7298a8d1103f5f091846807f5e3966c8d082492ec7ac9e7b14fd33a252ad09",
+  "source_chunks": [
+    {
+      "path": "data/gate0/raw/southern_africa/southern_africa_19810101_19901231.json",
+      "sha256": "67b7f536745245de2c74c342b0aec85389dfbc4d769b15cb5c4edf73bdc36cda",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=25.00000&latitude=-27.00000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:32.648108+00:00",
+      "date_start": "19810101",
+      "date_end": "19901231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/southern_africa/southern_africa_19910101_20001231.json",
+      "sha256": "065673c58467bfe3814b0024a516fc101c088531c6cbf2cdc792af29e75f30a5",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=25.00000&latitude=-27.00000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:33.523792+00:00",
+      "date_start": "19910101",
+      "date_end": "20001231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/southern_africa/southern_africa_20010101_20101231.json",
+      "sha256": "989ebc2b605e2c986bdb64a0ca1a7f71516e23743134e6c3ed2ceef7ed828845",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=25.00000&latitude=-27.00000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:34.012607+00:00",
+      "date_start": "20010101",
+      "date_end": "20101231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/southern_africa/southern_africa_20110101_20201231.json",
+      "sha256": "736f4a9780ddc3570574e6edf472f44e599f179384269fe264a469ff5a1c7a37",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=25.00000&latitude=-27.00000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:34.733546+00:00",
+      "date_start": "20110101",
+      "date_end": "20201231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/southern_africa/southern_africa_20210101_20251231.json",
+      "sha256": "127326aa78a2d2338ddec19f0936fdaeb22196158df4e64de3a776c3468193d3",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=25.00000&latitude=-27.00000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T15:39:35.337447+00:00",
+      "date_start": "20210101",
+      "date_end": "20251231",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    }
+  ],
+  "scientific_status": "RAW DATA INGESTED; NO DROUGHT-RECOVERY FINDING VERIFIED"
+}
