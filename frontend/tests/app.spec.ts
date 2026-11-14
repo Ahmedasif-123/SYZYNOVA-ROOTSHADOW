@@ -291,3 +291,49 @@ test("Middle East NASA locations load authentic 45-year model analysis without c
   expect(published.period.days).toBe(16436);
   expect(published.ready_for_scientific_claims).toBe(false);
 });
+
+
+test("five map categories show verified NASA point data without manufacturing a continuous raster", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".earth-stage")).toBeVisible();
+  await page.getByRole("button", { name: "Surface", exact: true }).click();
+  const surface = page.getByRole("region", { name: "Surface Moisture model-point map" });
+  await expect(surface).toBeVisible();
+  await expect(surface.locator(".moisture-atlas-count")).toContainText("97 / 97 readings");
+  await expect(surface).toContainText("97 sampled MERRA-2 grid points, not a continuous global raster");
+  await expect(surface).toContainText("2026-11-12");
+  await page.getByRole("button", { name: "Roots", exact: true }).click();
+  await expect(page.getByRole("region", { name: "Root-Zone Moisture model-point map" })).toBeVisible();
+  await page.getByRole("button", { name: "Mismatch", exact: true }).click();
+  const mismatch = page.getByRole("region", { name: "Surface–Root Mismatch model-point map" });
+  await expect(mismatch).toBeVisible();
+  await expect(mismatch.locator(".moisture-atlas-count")).toContainText("screen-positive");
+  await page.getByRole("button", { name: "Historical 1981–2025" }).click();
+  await expect(mismatch.getByText("Historical month:")).toBeVisible();
+  const scrub = mismatch.getByRole("slider");
+  await scrub.fill("0");
+  await expect(mismatch).toContainText("1981-01");
+  await scrub.fill("539");
+  await expect(mismatch).toContainText("2025-12");
+  await mismatch.getByRole("combobox", { name: "Filter moisture map by region" }).selectOption("Middle East");
+  await expect(mismatch.getByRole("button", { name: /Inspect Doha on Surface–Root Mismatch/i })).toBeVisible();
+  await mismatch.getByRole("button", { name: /Inspect Doha on Surface–Root Mismatch/i }).click();
+  await expect(mismatch).toContainText("Doha · Qatar");
+  await page.getByRole("button", { name: "Map", exact: true }).click();
+  await expect(page.locator(".geo-explorer")).toBeVisible();
+  await page.getByRole("button", { name: "Earth", exact: true }).click();
+  await expect(page.locator(".earth-stage")).toBeVisible();
+});
+
+test("five geographic modes remain selectable inside the guided research workspace", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  const modes = page.getByRole("group", { name: "Map viewing mode" });
+  for (const name of ["World map", "3D Earth", "Surface moisture", "Root-zone moisture", "Layer mismatch"]) {
+    await expect(modes.getByRole("button", { name, exact: true })).toBeVisible();
+  }
+  await modes.getByRole("button", { name: "Surface moisture" }).click();
+  await expect(page.getByRole("region", { name: "Surface Moisture model-point map" })).toBeVisible();
+  await modes.getByRole("button", { name: "Layer mismatch" }).click();
+  await expect(page.getByRole("region", { name: "Surface–Root Mismatch model-point map" })).toBeVisible();
+});
