@@ -1,0 +1,31 @@
+name: Focused chart interaction regression
+on:
+  push:
+    branches: [moisture-atlas-daily-2026]
+    paths:
+      - '.github/workflows/chart-smoke.yml'
+      - 'frontend/src/components/ScientificCharts.tsx'
+      - 'frontend/src/components/SoilDepthExplorer.tsx'
+      - 'frontend/src/components/GuidedWorkspace.tsx'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, mobile-chromium]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --no-audit --no-fund
+        working-directory: frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - name: Verify original research workspace and new graph selection
+        run: npx playwright test --project=${{ matrix.browser }} -g 'verified Goodwell data|monthly depth explorer|monthly graph selection'
+        working-directory: frontend
