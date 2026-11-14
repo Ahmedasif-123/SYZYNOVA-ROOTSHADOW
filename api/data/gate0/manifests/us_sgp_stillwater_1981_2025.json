@@ -1,0 +1,132 @@
+{
+  "site": "us_sgp_stillwater",
+  "latitude": 36.118,
+  "longitude": -97.091,
+  "period": "1981–2025",
+  "reference_period_for_science": "1991–2020 (applied separately in scientific analysis)",
+  "processed_csv": "data/gate0/processed/us_sgp_stillwater_1981_2025.csv",
+  "processed_sha256": "4da7f98cec666cf820eebc5afdb9fabbee36de06b62172d89d09403ea540af9e",
+  "source_chunks": [
+    {
+      "path": "data/gate0/raw/us_sgp_stillwater/us_sgp_stillwater_19810101_19901231.json",
+      "sha256": "88997964f63b7064e16c95c53bf99823dec4be0ff3b574a37c86e4f87a52bad0",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-97.09100&latitude=36.11800&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:42:27.650282+00:00",
+      "date_start": "19810101",
+      "date_end": "19901231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/us_sgp_stillwater/us_sgp_stillwater_19910101_20001231.json",
+      "sha256": "b24564cbb3cc90c4cbf3dcc0bece6dc14a199d3fe35183edb1b97e3c57b1f101",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-97.09100&latitude=36.11800&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:42:29.968840+00:00",
+      "date_start": "19910101",
+      "date_end": "20001231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/us_sgp_stillwater/us_sgp_stillwater_20010101_20101231.json",
+      "sha256": "fb6e43c2fabf83e692f19cf6faa208ab09a54a92da556418e0915464cd706185",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-97.09100&latitude=36.11800&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:42:32.385788+00:00",
+      "date_start": "20010101",
+      "date_end": "20101231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/us_sgp_stillwater/us_sgp_stillwater_20110101_20201231.json",
+      "sha256": "2fbc429f2c3a13811cae36429503365cc6a064f98021151e37c299c5f9fd126f",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-97.09100&latitude=36.11800&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:42:34.638421+00:00",
+      "date_start": "20110101",
+      "date_end": "20201231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/us_sgp_stillwater/us_sgp_stillwater_20210101_20251231.json",
+      "sha256": "669708899baecf035c2d2038545bca121781d010b9441c07c9c9f72ef4a75eb6",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-97.09100&latitude=36.11800&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:42:36.695237+00:00",
+      "date_start": "20210101",
+      "date_end": "20251231",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    }
+  ],
+  "scientific_status": "RAW DATA INGESTED; NO DROUGHT-RECOVERY FINDING VERIFIED"
+}

@@ -1,0 +1,132 @@
+{
+  "site": "spain_cordoba",
+  "latitude": 37.888,
+  "longitude": -4.779,
+  "period": "1981–2025",
+  "reference_period_for_science": "1991–2020 (applied separately in scientific analysis)",
+  "processed_csv": "data/gate0/processed/spain_cordoba_1981_2025.csv",
+  "processed_sha256": "5b788b6063e12e0e0a1e12048e202f63efa4a19fe13826c1a521a25b1749144c",
+  "source_chunks": [
+    {
+      "path": "data/gate0/raw/spain_cordoba/spain_cordoba_19810101_19901231.json",
+      "sha256": "c9f7c8256fd73cd8392feb092a8cfe39a7c64a2223ec60171400cba9c877e913",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.77900&latitude=37.88800&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:56:06.967987+00:00",
+      "date_start": "19810101",
+      "date_end": "19901231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/spain_cordoba/spain_cordoba_19910101_20001231.json",
+      "sha256": "c6fdf7326044bc50eb2e27c2cead636118573a6bd1816371a4019855acb6b392",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.77900&latitude=37.88800&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:56:12.135534+00:00",
+      "date_start": "19910101",
+      "date_end": "20001231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/spain_cordoba/spain_cordoba_20010101_20101231.json",
+      "sha256": "c95c8cc6338d029905e682b0c10426f3c3ac14bec6f1355cdc4c47721316c946",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.77900&latitude=37.88800&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:56:13.550600+00:00",
+      "date_start": "20010101",
+      "date_end": "20101231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/spain_cordoba/spain_cordoba_20110101_20201231.json",
+      "sha256": "ee2d857c3f6af82cdcdeef14a2a89b878f0f043e8247610298a203739f7b62ca",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.77900&latitude=37.88800&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:56:16.098129+00:00",
+      "date_start": "20110101",
+      "date_end": "20201231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/spain_cordoba/spain_cordoba_20210101_20251231.json",
+      "sha256": "230d2461f99825244ed9ef66a35d92cbe0836402d19dd190b4481388c1094893",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.77900&latitude=37.88800&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:56:16.891762+00:00",
+      "date_start": "20210101",
+      "date_end": "20251231",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    }
+  ],
+  "scientific_status": "RAW DATA INGESTED; NO DROUGHT-RECOVERY FINDING VERIFIED"
+}

@@ -94,7 +94,7 @@ def test_chunk_windows_partition_range():
     assert all(b[0] == a[1] + pd.Timedelta(days=1) for a, b in zip(windows, windows[1:]))
 
 
-def test_request_has_no_30_year_cap_and_uses_hy_precip_name():
+def test_request_has_no_30_year_cap_and_uses_ag_precip_name():
     url = request_url(36, -97, "1981-01-01", "2025-12-31")
     assert "PRECTOT" in url and "PRECTOT%2C" not in url
     assert "PRECTOT" not in request_url(36, -97, "1981-01-01", "1990-12-31", include_precip=False)

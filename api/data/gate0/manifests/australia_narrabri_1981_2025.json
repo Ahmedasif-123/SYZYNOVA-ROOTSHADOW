@@ -1,0 +1,132 @@
+{
+  "site": "australia_narrabri",
+  "latitude": -30.325,
+  "longitude": 149.783,
+  "period": "1981–2025",
+  "reference_period_for_science": "1991–2020 (applied separately in scientific analysis)",
+  "processed_csv": "data/gate0/processed/australia_narrabri_1981_2025.csv",
+  "processed_sha256": "70716a8b92d47c17214f636e631a0439ed8b171164c29c70cc00b6d4ab0118f0",
+  "source_chunks": [
+    {
+      "path": "data/gate0/raw/australia_narrabri/australia_narrabri_19810101_19901231.json",
+      "sha256": "78122cdf597d7d8f60dbeeed5f5b112e61b88c5273fec173afb7d620bdac87ea",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=149.78300&latitude=-30.32500&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:55:55.432645+00:00",
+      "date_start": "19810101",
+      "date_end": "19901231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/australia_narrabri/australia_narrabri_19910101_20001231.json",
+      "sha256": "36c10a5b90167bba0793a41c1e732dbfaf174917586ffe65f712edd024bca0bc",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=149.78300&latitude=-30.32500&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:55:57.709029+00:00",
+      "date_start": "19910101",
+      "date_end": "20001231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/australia_narrabri/australia_narrabri_20010101_20101231.json",
+      "sha256": "2da28c0e925772f273e7d0c1b4f040ba562f718d0f467a64fd5bd267ccbb9d5b",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=149.78300&latitude=-30.32500&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:56:00.185728+00:00",
+      "date_start": "20010101",
+      "date_end": "20101231",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/australia_narrabri/australia_narrabri_20110101_20201231.json",
+      "sha256": "7f2e539248141905076d5df4a9d5fcabd477ed90661c03948d8ca3f8e275ab78",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=149.78300&latitude=-30.32500&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:56:01.783750+00:00",
+      "date_start": "20110101",
+      "date_end": "20201231",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    },
+    {
+      "path": "data/gate0/raw/australia_narrabri/australia_narrabri_20210101_20251231.json",
+      "sha256": "a0181b17c0a835022f7a18f00d0752d23d9078284fa7bfe525adfa1d23792620",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=149.78300&latitude=-30.32500&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T09:56:03.254212+00:00",
+      "date_start": "20210101",
+      "date_end": "20251231",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826,
+      "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+      "community": "AG",
+      "source_variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOTCORR",
+        "T2M"
+      ],
+      "variables": [
+        "GWETTOP",
+        "GWETROOT",
+        "PRECTOT",
+        "T2M"
+      ]
+    }
+  ],
+  "scientific_status": "RAW DATA INGESTED; NO DROUGHT-RECOVERY FINDING VERIFIED"
+}

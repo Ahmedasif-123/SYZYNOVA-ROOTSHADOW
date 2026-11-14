@@ -24,7 +24,8 @@ def test_cache_integrity_rejects_altered_data(tmp_path):
 def test_url_is_pinned_to_nasa_and_encoded():
     url = request_url(25.3, 51.5, "2014-01-01", "2024-12-31")
     assert url.startswith("https://power.larc.nasa.gov/api/temporal/daily/point?")
-    assert "community=HY" in url
+    assert "community=AG" in url
+    assert "PRECTOTCORR" in url
     assert "GWETTOP" in url
 
 

@@ -12,10 +12,16 @@ import pandas as pd
 import requests
 
 API_URL = "https://power.larc.nasa.gov/api/temporal/daily/point"
-CORE_PARAMETERS = ("GWETTOP", "GWETROOT", "GWETPROF", "T2M")
-# NASA POWER Hydrology daily catalog lists PRECTOT. Precipitation is optional contextual data.
+CORE_PARAMETERS = ("GWETTOP", "GWETROOT")
+OPTIONAL_PARAMETERS = ("GWETPROF", "T2M")
 PRECIP_PARAMETER = "PRECTOT"
-PARAMETERS = CORE_PARAMETERS + (PRECIP_PARAMETER,)
+PARAMETERS = CORE_PARAMETERS + OPTIONAL_PARAMETERS + (PRECIP_PARAMETER,)
+PROFILES = (
+    ("AG", ("GWETTOP", "GWETROOT", "PRECTOTCORR", "T2M")),
+    ("AG", ("GWETTOP", "GWETROOT")),
+    ("HY", ("GWETTOP", "GWETROOT", "PRECTOT", "T2M")),
+    ("HY", ("GWETTOP", "GWETROOT")),
+)
 CHUNK_YEARS = 10
 MISSING = {-999, -999.0, -9999, -9999.0}
 
@@ -44,11 +50,15 @@ def validate_request(latitude, longitude, start, end, enforce_minimum=True):
     return latitude, longitude, first, last
 
 
-def request_url(latitude, longitude, start, end, include_precip=True, enforce_minimum=True):
+def request_url(latitude, longitude, start, end, include_precip=True, enforce_minimum=True, community="AG", variables=None):
     latitude, longitude, first, last = validate_request(latitude, longitude, start, end, enforce_minimum)
+    if variables is None:
+        variables = PROFILES[0][1] if include_precip else CORE_PARAMETERS
+    if community not in {"AG", "HY"}:
+        raise ValueError("Unknown NASA POWER community")
     query = {
-        "parameters": ",".join(PARAMETERS if include_precip else CORE_PARAMETERS),
-        "community": "HY",
+        "parameters": ",".join(variables),
+        "community": community,
         "longitude": f"{longitude:.5f}",
         "latitude": f"{latitude:.5f}",
         "start": first.strftime("%Y%m%d"),
@@ -104,19 +114,25 @@ def chunk_windows(first, last, years=CHUNK_YEARS):
         cursor = stop + pd.Timedelta(days=1)
 
 
+def _nasa_error(response):
+    try:
+        detail = response.json()
+    except (ValueError, TypeError):
+        detail = getattr(response, "text", "")
+    return json.dumps(detail, ensure_ascii=False)[:700] if isinstance(detail, (dict, list)) else str(detail)[:700]
+
+
 def _fetch_chunk(latitude, longitude, first, last, cache_dir, session):
     errors = []
     started = time.monotonic()
-    for include_precip in (True, False):
-        url = request_url(latitude, longitude, first, last, include_precip=include_precip, enforce_minimum=False)
+    for community, variables in PROFILES:
+        url = request_url(latitude, longitude, first, last, enforce_minimum=False, community=community, variables=variables)
         raw_path, manifest_path = _cache_paths(url, cache_dir)
-        rejected = False
         for attempt in range(2):
             try:
-                response = session.get(url, timeout=(5, 40), headers={"Accept": "application/json", "User-Agent": "ROOTSHADOW-SpaceApps-Doha/0.2"})
-                if 400 <= response.status_code < 500 and include_precip:
-                    rejected = True  # e.g. an unknown parameter name: retry once without precipitation
-                    errors.append(f"HTTP {response.status_code} with precipitation parameter")
+                response = session.get(url, timeout=(5, 40), headers={"Accept": "application/json", "User-Agent": "ROOTSHADOW-SpaceApps-Doha/0.3"})
+                if response.status_code in (400, 422):
+                    errors.append(f"{community}/{','.join(variables)}: HTTP {response.status_code}: {_nasa_error(response)}")
                     break
                 response.raise_for_status()
                 if "json" not in response.headers.get("content-type", "").lower():
@@ -124,24 +140,21 @@ def _fetch_chunk(latitude, longitude, first, last, cache_dir, session):
                 payload = response.json()
                 validate_nasa_payload(payload)
                 metadata = _write_cache(response.content, url, raw_path, manifest_path)
-                metadata.update({"mode": "live_nasa", "precipitation_included": include_precip})
+                metadata.update({"mode": "live_nasa", "community": community, "requested_parameters": list(variables)})
                 return payload, metadata, round((time.monotonic() - started) * 1000), errors
             except (requests.RequestException, OSError, ValueError, KeyError, DataUnavailable) as exc:
-                errors.append(str(exc)[:240])
+                errors.append(f"{community}/{','.join(variables)}: {str(exc)[:350]}")
                 if attempt == 0:
-                    time.sleep(0.35)
-        if not rejected:
-            break
-    # network path failed: fall back to a checksum-verified snapshot of this exact request, if one exists
-    for include_precip in (True, False):
-        url = request_url(latitude, longitude, first, last, include_precip=include_precip, enforce_minimum=False)
+                    time.sleep(0.25)
+    for community, variables in PROFILES:
+        url = request_url(latitude, longitude, first, last, enforce_minimum=False, community=community, variables=variables)
         raw_path, manifest_path = _cache_paths(url, cache_dir)
         if raw_path.exists() and manifest_path.exists():
             payload, metadata = verify_cache(raw_path, manifest_path)
             validate_nasa_payload(payload)
-            metadata.update({"mode": "verified_cached_nasa", "precipitation_included": include_precip})
+            metadata.update({"mode": "verified_cached_nasa", "community": community, "requested_parameters": list(variables)})
             return payload, metadata, round((time.monotonic() - started) * 1000), errors
-    raise DataUnavailable("NASA observations are unavailable and no verified cached copy exists: " + "; ".join(errors))
+    raise DataUnavailable("NASA observations unavailable, no verified cache: " + "; ".join(errors))
 
 
 def obtain_nasa(latitude, longitude, start, end, cache_dir=None, session=None):
@@ -181,18 +194,20 @@ def validate_nasa_payload(payload):
     missing = [name for name in CORE_PARAMETERS if name not in container or not isinstance(container[name], dict)]
     if missing:
         raise DataUnavailable("The NASA response lacks required parameter series: " + ", ".join(missing))
-    if not container["GWETTOP"]:
-        raise DataUnavailable("The NASA response has no observations")
+    if not container["GWETTOP"] or not container["GWETROOT"]:
+        raise DataUnavailable("The NASA response has no paired soil-wetness series")
     return container
 
 
 def parse_nasa(payload):
     values = validate_nasa_payload(payload)
+    if "PRECTOT" not in values and "PRECTOTCORR" in values:
+        values = {**values, "PRECTOT": values["PRECTOTCORR"]}
     dates = pd.to_datetime(list(values["GWETTOP"].keys()), format="%Y%m%d", errors="raise")
     ordered = pd.DatetimeIndex(dates).sort_values()
     ordered = pd.date_range(ordered.min(), ordered.max(), freq="D")
     frame = pd.DataFrame(index=ordered)
-    for key in CORE_PARAMETERS + (PRECIP_PARAMETER,):
+    for key in PARAMETERS:
         if key not in values:
             frame["PRECIP" if key == PRECIP_PARAMETER else key] = np.nan
             continue
@@ -261,8 +276,9 @@ def list_sites(data_dirs=None):
         for manifest in sorted((base / "manifests").glob("*.json")) if (base / "manifests").exists() else []:
             record = json.loads(manifest.read_text(encoding="utf-8"))
             csv_path = base / "processed" / Path(record["processed_csv"]).name
-            if csv_path.exists():
-                found.setdefault(record["site"], (csv_path, record))
+            packed = csv_path.with_suffix(".csv.gz")
+            if csv_path.exists() or packed.exists():
+                found.setdefault(record["site"], (csv_path if csv_path.exists() else packed, record))
     return found
 
 
@@ -272,9 +288,16 @@ def load_site(site, data_dirs=None):
     if site not in sites:
         raise DataUnavailable(f"No prefetched NASA snapshot for site '{site}'. Run scripts/gate0_fetch.py first.")
     csv_path, record = sites[site]
-    if hashlib.sha256(csv_path.read_bytes()).hexdigest() != record["processed_sha256"]:
+    if csv_path.suffix == ".gz":
+        import gzip
+        from io import BytesIO
+        original = gzip.decompress(csv_path.read_bytes())
+    else:
+        original = csv_path.read_bytes()
+    if hashlib.sha256(original).hexdigest() != record["processed_sha256"]:
         raise IntegrityError("Prefetched CSV does not match its manifest digest")
-    frame = pd.read_csv(csv_path, parse_dates=["date"]).set_index("date").sort_index().asfreq("D")
+    from io import BytesIO
+    frame = pd.read_csv(BytesIO(original), parse_dates=["date"]).set_index("date").sort_index().asfreq("D")
     if "PRECTOT" in frame:
         frame = frame.rename(columns={"PRECTOT": "PRECIP"})
     elif "PRECTOTCORR" in frame:
