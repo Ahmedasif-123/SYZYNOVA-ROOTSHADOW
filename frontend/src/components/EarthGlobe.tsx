@@ -364,7 +364,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
       </div>
       <div className="earth-left-rail">
         <div className="earth-rail-title"><span className="earth-live-indicator" /> {textureUnavailable ? "EARTH TEXTURE UNAVAILABLE" : textureLoaded ? "BLUE MARBLE REFERENCE READY" : "LOADING EARTH IMAGERY"}</div>
-        <div className="earth-rail-selected"><small>SELECTED REGION</small><strong>{active.name}</strong><span>{active.region} / {active.country}</span></div>
+        <div className="earth-rail-selected"><small>{active.name.toUpperCase()} · {active.country.toUpperCase()}</small><strong>{active.name}</strong><span>{active.region} / {active.country}</span></div>
         <div className="earth-rail-coordinates">
           <span>{Math.abs(active.coordinates[1]).toFixed(3)}°{active.coordinates[1] >= 0 ? "N" : "S"}</span>
           <span>{Math.abs(active.coordinates[0]).toFixed(3)}°{active.coordinates[0] >= 0 ? "E" : "W"}</span>
