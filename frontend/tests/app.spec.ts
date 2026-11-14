@@ -248,10 +248,10 @@ test("graph guidance follows historical monthly data and explains interpretation
   await expect(page.getByText(/Nine versions of the analysis/)).toBeVisible();
 });
 
-test("six-location selection, concise takeaway and event filters work", async ({ page }) => {
+test("97-location selection, concise takeaway and event filters work", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Start investigating" }).click();
-  await expect(page.locator("#site-select option")).toHaveCount(6);
+  await expect(page.locator("#site-select option")).toHaveCount(97);
   await page.getByRole("button", { name: /The takeaway/i }).click();
   await expect(page.getByRole("region", { name: "Results at a glance" })).toContainText("Surface recovery doesn't always mean deeper recovery");
   await expect(page.locator(".guided-evidence-panel")).not.toBeVisible();
@@ -262,4 +262,32 @@ test("six-location selection, concise takeaway and event filters work", async ({
   expect(await page.locator(".guided-event-table tbody tr").count()).toBeLessThanOrEqual(12);
   await page.locator("#site-select").selectOption("argentina_pampas");
   await expect(page.locator(".guided-large-number")).toContainText("11");
+});
+
+test("Middle East NASA locations load authentic 45-year model analysis without changing the original six", async ({ page }) => {
+  const doha = JSON.parse(readFileSync(new URL("../public/site-results/qatar_doha.json", import.meta.url), "utf8"));
+  const riyadh = JSON.parse(readFileSync(new URL("../public/site-results/saudi_riyadh.json", import.meta.url), "utf8"));
+  await page.route("**/api/analyze?**", async route => {
+    const id = new URL(route.request().url()).searchParams.get("site");
+    const data = id === "qatar_doha" ? doha : id === "saudi_riyadh" ? riyadh : null;
+    if (data) {
+      await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(data) });
+    } else {
+      await route.fallback();
+    }
+  });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  await page.locator("#site-select").selectOption("qatar_doha");
+  await expect(page.locator(".guided-finding h2")).toContainText("Doha");
+  await expect(page.locator(".metric-value").first()).toHaveText(String(doha.events.length));
+  await expect(page.locator(".guided-large-number")).toContainText(String(doha.events.filter((event: { status: string }) => event.status === "COMPLETE_SURFACE_FIRST").length));
+  await page.locator("#site-select").selectOption("saudi_riyadh");
+  await expect(page.locator(".guided-finding h2")).toContainText("Riyadh");
+  await expect(page.locator(".metric-value").first()).toHaveText(String(riyadh.events.length));
+  const response = await page.request.get("/site-results/qatar_doha.json");
+  expect(response.ok()).toBeTruthy();
+  const published = await response.json();
+  expect(published.period.days).toBe(16436);
+  expect(published.ready_for_scientific_claims).toBe(false);
 });

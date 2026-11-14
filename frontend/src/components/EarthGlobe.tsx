@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { ArrowUpRight, Compass, Globe2, RotateCcw, ScanLine, ZoomIn, ZoomOut } from "lucide-react";
-import { sites, type SiteId } from "../lib/sites";
+import { isCoreSite, productSites, researchSites, siteRegions, sites, type SiteId } from "../lib/sites";
 
 type Props = {
   selected: SiteId;
@@ -348,7 +348,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
         {status !== "fallback" && sites.map(site => (
           <button
             key={site.id}
-            className={`earth-site-pin ${selected === site.id ? "earth-pin-active" : ""}`}
+            className={`earth-site-pin ${selected === site.id ? "earth-pin-active" : ""} ${isCoreSite(site.id) ? "earth-core-pin" : ""}`}
             ref={node => { pins.current[site.id] = node; }}
             onClick={() => { focusSite.current(site.id); onSelectRef.current(site.id); }}
             aria-label={`Focus ${site.name}, ${site.country}`}
@@ -378,15 +378,22 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
       </div>
       <div className="earth-stage-bottom">
         <span><Globe2 size={14} /> DRAG TO ROTATE / SCROLL TO ZOOM</span>
-        <span>{String(sites.length).padStart(2, "0")} RESEARCH LOCATIONS <ArrowUpRight size={13} /></span>
+        <span>{String(sites.length).padStart(2, "0")} MODEL LOCATIONS <ArrowUpRight size={13} /></span>
       </div>
       <div className="earth-location-strip" role="group" aria-label="Research study locations">
-        {sites.map(site => (
+        {researchSites.map(site => (
           <button type="button" key={site.id} className={selected === site.id ? "earth-location-active" : ""} onClick={() => { focusSite.current(site.id); onSelectRef.current(site.id); }}>
             <small>{site.index}</small>
             <span>{site.name}</span>
           </button>
         ))}
+        <select aria-label="Choose another global study location" value={isCoreSite(selected) ? "" : selected} onChange={event => {
+          const id = event.target.value as SiteId;
+          if (id) { focusSite.current(id); onSelectRef.current(id); }
+        }}>
+          <option value="">91 more locations</option>
+          {siteRegions.map(region => <optgroup key={region} label={region}>{productSites.filter(site => site.region === region).map(site => <option key={site.id} value={site.id}>{site.name} · {site.country}</option>)}</optgroup>)}
+        </select>
       </div>
     </div>
   );

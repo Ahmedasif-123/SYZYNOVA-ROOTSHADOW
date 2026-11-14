@@ -740,3 +740,18 @@ main { max-width: none; }
   .depth-timeline-controls { flex-wrap:wrap; gap:6px; }
   .depth-timeline-controls .depth-reset { margin-left:0; }
 }
+
+.world-map-marker.is-product:not(.selected):not(:hover):not(:focus-visible) .world-map-label { opacity: 0; }
+.map-site-list { max-height: calc(100% - 110px); overflow-y: auto; overscroll-behavior: contain; }
+.map-filter-controls { display: grid; gap: 5px; padding: 9px 10px; background: rgba(7,24,32,.96); border-bottom: 1px solid rgba(129,171,181,.24); }
+.map-filter-controls input,.map-filter-controls select { width: 100%; min-width: 0; border: 1px solid #35515a; border-radius: 5px; background: #0a2633; color: #e5f3f1; padding: 8px; font: 500 11px "IBM Plex Mono",monospace; }
+.map-filter-controls input::placeholder { color: #a5b8c2; }
+.earth-site-pin:not(.earth-pin-active):not(.earth-core-pin):not(:hover):not(:focus-visible) .earth-pin-label { display:none; }
+.earth-location-strip select { width:100%; min-width:0; border:0; border-radius:0; background:#102c39; color:#f0ddba; font:600 10px "IBM Plex Mono",monospace; padding:12px 8px; text-align:center; cursor:pointer; }
+.earth-location-strip select:focus-visible { outline:2px solid #c5e0df; outline-offset:-2px; }
+@media(max-width:730px) {
+  .map-site-list { max-height: calc(100% - 94px); }
+  .map-filter-controls { padding:6px; }
+  .map-filter-controls input,.map-filter-controls select { padding:6px; font-size:9px; }
+  .earth-location-strip select { padding:8px 2px; font-size:9px; }
+}

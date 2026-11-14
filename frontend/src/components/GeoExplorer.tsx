@@ -1,6 +1,6 @@
 import { useRef, useState, type PointerEvent } from "react";
 import { LocateFixed, ZoomIn, ZoomOut } from "lucide-react";
-import { sites, type SiteId, type Site } from "../lib/sites";
+import { findSite, isCoreSite, researchSites, siteRegions, sites, type SiteId, type Site } from "../lib/sites";
 
 type Props = { selected: SiteId; onSelect: (id: SiteId) => void; variant?: "light" | "dark" };
 type WindowBox = { x: number; y: number; width: number; height: number };
@@ -32,9 +32,18 @@ function focusWindow(site: Site, zoom: number): WindowBox {
 export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Props) {
   const [view, setView] = useState<WindowBox>(fullWorld);
   const [zoom, setZoom] = useState(1);
+  const [region, setRegion] = useState("research");
+  const [search, setSearch] = useState("");
   const drag = useRef<{ x: number; y: number; initial: WindowBox } | null>(null);
   const selectedSite = sites.find(site => site.id === selected) ?? sites[0];
   const viewBox = [view.x, view.y, view.width, view.height].join(" ");
+  const query = search.trim().toLowerCase();
+  const filteredSites = sites.filter(site => {
+    const matchesRegion = region === "all" || (region === "research" ? isCoreSite(site.id) : site.region === region);
+    const matchesText = !query || [site.name, site.country, site.region].some(value => value.toLowerCase().includes(query));
+    return matchesRegion && matchesText;
+  });
+  const listedSites = !query && !filteredSites.some(site => site.id === selected) ? [findSite(selected), ...filteredSites] : filteredSites;
 
   function focus(id: SiteId) {
     const site = sites.find(item => item.id === id) ?? sites[0];
@@ -92,14 +101,14 @@ export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Pr
         onPointerUp={pointerUp}
         onPointerCancel={pointerUp}
       >
-        <title>World map with six historical NASA POWER research locations</title>
+        <title>World map with 97 selected historical NASA POWER model locations</title>
         <image href={variant === "light" ? `${import.meta.env.BASE_URL}world-map-light.svg` : `${import.meta.env.BASE_URL}world-map.svg`} x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
         {sites.map(site => {
           const point = sitePoint(site);
           const active = selected === site.id;
           return <g
             key={site.id}
-            className={["world-map-marker", active ? "selected" : ""].join(" ")}
+            className={["world-map-marker", active ? "selected" : "", isCoreSite(site.id) ? "is-core" : "is-product"].join(" ")}
             role="button"
             tabIndex={0}
             aria-label={"Focus " + site.name + ", " + site.country}
@@ -130,8 +139,16 @@ export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Pr
       <button type="button" onClick={reset} aria-label="Show full world map"><LocateFixed size={17} /></button>
     </div>
     <div className="map-site-list">
-      <div className="map-list-heading">CHOOSE RESEARCH LOCATION <span>{String(sites.length).padStart(2, "0")} SITES</span></div>
-      {sites.map(site => <button
+      <div className="map-list-heading">CHOOSE STUDY LOCATION <span>{String(sites.length).padStart(2, "0")} SITES</span></div>
+      <div className="map-filter-controls">
+        <input type="search" value={search} placeholder="Search 97 locations" aria-label="Search study locations" onChange={event => setSearch(event.target.value)} />
+        <select aria-label="Filter study locations by region" value={region} onChange={event => setRegion(event.target.value)}>
+          <option value="research">Original six</option>
+          <option value="all">All locations</option>
+          {siteRegions.map(item => <option key={item} value={item}>{item}</option>)}
+        </select>
+      </div>
+      {listedSites.map(site => <button
         key={site.id}
         type="button"
         className={["map-site", selected === site.id ? "selected" : ""].join(" ")}

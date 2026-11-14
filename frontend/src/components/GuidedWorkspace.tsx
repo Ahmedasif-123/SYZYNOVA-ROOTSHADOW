@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, ArrowUpRight, ChevronDown, Download, ExternalLink, Globe2, MapPinned, Microscope, RefreshCcw, ShieldCheck } from "lucide-react";
 import { getAnalysis, formatLag, medianPositiveLag, verdictLabel, type Analysis, type RecoveryEvent } from "../lib/api";
-import { findSite, siteCoordinates, sites, type SiteId } from "../lib/sites";
+import { findSite, productSites, researchSites, siteCoordinates, siteRegions, sites, type SiteId } from "../lib/sites";
 import { EventInspector } from "./EventInspector";
 import EvidencePanel from "./EvidencePanel";
 import ResearchConclusion from "./ResearchConclusion";
@@ -97,14 +97,14 @@ export default function GuidedWorkspace({ selected, onSelect }: { selected: Site
   return <div className="guided-workspace">
     <header className="guided-page-head">
       <div><span className="guided-overline">EXPLORE THE LAND</span><h1>What happens beneath the surface?</h1><p>Choose a place. See the result. Explore its soil history.</p></div>
-      <label className="guided-location-picker" htmlFor="site-select"><span>STUDY LOCATION</span><div><MapPinned size={17} /><select id="site-select" value={selected} onChange={e => onSelect(e.target.value as SiteId)}>{sites.map(site => <option value={site.id} key={site.id}>{site.name} · {site.country}</option>)}</select><ChevronDown size={16} /></div></label>
+      <label className="guided-location-picker" htmlFor="site-select"><span>STUDY LOCATION</span><div><MapPinned size={17} /><select id="site-select" value={selected} onChange={e => onSelect(e.target.value as SiteId)}><optgroup label="Original six research sites">{researchSites.map(site => <option value={site.id} key={site.id}>{site.name} · {site.country}</option>)}</optgroup>{siteRegions.map(region => <optgroup key={region} label={region}>{productSites.filter(site => site.region === region).map(site => <option value={site.id} key={site.id}>{site.name} · {site.country}</option>)}</optgroup>)}</select><ChevronDown size={16} /></div></label>
     </header>
 
     <div className="guided-overview">
       <section className="guided-map-panel" aria-label="Choose a study location on the world map">
         <div className="guided-map-top"><div><span className="guided-overline">01 / FIND A PLACE</span><h2>Explore the study locations</h2></div><div className="guided-map-mode" role="group" aria-label="Map viewing mode"><button type="button" aria-pressed={mapMode === "atlas"} className={mapMode === "atlas" ? "active" : ""} onClick={() => setMapMode("atlas")}>World map</button><button type="button" aria-pressed={mapMode === "globe"} className={mapMode === "globe" ? "active" : ""} onClick={() => setMapMode("globe")}>3D Earth</button></div></div>
         <Suspense fallback={<div className="guided-map-loader" role="status">Loading the geographic explorer…</div>}>{mapMode === "atlas" ? <GeoExplorer selected={selected} onSelect={onSelect} variant="light" /> : <EarthGlobe selected={selected} onSelect={onSelect} />}</Suspense>
-        <div className="guided-map-footer"><span><Globe2 size={15} /> Select a marked research point to see its history.</span><span>{sites.length} verified research points · Not field boundaries</span></div>
+        <div className="guided-map-footer"><span><Globe2 size={15} /> Select a marked research point to see its history.</span><span>{sites.length} verified model points · 6 original research sites · Not field boundaries</span></div>
       </section>
       <aside className="guided-finding" aria-live="polite" aria-label="Selected location research finding">
         <span className="guided-overline">02 / THE FINDING</span>
@@ -170,6 +170,6 @@ export default function GuidedWorkspace({ selected, onSelect }: { selected: Site
       </section>}
     </div>
 
-    <footer className="guided-footer"><div><span className="guided-overline">DATA & LIMITATIONS</span><p>Historical NASA POWER / MERRA-2 gridded wetness, not a field sensor. This six-location prototype cannot diagnose the moisture of an individual farm or prescribe irrigation. Findings require independent validation.</p><a href="https://power.larc.nasa.gov/" target="_blank" rel="noreferrer">NASA POWER source <ExternalLink size={14} /></a></div>{analysis && <EvidenceDownload site={location.name} analysis={analysis} />}</footer>
+    <footer className="guided-footer"><div><span className="guided-overline">DATA & LIMITATIONS</span><p>Historical NASA POWER / MERRA-2 gridded wetness, not a field sensor. These 97 selected historical model points cannot diagnose the moisture of an individual farm or prescribe irrigation. Findings require independent validation.</p><a href="https://power.larc.nasa.gov/" target="_blank" rel="noreferrer">NASA POWER source <ExternalLink size={14} /></a></div>{analysis && <EvidenceDownload site={location.name} analysis={analysis} />}</footer>
   </div>;
 }
