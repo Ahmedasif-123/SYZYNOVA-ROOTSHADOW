@@ -1,24 +1,23 @@
 # ROOTSHADOW validation register
 
-As of 14 November 2026, the local project has a reproducible synthetic demonstration, a Gate 0 NASA POWER acquisition script, and an exploratory Gate 1 screening module. The test suite passes 36 of 36 local automated tests in the received Claude archive. These are software tests, not proof of a real drought event. The following statements are deliberately separate.
+**Updated 14 November 2026.** Separate software test status, authentic data acquisition, and scientific inference.
 
-| Item | Status | Evidence |
+| Item | Current status | Evidence |
 |---|---|---|
-| Fixed-baseline same-threshold recovery lag in API | Implemented, tested on synthetic and noise series | `api/rootshadow/recovery.py`, `tests/test_engine.py`, `tests/test_gate1.py` |
-| Autocorrelation-corrected trend (Hamed–Rao) | Implemented; reduces but does not remove false positives at n=45 | `api/rootshadow/trend.py`; test compares with naive MK |
-| Normal-lag surrogate null | Implemented as linear-Gaussian descriptive calibration, not a proof | `api/rootshadow/null_model.py` |
-| Evidence Auditor / 9-setting sensitivity | Implemented; thresholds are proposals | `api/rootshadow/analysis.py` |
-| Scientific anomaly findings | Not yet validated | A live/prefetched NASA run and independent review are required |
-| NASA API integration | Implemented (PRECTOT (HY) with no-precipitation fallback, 10-year chunks); not live-tested in the authoring environment | `api/rootshadow/data.py` |
-| SMAP / GLDAS / NOAA station / MODIS corroboration | Not implemented in the app (GEE extraction script exists) | `scripts/extract_gee_corroboration.py` |
-| SHA-256 integrity control | Implemented and tested | `tests/test_data.py`, `tests/test_engine.py` |
-| Azure deployment files | Prepared, not deployed | `api/`, `.github/workflows/azure-static-web-apps.yml` |
-| Submission readiness | In progress | Case-study validation, cloud deployment and presentation evidence remain open |
+| Python/API/UI integration | Local software tests passed (41/41 before data acquisition); cloud deployment not verified | `tests/`, `.github/workflows/tests.yml` |
+| NASA POWER acquisition | **Verified on four sites** from 1981–2025; `community=AG` accepted after `HY` returned HTTP 422 | 20 raw NASA responses, 4 manifests and CSVs, reviewed source ZIP |
+| Source integrity | 20/20 raw JSON SHA-256 hashes passed, 4/4 processed CSV hashes passed | Four manifests; 65,744 rows compared value-by-value with raw JSON |
+| Paired data coverage | 100% of 16,436 days per site for `GWETTOP` and `GWETROOT` | NASA CSVs and JSON responses |
+| Seasonal drought/recovery detection | Tested on authentic four-site NASA model-derived data; thresholds and rounding sensitivities remain | `scripts/gate1_screen.py`, `api/rootshadow/recovery.py` |
+| Exploratory multi-decade trends | Goodwell's signed recovery gap shows p≈0.01894, negative slope; **does not pass a conservative four-site p<0.0125 threshold**; other sites show no robust support | `docs/EXPLORATORY_4_SITE_RESULTS.md` |
+| Surrogate normal-lag calibration | Descriptive model only; unvalidated i.i.d. residual resampling and simplified physics | `api/rootshadow/null_model.py` |
+| Autocorrelation-corrected annual tests | Implemented, but potentially anti-conservative when estimated variance factor <1; not confirmatory | `api/rootshadow/trend.py` |
+| Independent scientific corroboration | Not performed (SMAP L4, GLDAS, NOAA USCRN, MODIS) | `scripts/extract_gee_corroboration.py` is only an optional acquisition scaffold |
+| Live application deployment | Not verified | Azure workflow remains manual pending cloud setup |
+| Drought warning / proven climate trend | **NOT established** | No independent field validation, incomplete sensitivity and multi-testing control |
 
-The code must not be described as production-secure or as an operational agricultural warning system.
+The output represents NASA POWER **MERRA-2 model-derived gridded** soil wetness. Surface and root series share the modeling system; a lag by itself is not independent evidence of unexpected ecological response. The software and statistical tests are exploratory, and the project must not be called an operational drought warning system.
 
-Update after independent integration review (14 November 2026): Annual mismatch days now count in the calendar year in which they occur, even when a recovery period crosses New Year; additional regression tests cover that case. The surrogate lag-slope comparison is centered on the empirical surrogate median. These changes do not establish the null model’s validity. The Azure deployment workflow is intentionally manual until cloud setup is complete.
+All source data, original NASA URLs, processed SHA-256 checksums and full per-site JSON reports are preserved in the user-supplied evidence archive. The GitHub repository contains only the compact comparative report to avoid committing large historical raw datasets.
 
-## NASA POWER API validation error (2026-11-14)
-
-A participant's Mac fetched the code and installed dependencies successfully, but a NASA POWER request using HY community and GWETTOP/GWETROOT returned HTTP 422. This was also true when precipitation was omitted, so the precipitation name alone is not an established root cause. `scripts/gate0_fetch.py` now captures response detail, avoids retrying permanent 422 errors, tests explicit HY and AG profile alternatives, preserves raw-body SHA-256 hashes and exposes `--diagnose` for a seven-day API probe. The live API outcome remains unverified from the restricted authoring environment. No live NASA evidence is claimed.
+See [`EXPLORATORY_4_SITE_RESULTS.md`](EXPLORATORY_4_SITE_RESULTS.md).
