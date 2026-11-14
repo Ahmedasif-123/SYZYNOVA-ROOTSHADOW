@@ -11,6 +11,7 @@ import { findSite, siteCoordinates, sites, type SiteId } from "./lib/sites";
 import { MoistureChart, AnnualChart, SensitivityChart } from "./components/ScientificCharts";
 import { EventInspector, EventList } from "./components/EventInspector";
 import EvidencePanel from "./components/EvidencePanel";
+import ResearchConclusion from "./components/ResearchConclusion";
 
 const GeoExplorer = lazy(() => import("./components/GeoExplorer"));
 const EarthGlobe = lazy(() => import("./components/EarthGlobe"));
@@ -132,6 +133,7 @@ function ExplorePage({ selected, onSelect }: { selected: SiteId; onSelect: (id: 
     {query.isPending && <div className="analysis-loading" role="status"><div className="loading-ring" /><h2>Analyzing verified NASA history</h2><p>Running the historical drought-recovery model for {current.name}. No synthetic observations will be substituted.</p></div>}
     {query.isError && <div className="analysis-error" role="alert"><ShieldCheck size={30} /><h2>Analysis unavailable</h2><p>{query.error.message}</p><button className="button-primary" onClick={() => query.refetch()} type="button"><RefreshCcw size={16} /> Try again</button></div>}
     {analysis && <AnimatePresence mode="wait"><motion.div key={selected} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: .22 }}>
+      <ResearchConclusion analysis={analysis} siteName={current.name} onEvents={() => document.querySelector(".event-side-panel")?.scrollIntoView({ behavior: "smooth", block: "center" })} onResearch={() => { setLevel("research"); window.setTimeout(() => document.querySelector(".advanced-workspace")?.scrollIntoView({ behavior: "smooth", block: "start" }), 150); }}/>
       <div className="site-story"><div className="site-story-left"><span className="eyebrow">SITE {current.index} / {current.landscape.toUpperCase()}</span><h2>{current.name} <span>over 45 years</span></h2><p>{positiveLags.length} detected drought episodes had a completed surface-first recovery under our fixed rules. This does not imply the land is currently dry.</p></div><div className="model-label"><Layers3 size={20} /><span><strong>MODEL-DERIVED RECORD</strong><small>NASA POWER / MERRA-2</small></span></div></div>
       <div className="metric-grid"><Metric label="Drought episodes" value={String(analysis.events.length)} note="Historical events detected" /><Metric label="Surface-first events" value={String(positiveLags.length)} note="Completed positive delays" /><Metric label="Median positive delay" value={median === null ? "—" : `${median} d`} note="Across surface-first events" /><Metric label="Evidence status" value={verdictLabel(analysis.audit.verdict)} note="Exploratory software audit" accent /></div>
       <Suspense fallback={<div className="analysis-loading">Preparing monthly depth instrument…</div>}><SoilDepthExplorer key={selected} analysis={analysis} onMonthChange={setHighlightedMonth} /></Suspense>
