@@ -25,3 +25,7 @@ The output represents NASA POWER **MERRA-2 model-derived gridded** soil wetness.
 All source data, original NASA URLs, processed SHA-256 checksums and full per-site JSON reports are preserved in the user-supplied evidence archive. The GitHub repository includes four compact compressed processed CSVs, their manifests, and the comparative report. The raw NASA JSON snapshots remain in the separately retained evidence archive.
 
 See [`EXPLORATORY_4_SITE_RESULTS.md`](EXPLORATORY_4_SITE_RESULTS.md).
+
+## Final backend audit (14 November 2026)
+
+Latest independent local audit: **57/57 tests pass** (Python 3.13). Four-site published results reproduced exactly. NASA JSON validation now rejects invalid values and incomplete dates before caching; Azure managed Python version set to 3.11. Hosted Azure build and a new live NASA request from the audit runtime were **not verified**. Detailed evidence: [`BACKEND_AUDIT_2026-11-14.md`](BACKEND_AUDIT_2026-11-14.md).
