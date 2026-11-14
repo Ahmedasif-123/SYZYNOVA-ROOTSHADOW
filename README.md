@@ -110,3 +110,7 @@ The project is a research prototype. It is not a validated drought warning syste
 The source code is published under the MIT license in `LICENSE`. NASA POWER provides the environmental input and must be cited in the project submission; dependency and AI-tool citations are in `docs/ATTRIBUTION_AND_AI.md`. The public repository contains compact gzip-compressed processed four-site CSVs, source provenance manifests, and an exploratory four-site report. The 20 original raw NASA JSON files are retained in the external evidence archive.
 
 Cloud deployment is not active by default. The Azure workflow is manual (`workflow_dispatch`) until a deployment token is installed and verified.
+
+## Six-site verified research extension
+
+The two additional historical NASA POWER point datasets (Argentine Pampas and South African interior) are packaged with original NASA response evidence; the six-site screening covers 98,616 point-days. See [the extension and sensitivity audit](docs/EXPLORATORY_6_SITE_EXTENSION.md). It remains exploratory and not a drought-warning or irrigation product.

@@ -378,7 +378,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
       </div>
       <div className="earth-stage-bottom">
         <span><Globe2 size={14} /> DRAG TO ROTATE / SCROLL TO ZOOM</span>
-        <span>04 RESEARCH LOCATIONS <ArrowUpRight size={13} /></span>
+        <span>{String(sites.length).padStart(2, "0")} RESEARCH LOCATIONS <ArrowUpRight size={13} /></span>
       </div>
       <div className="earth-location-strip" role="group" aria-label="Research study locations">
         {sites.map(site => (

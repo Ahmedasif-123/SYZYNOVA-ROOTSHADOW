@@ -3,10 +3,14 @@ import { readFileSync } from "node:fs";
 
 const goodwell = JSON.parse(readFileSync(new URL("./fixtures/goodwell.json", import.meta.url), "utf8"));
 const narrabri = JSON.parse(readFileSync(new URL("./fixtures/narrabri.json", import.meta.url), "utf8"));
+const argentina = JSON.parse(readFileSync(new URL("./fixtures/argentina.json", import.meta.url), "utf8"));
+const southernAfrica = JSON.parse(readFileSync(new URL("./fixtures/southern_africa.json", import.meta.url), "utf8"));
 
 const responses: Record<string, unknown> = {
   us_sgp_goodwell: goodwell,
-  australia_narrabri: narrabri
+  australia_narrabri: narrabri,
+  argentina_pampas: argentina,
+  southern_africa: southernAfrica
 };
 
 test.beforeEach(async ({ page }) => {
@@ -22,7 +26,7 @@ test.beforeEach(async ({ page }) => {
 test("homepage clearly explains model-based historical evidence", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /When rain returns/i })).toBeVisible();
-  await expect(page.getByText(/FOUR VERIFIED RESEARCH POINTS/i)).toBeVisible();
+  await expect(page.getByText(/SIX VERIFIED RESEARCH POINTS/i)).toBeVisible();
   await expect(page.getByText(/NO SYNTHETIC FINDINGS/i)).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("homepage.png"), fullPage: true });
 });
@@ -133,7 +137,7 @@ test("3D Earth and offline atlas both expose verified study locations", async ({
   await expect(page.locator(".earth-stage")).toBeVisible();
   await expect(page.getByRole("region", { name: "Interactive three dimensional Earth research explorer" })).toBeVisible();
   await expect(page.getByRole("group", { name: "Research study locations" })).toBeVisible();
-  await expect(page.locator(".earth-location-strip button")).toHaveCount(4);
+  await expect(page.locator(".earth-location-strip button")).toHaveCount(6);
   const image = await page.request.get("/earth-day-2048.jpg");
   expect(image.ok()).toBeTruthy();
   const geojson = await page.request.get("/world.geojson");
@@ -148,7 +152,7 @@ test("3D Earth and offline atlas both expose verified study locations", async ({
   await expect(atlas).not.toHaveAttribute("viewBox", extentBefore ?? "");
   await page.getByRole("button", { name: "Show full world map" }).click();
   await expect(atlas).toHaveAttribute("viewBox", extentBefore ?? "");
-  await expect(page.locator(".map-site-list .map-site")).toHaveCount(4);
+  await expect(page.locator(".map-site-list .map-site")).toHaveCount(6);
   await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
   await expect(page.getByRole("button", { name: "Start investigating" })).toBeVisible();
   await page.getByRole("button", { name: "Start investigating" }).click();
@@ -166,7 +170,7 @@ test("3D Earth retains accessible location selection when WebGL is unsupported",
   });
   await page.goto("/");
   await expect(page.getByText(/3D graphics unavailable on this device/)).toBeVisible();
-  await expect(page.locator(".earth-location-strip button")).toHaveCount(4);
+  await expect(page.locator(".earth-location-strip button")).toHaveCount(6);
   await page.locator(".earth-location-strip button").filter({ hasText: "Narrabri" }).click();
   await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator("#site-select")).toHaveValue("australia_narrabri");
@@ -190,4 +194,20 @@ test("offline atlas lets keyboard users focus and investigate a study location",
   await expect(page.locator(".map-site-list .map-site.selected")).toContainText("Córdoba");
   await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator("#site-select")).toHaveValue("spain_cordoba");
+});
+
+
+test("additional NASA locations expose distinct audited results and threshold limitations", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  await page.locator("#site-select").selectOption("argentina_pampas");
+  await expect(page.locator(".metric-value").first()).toHaveText("27");
+  await expect(page.locator(".metric-value").nth(1)).toHaveText("11");
+  await expect(page.locator(".rs-conclusion-lead")).toContainText("2 days");
+  await page.locator("#site-select").selectOption("southern_africa");
+  await expect(page.locator(".metric-value").first()).toHaveText("21");
+  await expect(page.locator(".metric-value").nth(1)).toHaveText("15");
+  await expect(page.locator(".rs-conclusion-lead")).toContainText("25 days");
+  await expect(page.getByText(/the median positive delay is 25 days under the default/)).toBeVisible();
+  await expect(page.getByText(/3.5 days under a 50th-percentile definition/)).toBeVisible();
 });

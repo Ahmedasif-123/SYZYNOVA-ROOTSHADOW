@@ -57,8 +57,12 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
     { id: "us_sgp_goodwell" as SiteId, name: "Goodwell", region: "Oklahoma · United States", total: 31, positive: 19, median: 2 },
     { id: "us_sgp_stillwater" as SiteId, name: "Stillwater", region: "Oklahoma · United States", total: 26, positive: 6, median: 1 },
     { id: "australia_narrabri" as SiteId, name: "Narrabri", region: "New South Wales · Australia", total: 28, positive: 16, median: 1 },
-    { id: "spain_cordoba" as SiteId, name: "Córdoba", region: "Andalusia · Spain", total: 25, positive: 6, median: 1 }
+    { id: "spain_cordoba" as SiteId, name: "Córdoba", region: "Andalusia · Spain", total: 25, positive: 6, median: 1 },
+    { id: "argentina_pampas" as SiteId, name: "Argentine Pampas", region: "Pampas · Argentina", total: 27, positive: 11, median: 2 },
+    { id: "southern_africa" as SiteId, name: "Southern Africa", region: "Interior · South Africa", total: 21, positive: 15, median: 25 }
   ];
+  const totalEpisodes = findings.reduce((sum, item) => sum + item.total, 0);
+  const surfaceFirst = findings.reduce((sum, item) => sum + item.positive, 0);
   return <div className="rs-editorial">
     <section className="rs-hero">
       <div className="rs-hero-copy">
@@ -70,7 +74,7 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
           <button type="button" className="rs-primary-link" onClick={() => navigate("explore")}>Start investigating <ArrowUpRight size={18}/></button>
           <button type="button" className="rs-secondary-link" onClick={() => document.getElementById("rs-findings")?.scrollIntoView({ behavior: "smooth" })}>See what we found <ArrowRight size={16}/></button>
         </div>
-        <div className="rs-hero-foot"><span>45 YEARS OF HISTORY</span><span>FOUR VERIFIED RESEARCH POINTS</span><span>NO SYNTHETIC FINDINGS</span></div>
+        <div className="rs-hero-foot"><span>45 YEARS OF HISTORY</span><span>SIX VERIFIED RESEARCH POINTS</span><span>NO SYNTHETIC FINDINGS</span></div>
       </div>
       <div className="rs-earth-shell">
         <div className="rs-earth-header"><span>EXPLORE THE STUDY REGIONS</span><div><button className={view === "globe" ? "is-on" : ""} type="button" onClick={() => setView("globe")}>Earth</button><button className={view === "atlas" ? "is-on" : ""} type="button" onClick={() => setView("atlas")}>Map</button></div></div>
@@ -88,8 +92,8 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
     </section>
 
     <section className="rs-findings" id="rs-findings">
-      <div className="rs-findings-header"><div><p className="rs-overline">02 — THE EVIDENCE</p><h2>Four places.<br/><em>Four different stories.</em></h2></div><p>We investigated 45 years of NASA POWER / MERRA-2 soil-wetness history at four agricultural locations. The pattern exists in the modeled records, but it is not uniform.</p></div>
-      <div className="rs-big-finding"><div className="rs-finding-ratio"><strong>47<span> / 110</span></strong><small>detected historical drought episodes had a completed surface-first recovery</small></div><div className="rs-finding-interpretation"><span>WHAT THAT NUMBER MEANS</span><p>About 42.7% of these selected modeled events recovered at the surface before the root zone. This is a descriptive finding for four sites, not a global drought rate.</p></div></div>
+      <div className="rs-findings-header"><div><p className="rs-overline">02 — THE EVIDENCE</p><h2>Six places.<br/><em>Six different stories.</em></h2></div><p>We investigated 45 years of NASA POWER / MERRA-2 soil-wetness history at six selected agricultural model points. The pattern exists in the modeled records, but it is not uniform.</p></div>
+      <div className="rs-big-finding"><div className="rs-finding-ratio"><strong>{surfaceFirst}<span> / {totalEpisodes}</span></strong><small>detected historical drought episodes had a completed surface-first recovery</small></div><div className="rs-finding-interpretation"><span>WHAT THAT NUMBER MEANS</span><p>About {(100 * surfaceFirst / totalEpisodes).toFixed(1)}% of these selected modeled events recovered at the surface before the root zone. This is a descriptive finding for six sites, not a global drought rate.</p></div></div>
       <div className="rs-findings-table">
         <div className="rs-findings-labels"><span>LOCATION</span><span>COMPLETED SURFACE-FIRST / ALL EPISODES</span><span>MEDIAN GAP</span></div>
         {findings.map(item => <button key={item.id} className="rs-finding-row" type="button" onClick={() => { onSelect(item.id); navigate("explore"); }}>
@@ -98,7 +102,7 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
           <span className="rs-find-delay">{item.median} <small>{item.median === 1 ? "day" : "days"}</small><ArrowUpRight size={16}/></span>
         </button>)}
       </div>
-      <p className="rs-finding-limit"><strong>Important:</strong> No global trend has been demonstrated. Goodwell’s nominal trend did not meet a basic four-site multiple-testing correction; these records need independent corroboration.</p>
+      <p className="rs-finding-limit"><strong>Important:</strong> No global trend has been demonstrated. Goodwell’s nominal trend fails a six-site multiple-testing correction. Southern Africa’s 25-day default median is highly threshold-sensitive; independent corroboration is essential.</p>
     </section>
 
     <section className="rs-solution">
@@ -176,7 +180,7 @@ function MethodPage({ navigate }: { navigate: (p: Page) => void }) {
       { num: "05", icon: <Microscope size={24} />, title: "Challenge the hypothesis", desc: "Explore Theil–Sen/Kendall trends, nine threshold settings, annual mismatch statistics and a simplified surrogate model calibrated on the source model's behavior." },
       { num: "06", icon: <ShieldCheck size={24} />, title: "Report uncertainty", desc: "Mark incomplete recoveries as censored; report inconclusive tests and explicitly distinguish gridded model output from independent field measurements." }
     ].map(item => <div className="method-card" key={item.num}><div className="method-number">{item.num}</div><div className="method-icon">{item.icon}</div><h3>{item.title}</h3><p>{item.desc}</p></div>)}</div>
-    <section className="limitations"><div><span className="eyebrow">THE LIMITS MATTER</span><h2>What ROOTSHADOW<br />does not claim.</h2></div><div><p>NASA POWER/MERRA-2 surface and root-zone wetness are derived from a shared land-modeling system, not independently measured root sensors. Some apparent lag is expected from the model itself.</p><p>Goodwell's nominal exploratory trend does not meet a conservative four-site multiple-testing threshold. Independent SMAP, GLDAS and field corroboration is not complete.</p><p>ROOTSHADOW is a historical screening prototype. It does not recommend irrigation, diagnose crop loss or forecast next season's drought.</p><a href="https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW/blob/main/docs/EXPLORATORY_4_SITE_RESULTS.md" target="_blank" rel="noreferrer">Read the published four-site analysis <ArrowUpRight size={17} /></a></div></section>
+    <section className="limitations"><div><span className="eyebrow">THE LIMITS MATTER</span><h2>What ROOTSHADOW<br />does not claim.</h2></div><div><p>NASA POWER/MERRA-2 surface and root-zone wetness are derived from a shared land-modeling system, not independently measured root sensors. Some apparent lag is expected from the model itself.</p><p>Goodwell's nominal exploratory trend does not meet a conservative six-site multiple-testing threshold. Independent SMAP, GLDAS and field corroboration is not complete.</p><p>ROOTSHADOW is a historical screening prototype. It does not recommend irrigation, diagnose crop loss or forecast next season's drought.</p><a href="https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW/blob/main/docs/EXPLORATORY_4_SITE_RESULTS.md" target="_blank" rel="noreferrer">Read the published four-site analysis <ArrowUpRight size={17} /></a></div></section>
   </div>;
 }
 
@@ -186,7 +190,7 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   function navigate(next: Page) { setPage(next); setMobileOpen(false); window.scrollTo({ top: 0, behavior: "auto" }); }
   return <div className="app-frame">
-    <aside className={`sidebar ${mobileOpen ? "is-open" : ""}`} aria-label="Primary navigation"><div className="sidebar-top"><Brand /><button className="mobile-close" type="button" onClick={() => setMobileOpen(false)} aria-label="Close navigation"><X size={20} /></button></div><div className="sidebar-overline">WORKSPACE</div><nav className="side-nav"><button type="button" className={page === "home" ? "active" : ""} onClick={() => navigate("home")}><Leaf size={19} /> Overview</button><button type="button" className={page === "explore" ? "active" : ""} onClick={() => navigate("explore")}><Globe2 size={19} /> Explore locations</button><button type="button" className={page === "method" ? "active" : ""} onClick={() => navigate("method")}><BookOpenText size={19} /> The science</button></nav><div className="sidebar-overline secondary">RESEARCH</div><div className="sidebar-research"><div className="sidebar-icon"><Search size={18} /></div><div><strong>Earth System Trend Detective</strong><small>NASA Space Apps Doha 2026</small></div></div><div className="sidebar-bottom"><div className="sidebar-verification"><CheckCircle2 size={17} /><span>Verified NASA datasets<small>4 historical site snapshots</small></span></div><div className="sidebar-credit">BUILT BY SYZYNOVA<br /><span>MUHAMMAD AHMED · SOMAYA BAKIR</span></div></div></aside>
+    <aside className={`sidebar ${mobileOpen ? "is-open" : ""}`} aria-label="Primary navigation"><div className="sidebar-top"><Brand /><button className="mobile-close" type="button" onClick={() => setMobileOpen(false)} aria-label="Close navigation"><X size={20} /></button></div><div className="sidebar-overline">WORKSPACE</div><nav className="side-nav"><button type="button" className={page === "home" ? "active" : ""} onClick={() => navigate("home")}><Leaf size={19} /> Overview</button><button type="button" className={page === "explore" ? "active" : ""} onClick={() => navigate("explore")}><Globe2 size={19} /> Explore locations</button><button type="button" className={page === "method" ? "active" : ""} onClick={() => navigate("method")}><BookOpenText size={19} /> The science</button></nav><div className="sidebar-overline secondary">RESEARCH</div><div className="sidebar-research"><div className="sidebar-icon"><Search size={18} /></div><div><strong>Earth System Trend Detective</strong><small>NASA Space Apps Doha 2026</small></div></div><div className="sidebar-bottom"><div className="sidebar-verification"><CheckCircle2 size={17} /><span>Verified NASA datasets<small>6 historical site snapshots</small></span></div><div className="sidebar-credit">BUILT BY SYZYNOVA<br /><span>MUHAMMAD AHMED · SOMAYA BAKIR</span></div></div></aside>
     {mobileOpen && <button type="button" className="mobile-scrim" aria-label="Close menu" onClick={() => setMobileOpen(false)} />}
     <div className="main-shell"><header className="top-nav"><button type="button" className="mobile-menu" onClick={() => setMobileOpen(true)} aria-label="Open navigation"><Menu size={22} /></button><span className="breadcrumb"><span>ROOTSHADOW</span><span className="crumb-divider">/</span>{page === "home" ? "Overview" : page === "explore" ? "Investigation" : "Methodology"}</span><div className="top-nav-actions"><span className="top-dataset"><span className="live-pulse" />HISTORICAL DATA · 1981—2025</span><a href="https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW" target="_blank" rel="noreferrer" aria-label="Open the ROOTSHADOW source code">SOURCE CODE <ExternalLink size={14} /></a></div></header>
       <main id="main-content">{page === "home" ? <HomePage selected={selected} onSelect={setSelected} navigate={navigate} /> : page === "explore" ? <ExplorePage selected={selected} onSelect={setSelected} /> : <MethodPage navigate={navigate} />}</main>
