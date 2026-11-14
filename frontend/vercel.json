@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://rootshadow-api-preview-mfh04dvmq.vercel.app/api/:path*"
+      "destination": "https://rootshadow-api-preview-euaembw1t.vercel.app/api/:path*"
     }
   ]
 }
