@@ -15,7 +15,6 @@ test.beforeEach(async ({ page }) => {
     const response = responses[site];
     await route.fulfill(response ? { status: 200, contentType: "application/json", body: JSON.stringify(response) } : { status: 503, contentType: "application/json", body: JSON.stringify({ detail: "No verified site fixture" }) });
   });
-  await page.route("https://tiles.openfreemap.org/**", route => route.abort());
   await page.route("https://fonts.googleapis.com/**", route => route.abort());
   await page.route("https://fonts.gstatic.com/**", route => route.abort());
 });
@@ -87,9 +86,13 @@ test("small screens have working navigation without horizontal overflow", async 
   }
 });
 
-test("offline geographic tiles do not block access to verified study sites", async ({ page }) => {
+test("bundled world map works without any third-party tile service", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByText("Map tiles unavailable. Use the study-site selector.")).toBeVisible({ timeout: 12000 });
+  await expect(page.locator(".geo-explorer")).toBeVisible();
+  await expect(page.locator(".map-site-list .map-site")).toHaveCount(4);
+  const geojson = await page.request.get("/world.geojson");
+  expect(geojson.ok()).toBeTruthy();
+  expect((await geojson.json()).features.length).toBeGreaterThan(100);
   await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
   await expect(page.getByRole("heading", { name: "Explore soil recovery" })).toBeVisible();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
