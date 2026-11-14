@@ -37,7 +37,8 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
   const onSelectRef = useRef(onSelect);
   const [status, setStatus] = useState<StageStatus>("initializing");
   const [textureLoaded, setTextureLoaded] = useState(false);
-  const [rotationEnabled, setRotationEnabled] = useState(true);
+  const [rotationEnabled, setRotationEnabled] = useState(() => !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const [textureUnavailable, setTextureUnavailable] = useState(false);
   const rotatingRef = useRef(true);
 
   useEffect(() => { onSelectRef.current = onSelect; }, [onSelect]);
@@ -104,7 +105,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
       earthMaterial.needsUpdate = true;
       setTextureLoaded(true);
     }, undefined, () => {
-      if (!disposed) setTextureLoaded(false);
+      if (!disposed) { setTextureLoaded(false); setTextureUnavailable(true); }
     });
 
     scene.add(new THREE.AmbientLight(0x718eaf, 1.23));
@@ -194,6 +195,12 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
     let lastY = 0;
     let lastInteraction = performance.now();
     let animationFrame = 0;
+    let animationRunning = true;
+    let inViewport = true;
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let reduceMotion = motionQuery.matches;
+    const onMotionChange = (event: MediaQueryListEvent) => { reduceMotion = event.matches; };
+    motionQuery.addEventListener("change", onMotionChange);
     let widthCurrent = width;
     let heightCurrent = height;
 
@@ -255,15 +262,28 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
     resizeObserver.observe(root);
 
     const coords = new THREE.Vector3();
+    function updateVisibility() {
+      const shouldRun = !disposed && inViewport && !document.hidden;
+      if (shouldRun === animationRunning) return;
+      animationRunning = shouldRun;
+      if (shouldRun) animationFrame = requestAnimationFrame(frame);
+      else cancelAnimationFrame(animationFrame);
+    }
+    const visibilityObserver = new IntersectionObserver(entries => {
+      inViewport = entries[0]?.isIntersecting ?? true;
+      updateVisibility();
+    });
+    visibilityObserver.observe(root);
+    document.addEventListener("visibilitychange", updateVisibility);
     function frame(time: number) {
-      if (disposed) return;
-      if (!dragging && rotatingRef.current && time - lastInteraction > 15000) targetYaw += 0.00035;
+      if (disposed || !animationRunning) return;
+      if (!dragging && !reduceMotion && rotatingRef.current && time - lastInteraction > 15000) targetYaw += 0.00035;
       world.rotation.y += (targetYaw - world.rotation.y) * 0.075;
       world.rotation.x += (targetPitch - world.rotation.x) * 0.075;
       camera.position.z += (cameraDistance - camera.position.z) * 0.06;
       siteObjects.forEach((item, index) => {
         const active = selectedRef.current === item.id;
-        const pulse = 1 + Math.sin(time * 0.0025 + index) * 0.13;
+        const pulse = reduceMotion ? 1 : 1 + Math.sin(time * 0.0025 + index) * 0.13;
         item.ring.scale.setScalar(active ? pulse * 1.45 : pulse);
         (item.ring.material as THREE.MeshBasicMaterial).color.setHex(active ? 0xffdf9f : 0x8fe6f0);
         (item.outer.material as THREE.MeshBasicMaterial).color.setHex(active ? 0xffe0a9 : 0x86e3e7);
@@ -286,7 +306,11 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
 
     return () => {
       disposed = true;
+      animationRunning = false;
       cancelAnimationFrame(animationFrame);
+      visibilityObserver.disconnect();
+      document.removeEventListener("visibilitychange", updateVisibility);
+      motionQuery.removeEventListener("change", onMotionChange);
       resizeObserver.disconnect();
       renderer.domElement.removeEventListener("pointerdown", down);
       renderer.domElement.removeEventListener("pointermove", move);
@@ -339,7 +363,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
         <div className="earth-scanline" aria-hidden="true" />
       </div>
       <div className="earth-left-rail">
-        <div className="earth-rail-title"><span className="earth-live-indicator" /> {textureLoaded ? "OBSERVATION MODEL ONLINE" : "INITIALIZING EARTH IMAGERY"}</div>
+        <div className="earth-rail-title"><span className="earth-live-indicator" /> {textureUnavailable ? "EARTH TEXTURE UNAVAILABLE" : textureLoaded ? "BLUE MARBLE REFERENCE READY" : "LOADING EARTH IMAGERY"}</div>
         <div className="earth-rail-selected"><small>SELECTED REGION</small><strong>{active.name}</strong><span>{active.region} / {active.country}</span></div>
         <div className="earth-rail-coordinates">
           <span>{Math.abs(active.coordinates[1]).toFixed(3)}°{active.coordinates[1] >= 0 ? "N" : "S"}</span>

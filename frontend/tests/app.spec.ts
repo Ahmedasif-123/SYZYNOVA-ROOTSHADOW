@@ -172,3 +172,22 @@ test("3D Earth retains accessible location selection when WebGL is unsupported",
   await expect(page.locator("#site-select")).toHaveValue("australia_narrabri");
   await expect(page.locator(".metric-value").first()).toHaveText("28");
 });
+
+test("reduced-motion preference disables decorative globe rotation without blocking location selection", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(page.getByRole("button", { name: "Toggle globe auto rotation" })).toHaveAttribute("aria-pressed", "false");
+  await page.locator(".earth-location-strip button").filter({ hasText: "Narrabri" }).click();
+  await expect(page.locator(".earth-rail-selected strong")).toHaveText("Narrabri");
+});
+
+test("offline atlas lets keyboard users focus and investigate a study location", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Map", exact: true }).click();
+  const marker = page.getByRole("button", { name: /Focus Córdoba/i });
+  await marker.focus();
+  await marker.press("Enter");
+  await expect(page.locator(".map-site-list .map-site.selected")).toContainText("Córdoba");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  await expect(page.locator("#site-select")).toHaveValue("spain_cordoba");
+});
