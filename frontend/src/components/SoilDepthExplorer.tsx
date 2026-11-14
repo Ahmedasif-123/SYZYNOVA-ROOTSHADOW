@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, RotateCcw } from "lucide-react";
 import type { Analysis } from "../lib/api";
 
-type Props = { analysis: Analysis };
+type Props = { analysis: Analysis; onMonthChange?: (month: string) => void };
 
-export default function SoilDepthExplorer({ analysis }: Props) {
+export default function SoilDepthExplorer({ analysis, onMonthChange }: Props) {
   const samples = analysis.monthly;
   const startingIndex = useMemo(() => {
     let index = 0;
@@ -46,6 +46,7 @@ export default function SoilDepthExplorer({ analysis }: Props) {
   const difference = top !== null && root !== null ? top - root : null;
   const year = point?.month.slice(0, 4) ?? "—";
   const selectedMonth = point ? new Date(`${point.month}-01T00:00:00Z`).toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" }) : "Unavailable";
+  useEffect(() => { if (point?.month) onMonthChange?.(point.month); }, [point?.month, onMonthChange]);
   const firstYear = samples[0]?.month.slice(0, 4) ?? "1981";
   const finalYear = samples[samples.length - 1]?.month.slice(0, 4) ?? "2025";
 
