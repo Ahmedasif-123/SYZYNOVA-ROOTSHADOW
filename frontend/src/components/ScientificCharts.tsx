@@ -22,7 +22,7 @@ const axisText = "#91a8b4";
 const gridLine = "rgba(140,184,195,0.10)";
 const tooltipStyle = { backgroundColor: "#091e27", borderColor: "#2b4951", textStyle: { color: "#e6f6f5", fontFamily: "DM Sans" }, extraCssText: "box-shadow:0 16px 48px rgba(0,0,0,.3);border-radius:12px;" };
 
-export function MoistureChart({ analysis, event }: { analysis: Analysis; event: RecoveryEvent | null }) {
+export function MoistureChart({ analysis, event, highlightedMonth }: { analysis: Analysis; event: RecoveryEvent | null; highlightedMonth?: string | null }) {
   const [zoom, setZoom] = useState<"full" | "event">("full");
   useEffect(() => { setZoom(event ? "event" : "full"); }, [event]);
   const months = analysis.monthly.map(row => row.month);
@@ -47,7 +47,7 @@ export function MoistureChart({ analysis, event }: { analysis: Analysis; event: 
     ],
     series: [
       { name: "Surface", type: "line", data: analysis.monthly.map(row => row.top_percentile), showSymbol: false, smooth: 0.16, lineStyle: { width: 2.3 }, areaStyle: { opacity: 0.045 }, connectNulls: false,
-        markLine: { silent: true, symbol: ["none", "none"], label: { color: "#a4b7bf", fontSize: 10, show: false }, lineStyle: { color: "#8b9da3", opacity: .4, type: "dashed", width: 1 }, data: [{ yAxis: 20 }, { yAxis: 40 }] },
+        markLine: { silent: true, symbol: ["none", "none"], label: { color: "#a4b7bf", fontSize: 10, show: false }, lineStyle: { color: "#8b9da3", opacity: .4, type: "dashed", width: 1 }, data: [{ yAxis: 20 }, { yAxis: 40 }, ...(highlightedMonth ? [{ xAxis: highlightedMonth, label: { show: true, color: "#e8c79b", formatter: highlightedMonth }, lineStyle: { color: "#e8c79b", opacity: .75, type: "solid" as const, width: 1 } }] : [])] },
         markArea: event ? { silent: true, itemStyle: { color: "rgba(215,173,113,0.075)" }, data: [[{ xAxis: event.drought_start.slice(0, 7) }, { xAxis: (event.root_recovery ?? event.window_end).slice(0, 7) }]] } : undefined },
       { name: "Root zone", type: "line", data: analysis.monthly.map(row => row.root_percentile), showSymbol: false, smooth: 0.16, lineStyle: { width: 2.3 }, areaStyle: { opacity: 0.025 }, connectNulls: false }
     ]
