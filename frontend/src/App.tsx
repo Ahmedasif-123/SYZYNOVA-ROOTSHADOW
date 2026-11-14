@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import {
   Activity, ArrowRight, ArrowUpRight, BarChart3, BookOpenText, CheckCircle2, ChevronDown,
   CircleHelp, Database, Download, ExternalLink, Fingerprint, Globe2, Layers3, Leaf,
-  Menu, Microscope, MousePointer2, RefreshCcw, Satellite, Search, ShieldCheck, X
+  Menu, Microscope, MousePointer2, RefreshCcw, Search, ShieldCheck, X
 } from "lucide-react";
 import { getAnalysis, medianPositiveLag, verdictLabel, type RecoveryEvent } from "./lib/api";
 import { findSite, siteCoordinates, sites, type SiteId } from "./lib/sites";
@@ -110,6 +110,19 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
     <section className="rs-final-note"><span>THE NEXT SCIENTIFIC STEP</span><p>More locations and independent sources matter. SMAP L4, GLDAS and field measurements can provide additional comparisons; they have <strong>not</strong> yet been integrated into the published findings.</p><div><a href="https://nsidc.org/data/smap" target="_blank" rel="noreferrer">SMAP <ExternalLink size={13}/></a><a href="https://ldas.gsfc.nasa.gov/gldas" target="_blank" rel="noreferrer">GLDAS <ExternalLink size={13}/></a><button type="button" onClick={() => navigate("method")}>Read the limitations <ArrowRight size={15}/></button></div></section>
     <div className="rs-signature"><strong>ROOTSHADOW</strong><span>BY SYZYNOVA — MUHAMMAD AHMED & SOMAYA BAKIR</span><span>NASA SPACE APPS DOHA 2026</span></div>
   </div>;
+}
+
+function DownloadResult({ name, analysis }: { name: string; analysis: Awaited<ReturnType<typeof getAnalysis>> }) {
+  function download() {
+    const payload = { project: "ROOTSHADOW", site: name, exported_utc: new Date().toISOString(), provenance: analysis.source, method: analysis.method, results: { period: analysis.period, quality: analysis.quality, lag_trend: analysis.lag_trend, annual_trend: analysis.trend, audit: analysis.audit, events: analysis.events, sensitivity: analysis.sensitivity }, warning: "Exploratory NASA POWER/MERRA-2 model-derived screening, not field measurements or farm advice." };
+    const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
+    const element = document.createElement("a");
+    element.href = url;
+    element.download = `rootshadow-${name.toLowerCase().replaceAll(" ", "-")}-evidence.json`;
+    element.click();
+    URL.revokeObjectURL(url);
+  }
+  return <button type="button" className="icon-label-action" onClick={download}><Download size={16} /> Export evidence JSON</button>;
 }
 
 function ExplorePage({ selected, onSelect }: { selected: SiteId; onSelect: (id: SiteId) => void }) {
