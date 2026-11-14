@@ -405,3 +405,36 @@ test("Get Summary produces audited location-specific figures, interactive graphs
   ]);
   expect(file.suggestedFilename()).toBe("rootshadow-qatar_doha-summary.json");
 });
+
+test("science methodology is legible, transparent and shows verified research protocol", async ({ page }) => {
+  await page.goto("/");
+  const menu = page.getByRole("button", { name: "Open navigation" });
+  if (await menu.isVisible()) await menu.click();
+  await page.getByRole("button", { name: "The science" }).click();
+  await expect(page.getByRole("heading", { name: /How we see beneath/i })).toBeVisible();
+  await expect(page.locator(".method-card")).toHaveCount(6);
+  const protocol = page.getByRole("region", { name: "Reproducible screening protocol" });
+  await expect(protocol).toBeVisible();
+  await expect(protocol).toContainText("97");
+  await expect(protocol).toContainText("1991–2020");
+  await expect(protocol).toContainText("≤ 20th percentile");
+  await expect(protocol).toContainText("≥ 40th percentile");
+  await expect(protocol).toContainText("Seven consecutive days");
+  await expect(protocol).toContainText("independent SMAP, GLDAS and field cross-validation");
+  await expect(protocol.getByRole("link", { name: /Review recovery-detection source/i })).toHaveAttribute("href", /api\/rootshadow\/recovery\.py/);
+  const contrast = await page.locator(".method-card").first().evaluate(card => {
+    const heading = card.querySelector("h3");
+    if (!heading) return 0;
+    const rgb = (value: string) => (value.match(/\d+(?:\.\d+)?/g) ?? []).slice(0, 3).map(Number);
+    const luminance = (value: string) => {
+      const [r,g,b] = rgb(value).map(v => v / 255).map(v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+      return r * 0.2126 + g * 0.7152 + b * 0.0722;
+    };
+    const foreground = luminance(getComputedStyle(heading).color);
+    const background = luminance(getComputedStyle(card).backgroundColor);
+    return (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
+  });
+  expect(contrast).toBeGreaterThan(7);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(overflow).toBeLessThanOrEqual(2);
+});

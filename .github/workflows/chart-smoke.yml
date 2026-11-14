@@ -31,5 +31,5 @@ jobs:
       - run: npx playwright install --with-deps chromium
         working-directory: frontend
       - name: Verify original research workspace and new graph selection
-        run: npx playwright test --project=${{ matrix.browser }} -g 'verified Goodwell data|monthly depth explorer|monthly graph selection|globe selection caption|Get Summary produces'
+        run: npx playwright test --project=${{ matrix.browser }} -g 'verified Goodwell data|monthly depth explorer|monthly graph selection|globe selection caption|Get Summary produces|science methodology'
         working-directory: frontend
