@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import { Globe2, Map as MapIcon, LocateFixed } from "lucide-react";
 import { sites, type SiteId } from "../lib/sites";
 
