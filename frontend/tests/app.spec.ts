@@ -86,14 +86,38 @@ test("small screens have working navigation without horizontal overflow", async 
   }
 });
 
-test("bundled world map works without any third-party tile service", async ({ page }) => {
+test("3D Earth and offline atlas both expose verified study locations", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator(".geo-explorer")).toBeVisible();
-  await expect(page.locator(".map-site-list .map-site")).toHaveCount(4);
+  await expect(page.locator(".earth-stage")).toBeVisible();
+  await expect(page.locator(".earth-location-strip button")).toHaveCount(4);
+  const image = await page.request.get("/earth-day-2048.jpg");
+  expect(image.ok()).toBeTruthy();
   const geojson = await page.request.get("/world.geojson");
   expect(geojson.ok()).toBeTruthy();
   expect((await geojson.json()).features.length).toBeGreaterThan(100);
+  await page.getByRole("button", { name: "World map" }).click();
+  await expect(page.locator(".geo-explorer")).toBeVisible();
+  await expect(page.locator(".map-site-list .map-site")).toHaveCount(4);
   await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
+  await expect(page.getByRole("button", { name: "Explore the evidence" })).toBeVisible();
+  await page.getByRole("button", { name: "Explore the evidence" }).click();
   await expect(page.getByRole("heading", { name: "Explore soil recovery" })).toBeVisible();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
+});
+
+test("3D Earth retains accessible location selection when WebGL is unsupported", async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (contextId, ...args) {
+      if (contextId === "webgl" || contextId === "webgl2" || contextId === "experimental-webgl") return null;
+      return original.call(this, contextId, ...args);
+    } as typeof HTMLCanvasElement.prototype.getContext;
+  });
+  await page.goto("/");
+  await expect(page.getByText(/3D graphics unavailable on this device/)).toBeVisible();
+  await expect(page.locator(".earth-location-strip button")).toHaveCount(4);
+  await page.locator(".earth-location-strip button").filter({ hasText: "Narrabri" }).click();
+  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await expect(page.locator("#site-select")).toHaveValue("australia_narrabri");
+  await expect(page.locator(".metric-value").first()).toHaveText("28");
 });
