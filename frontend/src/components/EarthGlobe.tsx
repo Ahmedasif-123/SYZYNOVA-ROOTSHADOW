@@ -339,7 +339,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
         <div className="earth-scanline" aria-hidden="true" />
       </div>
       <div className="earth-left-rail">
-        <div className="earth-rail-title"><span className="earth-live-indicator" /> {textureLoaded ? "OBSERVATION MODEL ONLINE" : "INITIALIZING EARTH IMAGERY"}</div>
+        <div className="earth-rail-title"><span className="earth-live-indicator" /> {textureLoaded ? "BLUE MARBLE TEXTURE LOADED" : "INITIALIZING EARTH IMAGERY"}</div>
         <div className="earth-rail-selected"><small>SELECTED REGION</small><strong>{active.name}</strong><span>{active.region} / {active.country}</span></div>
         <div className="earth-rail-coordinates">
           <span>{Math.abs(active.coordinates[1]).toFixed(3)}°{active.coordinates[1] >= 0 ? "N" : "S"}</span>
@@ -354,7 +354,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
       </div>
       <div className="earth-stage-bottom">
         <span><Globe2 size={14} /> DRAG TO ROTATE / SCROLL TO ZOOM</span>
-        <span>04 RESEARCH LOCATIONS <ArrowUpRight size={13} /></span>
+        <span>NASA Blue Marble imagery · historical geographic reference <ArrowUpRight size={13} /></span>
       </div>
       <div className="earth-location-strip" aria-label="Research study locations">
         {sites.map(site => (

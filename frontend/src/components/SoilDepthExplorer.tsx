@@ -70,7 +70,7 @@ export default function SoilDepthExplorer({ analysis, onMonthChange }: Props) {
           <h2>Look beneath the surface.</h2>
           <p>Scrub 45 years of modeled monthly soil-wetness percentiles. The two layers can respond differently even within the same month.</p>
         </div>
-        <div className="depth-lens-source"><span className="depth-source-led" /> LIVE FROM VERIFIED SNAPSHOT <small>Historical model data, not a current sensor</small></div>
+        <div className="depth-lens-source"><span className="depth-source-led" /> ARCHIVED NASA POWER SNAPSHOT <small>Historical model data, not a current sensor</small></div>
       </div>
       <div className="depth-lens-instrument">
         <div className="depth-lens-profile">

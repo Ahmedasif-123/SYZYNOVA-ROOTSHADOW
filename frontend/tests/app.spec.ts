@@ -45,6 +45,7 @@ test("monthly depth explorer scrubs verified records and syncs with the chart", 
   await page.getByRole("button", { name: "Explore the evidence" }).click();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
   await expect(page.locator(".depth-lens")).toBeVisible();
+  await expect(page.getByText("ARCHIVED NASA POWER SNAPSHOT")).toBeVisible();
   const slider = page.getByRole("slider", { name: "Select month in historical soil record" });
   await slider.focus();
   await slider.press("Home");
@@ -109,6 +110,7 @@ test("small screens have working navigation without horizontal overflow", async 
 test("3D Earth and offline atlas both expose verified study locations", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".earth-stage")).toBeVisible();
+  await expect(page.getByText(/BLUE MARBLE TEXTURE LOADED|INITIALIZING EARTH IMAGERY/)).toBeVisible();
   await expect(page.locator(".earth-location-strip button")).toHaveCount(4);
   const image = await page.request.get("/earth-day-2048.jpg");
   expect(image.ok()).toBeTruthy();
