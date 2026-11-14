@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
-import goodwell from "./fixtures/goodwell.json";
-import narrabri from "./fixtures/narrabri.json";
+import { readFileSync } from "node:fs";
+
+const goodwell = JSON.parse(readFileSync(new URL("./fixtures/goodwell.json", import.meta.url), "utf8"));
+const narrabri = JSON.parse(readFileSync(new URL("./fixtures/narrabri.json", import.meta.url), "utf8"));
 
 const responses: Record<string, unknown> = {
   us_sgp_goodwell: goodwell,
