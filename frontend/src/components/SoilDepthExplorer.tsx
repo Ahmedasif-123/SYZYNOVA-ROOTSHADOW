@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, RotateCcw } from "lucide-react";
 import type { Analysis } from "../lib/api";
 
-type Props = { analysis: Analysis; selectedMonth?: string | null; onMonthChange?: (month: string) => void };
+type Props = { analysis: Analysis; synchronizedMonth?: string | null; onMonthChange?: (month: string) => void };
 
-export default function SoilDepthExplorer({ analysis, selectedMonth, onMonthChange }: Props) {
+export default function SoilDepthExplorer({ analysis, synchronizedMonth, onMonthChange }: Props) {
   const samples = analysis.monthly;
   const startingIndex = useMemo(() => {
     let index = 0;
@@ -26,10 +26,10 @@ export default function SoilDepthExplorer({ analysis, selectedMonth, onMonthChan
   }, [startingIndex, samples]);
 
   useEffect(() => {
-    if (!selectedMonth) return;
-    const found = samples.findIndex(sample => sample.month === selectedMonth);
+    if (!synchronizedMonth) return;
+    const found = samples.findIndex(sample => sample.month === synchronizedMonth);
     if (found >= 0) setIndex(current => current === found ? current : found);
-  }, [selectedMonth, samples]);
+  }, [synchronizedMonth, samples]);
 
   useEffect(() => {
     if (!playing || samples.length < 2) return;
