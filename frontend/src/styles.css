@@ -798,3 +798,5 @@ main { max-width: none; }
   .moisture-atlas-reading { padding:10px; gap:9px; }
   .moisture-atlas-foot span:last-child { margin-left:0; }
 }
+
+.moisture-atlas-controls select[aria-label="Choose a specific model location"] { flex:1 1 185px; border-color:#75a99d; color:#f8eacb; }

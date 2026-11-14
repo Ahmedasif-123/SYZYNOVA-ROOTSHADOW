@@ -317,7 +317,9 @@ test("five map categories show verified NASA point data without manufacturing a 
   await expect(mismatch).toContainText("2025-12");
   await mismatch.getByRole("combobox", { name: "Filter moisture map by region" }).selectOption("Middle East");
   await expect(mismatch.getByRole("button", { name: /Inspect Doha on Surface–Root Mismatch/i })).toBeVisible();
-  await mismatch.getByRole("button", { name: /Inspect Doha on Surface–Root Mismatch/i }).click();
+  await mismatch.getByRole("combobox", { name: "Choose a specific model location" }).selectOption("qatar_doha");
+  await mismatch.getByRole("button", { name: /Inspect Doha on Surface–Root Mismatch/i }).focus();
+  await mismatch.getByRole("button", { name: /Inspect Doha on Surface–Root Mismatch/i }).press("Enter");
   await expect(mismatch).toContainText("Doha · Qatar");
   await page.getByRole("button", { name: "Map", exact: true }).click();
   await expect(page.locator(".geo-explorer")).toBeVisible();

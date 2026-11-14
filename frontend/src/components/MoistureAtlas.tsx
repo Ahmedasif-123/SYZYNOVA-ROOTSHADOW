@@ -77,6 +77,10 @@ export default function MoistureAtlas({ selected, onSelect, layer }: Props) {
       <button type="button" className={showingHistorical ? "active" : ""} onClick={() => setPeriod("historical")} aria-pressed={showingHistorical}><CalendarDays size={13}/> Historical 1981–2025</button>
       <select aria-label="Filter moisture map by region" value={region} onChange={e => setRegion(e.target.value)}><option value="all">All regions</option>{siteRegions.map(name => <option value={name} key={name}>{name}</option>)}</select>
       <input type="search" aria-label="Search moisture map locations" value={search} onChange={e => setSearch(e.target.value)} placeholder="Find a location" />
+      <select aria-label="Choose a specific model location" value={selected} onChange={event => onSelect(event.target.value as SiteId)}>
+        {!listed.some(site => site.id === selected) && <option value={selected}>{selectedSite.name} · {selectedSite.country} (current)</option>}
+        {listed.map(site => <option key={site.id} value={site.id}>{site.name} · {site.country}</option>)}
+      </select>
     </div>
     {showingHistorical && <div className="moisture-atlas-timeline">
       <label htmlFor={"atlas-month-"+layer}>Historical month: <strong>{month}</strong></label>
