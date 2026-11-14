@@ -221,3 +221,22 @@ test("guided research shows honest error without reusing previous location's sta
   await expect(page.locator(".guided-large-number")).toHaveCount(0);
 });
 
+
+
+test("graph guidance follows historical monthly data and explains interpretation visually", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  const guide = page.getByRole("region", { name: "Understand the selected monthly soil reading" });
+  await expect(guide).toBeVisible();
+  await expect(guide.locator(".visual-meter")).toHaveCount(2);
+  const slider = page.getByRole("slider", { name: "Select month in historical soil record" });
+  await slider.focus();
+  await slider.press("Home");
+  await expect(guide).toContainText("January 1981");
+  await slider.press("End");
+  await expect(guide).toContainText("December 2025");
+  await expect(page.locator(".visual-chart-key")).toContainText("Dashed lines");
+  await page.getByRole("button", { name: /Check the evidence/i }).click();
+  await expect(page.getByText(/Each bar = days in one year/)).toBeVisible();
+  await expect(page.getByText(/Nine versions of the analysis/)).toBeVisible();
+});
