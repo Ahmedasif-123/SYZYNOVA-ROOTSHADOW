@@ -85,3 +85,5 @@
     font-size: 9px;
   }
 }
+
+.chart-skeleton { min-height: 320px; display: grid; place-items: center; background: rgba(12, 36, 43, .82); color: #d1e4dc; font: 500 12px "IBM Plex Mono", monospace; letter-spacing: .3px; padding: 24px; text-align: center; }
