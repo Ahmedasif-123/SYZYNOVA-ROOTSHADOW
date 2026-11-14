@@ -76,7 +76,7 @@ export async function getAnalysis(site: SiteId, signal?: AbortSignal): Promise<A
   let body: unknown;
   try { body = await response.json(); } catch { throw new Error("The analysis service did not return valid JSON."); }
   if (!response.ok) {
-    const detail = typeof body === "object" && body !== null && "detail" in body ? String(body.detail) : "The analysis could not be completed.";
+    const detail = typeof body === "object" && body !== null && "detail" in body ? String(body.detail) : `The NASA analysis API returned HTTP ${response.status}. No data were substituted.`;
     throw new Error(detail);
   }
   const parsed = AnalysisSchema.safeParse(body);
