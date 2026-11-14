@@ -6,20 +6,22 @@ import type { SiteId } from "../lib/sites";
 import { Maximize2, RefreshCcw } from "lucide-react";
 import type { Analysis, RecoveryEvent } from "../lib/api";
 
-function Chart({ option, className = "", ariaLabel, onSelectIndex, lastIndex = 0, zoomKey = "" }: {
+function Chart({ option, className = "", ariaLabel, onSelectIndex, lastIndex = 0, zoomKey = "", categories }: {
   option: echarts.EChartsOption;
   className?: string;
   ariaLabel: string;
   onSelectIndex?: (index: number) => void;
   lastIndex?: number;
   zoomKey?: string;
+  categories?: string[];
 }) {
   const node = useRef<HTMLDivElement | null>(null);
   const instance = useRef<echarts.ECharts | null>(null);
   const callback = useRef(onSelectIndex);
   const last = useRef(lastIndex);
+  const categoryRef = useRef(categories);
   const priorZoom = useRef<string | null>(null);
-  useEffect(() => { callback.current = onSelectIndex; last.current = lastIndex; }, [onSelectIndex, lastIndex]);
+  useEffect(() => { callback.current = onSelectIndex; last.current = lastIndex; categoryRef.current = categories; }, [onSelectIndex, lastIndex, categories]);
   useEffect(() => {
     if (!node.current) return;
     const renderer = echarts.init(node.current, undefined, { renderer: "canvas" });
@@ -29,7 +31,17 @@ function Chart({ option, className = "", ariaLabel, onSelectIndex, lastIndex = 0
       if (!renderer.containPixel({ gridIndex: 0 }, [event.offsetX, event.offsetY])) return;
       const result = renderer.convertFromPixel({ xAxisIndex: 0 }, [event.offsetX, event.offsetY]);
       const value = Array.isArray(result) ? result[0] : result;
-      const index = typeof value === "number" ? Math.round(value) : Number(value);
+      const mapped = typeof value === "string" ? categoryRef.current?.indexOf(value) ?? -1 : -1;
+      let index = mapped >= 0 ? mapped : typeof value === "number" ? Math.round(value) : Number(value);
+      if (!Number.isFinite(index) || index < 0 || index > last.current) {
+        const first = renderer.convertToPixel({ xAxisIndex: 0 }, 0);
+        const final = renderer.convertToPixel({ xAxisIndex: 0 }, last.current);
+        const left = Array.isArray(first) ? first[0] : first;
+        const right = Array.isArray(final) ? final[0] : final;
+        if (typeof left === "number" && typeof right === "number" && Number.isFinite(left) && Number.isFinite(right) && right !== left) {
+          index = Math.round((event.offsetX - left) / (right - left) * last.current);
+        }
+      }
       if (Number.isFinite(index) && index >= 0 && index <= last.current) callback.current?.(index);
     };
     const zr = renderer.getZr();
@@ -138,7 +150,7 @@ export function MoistureChart({ analysis, event, highlightedMonth, siteId, onMon
       <div className="chart-toolbar"><span>1991–2020 seasonal reference · Monthly medians</span>
         <div className="chart-actions"><button type="button" onClick={() => setZoom("full")} title="Reset to entire record"><RefreshCcw size={14} /> All years</button><button type="button" disabled={!event} onClick={() => setZoom("event")}><Maximize2 size={14} /> Selected event</button></div>
       </div>
-      <Chart option={option} className="moisture-chart" onSelectIndex={selectMonth} lastIndex={months.length - 1} zoomKey={[siteId ?? "", zoom, event?.drought_start ?? ""].join("|")} ariaLabel="Interactive monthly surface and root-zone soil moisture lines and rainfall bars. Click or drag the upper graph to explain a month." />
+      <Chart option={option} className="moisture-chart" onSelectIndex={selectMonth} lastIndex={months.length - 1} categories={months} zoomKey={[siteId ?? "", zoom, event?.drought_start ?? ""].join("|")} ariaLabel="Interactive monthly surface and root-zone soil moisture lines and rainfall bars. Click or drag the upper graph to explain a month." />
       <section className="chart-point-explanation" role="region" aria-label="Explanation of selected monthly graph reading">
         <header><span>SELECTED MONTH</span><strong>{inspected ?? "Unavailable"}</strong></header>
         <div className="chart-point-values">
