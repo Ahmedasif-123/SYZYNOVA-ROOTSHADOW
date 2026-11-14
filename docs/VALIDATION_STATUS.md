@@ -1,6 +1,6 @@
 # ROOTSHADOW validation register
 
-**Updated 14 November 2026.** Separate software test status, authentic data acquisition, and scientific inference.
+**Historical four-site validation register (14 November 2026).** The baseline checks below predate the six-site extension. For the current six-location release, including 98,616 site-days and 30 NASA response chunks, consult [`EXPLORATORY_6_SITE_EXTENSION.md`](EXPLORATORY_6_SITE_EXTENSION.md) and [`SIX_SITE_RELEASE_AUDIT_2026-11-14.md`](SIX_SITE_RELEASE_AUDIT_2026-11-14.md). Do not interpret the historical four-site deployment statuses as a current live-site check.
 
 | Item | Current status | Evidence |
 |---|---|---|
