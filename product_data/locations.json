@@ -1,0 +1,737 @@
+{
+  "source": "NASA POWER daily point / MERRA-2 gridded model-derived",
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "existing_research_sites": 6,
+  "scientific_validation": "Not performed for new sites",
+  "selected_locations": [
+    {
+      "id": "qatar_doha",
+      "name": "Doha",
+      "country": "Qatar",
+      "region": "Middle East",
+      "latitude": 25.2854,
+      "longitude": 51.531
+    },
+    {
+      "id": "qatar_dukhān",
+      "name": "Dukhan",
+      "country": "Qatar",
+      "region": "Middle East",
+      "latitude": 25.43,
+      "longitude": 50.78
+    },
+    {
+      "id": "saudi_riyadh",
+      "name": "Riyadh",
+      "country": "Saudi Arabia",
+      "region": "Middle East",
+      "latitude": 24.7136,
+      "longitude": 46.6753
+    },
+    {
+      "id": "saudi_jeddah",
+      "name": "Jeddah",
+      "country": "Saudi Arabia",
+      "region": "Middle East",
+      "latitude": 21.5433,
+      "longitude": 39.1728
+    },
+    {
+      "id": "saudi_hail",
+      "name": "Ha'il",
+      "country": "Saudi Arabia",
+      "region": "Middle East",
+      "latitude": 27.52,
+      "longitude": 41.7
+    },
+    {
+      "id": "uae_abu_dhabi",
+      "name": "Abu Dhabi",
+      "country": "United Arab Emirates",
+      "region": "Middle East",
+      "latitude": 24.4539,
+      "longitude": 54.3773
+    },
+    {
+      "id": "uae_al_ain",
+      "name": "Al Ain",
+      "country": "United Arab Emirates",
+      "region": "Middle East",
+      "latitude": 24.2,
+      "longitude": 55.75
+    },
+    {
+      "id": "oman_muscat",
+      "name": "Muscat",
+      "country": "Oman",
+      "region": "Middle East",
+      "latitude": 23.588,
+      "longitude": 58.3829
+    },
+    {
+      "id": "oman_nizwa",
+      "name": "Nizwa",
+      "country": "Oman",
+      "region": "Middle East",
+      "latitude": 22.93,
+      "longitude": 57.53
+    },
+    {
+      "id": "kuwait_al_jahra",
+      "name": "Al Jahra",
+      "country": "Kuwait",
+      "region": "Middle East",
+      "latitude": 29.35,
+      "longitude": 47.68
+    },
+    {
+      "id": "bahrain_riffa",
+      "name": "Riffa",
+      "country": "Bahrain",
+      "region": "Middle East",
+      "latitude": 26.13,
+      "longitude": 50.56
+    },
+    {
+      "id": "iraq_baghdad",
+      "name": "Baghdad",
+      "country": "Iraq",
+      "region": "Middle East",
+      "latitude": 33.3152,
+      "longitude": 44.3661
+    },
+    {
+      "id": "iraq_mosul",
+      "name": "Mosul",
+      "country": "Iraq",
+      "region": "Middle East",
+      "latitude": 36.34,
+      "longitude": 43.13
+    },
+    {
+      "id": "jordan_amman",
+      "name": "Amman",
+      "country": "Jordan",
+      "region": "Middle East",
+      "latitude": 31.9539,
+      "longitude": 35.9106
+    },
+    {
+      "id": "lebanon_bekaa",
+      "name": "Bekaa Valley",
+      "country": "Lebanon",
+      "region": "Middle East",
+      "latitude": 33.85,
+      "longitude": 36.03
+    },
+    {
+      "id": "syria_aleppo",
+      "name": "Aleppo",
+      "country": "Syria",
+      "region": "Middle East",
+      "latitude": 36.2,
+      "longitude": 37.16
+    },
+    {
+      "id": "yemen_sanaa",
+      "name": "Sana'a",
+      "country": "Yemen",
+      "region": "Middle East",
+      "latitude": 15.3694,
+      "longitude": 44.191
+    },
+    {
+      "id": "iran_isfahan",
+      "name": "Isfahan",
+      "country": "Iran",
+      "region": "Middle East",
+      "latitude": 32.6546,
+      "longitude": 51.668
+    },
+    {
+      "id": "iran_shiraz",
+      "name": "Shiraz",
+      "country": "Iran",
+      "region": "Middle East",
+      "latitude": 29.59,
+      "longitude": 52.58
+    },
+    {
+      "id": "turkey_konya",
+      "name": "Konya",
+      "country": "Türkiye",
+      "region": "Middle East",
+      "latitude": 37.87,
+      "longitude": 32.49
+    },
+    {
+      "id": "turkey_sanliurfa",
+      "name": "Sanliurfa",
+      "country": "Türkiye",
+      "region": "Middle East",
+      "latitude": 37.16,
+      "longitude": 38.79
+    },
+    {
+      "id": "israel_beersheba",
+      "name": "Beersheba",
+      "country": "Israel",
+      "region": "Middle East",
+      "latitude": 31.25,
+      "longitude": 34.79
+    },
+    {
+      "id": "palestine_jenin",
+      "name": "Jenin",
+      "country": "Palestine",
+      "region": "Middle East",
+      "latitude": 32.46,
+      "longitude": 35.3
+    },
+    {
+      "id": "egypt_faiyum",
+      "name": "Faiyum",
+      "country": "Egypt",
+      "region": "Middle East",
+      "latitude": 29.31,
+      "longitude": 30.84
+    },
+    {
+      "id": "egypt_aswan",
+      "name": "Aswan",
+      "country": "Egypt",
+      "region": "Middle East",
+      "latitude": 24.09,
+      "longitude": 32.9
+    },
+    {
+      "id": "morocco_marrakesh",
+      "name": "Marrakesh",
+      "country": "Morocco",
+      "region": "North Africa",
+      "latitude": 31.63,
+      "longitude": -8
+    },
+    {
+      "id": "morocco_fez",
+      "name": "Fez",
+      "country": "Morocco",
+      "region": "North Africa",
+      "latitude": 34.06,
+      "longitude": -4.99
+    },
+    {
+      "id": "algeria_tlemcen",
+      "name": "Tlemcen",
+      "country": "Algeria",
+      "region": "North Africa",
+      "latitude": 34.88,
+      "longitude": -1.32
+    },
+    {
+      "id": "tunisia_kairouan",
+      "name": "Kairouan",
+      "country": "Tunisia",
+      "region": "North Africa",
+      "latitude": 35.68,
+      "longitude": 10.1
+    },
+    {
+      "id": "libya_sabha",
+      "name": "Sabha",
+      "country": "Libya",
+      "region": "North Africa",
+      "latitude": 27.04,
+      "longitude": 14.43
+    },
+    {
+      "id": "sudan_khartoum",
+      "name": "Khartoum",
+      "country": "Sudan",
+      "region": "North Africa",
+      "latitude": 15.5,
+      "longitude": 32.56
+    },
+    {
+      "id": "ethiopia_addis_ababa",
+      "name": "Addis Ababa",
+      "country": "Ethiopia",
+      "region": "Sub-Saharan Africa",
+      "latitude": 9,
+      "longitude": 38.76
+    },
+    {
+      "id": "kenya_nakuru",
+      "name": "Nakuru",
+      "country": "Kenya",
+      "region": "Sub-Saharan Africa",
+      "latitude": -0.3,
+      "longitude": 36.07
+    },
+    {
+      "id": "uganda_kampala",
+      "name": "Kampala",
+      "country": "Uganda",
+      "region": "Sub-Saharan Africa",
+      "latitude": 0.35,
+      "longitude": 32.58
+    },
+    {
+      "id": "nigeria_kano",
+      "name": "Kano",
+      "country": "Nigeria",
+      "region": "Sub-Saharan Africa",
+      "latitude": 12,
+      "longitude": 8.52
+    },
+    {
+      "id": "ghana_kumasi",
+      "name": "Kumasi",
+      "country": "Ghana",
+      "region": "Sub-Saharan Africa",
+      "latitude": 6.69,
+      "longitude": -1.62
+    },
+    {
+      "id": "senegal_thies",
+      "name": "Thiès",
+      "country": "Senegal",
+      "region": "Sub-Saharan Africa",
+      "latitude": 14.79,
+      "longitude": -16.93
+    },
+    {
+      "id": "zambia_lusaka",
+      "name": "Lusaka",
+      "country": "Zambia",
+      "region": "Sub-Saharan Africa",
+      "latitude": -15.42,
+      "longitude": 28.28
+    },
+    {
+      "id": "zimbabwe_bulawayo",
+      "name": "Bulawayo",
+      "country": "Zimbabwe",
+      "region": "Sub-Saharan Africa",
+      "latitude": -20.16,
+      "longitude": 28.58
+    },
+    {
+      "id": "south_africa_pretoria",
+      "name": "Pretoria",
+      "country": "South Africa",
+      "region": "Sub-Saharan Africa",
+      "latitude": -25.747,
+      "longitude": 28.23
+    },
+    {
+      "id": "madagascar_antananarivo",
+      "name": "Antananarivo",
+      "country": "Madagascar",
+      "region": "Sub-Saharan Africa",
+      "latitude": -18.88,
+      "longitude": 47.51
+    },
+    {
+      "id": "india_delhi",
+      "name": "Delhi",
+      "country": "India",
+      "region": "South and East Asia",
+      "latitude": 28.6139,
+      "longitude": 77.209
+    },
+    {
+      "id": "india_nagpur",
+      "name": "Nagpur",
+      "country": "India",
+      "region": "South and East Asia",
+      "latitude": 21.1458,
+      "longitude": 79.0882
+    },
+    {
+      "id": "india_hyderabad",
+      "name": "Hyderabad",
+      "country": "India",
+      "region": "South and East Asia",
+      "latitude": 17.385,
+      "longitude": 78.4867
+    },
+    {
+      "id": "pakistan_lahore",
+      "name": "Lahore",
+      "country": "Pakistan",
+      "region": "South and East Asia",
+      "latitude": 31.52,
+      "longitude": 74.36
+    },
+    {
+      "id": "pakistan_multan",
+      "name": "Multan",
+      "country": "Pakistan",
+      "region": "South and East Asia",
+      "latitude": 30.16,
+      "longitude": 71.52
+    },
+    {
+      "id": "bangladesh_rajshahi",
+      "name": "Rajshahi",
+      "country": "Bangladesh",
+      "region": "South and East Asia",
+      "latitude": 24.37,
+      "longitude": 88.6
+    },
+    {
+      "id": "nepal_kathmandu",
+      "name": "Kathmandu",
+      "country": "Nepal",
+      "region": "South and East Asia",
+      "latitude": 27.71,
+      "longitude": 85.32
+    },
+    {
+      "id": "china_beijing",
+      "name": "Beijing",
+      "country": "China",
+      "region": "South and East Asia",
+      "latitude": 39.9,
+      "longitude": 116.4
+    },
+    {
+      "id": "china_chengdu",
+      "name": "Chengdu",
+      "country": "China",
+      "region": "South and East Asia",
+      "latitude": 30.57,
+      "longitude": 104.07
+    },
+    {
+      "id": "japan_sapporo",
+      "name": "Sapporo",
+      "country": "Japan",
+      "region": "South and East Asia",
+      "latitude": 43.06,
+      "longitude": 141.35
+    },
+    {
+      "id": "south_korea_daejeon",
+      "name": "Daejeon",
+      "country": "South Korea",
+      "region": "South and East Asia",
+      "latitude": 36.35,
+      "longitude": 127.38
+    },
+    {
+      "id": "thailand_chiang_mai",
+      "name": "Chiang Mai",
+      "country": "Thailand",
+      "region": "South and East Asia",
+      "latitude": 18.78,
+      "longitude": 98.98
+    },
+    {
+      "id": "vietnam_hanoi",
+      "name": "Hanoi",
+      "country": "Vietnam",
+      "region": "South and East Asia",
+      "latitude": 21.03,
+      "longitude": 105.85
+    },
+    {
+      "id": "indonesia_yogyakarta",
+      "name": "Yogyakarta",
+      "country": "Indonesia",
+      "region": "South and East Asia",
+      "latitude": -7.8,
+      "longitude": 110.37
+    },
+    {
+      "id": "philippines_davao",
+      "name": "Davao",
+      "country": "Philippines",
+      "region": "South and East Asia",
+      "latitude": 7.07,
+      "longitude": 125.61
+    },
+    {
+      "id": "kazakhstan_astana",
+      "name": "Astana",
+      "country": "Kazakhstan",
+      "region": "Central Asia",
+      "latitude": 51.17,
+      "longitude": 71.43
+    },
+    {
+      "id": "uzbekistan_samarkand",
+      "name": "Samarkand",
+      "country": "Uzbekistan",
+      "region": "Central Asia",
+      "latitude": 39.65,
+      "longitude": 66.96
+    },
+    {
+      "id": "uk_cambridge",
+      "name": "Cambridge",
+      "country": "United Kingdom",
+      "region": "Europe",
+      "latitude": 52.2,
+      "longitude": 0.12
+    },
+    {
+      "id": "france_toulouse",
+      "name": "Toulouse",
+      "country": "France",
+      "region": "Europe",
+      "latitude": 43.6,
+      "longitude": 1.44
+    },
+    {
+      "id": "germany_hanover",
+      "name": "Hanover",
+      "country": "Germany",
+      "region": "Europe",
+      "latitude": 52.38,
+      "longitude": 9.73
+    },
+    {
+      "id": "netherlands_wageningen",
+      "name": "Wageningen",
+      "country": "Netherlands",
+      "region": "Europe",
+      "latitude": 51.97,
+      "longitude": 5.67
+    },
+    {
+      "id": "italy_bologna",
+      "name": "Bologna",
+      "country": "Italy",
+      "region": "Europe",
+      "latitude": 44.49,
+      "longitude": 11.34
+    },
+    {
+      "id": "spain_zaragoza",
+      "name": "Zaragoza",
+      "country": "Spain",
+      "region": "Europe",
+      "latitude": 41.65,
+      "longitude": -0.88
+    },
+    {
+      "id": "portugal_evora",
+      "name": "Évora",
+      "country": "Portugal",
+      "region": "Europe",
+      "latitude": 38.57,
+      "longitude": -7.91
+    },
+    {
+      "id": "greece_larissa",
+      "name": "Larissa",
+      "country": "Greece",
+      "region": "Europe",
+      "latitude": 39.64,
+      "longitude": 22.42
+    },
+    {
+      "id": "poland_lublin",
+      "name": "Lublin",
+      "country": "Poland",
+      "region": "Europe",
+      "latitude": 51.25,
+      "longitude": 22.57
+    },
+    {
+      "id": "romania_cluj",
+      "name": "Cluj-Napoca",
+      "country": "Romania",
+      "region": "Europe",
+      "latitude": 46.77,
+      "longitude": 23.6
+    },
+    {
+      "id": "us_nebraska_lincoln",
+      "name": "Lincoln",
+      "country": "United States",
+      "region": "North America",
+      "latitude": 40.81,
+      "longitude": -96.7
+    },
+    {
+      "id": "us_california_fresno",
+      "name": "Fresno",
+      "country": "United States",
+      "region": "North America",
+      "latitude": 36.74,
+      "longitude": -119.79
+    },
+    {
+      "id": "us_iowa_ames",
+      "name": "Ames",
+      "country": "United States",
+      "region": "North America",
+      "latitude": 42.03,
+      "longitude": -93.62
+    },
+    {
+      "id": "us_arizona_tucson",
+      "name": "Tucson",
+      "country": "United States",
+      "region": "North America",
+      "latitude": 32.22,
+      "longitude": -110.97
+    },
+    {
+      "id": "us_georgia_athens",
+      "name": "Athens, Georgia",
+      "country": "United States",
+      "region": "North America",
+      "latitude": 33.95,
+      "longitude": -83.38
+    },
+    {
+      "id": "canada_saskatoon",
+      "name": "Saskatoon",
+      "country": "Canada",
+      "region": "North America",
+      "latitude": 52.13,
+      "longitude": -106.67
+    },
+    {
+      "id": "canada_guelph",
+      "name": "Guelph",
+      "country": "Canada",
+      "region": "North America",
+      "latitude": 43.54,
+      "longitude": -80.25
+    },
+    {
+      "id": "mexico_guanajuato",
+      "name": "Guanajuato",
+      "country": "Mexico",
+      "region": "North America",
+      "latitude": 21.02,
+      "longitude": -101.26
+    },
+    {
+      "id": "mexico_hermosillo",
+      "name": "Hermosillo",
+      "country": "Mexico",
+      "region": "North America",
+      "latitude": 29.07,
+      "longitude": -110.96
+    },
+    {
+      "id": "colombia_bogota",
+      "name": "Bogotá",
+      "country": "Colombia",
+      "region": "South America",
+      "latitude": 4.71,
+      "longitude": -74.07
+    },
+    {
+      "id": "peru_cusco",
+      "name": "Cusco",
+      "country": "Peru",
+      "region": "South America",
+      "latitude": -13.53,
+      "longitude": -71.97
+    },
+    {
+      "id": "brazil_campinas",
+      "name": "Campinas",
+      "country": "Brazil",
+      "region": "South America",
+      "latitude": -22.9,
+      "longitude": -47.06
+    },
+    {
+      "id": "brazil_cuiaba",
+      "name": "Cuiabá",
+      "country": "Brazil",
+      "region": "South America",
+      "latitude": -15.6,
+      "longitude": -56.1
+    },
+    {
+      "id": "chile_talca",
+      "name": "Talca",
+      "country": "Chile",
+      "region": "South America",
+      "latitude": -35.43,
+      "longitude": -71.66
+    },
+    {
+      "id": "argentina_rosario",
+      "name": "Rosario",
+      "country": "Argentina",
+      "region": "South America",
+      "latitude": -32.95,
+      "longitude": -60.66
+    },
+    {
+      "id": "uruguay_durazno",
+      "name": "Durazno",
+      "country": "Uruguay",
+      "region": "South America",
+      "latitude": -33.38,
+      "longitude": -56.52
+    },
+    {
+      "id": "bolivia_cochabamba",
+      "name": "Cochabamba",
+      "country": "Bolivia",
+      "region": "South America",
+      "latitude": -17.39,
+      "longitude": -66.16
+    },
+    {
+      "id": "australia_melbourne",
+      "name": "Melbourne",
+      "country": "Australia",
+      "region": "Oceania",
+      "latitude": -37.81,
+      "longitude": 144.96
+    },
+    {
+      "id": "australia_perth",
+      "name": "Perth",
+      "country": "Australia",
+      "region": "Oceania",
+      "latitude": -31.95,
+      "longitude": 115.86
+    },
+    {
+      "id": "australia_toowoomba",
+      "name": "Toowoomba",
+      "country": "Australia",
+      "region": "Oceania",
+      "latitude": -27.56,
+      "longitude": 151.95
+    },
+    {
+      "id": "australia_wagga_wagga",
+      "name": "Wagga Wagga",
+      "country": "Australia",
+      "region": "Oceania",
+      "latitude": -35.11,
+      "longitude": 147.37
+    },
+    {
+      "id": "new_zealand_hamilton",
+      "name": "Hamilton",
+      "country": "New Zealand",
+      "region": "Oceania",
+      "latitude": -37.79,
+      "longitude": 175.28
+    },
+    {
+      "id": "new_zealand_christchurch",
+      "name": "Christchurch",
+      "country": "New Zealand",
+      "region": "Oceania",
+      "latitude": -43.53,
+      "longitude": 172.63
+    }
+  ]
+}

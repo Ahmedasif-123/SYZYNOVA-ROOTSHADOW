@@ -1,0 +1,198 @@
+name: Acquire global NASA product data
+on:
+  push:
+    branches: [global-product-data-2026]
+    paths:
+      - 'product_data/locations.json'
+      - '.github/workflows/acquire-global-product-data.yml'
+permissions:
+  contents: write
+concurrency:
+  group: rootshadow-global-nasa-product-data
+  cancel-in-progress: false
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - { region: 'Middle East', key: 'middle-east' }
+          - { region: 'North Africa', key: 'north-africa' }
+          - { region: 'Sub-Saharan Africa', key: 'sub-saharan-africa' }
+          - { region: 'South and East Asia', key: 'south-east-asia' }
+          - { region: 'Central Asia', key: 'central-asia' }
+          - { region: 'Europe', key: 'europe' }
+          - { region: 'North America', key: 'north-america' }
+          - { region: 'South America', key: 'south-america' }
+          - { region: 'Oceania', key: 'oceania' }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install requests
+      - name: Download and independently hash-verify NASA source responses
+        env:
+          REGION: ${{ matrix.region }}
+        run: |
+          python - <<'PY'
+          import csv, gzip, hashlib, io, json, os, shutil, tarfile, time
+          from pathlib import Path
+          from datetime import date, timedelta, datetime, timezone
+          from scripts import gate0_fetch as gate
+          
+          root = Path.cwd()
+          product = root / "product_data"
+          locations = json.loads((product / "locations.json").read_text(encoding="utf-8"))["selected_locations"]
+          region = os.environ["REGION"]
+          selected = [x for x in locations if x["region"] == region]
+          gate.PROFILES = (("AG", ("GWETTOP", "GWETROOT", "PRECTOTCORR", "T2M")),) + tuple(p for p in gate.PROFILES if p[0] != "AG" or p[1] != ("GWETTOP", "GWETROOT", "PRECTOTCORR", "T2M"))
+          status = {"region": region, "selected": len(selected), "verified": [], "failed": {}, "finished_utc": None}
+          status_dir = product / "status"
+          status_dir.mkdir(parents=True, exist_ok=True)
+          status_file = status_dir / (region.lower().replace(" ", "_") + ".json")
+          def digest(blob):
+              return hashlib.sha256(blob).hexdigest()
+          def calendar_dates():
+              day = date(1981, 1, 1)
+              last = date(2025, 12, 31)
+              while day <= last:
+                  yield day.strftime("%Y%m%d")
+                  day += timedelta(days=1)
+          expected_dates = list(calendar_dates())
+          for index, loc in enumerate(selected, 1):
+              site = loc["id"]
+              tmp = product / "_working" / site
+              try:
+                  gate.SITES[site] = (loc["latitude"], loc["longitude"])
+                  error = None
+                  for attempt in range(3):
+                      try:
+                          manifest_path = gate.build_site(site, tmp, 1981, 2025)
+                          gate.verify_manifests(tmp)
+                          break
+                      except (RuntimeError, ValueError, OSError) as exc:
+                          error = exc
+                          if attempt == 2:
+                              raise
+                          time.sleep((attempt + 1) * 30)
+                  original = json.loads(manifest_path.read_text(encoding="utf-8"))
+                  csv_path = tmp / "processed" / f"{site}_1981_2025.csv"
+                  csv_blob = csv_path.read_bytes()
+                  with io.StringIO(csv_blob.decode("utf-8")) as file:
+                      reader = csv.DictReader(file)
+                      if reader.fieldnames != ["date", "GWETTOP", "GWETROOT", "PRECTOT", "T2M"]:
+                          raise ValueError("Unexpected NASA columns")
+                      rows = list(reader)
+                  if len(rows) != 16436 or [r["date"] for r in rows] != expected_dates:
+                      raise ValueError(f"NASA daily coverage mismatch ({len(rows)} records)")
+                  if any(not r["GWETTOP"] or not r["GWETROOT"] for r in rows):
+                      raise ValueError("Missing daily soil wetness in requested model point")
+                  source_chunks = []
+                  archive_stream = io.BytesIO()
+                  with gzip.GzipFile(fileobj=archive_stream, mode="wb", mtime=0) as zipped:
+                      with tarfile.open(fileobj=zipped, mode="w") as archive:
+                          for chunk in original["source_chunks"]:
+                              raw = Path(chunk["path"])
+                              raw_blob = raw.read_bytes()
+                              if digest(raw_blob) != chunk["sha256"]:
+                                  raise ValueError("Original NASA response integrity mismatch")
+                              metadata = tarfile.TarInfo(raw.name)
+                              metadata.size = len(raw_blob)
+                              metadata.mode = 0o644
+                              metadata.mtime = 0
+                              archive.addfile(metadata, io.BytesIO(raw_blob))
+                              source_chunks.append({"name": raw.name, "sha256": chunk["sha256"], "source_url": chunk["url"], "retrieved_utc": chunk["retrieved_utc"], "reported_dates": chunk["reported_dates"], "paired_valid_dates": chunk["paired_valid_dates"]})
+                  archive_blob = archive_stream.getvalue()
+                  zipped_csv = gzip.compress(csv_blob, mtime=0)
+                  out = product / "gate0"
+                  for sub in ("processed", "raw_archives", "manifests"):
+                      (out / sub).mkdir(parents=True, exist_ok=True)
+                  processed = out / "processed" / f"{site}_1981_2025.csv.gz"
+                  archived = out / "raw_archives" / f"{site}_1981_2025_raw.tar.gz"
+                  destination = out / "manifests" / f"{site}_1981_2025.json"
+                  processed.write_bytes(zipped_csv)
+                  archived.write_bytes(archive_blob)
+                  if digest(gzip.decompress(processed.read_bytes())) != digest(csv_blob):
+                      raise ValueError("Compressed data failed SHA-256 validation")
+                  with tarfile.open(archived, "r:gz") as archive:
+                      for chunk in source_chunks:
+                          if digest(archive.extractfile(chunk["name"]).read()) != chunk["sha256"]:
+                              raise ValueError("Archived NASA response failed SHA-256 validation")
+                  record = {"site": site, "name": loc["name"], "country": loc["country"], "region": loc["region"], "latitude": loc["latitude"], "longitude": loc["longitude"], "period_start": "1981-01-01", "period_end": "2025-12-31", "daily_records": len(rows), "paired_wetness_coverage": 1.0, "variables": ["GWETTOP", "GWETROOT", "PRECTOT", "T2M"], "csv_gzip_file": f"product_data/gate0/processed/{processed.name}", "csv_uncompressed_sha256": digest(csv_blob), "csv_gzip_sha256": digest(zipped_csv), "source_archive": f"product_data/gate0/raw_archives/{archived.name}", "source_archive_sha256": digest(archive_blob), "source_chunks": source_chunks, "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements", "scientific_validation": "NOT_PERFORMED", "product_integration": "NOT_ENABLED", "retrieved_utc": datetime.now(timezone.utc).isoformat()}
+                  destination.write_text(json.dumps(record, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                  status["verified"].append(site)
+                  print(f"VERIFIED {region} {index}/{len(selected)}: {site}", flush=True)
+              except Exception as exc:
+                  status["failed"][site] = str(exc)[:400]
+                  print(f"FAILED {region} {index}/{len(selected)}: {site}: {exc}", flush=True)
+              finally:
+                  shutil.rmtree(tmp, ignore_errors=True)
+                  status["finished_utc"] = datetime.now(timezone.utc).isoformat()
+                  status_file.write_text(json.dumps(status, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          print(f"RESULT: {region} verified={len(status['verified'])}/{len(selected)}", flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nasa-${{ matrix.key }}
+          path: |
+            product_data/gate0/
+            product_data/status/
+          if-no-files-found: error
+          retention-days: 14
+  record:
+    needs: acquire
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: nasa-*
+          merge-multiple: true
+          path: product_data/
+      - name: Verify compressed outputs and aggregate acquisition report
+        run: |
+          python - <<'PY'
+          import gzip, hashlib, io, json, tarfile
+          from pathlib import Path
+          from collections import Counter
+          root = Path("product_data")
+          selected = json.loads((root / "locations.json").read_text(encoding="utf-8"))["selected_locations"]
+          statuses = [json.loads(p.read_text(encoding="utf-8")) for p in (root / "status").glob("*.json")]
+          verified = {site for batch in statuses for site in batch["verified"]}
+          failed = {key: value for batch in statuses for key, value in batch["failed"].items()}
+          for site in sorted(verified):
+              m = json.loads((root / "gate0" / "manifests" / f"{site}_1981_2025.json").read_text(encoding="utf-8"))
+              packed = Path(m["csv_gzip_file"]).read_bytes()
+              blob = gzip.decompress(packed)
+              assert hashlib.sha256(packed).hexdigest() == m["csv_gzip_sha256"]
+              assert hashlib.sha256(blob).hexdigest() == m["csv_uncompressed_sha256"]
+              assert m["daily_records"] == 16436
+              archive = Path(m["source_archive"]).read_bytes()
+              assert hashlib.sha256(archive).hexdigest() == m["source_archive_sha256"]
+              assert len(m["source_chunks"]) == 5
+              with tarfile.open(fileobj=io.BytesIO(archive), mode="r:gz") as tar:
+                  for chunk in m["source_chunks"]:
+                      assert hashlib.sha256(tar.extractfile(chunk["name"]).read()).hexdigest() == chunk["sha256"]
+          regions = dict(Counter(s["region"] for s in selected if s["id"] in verified))
+          report = {"selected_new_locations": len(selected), "verified_new_locations": len(verified), "existing_research_sites_unchanged": 6, "total_verified_if_combined": 6 + len(verified), "new_daily_records": len(verified) * 16436, "verified_by_region": regions, "unverified_sites": sorted({s["id"] for s in selected} - verified), "failures": failed, "scientific_validation": "Not performed for the new locations", "frontend_status": "No change; the six-site research website remains unchanged"}
+          (root / "ACQUISITION_REPORT.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          print(json.dumps(report, indent=2, ensure_ascii=False), flush=True)
+          PY
+      - name: Commit data files only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add product_data/gate0/ product_data/status/ product_data/ACQUISITION_REPORT.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Add hash-verified NASA global model datasets'
+            git push origin HEAD:global-product-data-2026
+          fi
