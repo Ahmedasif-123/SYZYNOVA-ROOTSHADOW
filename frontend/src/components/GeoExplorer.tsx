@@ -2,7 +2,7 @@ import { useRef, useState, type PointerEvent } from "react";
 import { LocateFixed, ZoomIn, ZoomOut } from "lucide-react";
 import { sites, type SiteId, type Site } from "../lib/sites";
 
-type Props = { selected: SiteId; onSelect: (id: SiteId) => void };
+type Props = { selected: SiteId; onSelect: (id: SiteId) => void; variant?: "light" | "dark" };
 type WindowBox = { x: number; y: number; width: number; height: number };
 
 const worldWidth = 1440;
@@ -29,7 +29,7 @@ function focusWindow(site: Site, zoom: number): WindowBox {
   };
 }
 
-export default function GeoExplorer({ selected, onSelect }: Props) {
+export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Props) {
   const [view, setView] = useState<WindowBox>(fullWorld);
   const [zoom, setZoom] = useState(1);
   const drag = useRef<{ x: number; y: number; initial: WindowBox } | null>(null);
@@ -79,7 +79,7 @@ export default function GeoExplorer({ selected, onSelect }: Props) {
     drag.current = null;
   }
 
-  return <div className="geo-explorer" role="region" aria-label="World geography and NASA study locations">
+  return <div className={"geo-explorer" + (variant === "light" ? " is-light" : "")} role="region" aria-label="World geography and NASA study locations">
     <div className="map-inner" role="region" aria-label="Interactive equirectangular world map">
       <svg
         className="world-map-svg"
@@ -93,7 +93,7 @@ export default function GeoExplorer({ selected, onSelect }: Props) {
         onPointerCancel={pointerUp}
       >
         <title>World map with four historical NASA POWER research locations</title>
-        <image href="/world-map.svg" x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
+        <image href={variant === "light" ? "/world-map-light.svg" : "/world-map.svg"} x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
         {sites.map(site => {
           const point = sitePoint(site);
           const active = selected === site.id;
