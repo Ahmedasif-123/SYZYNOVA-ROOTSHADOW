@@ -1,0 +1,76 @@
+name: ROOTSHADOW daily NASA atlas refresh
+on:
+  schedule:
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: rootshadow-live-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - { region: "Original sites", key: r0 }
+          - { region: "Middle East", key: r1 }
+          - { region: "North Africa", key: r2 }
+          - { region: "Sub-Saharan Africa", key: r3 }
+          - { region: "South and East Asia", key: r4 }
+          - { region: "Central Asia", key: r5 }
+          - { region: "Europe", key: r6 }
+          - { region: "North America", key: r7 }
+          - { region: "South America", key: r8 }
+          - { region: "Oceania", key: r9 }
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: moisture-atlas-daily-2026
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Request latest real NASA POWER readings
+        run: python scripts/build_moisture_atlas.py --region "${{ matrix.region }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daily-rootshadow-${{ matrix.key }}
+          path: product_data/atlas_refresh/
+          retention-days: 2
+          if-no-files-found: error
+  publish:
+    needs: refresh
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: moisture-atlas-daily-2026
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: daily-rootshadow-r*
+          merge-multiple: true
+          path: product_data/atlas_refresh/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Merge validated sources and keep previously verified records on failures
+        run: python scripts/build_moisture_atlas.py --merge
+      - name: Publish date-labelled NASA snapshot without rewriting research results
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add frontend/public/atlas/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Daily NASA POWER observed-date atlas refresh'
+            git push origin HEAD:moisture-atlas-daily-2026
+          fi
