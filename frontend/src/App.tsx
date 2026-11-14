@@ -13,6 +13,7 @@ import { EventInspector, EventList } from "./components/EventInspector";
 import EvidencePanel from "./components/EvidencePanel";
 
 const GeoExplorer = lazy(() => import("./components/GeoExplorer"));
+const EarthGlobe = lazy(() => import("./components/EarthGlobe"));
 type Page = "home" | "explore" | "method";
 type Level = "simple" | "research";
 
@@ -45,6 +46,7 @@ function SoilVisual() {
 }
 
 function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect: (id: SiteId) => void; navigate: (p: Page) => void }) {
+  const [view, setView] = useState<"globe" | "atlas">("globe");
   return <>
     <section className="landing-hero">
       <div className="hero-content">
@@ -57,10 +59,15 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
       </div>
       <div className="hero-map-stage">
         <div className="hero-map-topline"><span>SYZYNOVA / GLOBAL OBSERVATION SYSTEM</span><span>01 — EARTH</span></div>
+        <div className="earth-view-switch" aria-label="Geographic exploration mode">
+          <button type="button" className={view === "globe" ? "active" : ""} aria-pressed={view === "globe"} onClick={() => setView("globe")}>3D Earth</button>
+          <button type="button" className={view === "atlas" ? "active" : ""} aria-pressed={view === "atlas"} onClick={() => setView("atlas")}>World map</button>
+        </div>
         <Suspense fallback={<div className="map-skeleton">Loading geographic model…</div>}>
-          <GeoExplorer selected={selected} onSelect={(id) => { onSelect(id); navigate("explore"); }} />
+          {view === "globe" ? <EarthGlobe selected={selected} onSelect={onSelect} /> : <GeoExplorer selected={selected} onSelect={onSelect} />}
         </Suspense>
-        <div className="hero-map-readout"><span className="readout-ping" /> INTERACTIVE EARTH MODEL <span> / SELECT A LOCATION TO INVESTIGATE</span></div>
+        <div className="hero-map-readout"><span className="readout-ping" /> HISTORICAL MODEL STUDY <span> / GEOGRAPHIC LOCATION IS NOT A FIELD MEASUREMENT</span></div>
+        <button type="button" className="hero-investigate-selected" onClick={() => navigate("explore")}>Investigate {findSite(selected).name} <ArrowUpRight size={16} /></button>
       </div>
     </section>
     <div className="section-divider"><span>RESEARCH OVERVIEW</span><span>SCROLL TO EXPLORE</span></div>
