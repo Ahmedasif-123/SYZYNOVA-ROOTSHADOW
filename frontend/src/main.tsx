@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "maplibre-gl/dist/maplibre-gl.css";
 import App from "./App";
 import "./styles.css";
+import "./editorial.css";
+import "./conclusion.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {
