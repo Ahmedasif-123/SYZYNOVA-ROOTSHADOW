@@ -70,7 +70,7 @@ export default function MoistureAtlas({ selected, onSelect, layer }: Props) {
   return <section className="moisture-atlas" aria-label={label(layer) + " model-point map"}>
     <div className="moisture-atlas-heading">
       <div><span className="moisture-atlas-eyebrow">NASA POWER / MERRA-2 · SELECTED GRID POINTS</span><h3>{label(layer)}</h3></div>
-      <span className="moisture-atlas-count">{seen} / 97 readings</span>
+      <span className="moisture-atlas-count">{seen} / 97 readings{layer === "mismatch" ? ` · ${mismatches} screen-positive` : ""}</span>
     </div>
     <div className="moisture-atlas-controls">
       <button type="button" className={!showingHistorical ? "active" : ""} onClick={() => setPeriod("latest")} aria-pressed={!showingHistorical}><RefreshCcw size={13}/> Latest verified</button>

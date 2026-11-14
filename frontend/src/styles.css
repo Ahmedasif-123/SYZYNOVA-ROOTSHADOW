@@ -755,3 +755,46 @@ main { max-width: none; }
   .map-filter-controls input,.map-filter-controls select { padding:6px; font-size:9px; }
   .earth-location-strip select { padding:8px 2px; font-size:9px; }
 }
+
+.moisture-atlas { background:#071c26; color:#e5efef; padding:17px; border:1px solid rgba(108,165,179,.25); display:flex; flex-direction:column; gap:13px; box-sizing:border-box; min-width:0; }
+.moisture-atlas-heading { display:flex; justify-content:space-between; gap:15px; align-items:flex-start; }
+.moisture-atlas-eyebrow { color:#92b5bd; font:600 9px "IBM Plex Mono",monospace; letter-spacing:1px; }
+.moisture-atlas-heading h3 { color:#f3ead7; font:500 clamp(21px,2.4vw,33px) Georgia,serif; margin:7px 0 0; }
+.moisture-atlas-count { color:#e3c78c; font:500 10px "IBM Plex Mono",monospace; white-space:nowrap; }
+.moisture-atlas-controls { display:flex; flex-wrap:wrap; gap:7px; }
+.moisture-atlas-controls button,.moisture-atlas-controls select,.moisture-atlas-controls input { border:1px solid #355663; background:#0d2a37; color:#dbebea; padding:9px 11px; border-radius:4px; font:500 11px "IBM Plex Mono",monospace; min-width:0; }
+.moisture-atlas-controls button { display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
+.moisture-atlas-controls button.active { background:#dbd5c4; color:#162d38; }
+.moisture-atlas-controls select { flex:1 1 135px; }
+.moisture-atlas-controls input { flex:1 1 135px; }
+.moisture-atlas-timeline { border:1px solid #355663; background:#0d2a37; border-radius:4px; padding:10px 12px; display:flex; flex-direction:column; gap:7px; }
+.moisture-atlas-timeline label { display:flex; justify-content:space-between; color:#a4c5c9; font:500 10px "IBM Plex Mono",monospace; }
+.moisture-atlas-timeline strong { color:#f2d4a1; }
+.moisture-atlas-timeline input { width:100%; accent-color:#83d4cd; cursor:pointer; }
+.moisture-atlas-timeline>div { display:flex; justify-content:space-between; font-size:9px; color:#8da6af; }
+.moisture-atlas-warning { border-left:3px solid #e4bd7f; padding:10px 12px; background:#342e20; color:#f4e3c2; font-size:12px; line-height:1.5; margin:0; }
+.moisture-atlas-stage { background:radial-gradient(ellipse at center,#123542,#04141d); overflow:hidden; border:1px solid #284551; border-radius:5px; width:100%; }
+.moisture-atlas-map { width:100%; height:auto; display:block; aspect-ratio:2/1; }
+.moisture-atlas-map g[role="button"] { cursor:pointer; outline:none; }
+.moisture-atlas-map g[role="button"]:focus-visible circle:nth-last-of-type(2) { stroke:#fff; stroke-width:3; }
+.moisture-atlas-selected-label { fill:#f6edd8; stroke:#061a23; stroke-width:3px; paint-order:stroke; font:600 15px "IBM Plex Mono",monospace; }
+.moisture-atlas-key { display:flex; align-items:center; flex-wrap:wrap; gap:10px; color:#b8cbcf; font:500 10px "IBM Plex Mono",monospace; }
+.moisture-atlas-spectrum { flex:1; min-width:105px; height:9px; background:linear-gradient(90deg,#ab6444 0%,#e5ba60 25%,#9fbc9f 52%,#5baca9 75%,#2388ac 100%); border-radius:3px; }
+.moisture-atlas-dot { display:inline-block; width:10px; height:10px; border-radius:50%; }
+.moisture-atlas-reading { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; border:1px solid #355663; padding:13px; background:#0c2733; border-radius:5px; }
+.moisture-atlas-reading>div { min-width:0; display:flex; flex-direction:column; gap:5px; }
+.moisture-atlas-reading small { color:#8eb4be; font:600 9px "IBM Plex Mono",monospace; letter-spacing:.5px; }
+.moisture-atlas-reading strong { color:#e8e5d6; font:600 12px "DM Sans",sans-serif; line-height:1.5; overflow-wrap:anywhere; }
+.moisture-atlas-reading span { color:#b7cbd0; font-size:10px; }
+.moisture-atlas-reading p { grid-column:1/-1; margin:0; font-size:11px; color:#b8d0d0; line-height:1.5; }
+.moisture-atlas-foot { display:flex; flex-wrap:wrap; align-items:center; gap:7px 15px; color:#94b5bf; font-size:9px; line-height:1.5; }
+.moisture-atlas-foot span:last-child { margin-left:auto; }
+@media(max-width:850px) { .moisture-atlas-reading { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:550px) {
+  .moisture-atlas { padding:11px; gap:10px; }
+  .moisture-atlas-heading { flex-direction:column; gap:4px; }
+  .moisture-atlas-controls button { flex:1 1 auto; justify-content:center; padding:8px 6px; font-size:9px; }
+  .moisture-atlas-controls select,.moisture-atlas-controls input { font-size:10px; }
+  .moisture-atlas-reading { padding:10px; gap:9px; }
+  .moisture-atlas-foot span:last-child { margin-left:0; }
+}

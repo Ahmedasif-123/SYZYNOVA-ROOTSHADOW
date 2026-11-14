@@ -10,13 +10,14 @@ import VisualSoilGuide from "./VisualSoilGuide";
 
 const GeoExplorer = lazy(() => import("./GeoExplorer"));
 const EarthGlobe = lazy(() => import("./EarthGlobe"));
+const MoistureAtlas = lazy(() => import("./MoistureAtlas"));
 const SoilDepthExplorer = lazy(() => import("./SoilDepthExplorer"));
 const MoistureChart = lazy(() => import("./ScientificCharts").then(module => ({ default: module.MoistureChart })));
 const AnnualChart = lazy(() => import("./ScientificCharts").then(module => ({ default: module.AnnualChart })));
 const SensitivityChart = lazy(() => import("./ScientificCharts").then(module => ({ default: module.SensitivityChart })));
 
 type Step = "layers" | "events" | "confidence";
-type MapMode = "atlas" | "globe";
+type MapMode = "atlas" | "globe" | "surface" | "root" | "mismatch";
 type EventFilter = "all" | "surface" | "incomplete";
 
 function dateLabel(date: string | null) {
@@ -102,9 +103,9 @@ export default function GuidedWorkspace({ selected, onSelect }: { selected: Site
 
     <div className="guided-overview">
       <section className="guided-map-panel" aria-label="Choose a study location on the world map">
-        <div className="guided-map-top"><div><span className="guided-overline">01 / FIND A PLACE</span><h2>Explore the study locations</h2></div><div className="guided-map-mode" role="group" aria-label="Map viewing mode"><button type="button" aria-pressed={mapMode === "atlas"} className={mapMode === "atlas" ? "active" : ""} onClick={() => setMapMode("atlas")}>World map</button><button type="button" aria-pressed={mapMode === "globe"} className={mapMode === "globe" ? "active" : ""} onClick={() => setMapMode("globe")}>3D Earth</button></div></div>
-        <Suspense fallback={<div className="guided-map-loader" role="status">Loading the geographic explorer…</div>}>{mapMode === "atlas" ? <GeoExplorer selected={selected} onSelect={onSelect} variant="light" /> : <EarthGlobe selected={selected} onSelect={onSelect} />}</Suspense>
-        <div className="guided-map-footer"><span><Globe2 size={15} /> Select a marked research point to see its history.</span><span>{sites.length} verified model points · 6 original research sites · Not field boundaries</span></div>
+        <div className="guided-map-top"><div><span className="guided-overline">01 / FIND A PLACE</span><h2>Explore the study locations</h2></div><div className="guided-map-mode" role="group" aria-label="Map viewing mode"><button type="button" aria-pressed={mapMode === "atlas"} className={mapMode === "atlas" ? "active" : ""} onClick={() => setMapMode("atlas")}>World map</button><button type="button" aria-pressed={mapMode === "globe"} className={mapMode === "globe" ? "active" : ""} onClick={() => setMapMode("globe")}>3D Earth</button><button type="button" aria-pressed={mapMode === "surface"} className={mapMode === "surface" ? "active" : ""} onClick={() => setMapMode("surface")}>Surface moisture</button><button type="button" aria-pressed={mapMode === "root"} className={mapMode === "root" ? "active" : ""} onClick={() => setMapMode("root")}>Root-zone moisture</button><button type="button" aria-pressed={mapMode === "mismatch"} className={mapMode === "mismatch" ? "active" : ""} onClick={() => setMapMode("mismatch")}>Layer mismatch</button></div></div>
+        <Suspense fallback={<div className="guided-map-loader" role="status">Loading the geographic explorer…</div>}>{mapMode === "atlas" ? <GeoExplorer selected={selected} onSelect={onSelect} variant="light" /> : mapMode === "globe" ? <EarthGlobe selected={selected} onSelect={onSelect} /> : <MoistureAtlas selected={selected} onSelect={onSelect} layer={mapMode} />}</Suspense>
+        <div className="guided-map-footer"><span><Globe2 size={15} /> Select a model point, switch between five geographic views, or scrub a historical month.</span><span>{sites.length} verified model points · 6 original research sites · Not field boundaries</span></div>
       </section>
       <aside className="guided-finding" aria-live="polite" aria-label="Selected location research finding">
         <span className="guided-overline">02 / THE FINDING</span>

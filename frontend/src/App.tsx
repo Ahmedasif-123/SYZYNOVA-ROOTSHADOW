@@ -16,6 +16,7 @@ import ResearchConclusion from "./components/ResearchConclusion";
 const GeoExplorer = lazy(() => import("./components/GeoExplorer"));
 const GuidedWorkspace = lazy(() => import("./components/GuidedWorkspace"));
 const EarthGlobe = lazy(() => import("./components/EarthGlobe"));
+const MoistureAtlas = lazy(() => import("./components/MoistureAtlas"));
 const SoilDepthExplorer = lazy(() => import("./components/SoilDepthExplorer"));
 const MoistureChart = lazy(() => import("./components/ScientificCharts").then(module => ({ default: module.MoistureChart })));
 const AnnualChart = lazy(() => import("./components/ScientificCharts").then(module => ({ default: module.AnnualChart })));
@@ -52,7 +53,7 @@ function SoilVisual() {
 }
 
 function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect: (id: SiteId) => void; navigate: (p: Page) => void }) {
-  const [view, setView] = useState<"globe" | "atlas">("globe");
+  const [view, setView] = useState<"globe" | "atlas" | "surface" | "root" | "mismatch">("globe");
   const current = findSite(selected);
   const findings = [
     { id: "us_sgp_goodwell" as SiteId, name: "Goodwell", region: "Oklahoma · United States", total: 31, positive: 19, median: 2 },
@@ -76,9 +77,9 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
         <div className="rs-hero-foot"><span>45 YEARS OF HISTORY</span><span>SIX VERIFIED RESEARCH POINTS</span><span>NO SYNTHETIC FINDINGS</span></div>
       </div>
       <div className="rs-earth-shell">
-        <div className="rs-earth-header"><span>EXPLORE THE STUDY REGIONS</span><div><button className={view === "globe" ? "is-on" : ""} type="button" onClick={() => setView("globe")}>Earth</button><button className={view === "atlas" ? "is-on" : ""} type="button" onClick={() => setView("atlas")}>Map</button></div></div>
+        <div className="rs-earth-header"><span>EXPLORE THE STUDY REGIONS</span><div><button className={view === "globe" ? "is-on" : ""} type="button" onClick={() => setView("globe")}>Earth</button><button className={view === "atlas" ? "is-on" : ""} type="button" onClick={() => setView("atlas")}>Map</button><button className={view === "surface" ? "is-on" : ""} type="button" onClick={() => setView("surface")}>Surface</button><button className={view === "root" ? "is-on" : ""} type="button" onClick={() => setView("root")}>Roots</button><button className={view === "mismatch" ? "is-on" : ""} type="button" onClick={() => setView("mismatch")}>Mismatch</button></div></div>
         <Suspense fallback={<div className="rs-map-loading">Preparing geographic model…</div>}>
-          {view === "globe" ? <EarthGlobe selected={selected} onSelect={onSelect}/> : <GeoExplorer selected={selected} onSelect={onSelect}/>}
+          {view === "globe" ? <EarthGlobe selected={selected} onSelect={onSelect}/> : view === "atlas" ? <GeoExplorer selected={selected} onSelect={onSelect}/> : <MoistureAtlas selected={selected} onSelect={onSelect} layer={view}/>}
         </Suspense>
         <div className="rs-earth-footer"><span><strong>{current.name}</strong><small>{current.region}, {current.country}</small></span><button type="button" onClick={() => navigate("explore")}>Investigate this location <ArrowUpRight size={15}/></button></div>
       </div>

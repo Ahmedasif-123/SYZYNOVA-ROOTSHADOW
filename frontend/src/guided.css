@@ -339,3 +339,14 @@
 .guided-decade-filter select { border:1px solid #b7c7b8;background:#f7faf3;color:#275037;border-radius:4px;padding:8px;max-width:140px; }
 .guided-unique-caution {font-size:12px;line-height:1.5;color:#795e39;background:#f2e9d2;padding:9px 12px;border-left:3px solid #b89754;}
 @media (max-width:730px){.guided-simple-conclusion { display:block;padding:18px; }.guided-simple-number { border-right:0;border-bottom:1px solid #c2d3be;padding:0 0 18px;margin-bottom:18px; }.guided-decade-filter { flex-basis:100%; }.guided-simple-number>strong {font-size:62px;}}
+
+.guided-map-mode { flex-wrap: wrap; justify-content:flex-end; max-width:100%; }
+.guided-map-mode button { white-space:nowrap; }
+@media(max-width:1000px) {
+  .guided-map-top { align-items:flex-start; flex-direction:column; }
+  .guided-map-mode { justify-content:flex-start; }
+}
+@media(max-width:730px) {
+  .guided-map-mode { width:100%; flex-wrap:wrap; }
+  .guided-map-mode button { padding:9px 10px; font-size:10px; flex:1 1 auto; }
+}

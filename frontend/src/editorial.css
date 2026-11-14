@@ -218,3 +218,13 @@ body { color:var(--rs-ink); }
   .explorer-header .chip { display:inline-flex; flex-wrap:wrap; white-space:normal; max-width:100%; margin-top:15px; background:#e4e9dc; border:1px solid #aec2ac; color:#285039; padding:9px 12px; font-size:9px; line-height:1.35; }
   .explorer-header .chip-led { flex:none; background:#548a65; }
 }
+
+.rs-earth-header { flex-wrap:wrap; }
+.rs-earth-header>div { flex-wrap:wrap; justify-content:flex-end; }
+.rs-earth-header button { white-space:nowrap; }
+.rs-earth-shell>.moisture-atlas { flex:1; min-height:595px; }
+@media(max-width:730px) {
+  .rs-earth-header { align-items:flex-start; flex-direction:column; }
+  .rs-earth-header>div { justify-content:flex-start; }
+  .rs-earth-shell>.moisture-atlas { min-height:505px; }
+}
