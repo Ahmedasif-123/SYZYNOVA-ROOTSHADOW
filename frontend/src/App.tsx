@@ -48,54 +48,67 @@ function SoilVisual() {
 
 function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect: (id: SiteId) => void; navigate: (p: Page) => void }) {
   const [view, setView] = useState<"globe" | "atlas">("globe");
-  return <>
-    <section className="landing-hero">
-      <div className="hero-content">
-        <div className="hero-kicker"><span className="live-pulse" />EARTH SYSTEM RESEARCH / NASA POWER</div>
-        <h1>Rain returns.<br /><em>But does the soil?</em></h1>
-        <p className="hero-intro">A landscape can look recovered while deeper soil takes longer to respond. ROOTSHADOW explores the difference—using 45 years of NASA environmental history.</p>
-        <div className="hero-cta"><button className="button-primary" type="button" onClick={() => navigate("explore")}>Explore the evidence <ArrowRight size={18} /></button><button className="button-quiet" type="button" onClick={() => navigate("method")}>How it works <ArrowUpRight size={16} /></button></div>
-        <div className="hero-auth"><ShieldCheck size={18} /><span>Authentic NASA POWER records. Model-derived soil wetness. No simulated results in this experience.</span></div>
-        <div className="hero-counts"><div><strong>45<span> years</span></strong><small>1981—2025</small></div><div><strong>04<span> sites</span></strong><small>Three countries</small></div><div><strong>65,744</strong><small>Historical site-days</small></div></div>
-      </div>
-      <div className="hero-map-stage">
-        <div className="hero-map-topline"><span>SYZYNOVA / GLOBAL OBSERVATION SYSTEM</span><span>01 — EARTH</span></div>
-        <div className="earth-view-switch" aria-label="Geographic exploration mode">
-          <button type="button" className={view === "globe" ? "active" : ""} aria-pressed={view === "globe"} onClick={() => setView("globe")}>3D Earth</button>
-          <button type="button" className={view === "atlas" ? "active" : ""} aria-pressed={view === "atlas"} onClick={() => setView("atlas")}>World map</button>
+  const current = findSite(selected);
+  const findings = [
+    { id: "us_sgp_goodwell" as SiteId, name: "Goodwell", region: "Oklahoma · United States", total: 31, positive: 19, median: 2 },
+    { id: "us_sgp_stillwater" as SiteId, name: "Stillwater", region: "Oklahoma · United States", total: 26, positive: 6, median: 1 },
+    { id: "australia_narrabri" as SiteId, name: "Narrabri", region: "New South Wales · Australia", total: 28, positive: 16, median: 1 },
+    { id: "spain_cordoba" as SiteId, name: "Córdoba", region: "Andalusia · Spain", total: 25, positive: 6, median: 1 }
+  ];
+  return <div className="rs-editorial">
+    <section className="rs-hero">
+      <div className="rs-hero-copy">
+        <div className="rs-topline"><span>SYZYNOVA FIELD NOTES</span><span>EARTH SYSTEMS / 2026</span></div>
+        <span className="rs-kicker">A RESEARCH INSTRUMENT FOR THE LAND BENEATH US</span>
+        <h1>When rain returns,<br/><em>what happens</em><br/>below ground?</h1>
+        <p className="rs-hero-intro">A landscape can appear recovered while deeper soil takes longer. We built ROOTSHADOW to investigate that invisible interval, not to assume every rainfall ends a drought.</p>
+        <div className="rs-hero-actions">
+          <button type="button" className="rs-primary-link" onClick={() => navigate("explore")}>Start investigating <ArrowUpRight size={18}/></button>
+          <button type="button" className="rs-secondary-link" onClick={() => document.getElementById("rs-findings")?.scrollIntoView({ behavior: "smooth" })}>See what we found <ArrowRight size={16}/></button>
         </div>
-        <Suspense fallback={<div className="map-skeleton">Loading geographic model…</div>}>
-          {view === "globe" ? <EarthGlobe selected={selected} onSelect={onSelect} /> : <GeoExplorer selected={selected} onSelect={onSelect} />}
+        <div className="rs-hero-foot"><span>45 YEARS OF HISTORY</span><span>FOUR VERIFIED RESEARCH POINTS</span><span>NO SYNTHETIC FINDINGS</span></div>
+      </div>
+      <div className="rs-earth-shell">
+        <div className="rs-earth-header"><span>EXPLORE THE STUDY REGIONS</span><div><button className={view === "globe" ? "is-on" : ""} type="button" onClick={() => setView("globe")}>Earth</button><button className={view === "atlas" ? "is-on" : ""} type="button" onClick={() => setView("atlas")}>Map</button></div></div>
+        <Suspense fallback={<div className="rs-map-loading">Preparing geographic model…</div>}>
+          {view === "globe" ? <EarthGlobe selected={selected} onSelect={onSelect}/> : <GeoExplorer selected={selected} onSelect={onSelect}/>}
         </Suspense>
-        <div className="hero-map-readout"><span className="readout-ping" /> HISTORICAL MODEL STUDY <span> / GEOGRAPHIC LOCATION IS NOT A FIELD MEASUREMENT</span></div>
-        <button type="button" className="hero-investigate-selected" onClick={() => navigate("explore")}>Investigate {findSite(selected).name} <ArrowUpRight size={16} /></button>
+        <div className="rs-earth-footer"><span><strong>{current.name}</strong><small>{current.region}, {current.country}</small></span><button type="button" onClick={() => navigate("explore")}>Investigate this location <ArrowUpRight size={15}/></button></div>
       </div>
     </section>
-    <div className="section-divider"><span>RESEARCH OVERVIEW</span><span>SCROLL TO EXPLORE</span></div>
-    <section className="section-container intro-triptych" aria-label="How ROOTSHADOW works">
-      <div><span className="item-index">01</span><div className="feature-symbol"><Satellite size={23} /></div><h3>Observe</h3><p>Read authentic NASA POWER histories of surface and root-zone wetness.</p></div>
-      <div><span className="item-index">02</span><div className="feature-symbol"><Activity size={23} /></div><h3>Compare</h3><p>Find historical droughts and measure which soil layer recovered first.</p></div>
-      <div><span className="item-index">03</span><div className="feature-symbol"><ShieldCheck size={23} /></div><h3>Question</h3><p>Inspect trends, sensitivity and uncertainty rather than assuming a confident answer.</p></div>
-    </section>
-    <section className="section-container map-home-section model-story-section">
-      <div className="section-heading"><div><span className="eyebrow">02 / BENEATH THE SURFACE</span><h2>The signal you <em>cannot see.</em></h2><p>Rain can restore a landscape's appearance before the deeper root zone has recovered. Our workflow detects that difference in historical NASA POWER model output, rather than assuming it.</p></div><button className="button-quiet" type="button" onClick={() => navigate("explore")}>Investigate actual events <ArrowUpRight size={17} /></button></div>
-      <div className="model-story-grid"><div className="model-story-explainer"><div className="story-index">MODEL VIEW / ILLUSTRATIVE</div><SoilVisual /><p>Conceptual layer illustration — not satellite imagery or a measured soil profile.</p></div><div className="model-story-steps"><div><span>01 / ABOVE GROUND</span><h3>Rainfall resumes.</h3><p>Shallow soil responds quickly in some historical drought recoveries.</p></div><div><span>02 / BELOW GROUND</span><h3>Roots may still wait.</h3><p>Compare when modeled root-zone wetness crosses the same recovery threshold.</p></div><div><span>03 / SCIENTIFIC CHECK</span><h3>Test the evidence.</h3><p>Inspect every event, trend robustness, provenance and limitations.</p></div></div></div>
-    </section>
-    <section className="section-container science-statement"><span className="eyebrow">SCIENTIFIC INTEGRITY</span><h2>A convincing visualization is not the same as a proven climate trend.</h2><p>We distinguish historical model estimates from direct soil measurements, and exploratory patterns from statistically confirmed conclusions. This is a research prototype—not an irrigation advisory or drought forecasting service.</p><button className="button-quiet" onClick={() => navigate("method")}>Read the method and limitations <ArrowUpRight size={16} /></button></section>
-  </>;
-}
 
-function DownloadResult({ name, analysis }: { name: string; analysis: Awaited<ReturnType<typeof getAnalysis>> }) {
-  function download() {
-    const payload = { project: "ROOTSHADOW", site: name, exported_utc: new Date().toISOString(), provenance: analysis.source, method: analysis.method, results: { period: analysis.period, quality: analysis.quality, lag_trend: analysis.lag_trend, annual_trend: analysis.trend, audit: analysis.audit, events: analysis.events, sensitivity: analysis.sensitivity }, warning: "Exploratory NASA POWER/MERRA-2 model-derived screening, not field measurements or farm advice." };
-    const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
-    const element = document.createElement("a");
-    element.href = url;
-    element.download = `rootshadow-${name.toLowerCase().replaceAll(" ", "-")}-evidence.json`;
-    element.click();
-    URL.revokeObjectURL(url);
-  }
-  return <button type="button" className="icon-label-action" onClick={download}><Download size={16} /> Export evidence JSON</button>;
+    <section className="rs-narrative rs-problem">
+      <aside className="rs-side-number">01 — THE QUESTION</aside>
+      <div className="rs-narrative-body"><p className="rs-overline">WHAT WE CAN'T SEE FROM ABOVE</p><h2>Green above ground<br/>doesn't always mean<br/><em>recovered below.</em></h2><p>After a drought, the surface and deeper soil can recover at different times. That matters because the shallow layer is only part of the water story. To investigate the difference, we track both layers under the same recovery rule.</p><div className="rs-inline-rule"><span>Rainfall resumes</span><span>Surface responds</span><span>Root-zone response checked</span></div></div>
+      <figure className="rs-soil-figure"><SoilVisual/><figcaption>Conceptual soil profile. The actual measurements in this study are gridded model estimates, not probes on a farm.</figcaption></figure>
+    </section>
+
+    <section className="rs-findings" id="rs-findings">
+      <div className="rs-findings-header"><div><p className="rs-overline">02 — THE EVIDENCE</p><h2>Four places.<br/><em>Four different stories.</em></h2></div><p>We investigated 45 years of NASA POWER / MERRA-2 soil-wetness history at four agricultural locations. The pattern exists in the modeled records, but it is not uniform.</p></div>
+      <div className="rs-big-finding"><div className="rs-finding-ratio"><strong>47<span> / 110</span></strong><small>detected historical drought episodes had a completed surface-first recovery</small></div><div className="rs-finding-interpretation"><span>WHAT THAT NUMBER MEANS</span><p>About 42.7% of these selected modeled events recovered at the surface before the root zone. This is a descriptive finding for four sites, not a global drought rate.</p></div></div>
+      <div className="rs-findings-table">
+        <div className="rs-findings-labels"><span>LOCATION</span><span>COMPLETED SURFACE-FIRST / ALL EPISODES</span><span>MEDIAN GAP</span></div>
+        {findings.map(item => <button key={item.id} className="rs-finding-row" type="button" onClick={() => { onSelect(item.id); navigate("explore"); }}>
+          <span className="rs-find-place"><strong>{item.name}</strong><small>{item.region}</small></span>
+          <span className="rs-find-bar"><i><b style={{ width: String(item.positive / item.total * 100) + "%" }}/></i><span>{item.positive} of {item.total} events</span></span>
+          <span className="rs-find-delay">{item.median} <small>{item.median === 1 ? "day" : "days"}</small><ArrowUpRight size={16}/></span>
+        </button>)}
+      </div>
+      <p className="rs-finding-limit"><strong>Important:</strong> No global trend has been demonstrated. Goodwell’s nominal trend did not meet a basic four-site multiple-testing correction; these records need independent corroboration.</p>
+    </section>
+
+    <section className="rs-solution">
+      <div><p className="rs-overline">03 — WHAT WE BUILT</p><h2>Evidence first.<br/><em>Decisions second.</em></h2><p>ROOTSHADOW lets people follow an investigation instead of reading a dashboard. Pick a location. See the historical result. Test its sensitivity. Understand its limitations. Leave with evidence you can inspect.</p><button className="rs-primary-link" type="button" onClick={() => navigate("explore")}>Open the research workspace <ArrowUpRight size={18}/></button></div>
+      <div className="rs-solution-notes">
+        <div><span>INVESTIGATE</span><strong>Navigate from Earth to a local timeline.</strong><p>Follow actual modeled events at a research point, not an invented global animation.</p></div>
+        <div><span>INTERROGATE</span><strong>Challenge the apparent result.</strong><p>Compare the soil layers, change context and inspect robustness and uncertainty.</p></div>
+        <div><span>COMMUNICATE</span><strong>Take the evidence with you.</strong><p>Export the verified analysis and identify which field measurements are still missing.</p></div>
+      </div>
+    </section>
+
+    <section className="rs-final-note"><span>THE NEXT SCIENTIFIC STEP</span><p>More locations and independent sources matter. SMAP L4, GLDAS and field measurements can provide additional comparisons; they have <strong>not</strong> yet been integrated into the published findings.</p><div><a href="https://nsidc.org/data/smap" target="_blank" rel="noreferrer">SMAP <ExternalLink size={13}/></a><a href="https://ldas.gsfc.nasa.gov/gldas" target="_blank" rel="noreferrer">GLDAS <ExternalLink size={13}/></a><button type="button" onClick={() => navigate("method")}>Read the limitations <ArrowRight size={15}/></button></div></section>
+    <div className="rs-signature"><strong>ROOTSHADOW</strong><span>BY SYZYNOVA — MUHAMMAD AHMED & SOMAYA BAKIR</span><span>NASA SPACE APPS DOHA 2026</span></div>
+  </div>;
 }
 
 function ExplorePage({ selected, onSelect }: { selected: SiteId; onSelect: (id: SiteId) => void }) {
