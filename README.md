@@ -17,7 +17,7 @@ After an identified drought, how long does root-zone wetness stay below the seas
 - **Data**: live NASA POWER (10-year chunks, SHA-256 snapshots, verified cache fallback), prefetched verified site snapshots from `scripts/gate0_fetch.py` (recommended for the demo), and a clearly labelled synthetic mode.
 - Responsive UI, FastAPI local server, Azure Static Web Apps + Functions configuration, tests and CI.
 
-**Not validated:** no real NASA data has been run through this build in the authoring environment. No statistical significance claim is scientifically established, and the surrogate calibration is exploratory. Independent corroboration (SMAP L4, GLDAS, NOAA stations, MODIS) is not implemented. The synthetic mode is not evidence.
+**Evidence status (14 November 2026):** Verified NASA POWER source responses for four predefined sites (Stillwater, Goodwell, Narrabri and Córdoba), 1981–2025: 65,744 site-days, all 20 raw source hashes and four CSV hashes valid, and complete raw-to-CSV value agreement. The scientific results are **exploratory only**: Goodwell shows a candidate declining signed recovery-order gap, but there is **no independently corroborated climatic trend**. See [`docs/EXPLORATORY_4_SITE_RESULTS.md`](docs/EXPLORATORY_4_SITE_RESULTS.md). Independent SMAP/GLDAS/station corroboration is not complete; synthetic data are never evidence.
 
 ## NASA POWER HTTP 422 troubleshooting
 
@@ -36,7 +36,7 @@ python scripts/gate0_fetch.py --site us_sgp_stillwater --start-year 1981 --end-y
 python scripts/gate0_fetch.py --verify
 ```
 
-A passing mock-data test suite does not prove the live NASA API has been reached. No real historical case is verified until the user supplies completed NASA files and the scientific analysis is run on those bytes.
+Live requests using `community=HY` returned HTTP 422; `community=AG` with `GWETTOP`, `GWETROOT`, `PRECTOTCORR`, and `T2M` succeeded on 14 November 2026. The four supplied NASA datasets were independently hash-verified and analyzed. This API result does not validate scientific inference.
 
 ## Recommended workflow
 
@@ -85,6 +85,6 @@ See `method` in any API response and `docs/GATE1_SCREENING.md`. Known limits: PO
 
 The project is a research prototype. It is not a validated drought warning system. Annual incomplete-recovery days are attributed to the calendar year on which each mismatch day occurs; event counts are attributed to the year surface recovery begins. Null-model and autocorrelation tests are exploratory, and their nominal p-values must not be presented as calibrated evidence of a climatic trend.
 
-The source code is published under the MIT license in `LICENSE`. NASA POWER provides the environmental input and must be cited in the project submission; dependency and AI-tool citations are in `docs/ATTRIBUTION_AND_AI.md`. No real NASA-derived case-study results are included in this source archive.
+The source code is published under the MIT license in `LICENSE`. NASA POWER provides the environmental input and must be cited in the project submission; dependency and AI-tool citations are in `docs/ATTRIBUTION_AND_AI.md`. The public repository contains the exploratory four-site analysis report but does not include the large raw NASA JSON or processed CSV files, which are retained separately with provenance manifests.
 
 Cloud deployment is not active by default. The Azure workflow is manual (`workflow_dispatch`) until a deployment token is installed and verified.
