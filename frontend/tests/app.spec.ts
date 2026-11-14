@@ -390,13 +390,13 @@ test("Get Summary produces audited location-specific figures, interactive graphs
   await page.getByRole("button", { name: "Get Summary" }).click();
   await expect(page.getByRole("heading", { name: "Get Summary." })).toBeVisible();
   const report = page.getByRole("region", { name: "Generated research summary for selected location" });
-  await expect(report.getByRole("heading", { name: "Goodwell" })).toBeVisible();
+  await expect(report.locator(".summary-location-title h2")).toHaveText("Goodwell");
   await expect(report.locator(".summary-facts>div").first()).toContainText("31");
   await expect(report.locator(".summary-facts>div").nth(1)).toContainText("19");
   await expect(report.getByRole("region", { name: "Explanation of selected monthly graph reading" })).toBeVisible();
   await expect(report.getByRole("region", { name: "Explanation of selected annual bar" })).toBeVisible();
   await report.getByRole("combobox", { name: "Summary study location" }).selectOption("qatar_doha");
-  await expect(report.getByRole("heading", { name: "Doha" })).toBeVisible();
+  await expect(report.locator(".summary-location-title h2")).toHaveText("Doha");
   await expect(report.locator(".summary-facts>div").first()).toContainText(String(doha.events.length));
   await expect(report.locator(".summary-facts>div").nth(1)).toContainText(String(doha.events.filter((item: { status: string }) => item.status === "COMPLETE_SURFACE_FIRST").length));
   const [file] = await Promise.all([
