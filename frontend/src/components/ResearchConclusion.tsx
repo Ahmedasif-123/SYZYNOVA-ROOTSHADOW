@@ -52,7 +52,8 @@ function exportConclusion(siteName: string, analysis: Analysis, count: number, m
   const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
   const link = document.createElement("a");
   link.href = url;
-  link.download = "ROOTSHADOW-" + siteName.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-conclusion.json";
+  const slug = siteName.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  link.download = "ROOTSHADOW-" + slug + "-conclusion.json";
   document.body.appendChild(link);
   link.click();
   link.remove();

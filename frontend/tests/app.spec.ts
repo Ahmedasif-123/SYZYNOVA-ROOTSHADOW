@@ -73,7 +73,13 @@ test("research conclusions drive an audience-specific next step and export", asy
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export this finding" }).click();
   const file = await download;
-  expect(file.suggestedFilename()).toContain("goodwell");
+  expect(file.suggestedFilename()).toBe("ROOTSHADOW-goodwell-conclusion.json");
+  const exported = JSON.parse(readFileSync(await file.path(), "utf8"));
+  expect(exported.project).toBe("ROOTSHADOW");
+  expect(exported.conclusion.drought_events).toBe(31);
+  expect(exported.conclusion.completed_surface_first).toBe(19);
+  expect(exported.conclusion.scientific_claim_ready).toBe(false);
+  expect(exported.source.mode).toBe("verified_prefetched_nasa");
 });
 
 test("scientific workspace renders actual backend tests and comparisons", async ({ page }, testInfo) => {
