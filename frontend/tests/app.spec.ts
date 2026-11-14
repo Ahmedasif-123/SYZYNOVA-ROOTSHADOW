@@ -143,3 +143,30 @@ test("3D Earth retains accessible location selection when WebGL is unsupported",
   await expect(page.locator("#site-select")).toHaveValue("australia_narrabri");
   await expect(page.locator(".metric-value").first()).toHaveText("28");
 });
+
+test("research journey flows from a case study into evidence and audience interpretation", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".editorial-lead")).toBeVisible();
+  await expect(page.locator(".fieldnotes-row")).toHaveCount(4);
+  await expect(page.locator(".app-frame")).toHaveAttribute("data-theme", "field");
+  await page.locator(".fieldnotes-row").filter({ hasText: "Goodwell" }).click();
+  await expect(page.locator(".research-conclusions")).toBeVisible();
+  await expect(page.locator(".investigation-journey button")).toHaveCount(5);
+  await expect(page.getByText(/A repeatable surface-first pattern deserves a closer look/)).toBeVisible();
+  await page.getByRole("button", { name: "For researchers" }).click();
+  await expect(page.getByText(/Quantify differences in modeled recovery timing/)).toBeVisible();
+  await page.getByRole("button", { name: "Review detailed scientific tests" }).click();
+  await expect(page.locator(".advanced-workspace")).toBeVisible();
+  await expect(page.locator(".echart")).toHaveCount(3);
+});
+
+test("editorial appearance can be changed without losing investigation context", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("combobox", { name: "Choose color theme" }).selectOption("canopy");
+  await expect(page.locator(".app-frame")).toHaveAttribute("data-theme", "canopy");
+  await page.getByRole("combobox", { name: "Choose color theme" }).selectOption("orbit");
+  await expect(page.locator(".app-frame")).toHaveAttribute("data-theme", "orbit");
+  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await expect(page.locator(".metric-value").first()).toHaveText("31");
+  await expect(page.locator(".app-frame")).toHaveAttribute("data-theme", "orbit");
+});
