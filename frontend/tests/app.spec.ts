@@ -350,9 +350,10 @@ test("monthly graph selection explains paired wetness and real precipitation; an
   await expect(interpretation).toContainText("Root zone");
   await expect(interpretation).toContainText("Rainfall");
   const slider = page.getByRole("slider", { name: "Select month in historical soil record" });
-  await slider.fill("0");
+  await slider.focus();
+  await slider.press("Home");
   await expect(interpretation).toContainText("1981-01");
-  await slider.fill("539");
+  await slider.press("End");
   await expect(interpretation).toContainText("2025-12");
   await page.locator(".moisture-chart").click({ position: { x: 210, y: 112 } });
   await expect(interpretation).not.toContainText("2025-12");
