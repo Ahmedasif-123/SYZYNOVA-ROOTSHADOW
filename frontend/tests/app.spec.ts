@@ -21,15 +21,15 @@ test.beforeEach(async ({ page }) => {
 
 test("homepage clearly explains model-based historical evidence", async ({ page }, testInfo) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /Rain returns/i })).toBeVisible();
-  await expect(page.getByText("65,744", { exact: true })).toBeVisible();
-  await expect(page.getByText(/No simulated results in this experience/i)).toBeVisible();
+  await expect(page.getByRole("heading", { name: /When rain returns/i })).toBeVisible();
+  await expect(page.getByText(/FOUR VERIFIED RESEARCH POINTS/i)).toBeVisible();
+  await expect(page.getByText(/NO SYNTHETIC FINDINGS/i)).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("homepage.png"), fullPage: true });
 });
 
 test("verified Goodwell data drives farmer-facing metrics and recovery selection", async ({ page }, testInfo) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator(".metric-value").nth(0)).toHaveText("31");
   await expect(page.locator(".metric-value").nth(1)).toHaveText("19");
   await expect(page.locator(".metric-value").nth(2)).toHaveText("2 d");
@@ -42,7 +42,7 @@ test("verified Goodwell data drives farmer-facing metrics and recovery selection
 
 test("monthly depth explorer scrubs verified records and syncs with the chart", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
   await expect(page.locator(".depth-lens")).toBeVisible();
   const slider = page.getByRole("slider", { name: "Select month in historical soil record" });
@@ -60,9 +60,25 @@ test("monthly depth explorer scrubs verified records and syncs with the chart", 
   await expect(page.locator(".echart")).toHaveCount(1);
 });
 
+test("research conclusions drive an audience-specific next step and export", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  await expect(page.locator(".rs-conclusion")).toBeVisible();
+  await expect(page.getByRole("heading", { name: /surface recovered first/i })).toBeVisible();
+  await expect(page.locator(".rs-conclusion-lead")).toContainText("61.3%");
+  await page.getByRole("button", { name: "Researcher", exact: true }).click();
+  await expect(page.getByText(/Treat the delay as a testable screening result/)).toBeVisible();
+  await page.getByRole("button", { name: "Planner", exact: true }).click();
+  await expect(page.getByText(/prioritize verification/)).toBeVisible();
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Export this finding" }).click();
+  const file = await download;
+  expect(file.suggestedFilename()).toContain("goodwell");
+});
+
 test("scientific workspace renders actual backend tests and comparisons", async ({ page }, testInfo) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
   await page.getByRole("button", { name: "Scientific view" }).click();
   await expect(page.locator(".echart")).toHaveCount(3);
@@ -75,7 +91,7 @@ test("scientific workspace renders actual backend tests and comparisons", async 
 
 test("location changes update real data and never reuse the previous site's figures", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
   await page.locator("#site-select").selectOption("australia_narrabri");
   await expect(page.locator(".metric-value").first()).toHaveText("28");
@@ -85,7 +101,7 @@ test("location changes update real data and never reuse the previous site's figu
 
 test("missing data produces an error rather than invented scientific numbers", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
   await page.locator("#site-select").selectOption("spain_cordoba");
   await expect(page.getByRole("heading", { name: "Analysis unavailable" })).toBeVisible();
@@ -115,12 +131,12 @@ test("3D Earth and offline atlas both expose verified study locations", async ({
   const geojson = await page.request.get("/world.geojson");
   expect(geojson.ok()).toBeTruthy();
   expect((await geojson.json()).features.length).toBeGreaterThan(100);
-  await page.getByRole("button", { name: "World map" }).click();
+  await page.getByRole("button", { name: "Map", exact: true }).click();
   await expect(page.locator(".geo-explorer")).toBeVisible();
   await expect(page.locator(".map-site-list .map-site")).toHaveCount(4);
   await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
-  await expect(page.getByRole("button", { name: "Explore the evidence" })).toBeVisible();
-  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await expect(page.getByRole("button", { name: "Start investigating" })).toBeVisible();
+  await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.getByRole("heading", { name: "Explore soil recovery" })).toBeVisible();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
 });
@@ -137,7 +153,7 @@ test("3D Earth retains accessible location selection when WebGL is unsupported",
   await expect(page.getByText(/3D graphics unavailable on this device/)).toBeVisible();
   await expect(page.locator(".earth-location-strip button")).toHaveCount(4);
   await page.locator(".earth-location-strip button").filter({ hasText: "Narrabri" }).click();
-  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator("#site-select")).toHaveValue("australia_narrabri");
   await expect(page.locator(".metric-value").first()).toHaveText("28");
 });
