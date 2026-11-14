@@ -339,3 +339,28 @@ test("five geographic modes remain selectable inside the guided research workspa
   await modes.getByRole("button", { name: "Layer mismatch" }).click();
   await expect(page.getByRole("region", { name: "Surface–Root Mismatch model-point map" })).toBeVisible();
 });
+
+
+test("monthly graph selection explains paired wetness and real precipitation; annual bar selection explains the year", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  const interpretation = page.getByRole("region", { name: "Explanation of selected monthly graph reading" });
+  await expect(interpretation).toBeVisible();
+  await expect(interpretation).toContainText("Surface");
+  await expect(interpretation).toContainText("Root zone");
+  await expect(interpretation).toContainText("Rainfall");
+  const slider = page.getByRole("slider", { name: "Select month in historical soil record" });
+  await slider.fill("0");
+  await expect(interpretation).toContainText("1981-01");
+  await slider.fill("539");
+  await expect(interpretation).toContainText("2025-12");
+  await page.locator(".moisture-chart").click({ position: { x: 210, y: 112 } });
+  await expect(interpretation).not.toContainText("2025-12");
+  await page.getByRole("button", { name: /The takeaway/i }).click();
+  await page.getByText("Explore advanced graphs").click();
+  const annual = page.getByRole("region", { name: "Explanation of selected annual bar" });
+  await expect(annual).toBeVisible();
+  await annual.getByRole("combobox", { name: "Inspect annual mismatch year" }).selectOption("2000");
+  await expect(annual).toContainText("In 2000");
+  await expect(annual).toContainText("Mismatch days");
+});

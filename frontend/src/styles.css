@@ -800,3 +800,16 @@ main { max-width: none; }
 }
 
 .moisture-atlas-controls select[aria-label="Choose a specific model location"] { flex:1 1 185px; border-color:#75a99d; color:#f8eacb; }
+
+.chart-inspection { min-width:0; }
+.chart-inspection .moisture-chart { height:445px; }
+.chart-point-explanation { background:#102d39; border:1px solid #365764; border-radius:6px; margin:9px 0 12px; padding:16px 18px; color:#dceceb; }
+.chart-point-explanation header { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:12px; }
+.chart-point-explanation header span { font:600 10px "IBM Plex Mono",monospace; color:#9ac3c8; }
+.chart-point-explanation header strong { color:#eddbb7; font:600 17px "IBM Plex Mono",monospace; }
+.chart-point-explanation select { border:1px solid #55757c; background:#0e2632; color:#eeddb9; font:600 13px "IBM Plex Mono",monospace; padding:8px 11px; }
+.chart-point-values { display:flex; flex-wrap:wrap; gap:9px; }
+.chart-point-values span { display:inline-flex; align-items:center; gap:7px; border:1px solid #355967; padding:9px 11px; font-size:11px; color:#bdd4d4; background:#0b2430; }
+.chart-point-values strong { color:#edf4ef; font-weight:700; }
+.chart-point-explanation p { color:#c6dada; font-size:12px; line-height:1.75; margin:15px 0 0; }
+@media(max-width:730px) { .chart-inspection .moisture-chart { height:420px; }.chart-point-explanation { padding:12px; }.chart-point-values span { flex:1 1 140px; } }
