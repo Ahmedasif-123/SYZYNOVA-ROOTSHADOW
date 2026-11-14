@@ -265,9 +265,10 @@ def synthetic_demo():
 
 
 def default_data_dirs():
-    root = Path(__file__).resolve().parents[2]
+    api_root = Path(__file__).resolve().parents[1]
+    repository_root = api_root.parent
     env = os.environ.get("ROOTSHADOW_DATA_DIR")
-    return [Path(env)] if env else [root / "api" / "data" / "gate0", root / "data" / "gate0"]
+    return [Path(env)] if env else [api_root / "data" / "gate0", repository_root / "data" / "gate0"]
 
 
 def list_sites(data_dirs=None):

@@ -9,7 +9,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from local_server import app
-from rootshadow.data import IntegrityError, _fetch_chunk, list_sites, load_site, obtain_nasa
+from rootshadow.data import IntegrityError, default_data_dirs, list_sites, load_site, obtain_nasa
 
 
 SITES = {"us_sgp_stillwater", "us_sgp_goodwell", "australia_narrabri", "spain_cordoba"}
@@ -83,3 +83,9 @@ def test_corrupted_compressed_snapshot_is_rejected(tmp_path):
     (base / "manifests" / "site_1981_2025.json").write_text(json.dumps({"site": "site", "processed_csv": "site_1981_2025.csv", "processed_sha256": hashlib.sha256(csv + b"changed").hexdigest(), "source_chunks": []}))
     with pytest.raises(IntegrityError):
         load_site("site", [base])
+
+
+def test_default_site_data_search_matches_api_runtime_layout():
+    from rootshadow import data as module
+    api_dir = Path(module.__file__).resolve().parents[1]
+    assert default_data_dirs()[0] == api_dir / "data" / "gate0"

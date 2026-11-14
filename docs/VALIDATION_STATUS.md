@@ -4,7 +4,7 @@
 
 | Item | Current status | Evidence |
 |---|---|---|
-| Python/API/UI integration | Local software tests passed (46/46 after live API and bundled-site integration); cloud deployment not verified | `tests/`, `.github/workflows/tests.yml` |
+| Python/API/UI integration | Local software tests passed (47/47 after live API and bundled-site integration); cloud deployment not verified | `tests/`, `.github/workflows/tests.yml` |
 | NASA POWER acquisition | **Verified on four sites** from 1981–2025; `community=AG` accepted after `HY` returned HTTP 422 | 20 raw NASA responses, 4 manifests and CSVs, reviewed source ZIP |
 | Source integrity | 20/20 raw JSON SHA-256 hashes passed, 4/4 processed CSV hashes passed | Four manifests; 65,744 rows compared value-by-value with raw JSON |
 | Paired data coverage | 100% of 16,436 days per site for `GWETTOP` and `GWETROOT` | NASA CSVs and JSON responses |
@@ -13,6 +13,8 @@
 | Surrogate normal-lag calibration | Descriptive model only; unvalidated i.i.d. residual resampling and simplified physics | `api/rootshadow/null_model.py` |
 | Autocorrelation-corrected annual tests | Implemented, but potentially anti-conservative when estimated variance factor <1; not confirmatory | `api/rootshadow/trend.py` |
 | Independent scientific corroboration | Not performed (SMAP L4, GLDAS, NOAA USCRN, MODIS) | `scripts/extract_gee_corroboration.py` is only an optional acquisition scaffold |
+| Four-site runtime loading | All four snapshot tables packaged as gzip CSVs with original SHA-256 manifests; tested through local FastAPI | `api/data/gate0/`, `tests/test_integration_real.py` |
+| Live NASA API compatibility | `AG` first and explicit fallbacks; mock-tested; **real post-fix live API call not verified** | `api/rootshadow/data.py` |
 | Four-site runtime loading | All four snapshot tables packaged as gzip CSVs with original SHA-256 manifests; tested through local FastAPI | `api/data/gate0/`, `tests/test_integration_real.py` |
 | Live NASA API compatibility | `AG` first and explicit fallbacks; mock-tested; **real post-fix live API call not verified** | `api/rootshadow/data.py` |
 | Live application deployment | Not verified | Azure workflow remains manual pending cloud setup |
