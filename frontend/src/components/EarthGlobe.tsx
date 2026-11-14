@@ -92,7 +92,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
     let dayTexture: THREE.Texture | null = null;
     let disposed = false;
     const loader = new THREE.TextureLoader();
-    loader.load("/earth-day-2048.jpg", texture => {
+    loader.load(`${import.meta.env.BASE_URL}earth-day-2048.jpg`, texture => {
       if (disposed) {
         texture.dispose();
         return;
@@ -341,7 +341,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
       <div className="earth-render-host" ref={host}>
         {status === "fallback" && (
           <div className="earth-static-fallback">
-            <img src="/world-map.svg" alt="World landmasses and study regions" />
+            <img src={`${import.meta.env.BASE_URL}world-map.svg`} alt="World landmasses and study regions" />
             <span>3D graphics unavailable on this device. Use the location selector below.</span>
           </div>
         )}
@@ -378,7 +378,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
       </div>
       <div className="earth-stage-bottom">
         <span><Globe2 size={14} /> DRAG TO ROTATE / SCROLL TO ZOOM</span>
-        <span>04 RESEARCH LOCATIONS <ArrowUpRight size={13} /></span>
+        <span>{String(sites.length).padStart(2, "0")} RESEARCH LOCATIONS <ArrowUpRight size={13} /></span>
       </div>
       <div className="earth-location-strip" role="group" aria-label="Research study locations">
         {sites.map(site => (

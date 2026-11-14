@@ -37,7 +37,7 @@ These are engineering and product references, not claims of collaboration, endor
 
 ## Scientific safeguards
 
-- The 1981–2025 timeline represents historical NASA POWER/MERRA-2 model-derived wetness for four specific points only.
+- The 1981–2025 timeline represents historical NASA POWER/MERRA-2 model-derived wetness for six selected gridded model points only.
 - Surface/root-zone percentiles displayed in the depth lens are monthly medians. Drought recovery rules operate on daily data, so monthly bar crossings are **not** labeled as recovery-event dates.
 - Drought detection, recovery delays, sensitivity checks and audit verdicts originate from the existing Python service and remain unchanged by the visual redesign.
 - Null model, reanalysis model circularity and independent corroboration limitations must remain visible. ROOTSHADOW is not a validated agricultural decision-support system.
@@ -47,7 +47,7 @@ These are engineering and product references, not claims of collaboration, endor
 
 1. Build TypeScript and Vite without errors.
 2. Pass backend test suite and browser interaction suite for desktop/mobile.
-3. Verify all four `/api/analyze?mode=site` responses in Vercel.
+3. Verify all six `/api/analyze?mode=site` responses for the API deployment, and all six `/site-results/*.json` snapshots in the GitHub Pages build. Keep hosted and locally tested results distinct.
 4. Validate the 3D globe on a WebGL-capable device and flat-map fallback without WebGL.
 5. Validate historical timeline scrubbing, site selection, scientific comparisons and evidence JSON export.
 6. Review actual browser screenshots and mobile viewport.

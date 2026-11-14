@@ -12,7 +12,7 @@ from local_server import app
 from rootshadow.data import IntegrityError, default_data_dirs, list_sites, load_site, obtain_nasa
 
 
-SITES = {"us_sgp_stillwater", "us_sgp_goodwell", "australia_narrabri", "spain_cordoba"}
+SITES = {"us_sgp_stillwater", "us_sgp_goodwell", "australia_narrabri", "spain_cordoba", "argentina_pampas", "southern_africa"}
 
 
 def test_bundled_nasa_data_is_accessible_and_verified():
@@ -89,3 +89,18 @@ def test_default_site_data_search_matches_api_runtime_layout():
     from rootshadow import data as module
     api_dir = Path(module.__file__).resolve().parents[1]
     assert default_data_dirs()[0] == api_dir / "data" / "gate0"
+
+
+@pytest.mark.parametrize("site,expected_events,expected_surface_first", [
+    ("argentina_pampas", 27, 11),
+    ("southern_africa", 21, 15),
+])
+def test_two_new_verifiable_study_points(site, expected_events, expected_surface_first):
+    response = TestClient(app).get("/api/analyze", params={"mode": "site", "site": site})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["source"]["mode"] == "verified_prefetched_nasa"
+    assert data["period"]["days"] == 16436
+    assert len(data["events"]) == expected_events
+    assert sum(e["status"] == "COMPLETE_SURFACE_FIRST" for e in data["events"]) == expected_surface_first
+    assert data["ready_for_scientific_claims"] is False

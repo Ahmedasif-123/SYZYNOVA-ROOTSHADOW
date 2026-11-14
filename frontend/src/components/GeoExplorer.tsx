@@ -92,8 +92,8 @@ export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Pr
         onPointerUp={pointerUp}
         onPointerCancel={pointerUp}
       >
-        <title>World map with four historical NASA POWER research locations</title>
-        <image href={variant === "light" ? "/world-map-light.svg" : "/world-map.svg"} x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
+        <title>World map with six historical NASA POWER research locations</title>
+        <image href={variant === "light" ? `${import.meta.env.BASE_URL}world-map-light.svg` : `${import.meta.env.BASE_URL}world-map.svg`} x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
         {sites.map(site => {
           const point = sitePoint(site);
           const active = selected === site.id;
@@ -130,7 +130,7 @@ export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Pr
       <button type="button" onClick={reset} aria-label="Show full world map"><LocateFixed size={17} /></button>
     </div>
     <div className="map-site-list">
-      <div className="map-list-heading">CHOOSE RESEARCH LOCATION <span>04 SITES</span></div>
+      <div className="map-list-heading">CHOOSE RESEARCH LOCATION <span>{String(sites.length).padStart(2, "0")} SITES</span></div>
       {sites.map(site => <button
         key={site.id}
         type="button"

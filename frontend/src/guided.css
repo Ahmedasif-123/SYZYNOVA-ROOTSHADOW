@@ -280,3 +280,62 @@
   .guided-map-panel .geo-explorer.is-light .geo-tools button {height:26px;width:26px;}
   .guided-map-panel .geo-explorer.is-light .map-footer-note {left:7px;right:7px;bottom:4px;padding:2px;background:#f7faf5;color:#59715b;font-size:7px;text-align:center;}
 }
+
+
+
+.visual-soil-guide {border:1px solid #ccd8c8;background:#edf2e9;margin:10px 0 24px;padding:15px 18px;color:#2e533d;font-family:Manrope,"DM Sans",sans-serif;}
+.visual-guide-reading {display:flex;align-items:center;gap:17px;flex-wrap:wrap;}
+.visual-guide-month {font:600 11px "IBM Plex Mono",monospace;letter-spacing:.25px;color:#526d58;}
+.visual-guide-value {display:inline-flex;gap:6px;align-items:center;font-size:11px;color:#59715e;}
+.visual-guide-value strong {color:#2f6248;font-size:14px;font-weight:750;}
+.visual-guide-value small {color:#788d7b;font-size:10px;}
+.visual-guide-dot {display:inline-block;flex:none;width:8px;height:8px;border-radius:50%;}
+.visual-guide-dot.surface {background:#50a9a6;}
+.visual-guide-dot.root {background:#c6a078;}
+.visual-guide-reading p {flex:1 1 220px;margin:0;font-size:12px;font-weight:600;color:#355d41;line-height:1.45;}
+.visual-guide-key {margin-top:10px;padding-top:10px;border-top:1px solid #d3ded0;display:flex;gap:9px;align-items:center;flex-wrap:wrap;color:#667e6a;font:500 10px Manrope,sans-serif;}
+.visual-guide-spectrum {height:7px;width:115px;border-radius:10px;background:linear-gradient(90deg,#c38063,#d8c29c 35%,#8fbc9f 70%,#4e9997);position:relative;display:inline-block;}
+.visual-guide-spectrum i,.visual-guide-spectrum b {position:absolute;top:-3px;height:13px;border-left:2px solid #294b38;}
+.visual-guide-spectrum i {left:20%;}
+.visual-guide-spectrum b {left:40%;}
+.visual-guide-key small {font-size:10px;color:#7b897a;}
+.visual-guide-key details {margin-left:auto;max-width:450px;color:#5d7861;line-height:1.5;}
+.visual-guide-key summary {cursor:pointer;font-weight:650;text-decoration:underline;text-underline-offset:3px;}
+.visual-guide-key details::details-content {font-weight:400;}
+@media(max-width:730px){.visual-soil-guide{padding:12px;}.visual-guide-reading{gap:8px 13px;}.visual-guide-reading p{flex-basis:100%;}.visual-guide-key details{margin-left:0;width:100%;}}
+
+.visual-chart-key {display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:14px 0 8px;font:500 11px Manrope,sans-serif;color:#d4e8dc;}
+.visual-chart-key>span {display:flex;gap:8px;align-items:center;}
+.visual-line {display:inline-block;width:21px;height:0;border-top:3px solid;}
+.visual-line.surface {border-color:#62d8e0;}
+.visual-line.root {border-color:#d3b68d;}
+.visual-line.threshold {border-color:#9aabb3;border-top-style:dashed;}
+.visual-line.selected {border-color:#e8c79b;border-top-style:dotted;}
+.visual-chart-message {font-size:11.5px;line-height:1.5;margin:8px 0 12px;color:#aec5bd;}
+.guided-science-charts .visual-chart-message {color:#b6cbc2;margin-top:2px;}
+
+.guided-simple-conclusion { display:grid;grid-template-columns:minmax(230px,.75fr) 1.25fr;gap:26px;padding:24px 28px;background:#e7eee4;border:1px solid #c5d5c2;color:#284e37;margin:7px 0 18px; }
+.guided-simple-number { border-right:1px solid #c2d3be;padding-right:26px;display:flex;flex-direction:column;gap:12px; }
+.guided-simple-number>strong { font:500 clamp(52px,6vw,82px)/1 Georgia,serif;letter-spacing:-2px;color:#2b734c; }
+.guided-simple-number>strong small { font-size:.38em;color:#718f77; }
+.guided-simple-number>small { font-size:11px;line-height:1.5;color:#6b866e; }
+.guided-proportion { height:10px;background:#cfdfca;border-radius:8px;overflow:hidden; }
+.guided-proportion>i { display:block;height:100%;background:#408962; }
+.guided-simple-meaning h4 { font:500 clamp(23px,2.7vw,34px)/1.2 Georgia,serif;color:#284b37;margin:11px 0 14px; }
+.guided-simple-meaning p { color:#506d57;line-height:1.6;font-size:13px;margin:0 0 18px; }
+.guided-next-step { border-top:1px solid #c2d1bd;padding-top:14px;color:#496a50;font-size:12px;line-height:1.6; }
+.guided-next-step strong { display:block;color:#2d5d3e; }
+.guided-audit-details { border:1px solid #cad7c7;margin:15px 0;background:#f6f8f1; }
+.guided-audit-details>summary { display:flex;align-items:center;gap:10px;padding:16px 18px;color:#365b42;font-size:12px;font-weight:700;cursor:pointer;list-style:none; }
+.guided-audit-details>summary::-webkit-details-marker { display:none; }
+.guided-audit-details>summary span { margin-left:auto;font-weight:500;color:#637d67; }
+.guided-audit-details>summary svg:last-child { flex:none; }
+.guided-audit-details .guided-evidence-panel { margin:0;padding:15px; }
+.guided-science-detail { margin-top:20px; }
+.guided-science-detail>summary { display:flex;align-items:center;gap:12px;padding:17px 3px;border-top:1px solid #b6cbbb;font-size:12px;font-weight:700;color:#34684b;cursor:pointer;list-style:none; }
+.guided-science-detail>summary::-webkit-details-marker { display:none; }
+.guided-science-detail>summary svg { margin-left:auto; }
+.guided-decade-filter { display:flex;align-items:center;gap:8px;color:#6a876d;font:600 11px Manrope,sans-serif; }
+.guided-decade-filter select { border:1px solid #b7c7b8;background:#f7faf3;color:#275037;border-radius:4px;padding:8px;max-width:140px; }
+.guided-unique-caution {font-size:12px;line-height:1.5;color:#795e39;background:#f2e9d2;padding:9px 12px;border-left:3px solid #b89754;}
+@media (max-width:730px){.guided-simple-conclusion { display:block;padding:18px; }.guided-simple-number { border-right:0;border-bottom:1px solid #c2d3be;padding:0 0 18px;margin-bottom:18px; }.guided-decade-filter { flex-basis:100%; }.guided-simple-number>strong {font-size:62px;}}

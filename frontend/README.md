@@ -35,7 +35,7 @@ npm run build
 npm run preview
 ```
 
-The production build is emitted to `frontend/dist`. This standalone frontend is not yet live-deployed; a Vercel configuration and its Python service integration must be tested as a separate deployment task.
+The production build is emitted to `frontend/dist`. The latest six-site source is on `farm-decision-clarity-six-sites`. Its tested, self-contained static build is published to `gh-pages`; public GitHub Pages activation must be checked separately. Vercel preview deployments exist, but the most recent successful frontend preview may lag behind this branch; do not present a preview as the current build without checking its commit.
 
 ## Important design and data constraints
 
@@ -44,7 +44,7 @@ The production build is emitted to `frontend/dist`. This standalone frontend is 
 - The interactive monthly plot uses the API's monthly median percentile series; event dates derive from the API's daily event detector. Do not infer daily values from the monthly graph.
 - The Evidence Auditor has custom exploratory decision rules; its labels are not scientific certifications.
 - A location and event selector, a research mode, an event inspector, trend visualization, sensitivity heatmap, site comparison, and JSON evidence export are implemented.
-- External map tiles require internet and display provider attribution. When unavailable, users can still select sites from the list.
+- The flat map, geographic geometry, Earth texture, and six static research snapshots are bundled locally in the fallback build. External font downloads are optional; they are not scientific data dependencies.
 - No forecast or irrigation recommendation is made.
 
 ## Stack

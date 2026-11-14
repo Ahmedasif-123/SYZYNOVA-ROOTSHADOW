@@ -1,0 +1,43 @@
+name: Publish ROOTSHADOW static fallback
+on:
+  push:
+    branches: [farm-decision-clarity-six-sites]
+    paths:
+      - 'frontend/**'
+      - 'api/**'
+      - 'scripts/export_pages_results.py'
+      - '.github/workflows/publish-static-fallback.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Generate verified NASA results for offline-capable public demo
+        run: python scripts/export_pages_results.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+        working-directory: frontend
+      - name: Build static site with project-relative asset URLs
+        env:
+          VITE_STATIC_SNAPSHOTS: 'true'
+        run: |
+          sed -i 's|url("/world-map.svg")|url("/SYZYNOVA-ROOTSHADOW/world-map.svg")|' frontend/src/styles.css
+          cd frontend
+          npm run build -- --base /SYZYNOVA-ROOTSHADOW/
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/dist
+          publish_branch: gh-pages
+          force_orphan: true

@@ -4,6 +4,16 @@
 
 ROOTSHADOW investigates whether apparent recovery in surface soil moisture can conceal continued root-zone water stress after drought, using NASA POWER gridded environmental data.
 
+## Current six-site release — 14 November 2026
+
+**Judge-facing version:** the `farm-decision-clarity-six-sites` branch includes a guided, six-point React research workspace; a completed static build is available in the `gh-pages` branch. The six published NASA POWER/MERRA-2 model-derived analysis snapshots cover **1981–2025**, totaling **98,616 site-days**, **158 candidate drought episodes**, and **73 completed surface-first recovery episodes**. Argentina and South Africa are included. See [six-site research report](docs/EXPLORATORY_6_SITE_EXTENSION.md) and [release audit](docs/SIX_SITE_RELEASE_AUDIT_2026-11-14.md).
+
+**Static demo:** https://ahmedasif-123.github.io/SYZYNOVA-ROOTSHADOW/ — this address requires GitHub Pages to be enabled in repository settings using branch `gh-pages`, folder `/ (root)`. The static build does not depend on the Vercel API. GitHub Actions build and browser checks passed, but a live public browser test and Pages activation were **not independently confirmed** by this audit.
+
+**Scientific boundary:** a location represents a NASA gridded model point, not a measured field. The six-point sample is not globally representative; no independently validated drought prediction, climate trend, or irrigation recommendation has been established. The OpenAI research assistant and independent SMAP/GLDAS/in-situ corroboration are not complete.
+
+**Note:** older four-site integration and Azure instructions below document the original baseline, not the current six-site static release.
+
 ## Scientific question
 
 After an identified drought, how long does root-zone wetness stay below the seasonal threshold after surface wetness has recovered (the *recovery delay*), and has that delay changed over 1981–2025?
@@ -17,10 +27,10 @@ After an identified drought, how long does root-zone wetness stay below the seas
 - **Data**: live NASA POWER (10-year chunks, SHA-256 snapshots, verified cache fallback), prefetched verified site snapshots from `scripts/gate0_fetch.py` (recommended for the demo), and a clearly labelled synthetic mode.
 - Responsive UI, FastAPI local server, Azure Static Web Apps + Functions configuration, tests and CI.
 
-**Evidence status (14 November 2026):** Verified NASA POWER source responses for four predefined sites (Stillwater, Goodwell, Narrabri and Córdoba), 1981–2025: 65,744 site-days, all 20 raw source hashes and four CSV hashes valid, and complete raw-to-CSV value agreement. The scientific results are **exploratory only**: Goodwell shows a candidate declining signed recovery-order gap, but there is **no independently corroborated climatic trend**. See [`docs/EXPLORATORY_4_SITE_RESULTS.md`](docs/EXPLORATORY_4_SITE_RESULTS.md). Independent SMAP/GLDAS/station corroboration is not complete; synthetic data are never evidence.
+**Historical four-site evidence status (superseded by the six-site release above):** Verified NASA POWER source responses for four predefined sites (Stillwater, Goodwell, Narrabri and Córdoba), 1981–2025: 65,744 site-days, all 20 raw source hashes and four CSV hashes valid, and complete raw-to-CSV value agreement. The scientific results are **exploratory only**: Goodwell shows a candidate declining signed recovery-order gap, but there is **no independently corroborated climatic trend**. See [`docs/EXPLORATORY_4_SITE_RESULTS.md`](docs/EXPLORATORY_4_SITE_RESULTS.md). Independent SMAP/GLDAS/station corroboration is not complete; synthetic data are never evidence.
 
 
-## Backend integration completion (14 November 2026)
+## Historical four-site backend integration (superseded)
 
 - All four verified NASA 1981–2025 site tables are now shipped with the Python API as deterministic gzip-compressed CSVs in `api/data/gate0/processed/`. Their original manifests remain in `api/data/gate0/manifests/`; the loader checks the SHA-256 of the **decompressed original CSV bytes** before analysis. The 20 original source JSON responses stay in the separate research evidence archive, with original NASA URLs and hashes preserved in the manifests.
 - `/api/sites` lists the four bundled locations. `/api/analyze?mode=site&site=us_sgp_goodwell` runs the analysis on verified real data without any NASA network request. `/api/analyze?mode=live` uses `community=AG` first and retries explicit alternate parameter/community profiles if NASA rejects a request; synthetic results are never substituted for missing real data.
