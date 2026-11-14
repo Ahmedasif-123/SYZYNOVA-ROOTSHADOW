@@ -14,6 +14,7 @@ import EvidencePanel from "./components/EvidencePanel";
 import ResearchConclusion from "./components/ResearchConclusion";
 
 const GeoExplorer = lazy(() => import("./components/GeoExplorer"));
+const GuidedWorkspace = lazy(() => import("./components/GuidedWorkspace"));
 const EarthGlobe = lazy(() => import("./components/EarthGlobe"));
 const SoilDepthExplorer = lazy(() => import("./components/SoilDepthExplorer"));
 const MoistureChart = lazy(() => import("./components/ScientificCharts").then(module => ({ default: module.MoistureChart })));
@@ -128,7 +129,7 @@ function DownloadResult({ name, analysis }: { name: string; analysis: Awaited<Re
   return <button type="button" className="icon-label-action" onClick={download}><Download size={16} /> Export evidence JSON</button>;
 }
 
-function ExplorePage({ selected, onSelect }: { selected: SiteId; onSelect: (id: SiteId) => void }) {
+function LegacyExplorePage({ selected, onSelect }: { selected: SiteId; onSelect: (id: SiteId) => void }) {
   const [level, setLevel] = useState<Level>("simple");
   const [event, setEvent] = useState<RecoveryEvent | null>(null);
   const [comparisonSite, setComparisonSite] = useState<SiteId | "none">("none");
@@ -163,6 +164,14 @@ function ExplorePage({ selected, onSelect }: { selected: SiteId; onSelect: (id: 
       </div>}
       <div className="explorer-endnote"><CircleHelp size={16} /><span>ROOTSHADOW uses historical, model-derived NASA POWER soil wetness. It is not field-scale sensing, real-time drought monitoring, or an irrigation recommendation system.</span></div>
     </motion.div></AnimatePresence>}
+  </div>;
+}
+
+function ExplorePage({ selected, onSelect }: { selected: SiteId; onSelect: (id: SiteId) => void }) {
+  const [technical, setTechnical] = useState(false);
+  return <div className="guided-route">
+    <div className="guided-mode-switch"><span>{technical ? "SCIENTIFIC RESEARCH VIEW" : "GUIDED RESEARCH WORKSPACE"}</span><button type="button" onClick={() => setTechnical(value => !value)}>{technical ? "Return to guided tools" : "Open complete scientific workbench"}</button></div>
+    {technical ? <LegacyExplorePage selected={selected} onSelect={onSelect} /> : <Suspense fallback={<div className="analysis-loading" role="status">Opening the research workspace…</div>}><GuidedWorkspace selected={selected} onSelect={onSelect} /></Suspense>}
   </div>;
 }
 

@@ -33,9 +33,11 @@ test("verified Goodwell data drives farmer-facing metrics and recovery selection
   await expect(page.locator(".metric-value").nth(0)).toHaveText("31");
   await expect(page.locator(".metric-value").nth(1)).toHaveText("19");
   await expect(page.locator(".metric-value").nth(2)).toHaveText("2 d");
-  await expect(page.getByText("NASA POWER · HISTORICAL MODEL", { exact: true })).toBeVisible();
-  await page.locator(".event-row").first().click();
+  await expect(page.locator(".guided-reliability")).toContainText("NASA POWER");
+  await page.getByRole("button", { name: /Drought events/i }).click();
+  await page.locator(".guided-event-table tbody button").first().click();
   await expect(page.locator(".event-inspector")).toBeVisible();
+  await page.getByRole("button", { name: /Soil over time/i }).click();
   await expect(page.locator(".echart")).toHaveCount(1);
   await page.screenshot({ path: testInfo.outputPath("investigation.png"), fullPage: true });
 });
@@ -63,6 +65,8 @@ test("monthly depth explorer scrubs verified records and syncs with the chart", 
 test("research conclusions drive an audience-specific next step and export", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Start investigating" }).click();
+  await page.getByRole("button", { name: /Check the evidence/i }).click();
+  await page.getByText(/Read the complete research interpretation/i).click();
   await expect(page.locator(".rs-conclusion")).toBeVisible();
   await expect(page.getByRole("heading", { name: /surface recovered first/i })).toBeVisible();
   await expect(page.locator(".rs-conclusion-lead")).toContainText("61.3%");
@@ -86,11 +90,11 @@ test("scientific workspace renders actual backend tests and comparisons", async 
   await page.goto("/");
   await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
-  await page.getByRole("button", { name: "Scientific view" }).click();
-  await expect(page.locator(".echart")).toHaveCount(3);
+  await page.getByRole("button", { name: /Check the evidence/i }).click();
+  await expect(page.locator(".echart")).toHaveCount(2);
   await expect(page.locator(".evidence-check")).toHaveCount(goodwell.audit.checks.length);
-  await expect(page.getByText(/not establish an independently confirmed climatic trend/i)).toBeVisible();
-  await page.locator(".compare-select select").selectOption("australia_narrabri");
+  await expect(page.getByText(/It does not confirm a climate trend/i)).toBeVisible();
+  await page.locator("#guided-compare-select").selectOption("australia_narrabri");
   await expect(page.getByText("28 episodes")).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("scientific.png"), fullPage: true });
 });
@@ -102,7 +106,7 @@ test("location changes update real data and never reuse the previous site's figu
   await page.locator("#site-select").selectOption("australia_narrabri");
   await expect(page.locator(".metric-value").first()).toHaveText("28");
   await expect(page.locator(".metric-value").nth(1)).toHaveText("16");
-  await expect(page.locator(".site-story h2")).toContainText("Narrabri");
+  await expect(page.locator(".guided-finding h2")).toContainText("Narrabri");
 });
 
 test("missing data produces an error rather than invented scientific numbers", async ({ page }) => {
@@ -152,7 +156,7 @@ test("3D Earth and offline atlas both expose verified study locations", async ({
   await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
   await expect(page.getByRole("button", { name: "Start investigating" })).toBeVisible();
   await page.getByRole("button", { name: "Start investigating" }).click();
-  await expect(page.getByRole("heading", { name: "Explore soil recovery" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /See what the soil is telling us/i })).toBeVisible();
   await expect(page.locator(".metric-value").first()).toHaveText("31");
 });
 
@@ -191,3 +195,29 @@ test("offline atlas lets keyboard users focus and investigate a study location",
   await page.getByRole("button", { name: "Start investigating" }).click();
   await expect(page.locator("#site-select")).toHaveValue("spain_cordoba");
 });
+
+test("guided research begins with a selectable map and navigable evidence steps", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  await expect(page.getByRole("region", { name: "Choose a study location on the world map" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "World map", exact: true })).toBeVisible();
+  await expect(page.locator(".guided-finding .guided-large-number")).toContainText("19");
+  await page.getByRole("button", { name: /Drought events/i }).click();
+  await expect(page.locator(".guided-event-table tbody tr")).toHaveCount(12);
+  await page.getByRole("button", { name: /Surface first \(19\)/i }).click();
+  await expect(page.locator(".guided-table-controls")).toContainText("19 matching events");
+  await page.locator(".guided-event-table tbody button").first().click();
+  await expect(page.locator(".event-inspector")).toBeVisible();
+  await page.getByRole("button", { name: /View this event on the timeline/i }).click();
+  await expect(page.locator(".depth-lens")).toBeVisible();
+});
+
+test("guided research shows honest error without reusing previous location's statistics", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Start investigating" }).click();
+  await expect(page.locator(".guided-large-number")).toContainText("19");
+  await page.locator("#site-select").selectOption("spain_cordoba");
+  await expect(page.getByRole("heading", { name: "Analysis unavailable" })).toBeVisible();
+  await expect(page.locator(".guided-large-number")).toHaveCount(0);
+});
+
