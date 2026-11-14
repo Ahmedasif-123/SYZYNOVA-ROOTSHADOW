@@ -1,0 +1,87 @@
+.rs-topline,
+.rs-hero-foot,
+.rs-side-number,
+.rs-soil-figure figcaption,
+.rs-find-place small,
+.rs-signature,
+.rs-final-note > span,
+.rs-findings-labels,
+.rs-finding-interpretation > span,
+.rs-finding-ratio strong span {
+  color: #4b5d50;
+}
+.rs-kicker,
+.rs-overline,
+.rs-findings-header .rs-overline,
+.rs-conclusion-head,
+.rs-conclusion-plain,
+.rs-conclusion-aside-label,
+.rs-conclusion-aside > div span,
+.rs-outcome-text > span,
+.rs-conclusion-export > span,
+.rs-audience-control button,
+.rs-outcome-text > p,
+.rs-outcome-details > p {
+  color: #4d6051;
+}
+.rs-conclusion-lead,
+.rs-conclusion-main > p,
+.rs-findings-header > p,
+.rs-finding-limit,
+.rs-find-bar,
+.rs-final-note > p {
+  color: #425847;
+}
+.site-footer > span,
+.rs-editorial .site-footer > span {
+  color: #4b6050;
+}
+.explorer-header .eyebrow,
+.explorer-toolbar label,
+.toolbar-period > span,
+.toolbar-period > small,
+.selection-caption,
+.metric-label,
+.metric-note {
+  color: #4c6251;
+}
+.view-switch button:not(.active) {
+  color: #c0d9c7;
+}
+.analysis-columns > section,
+.comparison-panel,
+.provenance-panel {
+  color: #e8f1ec;
+}
+.analysis-columns .panel-heading h2,
+.analysis-columns .panel-heading h3,
+.comparison-panel h2,
+.comparison-panel h3,
+.provenance-panel h2,
+.provenance-panel h3 {
+  color: #eef5ef;
+}
+.rs-topline,
+.rs-hero-foot,
+.rs-side-number,
+.rs-find-place small,
+.rs-signature,
+.rs-soil-figure figcaption,
+.site-footer,
+.rs-conclusion-head,
+.rs-outcome-text > span,
+.rs-conclusion-aside-label,
+.rs-conclusion-export > span {
+  font-size: 10px;
+}
+.metric-note {
+  font-size: 11px;
+}
+@media (max-width: 730px) {
+  .rs-topline,
+  .rs-hero-foot,
+  .rs-signature,
+  .rs-conclusion-head {
+    font-size: 9px;
+  }
+}
