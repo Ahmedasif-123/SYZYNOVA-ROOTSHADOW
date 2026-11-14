@@ -176,3 +176,11 @@ input[type="range"]:focus-visible {
     min-height: 40px;
   }
 }
+
+.world-map-marker:not(.selected) .world-map-label {
+  opacity: 0;
+}
+.world-map-marker:hover .world-map-label,
+.world-map-marker:focus-visible .world-map-label {
+  opacity: 1;
+}

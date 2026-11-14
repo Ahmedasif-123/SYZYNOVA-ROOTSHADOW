@@ -114,7 +114,7 @@ export default function GeoExplorer({ selected, onSelect }: Props) {
           >
             <circle cx={point.x} cy={point.y} r={active ? 15 : 12} className="world-map-halo" />
             <circle cx={point.x} cy={point.y} r="5" className="world-map-center" />
-            <text x={point.x + 19} y={point.y - 13} className="world-map-label">{site.name}</text>
+            <text x={point.x > 1000 ? point.x - 19 : point.x + 19} y={point.y - 13} textAnchor={point.x > 1000 ? "end" : "start"} className="world-map-label">{site.name}</text>
             <circle cx={point.x} cy={point.y} r="26" fill="transparent" />
           </g>;
         })}
