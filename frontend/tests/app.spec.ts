@@ -40,6 +40,26 @@ test("verified Goodwell data drives farmer-facing metrics and recovery selection
   await page.screenshot({ path: testInfo.outputPath("investigation.png"), fullPage: true });
 });
 
+test("monthly depth explorer scrubs verified records and syncs with the chart", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Explore the evidence" }).click();
+  await expect(page.locator(".metric-value").first()).toHaveText("31");
+  await expect(page.locator(".depth-lens")).toBeVisible();
+  const slider = page.getByRole("slider", { name: "Select month in historical soil record" });
+  await slider.focus();
+  await slider.press("Home");
+  await expect(page.locator(".depth-readout-month")).toHaveText("January 1981");
+  await slider.press("End");
+  await expect(page.locator(".depth-readout-month")).toHaveText("December 2025");
+  await expect(page.locator(".depth-readout-caveat")).toContainText("recovery delay in days");
+  await page.getByRole("button", { name: "LARGEST MONTHLY CONTRAST" }).click();
+  await expect(page.locator(".depth-readout-month")).not.toHaveText("December 2025");
+  await page.getByRole("button", { name: "SCAN HISTORY" }).click();
+  await expect(page.getByRole("button", { name: "PAUSE SCAN" })).toBeVisible();
+  await page.getByRole("button", { name: "PAUSE SCAN" }).click();
+  await expect(page.locator(".echart")).toHaveCount(1);
+});
+
 test("scientific workspace renders actual backend tests and comparisons", async ({ page }, testInfo) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Explore the evidence" }).click();
