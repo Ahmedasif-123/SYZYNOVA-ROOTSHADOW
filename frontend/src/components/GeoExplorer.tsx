@@ -93,7 +93,7 @@ export default function GeoExplorer({ selected, onSelect }: Props) {
         onPointerCancel={pointerUp}
       >
         <title>World map with six historical NASA POWER research locations</title>
-        <image href="/world-map.svg" x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
+        <image href={import.meta.env.BASE_URL + "world-map.svg"} x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
         {sites.map(site => {
           const point = sitePoint(site);
           const active = selected === site.id;

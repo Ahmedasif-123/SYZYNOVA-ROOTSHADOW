@@ -449,7 +449,7 @@ main { max-width: none; }
 }
 .map-inner { background: #071726; }
 .map-standby {
-  background: #071726 url("/world-map.svg") center center / cover no-repeat;
+  background: #071726 url("../world-map.svg") center center / cover no-repeat;
   color: #bfd6da;
   font: 500 10px "IBM Plex Mono", monospace;
   letter-spacing: .8px;
