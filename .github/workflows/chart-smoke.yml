@@ -7,6 +7,8 @@ on:
       - 'frontend/src/components/ScientificCharts.tsx'
       - 'frontend/src/components/SoilDepthExplorer.tsx'
       - 'frontend/src/components/GuidedWorkspace.tsx'
+      - 'frontend/src/components/EarthGlobe.tsx'
+      - 'frontend/tests/app.spec.ts'
 permissions:
   contents: read
 jobs:
@@ -27,5 +29,5 @@ jobs:
       - run: npx playwright install --with-deps chromium
         working-directory: frontend
       - name: Verify original research workspace and new graph selection
-        run: npx playwright test --project=${{ matrix.browser }} -g 'verified Goodwell data|monthly depth explorer|monthly graph selection'
+        run: npx playwright test --project=${{ matrix.browser }} -g 'verified Goodwell data|monthly depth explorer|monthly graph selection|globe selection caption'
         working-directory: frontend

@@ -365,3 +365,11 @@ test("monthly graph selection explains paired wetness and real precipitation; an
   await expect(annual).toContainText("In 2000");
   await expect(annual).toContainText("Mismatch days");
 });
+
+test("globe selection caption shows the actual location name and country", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".earth-rail-selected small")).toContainText("GOODWELL · UNITED STATES");
+  await page.locator(".earth-location-strip button").filter({ hasText: "Narrabri" }).click();
+  await expect(page.locator(".earth-rail-selected small")).toContainText("NARRABRI · AUSTRALIA");
+  await expect(page.locator(".earth-rail-selected strong")).toHaveText("Narrabri");
+});
