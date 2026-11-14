@@ -1,6 +1,6 @@
 import { useRef, useState, type PointerEvent } from "react";
 import { LocateFixed, ZoomIn, ZoomOut } from "lucide-react";
-import { findSite, isCoreSite, researchSites, siteRegions, sites, type SiteId, type Site } from "../lib/sites";
+import { findSite, isCoreSite, siteRegions, sites, type SiteId, type Site } from "../lib/sites";
 
 type Props = { selected: SiteId; onSelect: (id: SiteId) => void; variant?: "light" | "dark" };
 type WindowBox = { x: number; y: number; width: number; height: number };
