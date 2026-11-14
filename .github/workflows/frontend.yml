@@ -1,0 +1,39 @@
+name: Frontend build
+on:
+  push:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend.yml"
+  pull_request:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend.yml"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+        working-directory: frontend
+      - name: Typecheck and production build
+        run: npm run build
+        working-directory: frontend
+      - name: Install Chromium for browser tests
+        run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - name: Browser interaction tests
+        run: npm run test:e2e
+        working-directory: frontend
+      - name: Save frontend build for browser verification
+        uses: actions/upload-artifact@v4
+        with:
+          name: rootshadow-frontend-dist
+          path: |
+            frontend/dist
+            frontend/package-lock.json
+            frontend/test-results
+          retention-days: 3
