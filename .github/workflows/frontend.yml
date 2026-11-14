@@ -22,6 +22,12 @@ jobs:
       - name: Typecheck and production build
         run: npm run build
         working-directory: frontend
+      - name: Install Chromium for browser tests
+        run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - name: Browser interaction tests
+        run: npm run test:e2e
+        working-directory: frontend
       - name: Save frontend build for browser verification
         uses: actions/upload-artifact@v4
         with:
@@ -29,4 +35,5 @@ jobs:
           path: |
             frontend/dist
             frontend/package-lock.json
+            frontend/test-results
           retention-days: 3
