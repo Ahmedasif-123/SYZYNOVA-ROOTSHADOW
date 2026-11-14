@@ -190,7 +190,7 @@ def nasa_latest(site, session, today):
 
 def refresh(region):
     today = datetime.now(timezone.utc).date()
-    selected = [s for s in SITES if s["region"] == region] if region != "Original sites" else CORE
+    selected = [s for s in SITES if s.get("region") == region] if region != "Original sites" else CORE
     if region == "Original sites":
         selected = CORE
     if not selected:
