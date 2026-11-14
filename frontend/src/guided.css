@@ -260,3 +260,23 @@
   .guided-step-content {animation:none;}
   .guided-workspace * {scroll-behavior:auto;}
 }
+
+.guided-map-panel .geo-explorer.is-light .map-inner {background:#dceae3;}
+.guided-map-panel .geo-explorer.is-light .world-map-svg {background:#dceae3;}
+@media(max-width:730px) {
+  .guided-map-panel .geo-explorer.is-light {height:385px;min-height:385px;overflow:hidden;}
+  .guided-map-panel .geo-explorer.is-light .map-inner {position:relative;inset:auto;height:208px;width:100%;overflow:hidden;}
+  .guided-map-panel .geo-explorer.is-light .world-map-svg {height:208px;width:100%;}
+  .guided-map-panel .geo-explorer.is-light .geo-overlay-top {top:6px;left:6px;right:6px;gap:5px;}
+  .guided-map-panel .geo-explorer.is-light .micro-label,.guided-map-panel .geo-explorer.is-light .map-counter {font-size:6.5px;letter-spacing:0;padding:5px;}
+  .guided-map-panel .geo-explorer.is-light .map-site-list {position:relative;inset:auto;width:100%;max-width:none;display:grid;grid-template-columns:1fr 1fr;border-left:0;border-right:0;box-shadow:none;background:#f7faf5;backdrop-filter:none;}
+  .guided-map-panel .geo-explorer.is-light .map-list-heading {grid-column:1/-1;padding:8px 10px;font-size:8px;}
+  .guided-map-panel .geo-explorer.is-light .map-site {min-width:0;padding:9px 8px;border-bottom:1px solid #d8e4d8;}
+  .guided-map-panel .geo-explorer.is-light .map-site:nth-child(2n) {border-right:1px solid #d8e4d8;}
+  .guided-map-panel .geo-explorer.is-light .map-site .site-index {font-size:8px;}
+  .guided-map-panel .geo-explorer.is-light .map-site .site-text strong {font-size:11px;}
+  .guided-map-panel .geo-explorer.is-light .map-site .site-text small {font-size:9px;}
+  .guided-map-panel .geo-explorer.is-light .geo-tools {top:148px;bottom:auto;right:7px;padding:3px;display:flex;flex-direction:row;}
+  .guided-map-panel .geo-explorer.is-light .geo-tools button {height:26px;width:26px;}
+  .guided-map-panel .geo-explorer.is-light .map-footer-note {left:7px;right:7px;bottom:4px;padding:2px;background:#f7faf5;color:#59715b;font-size:7px;text-align:center;}
+}
