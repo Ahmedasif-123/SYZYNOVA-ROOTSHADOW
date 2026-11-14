@@ -1,0 +1,73 @@
+name: Analyze 91 NASA product locations
+on:
+  push:
+    branches: [product-97-locations]
+    paths:
+      - 'scripts/generate_global_analyses.py'
+      - '.github/workflows/analyze-global-product.yml'
+permissions:
+  contents: write
+concurrency:
+  group: rootshadow-97-analyses
+  cancel-in-progress: false
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        include:
+          - { region: middle-east }
+          - { region: north-africa }
+          - { region: sub-saharan-africa }
+          - { region: south-east-asia }
+          - { region: central-asia }
+          - { region: europe }
+          - { region: north-america }
+          - { region: south-america }
+          - { region: oceania }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install deterministic historical analysis dependencies
+        run: pip install -r requirements.txt
+      - name: Calculate existing ROOTSHADOW methodology on verified global snapshots
+        run: python scripts/generate_global_analyses.py --region ${{ matrix.region }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rootshadow-analysis-${{ matrix.region }}
+          path: product_data/build_output/
+          if-no-files-found: error
+          retention-days: 7
+  publish:
+    needs: analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: rootshadow-analysis-*
+          merge-multiple: true
+          path: product_data/build_output/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Cross-check 91 analyses and preserve existing six results
+        run: python scripts/generate_global_analyses.py --publish
+      - name: Commit verified analysis outputs without changes to research code
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add frontend/public/site-results/ product_data/ANALYSIS_REPORT.json
+          git diff --cached --quiet || (git commit -m 'Publish 91 NASA site analyses beside preserved six-site research results' && git push origin HEAD:product-97-locations)
