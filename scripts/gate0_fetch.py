@@ -11,9 +11,14 @@ from urllib.parse import urlencode
 import requests
 
 API = "https://power.larc.nasa.gov/api/temporal/daily/point"
-CORE_PARAMETERS = ("GWETTOP", "GWETROOT", "T2M")
-PRECIP = "PRECTOT"
-PARAMETERS = ("GWETTOP", "GWETROOT", PRECIP, "T2M")
+PARAMETERS = ("GWETTOP", "GWETROOT", "PRECTOT", "T2M")
+REQUIRED = ("GWETTOP", "GWETROOT")
+PROFILES = (
+    ("HY", ("GWETTOP", "GWETROOT", "PRECTOT", "T2M")),
+    ("AG", ("GWETTOP", "GWETROOT", "PRECTOTCORR", "T2M")),
+    ("AG", ("GWETTOP", "GWETROOT")),
+    ("HY", ("GWETTOP", "GWETROOT")),
+)
 SITES = {
     "us_sgp_stillwater": (36.118, -97.091),
     "us_sgp_goodwell": (36.597, -101.618),
@@ -34,6 +39,13 @@ SITES = {
 MISSING = {-999, -999.0, -9999, -9999.0}
 
 
+class NASARequestError(RuntimeError):
+    def __init__(self, status, details):
+        self.status = status
+        self.details = details
+        super().__init__(f"NASA POWER HTTP {status}: {details}")
+
+
 def windows(start_year, end_year, size=10):
     if start_year < 1981 or end_year < start_year or end_year > datetime.now(timezone.utc).year:
         raise ValueError("Invalid year range")
@@ -42,10 +54,12 @@ def windows(start_year, end_year, size=10):
         yield f"{first}0101", f"{last}1231"
 
 
-def request_url(latitude, longitude, start, end, include_precip=True):
+def request_url(latitude, longitude, start, end, community="HY", variables=None):
+    if variables is None:
+        variables = PARAMETERS
     params = {
-        "community": "HY",
-        "parameters": ",".join(PARAMETERS if include_precip else CORE_PARAMETERS),
+        "community": community,
+        "parameters": ",".join(variables),
         "longitude": f"{longitude:.5f}",
         "latitude": f"{latitude:.5f}",
         "start": start,
@@ -56,12 +70,21 @@ def request_url(latitude, longitude, start, end, include_precip=True):
     return API + "?" + urlencode(params)
 
 
+def normalize_variables(variables):
+    result = dict(variables)
+    if "PRECTOT" not in result and "PRECTOTCORR" in result:
+        result["PRECTOT"] = result["PRECTOTCORR"]
+    return result
+
+
 def validate_payload(payload, start, end):
     if not isinstance(payload, dict):
-        raise ValueError("Response is not JSON object")
+        raise ValueError("Response is not a JSON object")
     variables = payload.get("properties", {}).get("parameter", {})
-    present = [v for v in PARAMETERS if v in variables]
-    for variable in CORE_PARAMETERS:
+    if not isinstance(variables, dict):
+        raise ValueError("No parameter dictionary in NASA response")
+    variables = normalize_variables(variables)
+    for variable in REQUIRED:
         if not isinstance(variables.get(variable), dict) or not variables[variable]:
             raise ValueError(f"Missing or empty series: {variable}")
     dates = sorted(variables["GWETTOP"])
@@ -70,7 +93,9 @@ def validate_payload(payload, start, end):
     valid_days = 0
     for key in dates:
         date.fromisoformat(f"{key[:4]}-{key[4:6]}-{key[6:8]}")
-        for variable in present:
+        for variable in PARAMETERS:
+            if variable not in variables:
+                continue
             if key not in variables[variable]:
                 raise ValueError(f"Missing date {key} in {variable}")
             value = variables[variable][key]
@@ -78,59 +103,94 @@ def validate_payload(payload, start, end):
                 continue
             if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
                 raise ValueError(f"Non-numeric or non-finite {variable} value")
-            if variable in ("GWETTOP", "GWETROOT") and not 0 <= value <= 1:
+            if variable in REQUIRED and not 0 <= value <= 1:
                 raise ValueError(f"Invalid fractional soil wetness for {variable}")
-            if variable == PRECIP and value < 0:
+            if variable == "PRECTOT" and value < 0:
                 raise ValueError("Negative precipitation")
-        if all(variables[name][key] is not None and variables[name][key] not in MISSING for name in ("GWETTOP", "GWETROOT")):
+        if all(key in variables[name] and variables[name][key] is not None and variables[name][key] not in MISSING for name in REQUIRED):
             valid_days += 1
     if not valid_days:
         raise ValueError("No usable paired soil-moisture observations")
     return variables, dates, valid_days
 
 
+def error_body(result):
+    content = getattr(result, "content", b"")
+    try:
+        body = result.json()
+    except (ValueError, AttributeError):
+        body = content.decode("utf-8", errors="replace") if isinstance(content, bytes) else str(content)
+    if isinstance(body, (dict, list)):
+        body = json.dumps(body, ensure_ascii=False)
+    return " ".join(str(body).split())[:1800]
+
+
 def fetch_bytes(url, session=None, attempts=3):
     client = session or requests.Session()
-    error = None
-    for index in range(attempts):
+    last_error = None
+    for attempt in range(attempts):
         try:
-            result = client.get(url, timeout=(6, 55), headers={"Accept": "application/json", "User-Agent": "ROOTSHADOW-SYZYNOVA/1.0"})
+            result = client.get(url, timeout=(6, 55), headers={"Accept": "application/json", "User-Agent": "ROOTSHADOW-SYZYNOVA/1.1"})
+            status = getattr(result, "status_code", 200)
+            if status >= 400:
+                raise NASARequestError(status, error_body(result))
             result.raise_for_status()
             if "json" not in result.headers.get("content-type", "").lower():
-                raise ValueError("Unexpected response media type")
+                raise RuntimeError("Unexpected NASA response media type")
             return result.content
-        except (requests.RequestException, ValueError) as exc:
-            error = exc
-            if index + 1 < attempts:
-                time.sleep(2 ** index)
-    raise RuntimeError(f"NASA POWER request failed: {error}")
+        except NASARequestError as exc:
+            if exc.status in (400, 401, 403, 404, 422):
+                raise
+            last_error = exc
+        except (requests.RequestException, OSError) as exc:
+            last_error = exc
+        if attempt + 1 < attempts:
+            time.sleep(2 ** attempt)
+    raise RuntimeError(f"NASA POWER request failed: {last_error}")
 
 
-def process_chunk(site, latitude, longitude, start, end, folder, session=None):
-    url = request_url(latitude, longitude, start, end)
-    try:
-        raw_bytes = fetch_bytes(url, session)
-    except RuntimeError:
-        # If POWER rejects the precipitation name, precipitation is dropped; the science needs only GWETTOP/GWETROOT.
-        url = request_url(latitude, longitude, start, end, include_precip=False)
-        raw_bytes = fetch_bytes(url, session)
-    payload = json.loads(raw_bytes)
-    variables, dates, valid_days = validate_payload(payload, start, end)
-    folder.mkdir(parents=True, exist_ok=True)
-    path = folder / f"{site}_{start}_{end}.json"
-    path.write_bytes(raw_bytes)
-    return {
-        "path": str(path),
-        "sha256": hashlib.sha256(raw_bytes).hexdigest(),
-        "url": url,
-        "retrieved_utc": datetime.now(timezone.utc).isoformat(),
-        "date_start": dates[0],
-        "date_end": dates[-1],
-        "reported_dates": len(dates),
-        "paired_valid_dates": valid_days,
-        "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
-        "variables": [v for v in PARAMETERS if v in variables],
-    }, variables
+def candidate_profiles(preferred=None):
+    if preferred in PROFILES:
+        return (preferred,) + tuple(p for p in PROFILES if p != preferred)
+    return PROFILES
+
+
+def process_chunk(site, latitude, longitude, start, end, folder, session=None, preferred=None):
+    errors = []
+    for community, names in candidate_profiles(preferred):
+        url = request_url(latitude, longitude, start, end, community=community, variables=names)
+        try:
+            raw_bytes = fetch_bytes(url, session)
+            payload = json.loads(raw_bytes)
+            variables, dates, valid_days = validate_payload(payload, start, end)
+        except NASARequestError as exc:
+            errors.append(f"{community}/{','.join(names)}: HTTP {exc.status}: {exc.details}")
+            if exc.status != 422:
+                break
+            continue
+        except (ValueError, RuntimeError) as exc:
+            errors.append(f"{community}/{','.join(names)}: {exc}")
+            if "No usable paired" in str(exc) or "Missing or empty" in str(exc):
+                continue
+            break
+        folder.mkdir(parents=True, exist_ok=True)
+        path = folder / f"{site}_{start}_{end}.json"
+        path.write_bytes(raw_bytes)
+        return {
+            "path": str(path),
+            "sha256": hashlib.sha256(raw_bytes).hexdigest(),
+            "url": url,
+            "retrieved_utc": datetime.now(timezone.utc).isoformat(),
+            "date_start": dates[0],
+            "date_end": dates[-1],
+            "reported_dates": len(dates),
+            "paired_valid_dates": valid_days,
+            "data_origin": "NASA POWER daily hydrology, gridded/model-derived",
+            "community": community,
+            "source_variables": list(payload["properties"]["parameter"]),
+            "variables": [name for name in PARAMETERS if name in variables],
+        }, variables, (community, names)
+    raise RuntimeError("Every compatible NASA request failed for " + site + " (" + start + "-" + end + "):\n" + "\n".join(errors))
 
 
 def build_site(site, dest, start_year=1981, end_year=2025, session=None):
@@ -140,11 +200,12 @@ def build_site(site, dest, start_year=1981, end_year=2025, session=None):
     raw_dir = dest / "raw" / site
     chunks = []
     samples = {}
+    preferred = None
     for start, end in windows(start_year, end_year):
-        entry, variables = process_chunk(site, latitude, longitude, start, end, raw_dir, session)
+        entry, variables, preferred = process_chunk(site, latitude, longitude, start, end, raw_dir, session, preferred)
         chunks.append(entry)
-        for key, value in variables["GWETTOP"].items():
-            samples.setdefault(key, {}).update({variable: variables[variable].get(key) for variable in PARAMETERS if variable in variables})
+        for key in variables["GWETTOP"]:
+            samples.setdefault(key, {}).update({name: variables[name].get(key) for name in PARAMETERS if name in variables})
     processed = dest / "processed"
     processed.mkdir(parents=True, exist_ok=True)
     csv_path = processed / f"{site}_{start_year}_{end_year}.csv"
@@ -159,11 +220,11 @@ def build_site(site, dest, start_year=1981, end_year=2025, session=None):
         "latitude": latitude,
         "longitude": longitude,
         "period": f"{start_year}–{end_year}",
-        "reference_period_for_science": "1991–2020 (to be applied in a separate analysis step)",
+        "reference_period_for_science": "1991–2020 (applied separately in scientific analysis)",
         "processed_csv": str(csv_path),
         "processed_sha256": hashlib.sha256(csv_path.read_bytes()).hexdigest(),
         "source_chunks": chunks,
-        "scientific_status": "RAW DATA INGESTED; NO FALSE-RECOVERY CLAIM VALIDATED",
+        "scientific_status": "RAW DATA INGESTED; NO DROUGHT-RECOVERY FINDING VERIFIED",
     }
     manifest = dest / "manifests"
     manifest.mkdir(parents=True, exist_ok=True)
@@ -176,39 +237,55 @@ def verify_manifests(dest):
     records = list((dest / "manifests").glob("*.json"))
     if not records:
         raise FileNotFoundError("No acquisition manifests exist")
-    n = 0
+    count = 0
     for manifest in records:
-        payload = json.loads(manifest.read_text(encoding="utf-8"))
-        for chunk in payload["source_chunks"]:
+        record = json.loads(manifest.read_text(encoding="utf-8"))
+        for chunk in record["source_chunks"]:
             path = Path(chunk["path"])
             if not path.exists() or hashlib.sha256(path.read_bytes()).hexdigest() != chunk["sha256"]:
                 raise ValueError(f"Raw file missing or corrupted: {path}")
-            n += 1
-        p = Path(payload["processed_csv"])
-        if not p.exists() or hashlib.sha256(p.read_bytes()).hexdigest() != payload["processed_sha256"]:
-            raise ValueError(f"Processed file missing or corrupted: {p}")
-    return len(records), n
+            count += 1
+        path = Path(record["processed_csv"])
+        if not path.exists() or hashlib.sha256(path.read_bytes()).hexdigest() != record["processed_sha256"]:
+            raise ValueError(f"Processed file missing or corrupted: {path}")
+    return len(records), count
+
+
+def diagnose(site, session=None):
+    latitude, longitude = SITES[site]
+    for community, names in PROFILES:
+        url = request_url(latitude, longitude, "20200101", "20200107", community=community, variables=names)
+        try:
+            raw = fetch_bytes(url, session, attempts=1)
+            validate_payload(json.loads(raw), "20200101", "20200107")
+            print(f"PASS {community}: {','.join(names)}")
+        except (NASARequestError, ValueError, RuntimeError) as exc:
+            print(f"FAIL {community}: {','.join(names)} | {exc}")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Acquire and verify genuine NASA POWER daily datasets")
-    parser.add_argument("--site", choices=tuple(SITES) + ("all",), default="us_oklahoma")
+    parser = argparse.ArgumentParser(description="Acquire and verify NASA POWER daily soil-water data")
+    parser.add_argument("--site", choices=tuple(SITES) + ("all",), default="us_sgp_stillwater")
     parser.add_argument("--start-year", type=int, default=1981)
     parser.add_argument("--end-year", type=int, default=2025)
     parser.add_argument("--output", type=Path, default=Path("data/gate0"))
     parser.add_argument("--verify", action="store_true")
+    parser.add_argument("--diagnose", action="store_true")
     args = parser.parse_args()
+    if args.diagnose:
+        diagnose(args.site if args.site != "all" else "us_sgp_stillwater")
+        return
     if args.verify:
         sites, files = verify_manifests(args.output)
         print(f"Integrity verified: {sites} site(s), {files} original NASA files")
         return
-    chosen = SITES if args.site == "all" else (args.site,)
-    for site in chosen:
+    selected = SITES if args.site == "all" else (args.site,)
+    for site in selected:
         path = build_site(site, args.output, args.start_year, args.end_year)
         print(f"NASA data acquired: {site}; manifest: {path}")
     sites, files = verify_manifests(args.output)
     print(f"Integrity verified: {sites} site(s), {files} original NASA files")
-    print("This script records data provenance; it does not establish scientific findings")
+    print("This records data provenance; it does not establish scientific findings")
 
 
 if __name__ == "__main__":

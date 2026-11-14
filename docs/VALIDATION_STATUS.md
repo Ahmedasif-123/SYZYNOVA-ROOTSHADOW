@@ -18,3 +18,7 @@ As of 14 November 2026, the local project has a reproducible synthetic demonstra
 The code must not be described as production-secure or as an operational agricultural warning system.
 
 Update after independent integration review (14 November 2026): Annual mismatch days now count in the calendar year in which they occur, even when a recovery period crosses New Year; additional regression tests cover that case. The surrogate lag-slope comparison is centered on the empirical surrogate median. These changes do not establish the null model’s validity. The Azure deployment workflow is intentionally manual until cloud setup is complete.
+
+## NASA POWER API validation error (2026-11-14)
+
+A participant's Mac fetched the code and installed dependencies successfully, but a NASA POWER request using HY community and GWETTOP/GWETROOT returned HTTP 422. This was also true when precipitation was omitted, so the precipitation name alone is not an established root cause. `scripts/gate0_fetch.py` now captures response detail, avoids retrying permanent 422 errors, tests explicit HY and AG profile alternatives, preserves raw-body SHA-256 hashes and exposes `--diagnose` for a seven-day API probe. The live API outcome remains unverified from the restricted authoring environment. No live NASA evidence is claimed.

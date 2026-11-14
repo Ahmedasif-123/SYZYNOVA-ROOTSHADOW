@@ -19,6 +19,25 @@ After an identified drought, how long does root-zone wetness stay below the seas
 
 **Not validated:** no real NASA data has been run through this build in the authoring environment. No statistical significance claim is scientifically established, and the surrogate calibration is exploratory. Independent corroboration (SMAP L4, GLDAS, NOAA stations, MODIS) is not implemented. The synthetic mode is not evidence.
 
+## NASA POWER HTTP 422 troubleshooting
+
+If NASA rejects a request with HTTP 422, the downloader now prints the server's actual validation message and tries a small list of explicit HY/AG configurations without changing the required soil variables. It does not repeat rejected requests or silently convert failed downloads into real results. NASA's exact diagnosis must be inspected when all profiles fail.
+
+Check the short diagnostic first:
+
+```bash
+python scripts/gate0_fetch.py --site us_sgp_stillwater --diagnose
+```
+
+If a supported profile succeeds, acquire and verify real historical records:
+
+```bash
+python scripts/gate0_fetch.py --site us_sgp_stillwater --start-year 1981 --end-year 2025
+python scripts/gate0_fetch.py --verify
+```
+
+A passing mock-data test suite does not prove the live NASA API has been reached. No real historical case is verified until the user supplies completed NASA files and the scientific analysis is run on those bytes.
+
 ## Recommended workflow
 
 ```bash
