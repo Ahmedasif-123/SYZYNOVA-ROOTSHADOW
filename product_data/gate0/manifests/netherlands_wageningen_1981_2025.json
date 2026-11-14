@@ -1,0 +1,69 @@
+{
+  "site": "netherlands_wageningen",
+  "name": "Wageningen",
+  "country": "Netherlands",
+  "region": "Europe",
+  "latitude": 51.97,
+  "longitude": 5.67,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/netherlands_wageningen_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "da1f25d4e96eaacb9bcdc498c57bf9f8a3856d35995bbf42fd2883301504bc2e",
+  "csv_gzip_sha256": "d8d1f186c7f75f3b96e4d3449ec0e3f4294578006e221a6f53364f147d77a172",
+  "source_archive": "product_data/gate0/raw_archives/netherlands_wageningen_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "7360344a216ac112a5febc4b02e94a5ad8bf909b5bc033d83e79217cef366e4b",
+  "source_chunks": [
+    {
+      "name": "netherlands_wageningen_19810101_19901231.json",
+      "sha256": "e32a1adade69b5c292eb9d15ed4893ec2aaa3ab9977dd6eaa5357679b9700a56",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=5.67000&latitude=51.97000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:42.151872+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "netherlands_wageningen_19910101_20001231.json",
+      "sha256": "0c260ecc91ee55ad29c0e65abc8703dc267e79e09edff5eea6e02cf9d1f30608",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=5.67000&latitude=51.97000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:42.888916+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "netherlands_wageningen_20010101_20101231.json",
+      "sha256": "5bbd42b64fbeda906d9b4e21f0fcf147829c65ee84202144f9cac99e22832cfa",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=5.67000&latitude=51.97000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:43.590017+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "netherlands_wageningen_20110101_20201231.json",
+      "sha256": "2bc99b8c17566e8464b5e286c5a1d97765b9d835597c839a52339348f929b757",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=5.67000&latitude=51.97000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:44.008951+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "netherlands_wageningen_20210101_20251231.json",
+      "sha256": "ea0f5e97765cdbe3c0c62e562902a9a28acd89771f02e8358975219aae57e51c",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=5.67000&latitude=51.97000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:44.650684+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:45.211208+00:00"
+}

@@ -1,0 +1,69 @@
+{
+  "site": "brazil_campinas",
+  "name": "Campinas",
+  "country": "Brazil",
+  "region": "South America",
+  "latitude": -22.9,
+  "longitude": -47.06,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/brazil_campinas_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "97b3a43e058becda7d0ca3f52bc6c4d9567a018841a333b0f81cfab53ef01521",
+  "csv_gzip_sha256": "b42b34d4b1db2aa6708476355959ba580e5097a1cbcceed92f0d781cdc2d516a",
+  "source_archive": "product_data/gate0/raw_archives/brazil_campinas_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "f8922bdd063cd4549fecd5a194c3d4fefe446bab9d19e1fee99d0768d9171d92",
+  "source_chunks": [
+    {
+      "name": "brazil_campinas_19810101_19901231.json",
+      "sha256": "04812b41a195e0d4de4319b9abfd28fb5dc5c87ff2f9b1ecc55bf0a3ec283826",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-47.06000&latitude=-22.90000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:04.699607+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "brazil_campinas_19910101_20001231.json",
+      "sha256": "400e9d798292853fc2fb0054ad597e9d6ef1e281e441a54ca9a524b3a2cf74c1",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-47.06000&latitude=-22.90000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:05.479501+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "brazil_campinas_20010101_20101231.json",
+      "sha256": "e0de3fe8af24a7aac32e0a09d61cba0473c5691148f562f98077a972ed0f0759",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-47.06000&latitude=-22.90000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:06.069275+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "brazil_campinas_20110101_20201231.json",
+      "sha256": "044e18e70ee2e8638ccbdf9a59911e70b15b992d5bdb49eac4a62effd1295109",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-47.06000&latitude=-22.90000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:06.991587+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "brazil_campinas_20210101_20251231.json",
+      "sha256": "e01d1496a8fc8e0886f9008c1f3e0f8d2b8844fabd7068ef60187e34f5a7d9f4",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-47.06000&latitude=-22.90000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:07.412419+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:07.791295+00:00"
+}

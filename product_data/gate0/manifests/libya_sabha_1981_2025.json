@@ -1,0 +1,69 @@
+{
+  "site": "libya_sabha",
+  "name": "Sabha",
+  "country": "Libya",
+  "region": "North Africa",
+  "latitude": 27.04,
+  "longitude": 14.43,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/libya_sabha_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "2ce0737732af6bdcde1a729e7f7ecbc75c75e27023e9c2e602d4a53b516ac6fb",
+  "csv_gzip_sha256": "7a659e231b7690e6e03ae5299b5a1d6a7141d1a995cd99e4cb8c584752a998e3",
+  "source_archive": "product_data/gate0/raw_archives/libya_sabha_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "8ec7956336cf9081276e24c96af18cd7d170a1f04126c98c4b661747d15e74f8",
+  "source_chunks": [
+    {
+      "name": "libya_sabha_19810101_19901231.json",
+      "sha256": "8ae8bf8fec687bcef52bfc8237ad3aed5db3196014cdce7d0c586ab3488b238f",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=14.43000&latitude=27.04000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:21.968335+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "libya_sabha_19910101_20001231.json",
+      "sha256": "4a7b8c4521e50035edcd9dfb78f6ae533b7d8f78c3eed7ebbcc78f1f0aa384ec",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=14.43000&latitude=27.04000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:23.319532+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "libya_sabha_20010101_20101231.json",
+      "sha256": "021a6350a781da7473b9047aebb11d5af064ef10d4bad393d63251f14dec0df7",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=14.43000&latitude=27.04000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:23.798802+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "libya_sabha_20110101_20201231.json",
+      "sha256": "686c9fcb663129891597414f14f38f5b523b1ac6f85c53033d92075860f48bc5",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=14.43000&latitude=27.04000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:24.958934+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "libya_sabha_20210101_20251231.json",
+      "sha256": "4f5059f6ab5fe8ec6d04fd76d58b4f4f77b82c4014e38e848db9ede27ee7cb78",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=14.43000&latitude=27.04000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:25.330137+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:25.689778+00:00"
+}

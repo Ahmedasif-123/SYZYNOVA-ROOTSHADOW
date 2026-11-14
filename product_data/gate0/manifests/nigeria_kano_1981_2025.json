@@ -1,0 +1,69 @@
+{
+  "site": "nigeria_kano",
+  "name": "Kano",
+  "country": "Nigeria",
+  "region": "Sub-Saharan Africa",
+  "latitude": 12,
+  "longitude": 8.52,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/nigeria_kano_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "049eaacedf36a7840d468f8f5954899e72a8d01f8526abf4dc2b2c77a64a7642",
+  "csv_gzip_sha256": "fe895013c59d9f512199f351a50a10e4404e1ac7484578b49d94b5ec8b7a8d52",
+  "source_archive": "product_data/gate0/raw_archives/nigeria_kano_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "d3fbe36c4617c82abe822544a34fe25dac0cd1beee0291fddda5b34d63a972bd",
+  "source_chunks": [
+    {
+      "name": "nigeria_kano_19810101_19901231.json",
+      "sha256": "edfe7c6faf01041a0e70e860c38c09f720079dfb7a7c01a9c9e46be4519f5ef5",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=8.52000&latitude=12.00000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:18.496685+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "nigeria_kano_19910101_20001231.json",
+      "sha256": "58d01f1d85483d9ee621361e6afad52e8353919f904e5ec3bbd76c626be70ff2",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=8.52000&latitude=12.00000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:19.354801+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "nigeria_kano_20010101_20101231.json",
+      "sha256": "b0701b30791f8c50dc47891783c040bffbb814e0c9a6d0c99f4a8519abc3ec71",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=8.52000&latitude=12.00000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:19.913100+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "nigeria_kano_20110101_20201231.json",
+      "sha256": "fb505e63507abd43b6c77c0b6e421bf46894fab87474b5fe9a9588d6a0185bc1",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=8.52000&latitude=12.00000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:20.823246+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "nigeria_kano_20210101_20251231.json",
+      "sha256": "d758464ef78baa4feac5a846cf4e7196c15bb16b181a845ae20ab1a59d7a138f",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=8.52000&latitude=12.00000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:21.593725+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:22.058447+00:00"
+}

@@ -1,0 +1,69 @@
+{
+  "site": "germany_hanover",
+  "name": "Hanover",
+  "country": "Germany",
+  "region": "Europe",
+  "latitude": 52.38,
+  "longitude": 9.73,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/germany_hanover_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "7e0799725a1203bb816baef501a37f232f1ad903f5f66f95b2b8e7bad18a29dd",
+  "csv_gzip_sha256": "7ed909aafd932e5eb4fb4f531865d396da076fc3bfea175edd60cc26162b6280",
+  "source_archive": "product_data/gate0/raw_archives/germany_hanover_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "b1f2dc6141103fb59eb77803a378271e96cd1b38b1b45fef1a76f35c768b397c",
+  "source_chunks": [
+    {
+      "name": "germany_hanover_19810101_19901231.json",
+      "sha256": "4b2e25a1daf1daf5de2c5bc9eb41938670bdc09caa8e82e373722a34c03ea181",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=9.73000&latitude=52.38000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:38.118264+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "germany_hanover_19910101_20001231.json",
+      "sha256": "b486cb738bcf9b9eb034228363e55828b38c536d09e1663b017f2095c612be74",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=9.73000&latitude=52.38000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:38.734827+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "germany_hanover_20010101_20101231.json",
+      "sha256": "1f38f0c0e4add08da47e40e59a7a7443353e25e6f7be096dcc7530b853159068",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=9.73000&latitude=52.38000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:39.399446+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "germany_hanover_20110101_20201231.json",
+      "sha256": "7344ae350dd909422aab6740aa705787a8b1292c55d8b0352576d0600b7b7c33",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=9.73000&latitude=52.38000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:40.303068+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "germany_hanover_20210101_20251231.json",
+      "sha256": "ae9667c475328b8478509e1d5cfbee7f76f004530394d5e603f3472018ccde2b",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=9.73000&latitude=52.38000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:40.933448+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:41.494024+00:00"
+}

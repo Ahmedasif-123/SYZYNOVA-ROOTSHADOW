@@ -1,0 +1,69 @@
+{
+  "site": "italy_bologna",
+  "name": "Bologna",
+  "country": "Italy",
+  "region": "Europe",
+  "latitude": 44.49,
+  "longitude": 11.34,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/italy_bologna_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "c8d785d2774602c8743bed3b2c662595c7ff0b6ce1d0836bcade124ccf2646bb",
+  "csv_gzip_sha256": "43b9db2ed9a5875095517d6e094eba7a92cc0fb47df172734ff5c9cf1612061b",
+  "source_archive": "product_data/gate0/raw_archives/italy_bologna_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "a54194927bdc02fcf04fee71d516cce9f7d81801e03e4a8d492df88ca8f50543",
+  "source_chunks": [
+    {
+      "name": "italy_bologna_19810101_19901231.json",
+      "sha256": "0f396de68fa3d3358832edb9cdc2ac3e37d51e6f466f7a58844284c991cfb98c",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=11.34000&latitude=44.49000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:45.890536+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "italy_bologna_19910101_20001231.json",
+      "sha256": "0d9a7861992221e48435bcb7ede394629e4deb941651bff50112916321b5512c",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=11.34000&latitude=44.49000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:46.804634+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "italy_bologna_20010101_20101231.json",
+      "sha256": "9b680fb1814823114666320bc42c6c420f64e85125b6293f344536148931fd09",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=11.34000&latitude=44.49000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:47.500078+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "italy_bologna_20110101_20201231.json",
+      "sha256": "fa87463ec985dbe103f63e85f78a2faf82e288dc591ffda7df408e4c22e2f870",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=11.34000&latitude=44.49000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:48.209025+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "italy_bologna_20210101_20251231.json",
+      "sha256": "9b262631022ad26a653514745511eedacef5f07b7b6dcbc137d3749c20183448",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=11.34000&latitude=44.49000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:48.570859+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:49.146138+00:00"
+}

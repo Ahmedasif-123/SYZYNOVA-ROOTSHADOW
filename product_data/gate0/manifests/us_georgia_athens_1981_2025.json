@@ -1,0 +1,69 @@
+{
+  "site": "us_georgia_athens",
+  "name": "Athens, Georgia",
+  "country": "United States",
+  "region": "North America",
+  "latitude": 33.95,
+  "longitude": -83.38,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/us_georgia_athens_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "713b47c5c9c1e896d50cb6ab5963ac02e2261867485e908ab90a9d049af1833b",
+  "csv_gzip_sha256": "22fb2bdc159726f19844d25fd2fa06b62b55c2a64d1b245fd486e206a3797d52",
+  "source_archive": "product_data/gate0/raw_archives/us_georgia_athens_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "2929fdb54f30108f96d4c246d7994d85d801de7d7782a01b002147eaec78a03a",
+  "source_chunks": [
+    {
+      "name": "us_georgia_athens_19810101_19901231.json",
+      "sha256": "9b55d5d0d1d444209c069e09f473c67a498e82a62feccc91eab238718f12b552",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-83.38000&latitude=33.95000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:54.995353+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "us_georgia_athens_19910101_20001231.json",
+      "sha256": "ed5d87adde832ffec37803019a8208a472e15fd63358c73141d05d9069a0b930",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-83.38000&latitude=33.95000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:55.643592+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "us_georgia_athens_20010101_20101231.json",
+      "sha256": "0dd019aa00277bfb6b0e12bda982ae2bfe9c5738a9fc8f44089d8e4b93b9ff42",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-83.38000&latitude=33.95000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:56.302157+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "us_georgia_athens_20110101_20201231.json",
+      "sha256": "43b259dd1fbbe747b1803ee6b73cec9bd18eabd92f04e9ca7f831b1a466ed5e5",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-83.38000&latitude=33.95000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:57.050450+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "us_georgia_athens_20210101_20251231.json",
+      "sha256": "85a69c3c277dd805561495234e93c592f3eedb640f0412b565e31d1e926461eb",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-83.38000&latitude=33.95000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:57.625488+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:58.157739+00:00"
+}

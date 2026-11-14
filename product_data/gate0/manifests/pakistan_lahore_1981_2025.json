@@ -1,0 +1,69 @@
+{
+  "site": "pakistan_lahore",
+  "name": "Lahore",
+  "country": "Pakistan",
+  "region": "South and East Asia",
+  "latitude": 31.52,
+  "longitude": 74.36,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/pakistan_lahore_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "d80c432924f9f6dc90fdcc6ff0e357812415ea96b957cee44dac646915b75fee",
+  "csv_gzip_sha256": "efa157759f0429ce5b3adb523a9efae6e8bc240c76c4f4cc8397cc4c49480a56",
+  "source_archive": "product_data/gate0/raw_archives/pakistan_lahore_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "626381dfdf8e34f098844779e5c3c0ded6b776c9b14bb071228ccb9930688976",
+  "source_chunks": [
+    {
+      "name": "pakistan_lahore_19810101_19901231.json",
+      "sha256": "7fa6fade884392f66b804d5e26833e9457b79916fcf619fb9dcd3b6bb60353fb",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=74.36000&latitude=31.52000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:26.300634+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "pakistan_lahore_19910101_20001231.json",
+      "sha256": "98aa25896c9e141eab12686644d4060671ed4b66b215e33bfbbca4e304a1f85e",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=74.36000&latitude=31.52000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:27.580818+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "pakistan_lahore_20010101_20101231.json",
+      "sha256": "4a943ebfb83e0bc0433f361903b5f27c8effda3462174fd97fd2ea5c72545d88",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=74.36000&latitude=31.52000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:27.973413+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "pakistan_lahore_20110101_20201231.json",
+      "sha256": "e3c8d3d080b205af3b4b80dc5c565e5f3f0919e48d7d34c53ef2c58575f37a62",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=74.36000&latitude=31.52000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:29.176991+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "pakistan_lahore_20210101_20251231.json",
+      "sha256": "8974085a209feebfbaa7a8fb88b2af06a1e8dd6c5fd580028f011a5a2d0a8e74",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=74.36000&latitude=31.52000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:29.652054+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:30.194077+00:00"
+}

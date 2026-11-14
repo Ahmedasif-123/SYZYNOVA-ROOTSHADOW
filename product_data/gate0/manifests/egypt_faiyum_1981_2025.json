@@ -1,0 +1,69 @@
+{
+  "site": "egypt_faiyum",
+  "name": "Faiyum",
+  "country": "Egypt",
+  "region": "Middle East",
+  "latitude": 29.31,
+  "longitude": 30.84,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/egypt_faiyum_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "8a07d3f3ec5f10aa46154c0fc5274cdfe462fc381e32f7f614b219b30ed24e0f",
+  "csv_gzip_sha256": "879389f0e8b92c3494479856baa43bb9debd9504b97c131c706bd68deb2bb098",
+  "source_archive": "product_data/gate0/raw_archives/egypt_faiyum_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "2219f9d933c64e15c5525f82690090fec3831f0b288df810da71508353485144",
+  "source_chunks": [
+    {
+      "name": "egypt_faiyum_19810101_19901231.json",
+      "sha256": "71fa8deed70bacca56fb623ae6fabb8099ff06394466c210c41e11573f96c2dc",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=30.84000&latitude=29.31000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:41.953514+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "egypt_faiyum_19910101_20001231.json",
+      "sha256": "a9c0fb2778d32f5b66f7f91f0761477b39188b6d10ed8a51687c39a3a275f27b",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=30.84000&latitude=29.31000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:42.666419+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "egypt_faiyum_20010101_20101231.json",
+      "sha256": "4e086e04129d14868aa44982d92ba13580fab746712e1ae264e006459fc4042e",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=30.84000&latitude=29.31000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:43.363862+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "egypt_faiyum_20110101_20201231.json",
+      "sha256": "13c13701ad016a1e5cf898b38fd019726ae1c30a859804d692cfde308294d6f8",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=30.84000&latitude=29.31000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:44.252423+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "egypt_faiyum_20210101_20251231.json",
+      "sha256": "a4f4357e95b4bbecd2eda0135748e5474c3308882b09c256713b1b1a8530f1a0",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=30.84000&latitude=29.31000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:44.773323+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:45.222941+00:00"
+}

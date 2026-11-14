@@ -1,0 +1,69 @@
+{
+  "site": "china_chengdu",
+  "name": "Chengdu",
+  "country": "China",
+  "region": "South and East Asia",
+  "latitude": 30.57,
+  "longitude": 104.07,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/china_chengdu_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "8fac313009f67cc554f50ea1e54668c530fd21e6f7e628f8a85296e54404280d",
+  "csv_gzip_sha256": "be7d02938c9bff03e4a1fd57f9dd4021f9a8d9d6e3d409ad54fa2b7a8568803a",
+  "source_archive": "product_data/gate0/raw_archives/china_chengdu_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "06b63970822bbf7a25c688d29ef18677ec0dfe58738242580f18b113d056782b",
+  "source_chunks": [
+    {
+      "name": "china_chengdu_19810101_19901231.json",
+      "sha256": "29be0901506c1bad6df07370efedba67dc55e64f144317114f2089735ae8edce",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=104.07000&latitude=30.57000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:47.284441+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "china_chengdu_19910101_20001231.json",
+      "sha256": "8d6368d93bd03ca21fd4a1d7e4b5d48774242724cd5ea932bf20b904100f24b9",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=104.07000&latitude=30.57000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:48.227697+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "china_chengdu_20010101_20101231.json",
+      "sha256": "0d6a16943a3f1b8a48be6b76898ad98254e31d84c059434c4c43b06b2660e01e",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=104.07000&latitude=30.57000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:48.928254+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "china_chengdu_20110101_20201231.json",
+      "sha256": "83728a89d8075a7e9f87670c8d141a613b011867868bda555a6c0ba7ef44ed7b",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=104.07000&latitude=30.57000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:49.495499+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "china_chengdu_20210101_20251231.json",
+      "sha256": "9e57dd3772ba0f10d8fa253f2e9c6c10cb9b37241dcfcc1bb11bcc8675dc9e57",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=104.07000&latitude=30.57000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:50.144805+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:50.711079+00:00"
+}

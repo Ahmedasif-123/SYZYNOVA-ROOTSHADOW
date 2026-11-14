@@ -1,0 +1,69 @@
+{
+  "site": "ethiopia_addis_ababa",
+  "name": "Addis Ababa",
+  "country": "Ethiopia",
+  "region": "Sub-Saharan Africa",
+  "latitude": 9,
+  "longitude": 38.76,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/ethiopia_addis_ababa_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "a95206d0f0076da1c93dbeb47a53431eb7cce89e8181636435871a7204b3d093",
+  "csv_gzip_sha256": "53f34019955a4a2c231f3fa6a4bb95aa8744ef2c228fd7fd69c8ee346fdc3df3",
+  "source_archive": "product_data/gate0/raw_archives/ethiopia_addis_ababa_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "d86ac5f52cf58bd19d1a6f03eadd0af9d53e5e4004da3789d2a4bc83bce87d1d",
+  "source_chunks": [
+    {
+      "name": "ethiopia_addis_ababa_19810101_19901231.json",
+      "sha256": "663ce003da767406b2bcbed44a2a54c39f536458cd3de04e6083a84d7a6a3d8d",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=38.76000&latitude=9.00000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:07.297508+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "ethiopia_addis_ababa_19910101_20001231.json",
+      "sha256": "61518ac3a868f5b4fba724ce480de3e13ed5f0eaaa3b3f2f78eef96073cfdd0e",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=38.76000&latitude=9.00000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:08.052594+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "ethiopia_addis_ababa_20010101_20101231.json",
+      "sha256": "26586c1732a6f48b126d16a99925bcef842039195d2b659e0c8013a382d430cc",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=38.76000&latitude=9.00000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:08.692667+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "ethiopia_addis_ababa_20110101_20201231.json",
+      "sha256": "28af03c0cad0e9d586b886ffbedffe14f9bbebcb8df2467b63706ea07c2a3d3c",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=38.76000&latitude=9.00000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:09.411791+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "ethiopia_addis_ababa_20210101_20251231.json",
+      "sha256": "e9fadf0feebcc9ee7c6eda831352f8c4e38ac88036afa4847c263079b099b27c",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=38.76000&latitude=9.00000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:10.023134+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:10.511019+00:00"
+}

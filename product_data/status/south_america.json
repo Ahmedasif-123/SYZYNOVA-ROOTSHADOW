@@ -1,0 +1,16 @@
+{
+  "region": "South America",
+  "selected": 8,
+  "verified": [
+    "colombia_bogota",
+    "peru_cusco",
+    "brazil_campinas",
+    "brazil_cuiaba",
+    "chile_talca",
+    "argentina_rosario",
+    "uruguay_durazno",
+    "bolivia_cochabamba"
+  ],
+  "failed": {},
+  "finished_utc": "2026-11-14T20:31:29.227317+00:00"
+}

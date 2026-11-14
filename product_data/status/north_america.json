@@ -1,0 +1,17 @@
+{
+  "region": "North America",
+  "selected": 9,
+  "verified": [
+    "us_nebraska_lincoln",
+    "us_california_fresno",
+    "us_iowa_ames",
+    "us_arizona_tucson",
+    "us_georgia_athens",
+    "canada_saskatoon",
+    "canada_guelph",
+    "mexico_guanajuato",
+    "mexico_hermosillo"
+  ],
+  "failed": {},
+  "finished_utc": "2026-11-14T20:31:13.515889+00:00"
+}

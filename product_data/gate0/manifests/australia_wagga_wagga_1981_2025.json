@@ -1,0 +1,69 @@
+{
+  "site": "australia_wagga_wagga",
+  "name": "Wagga Wagga",
+  "country": "Australia",
+  "region": "Oceania",
+  "latitude": -35.11,
+  "longitude": 147.37,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/australia_wagga_wagga_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "ae7bad15c389d522262a7c7d09c54758e96d461a0acad131ddff16a687b6c486",
+  "csv_gzip_sha256": "c16d022175404ed5c8b3239b903600aee1096b83c5c1036cbb210cfb98eef110",
+  "source_archive": "product_data/gate0/raw_archives/australia_wagga_wagga_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "24efcca35fd09690c3e27ca52c3c7ec241553cd7876c8a9e4281a637d53f6af0",
+  "source_chunks": [
+    {
+      "name": "australia_wagga_wagga_19810101_19901231.json",
+      "sha256": "3cbb6087ac52addc7bd5d9487f6e4216e7f81ebaa33ed847a00ed7079aa6d17d",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=147.37000&latitude=-35.11000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:32.961087+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "australia_wagga_wagga_19910101_20001231.json",
+      "sha256": "350aba97ceea9e5ea760b910455e9a9f0b6df66aa311700f7d79f6664ec13afd",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=147.37000&latitude=-35.11000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:33.988218+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "australia_wagga_wagga_20010101_20101231.json",
+      "sha256": "ad6a67e68dcada483a91b42573585192572da80a80a4a699180174918cbee89e",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=147.37000&latitude=-35.11000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:34.830308+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "australia_wagga_wagga_20110101_20201231.json",
+      "sha256": "d756bc64185c86d303929c6862654ccef23b94ff29ce04bf3d1939fbb77d43a2",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=147.37000&latitude=-35.11000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:35.896857+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "australia_wagga_wagga_20210101_20251231.json",
+      "sha256": "b1773fd6902f15eaaebfd1389e842b95cd53b43595575f216c6ee8699601bdcc",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=147.37000&latitude=-35.11000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:36.671937+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:37.043632+00:00"
+}

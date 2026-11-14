@@ -1,0 +1,69 @@
+{
+  "site": "australia_melbourne",
+  "name": "Melbourne",
+  "country": "Australia",
+  "region": "Oceania",
+  "latitude": -37.81,
+  "longitude": 144.96,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/australia_melbourne_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "67de3db0ccd7f626f584860a30b1cca01e4bcb0636513f7caf055827b3dc7f7d",
+  "csv_gzip_sha256": "dfa42e386624fa33b3b7ba6f901c7589ee843bad229e83906e3a3e1223531776",
+  "source_archive": "product_data/gate0/raw_archives/australia_melbourne_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "c05405ffd35f32f1b78e867911dce859c5ac48eb9a76f7d2660fda90c09a971a",
+  "source_chunks": [
+    {
+      "name": "australia_melbourne_19810101_19901231.json",
+      "sha256": "9e9d0f12329656ae3c277cc387011a8b236663653c285c4888eb7aad52c0bfcd",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=144.96000&latitude=-37.81000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:17.929385+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "australia_melbourne_19910101_20001231.json",
+      "sha256": "29f055d8fcb461ed8e9b06b1ec9ebcdcaafea4618ea42cea7614dc8cc184739f",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=144.96000&latitude=-37.81000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:18.960207+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "australia_melbourne_20010101_20101231.json",
+      "sha256": "0a831788987937fb8f476f0e28e25f750886a7279d53333c83b37987cfb6f631",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=144.96000&latitude=-37.81000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:19.519398+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "australia_melbourne_20110101_20201231.json",
+      "sha256": "2ed390e49f101c30b3e8c3e10074ba1af50511ae0998a2e9b0ae6b976525dc52",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=144.96000&latitude=-37.81000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:20.823082+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "australia_melbourne_20210101_20251231.json",
+      "sha256": "82d9e3f93154e2c175630c7a7117b7c962e6d69c879f187c6ebf79daacdece48",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=144.96000&latitude=-37.81000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:21.601245+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:21.981445+00:00"
+}

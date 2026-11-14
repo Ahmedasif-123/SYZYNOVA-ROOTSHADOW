@@ -1,0 +1,69 @@
+{
+  "site": "australia_perth",
+  "name": "Perth",
+  "country": "Australia",
+  "region": "Oceania",
+  "latitude": -31.95,
+  "longitude": 115.86,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/australia_perth_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "b2d2d4fbdd879e95bcb7e9a6953f132720c775888781bf8d9fe49adf878dce68",
+  "csv_gzip_sha256": "39ae37a716b065329a8b30b7719cffdedfdc69322b8a9aac01ad75112ac6613b",
+  "source_archive": "product_data/gate0/raw_archives/australia_perth_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "72bb7ef8400765dfd919bd39c6769e04b726754358e182a1e4a104f35e69809b",
+  "source_chunks": [
+    {
+      "name": "australia_perth_19810101_19901231.json",
+      "sha256": "fa4bff9822215fb290a9556b5e87ddfe362f57ce80f946c9cd474cf38e0943bc",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=115.86000&latitude=-31.95000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:22.976775+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "australia_perth_19910101_20001231.json",
+      "sha256": "83874100322d10b0d25d242ebe1ffd554a611ca7d8014d416834e09b39af291d",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=115.86000&latitude=-31.95000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:24.083061+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "australia_perth_20010101_20101231.json",
+      "sha256": "111698daa5a86f22ed9ed457ea7d0eb504c7522baf7e7674a6af2f0518324940",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=115.86000&latitude=-31.95000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:24.923775+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "australia_perth_20110101_20201231.json",
+      "sha256": "cf55ca687b71855032e3b6d0038382a838226ba5580103dab7b84012b0a84cba",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=115.86000&latitude=-31.95000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:25.638425+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "australia_perth_20210101_20251231.json",
+      "sha256": "c9ccf3d6ad86e4e237aea74ba47cb933abc6e76866fc22341175a0a950ab35b0",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=115.86000&latitude=-31.95000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:26.411068+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:26.809497+00:00"
+}

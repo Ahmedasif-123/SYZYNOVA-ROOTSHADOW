@@ -1,0 +1,14 @@
+{
+  "region": "North Africa",
+  "selected": 6,
+  "verified": [
+    "morocco_marrakesh",
+    "morocco_fez",
+    "algeria_tlemcen",
+    "tunisia_kairouan",
+    "libya_sabha",
+    "sudan_khartoum"
+  ],
+  "failed": {},
+  "finished_utc": "2026-11-14T20:30:29.960590+00:00"
+}

@@ -1,0 +1,69 @@
+{
+  "site": "lebanon_bekaa",
+  "name": "Bekaa Valley",
+  "country": "Lebanon",
+  "region": "Middle East",
+  "latitude": 33.85,
+  "longitude": 36.03,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/lebanon_bekaa_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "fd7439a71346d28864ee821460396121833f623b357b9c0635bc921b166d41a9",
+  "csv_gzip_sha256": "722b096502860d0a2772fba5533763673971af8ec0ef8818f99cd78355c4d86f",
+  "source_archive": "product_data/gate0/raw_archives/lebanon_bekaa_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "7a051bd7e891c5d67886c3624de7bd2cbfcf50e8ff781a6c0797ace4e3159b5e",
+  "source_chunks": [
+    {
+      "name": "lebanon_bekaa_19810101_19901231.json",
+      "sha256": "31c6e84c1c42dc596eefa3ee36e9a31cf5f14b50d72953930910d6ab3f956a96",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=36.03000&latitude=33.85000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:04.220119+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "lebanon_bekaa_19910101_20001231.json",
+      "sha256": "a46fcda693f36dd0db607d4683f3e7a0f81c861a8c1dc27e19fcbc69f47746e6",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=36.03000&latitude=33.85000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:04.668118+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "lebanon_bekaa_20010101_20101231.json",
+      "sha256": "60e97fbb544bc6daf79465c023148a93e3749d9bce43600eff5a4387aed37ebd",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=36.03000&latitude=33.85000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:05.437276+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "lebanon_bekaa_20110101_20201231.json",
+      "sha256": "b651185ca7e9d7bbb515776164cc16fd8f323a72c9034f1a336bc86e485d8ffc",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=36.03000&latitude=33.85000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:06.217494+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "lebanon_bekaa_20210101_20251231.json",
+      "sha256": "5a1859ba6064b3923d6aa2d3a4baa2639d71d25bdcf49a5299e059f52dbae686",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=36.03000&latitude=33.85000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:06.871671+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:07.400752+00:00"
+}

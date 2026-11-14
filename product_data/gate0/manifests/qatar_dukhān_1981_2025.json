@@ -1,0 +1,69 @@
+{
+  "site": "qatar_dukhān",
+  "name": "Dukhan",
+  "country": "Qatar",
+  "region": "Middle East",
+  "latitude": 25.43,
+  "longitude": 50.78,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/qatar_dukhān_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "c64e23ac9e70d9979fcf4fd088922bbb2073b585f7a09ac2fed3076d3a50fc23",
+  "csv_gzip_sha256": "dd41267ada889be9c636293092750c504884c4cac4fe0b98c0e07fe5abb3b18b",
+  "source_archive": "product_data/gate0/raw_archives/qatar_dukhān_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "55acb15777f9ee8d02c4f373c74495422ae5ee411beb33e759459e9218da20b3",
+  "source_chunks": [
+    {
+      "name": "qatar_dukhān_19810101_19901231.json",
+      "sha256": "6a6ec35fc3d3bb379e5d1395f1c1d736aa01ee4b99ddf5539b731f59a8b5aa7a",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=50.78000&latitude=25.43000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:08.671483+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "qatar_dukhān_19910101_20001231.json",
+      "sha256": "ea9fdc58c754ff6451d723670b656ef20e45bf2f3849f211ec02e6216f08b510",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=50.78000&latitude=25.43000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:09.448472+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "qatar_dukhān_20010101_20101231.json",
+      "sha256": "7a76be1f9645c49b66f5a5ccafd0c688162fa6a9ac4f720e60435110e93055a4",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=50.78000&latitude=25.43000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:10.210665+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "qatar_dukhān_20110101_20201231.json",
+      "sha256": "f2b15a0dc71d2b06c5854c26a1b8ce878141140cf52971081656206d0d0a327e",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=50.78000&latitude=25.43000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:10.967137+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "qatar_dukhān_20210101_20251231.json",
+      "sha256": "2d16a8feae6f91898c3dc9e12c2ba29e1941e0a86e186bb82d6f32fc95f05140",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=50.78000&latitude=25.43000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:11.609929+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:12.042259+00:00"
+}

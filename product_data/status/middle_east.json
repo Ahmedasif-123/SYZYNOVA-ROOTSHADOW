@@ -1,0 +1,33 @@
+{
+  "region": "Middle East",
+  "selected": 25,
+  "verified": [
+    "qatar_doha",
+    "qatar_dukhān",
+    "saudi_riyadh",
+    "saudi_jeddah",
+    "saudi_hail",
+    "uae_abu_dhabi",
+    "uae_al_ain",
+    "oman_muscat",
+    "oman_nizwa",
+    "kuwait_al_jahra",
+    "bahrain_riffa",
+    "iraq_baghdad",
+    "iraq_mosul",
+    "jordan_amman",
+    "lebanon_bekaa",
+    "syria_aleppo",
+    "yemen_sanaa",
+    "iran_isfahan",
+    "iran_shiraz",
+    "turkey_konya",
+    "turkey_sanliurfa",
+    "israel_beersheba",
+    "palestine_jenin",
+    "egypt_faiyum",
+    "egypt_aswan"
+  ],
+  "failed": {},
+  "finished_utc": "2026-11-14T20:31:48.633771+00:00"
+}

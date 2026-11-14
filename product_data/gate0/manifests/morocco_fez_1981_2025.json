@@ -1,0 +1,69 @@
+{
+  "site": "morocco_fez",
+  "name": "Fez",
+  "country": "Morocco",
+  "region": "North Africa",
+  "latitude": 34.06,
+  "longitude": -4.99,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/morocco_fez_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "d5bbdf4e6e21d106e8506a8d1c874d18ef080794cb648a17063690a05f518cda",
+  "csv_gzip_sha256": "944ce18d00ab67867ab102f7c1ca1b6cc9d91d24348e16e6e9f016361591e1b2",
+  "source_archive": "product_data/gate0/raw_archives/morocco_fez_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "9bc2017b635dffcd6ad767a5c858cfb93f2c9e98914cc503c6c055c553d78bef",
+  "source_chunks": [
+    {
+      "name": "morocco_fez_19810101_19901231.json",
+      "sha256": "5a0d2010e06f2cc6722f0ebec0ae6584a04a6852c0c6214255f2f71c5173573d",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.99000&latitude=34.06000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:08.950314+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "morocco_fez_19910101_20001231.json",
+      "sha256": "93795ddaedd89ef11565730af13f11fb227ae3f106a58ca447ada0a87f3e4843",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.99000&latitude=34.06000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:09.692985+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "morocco_fez_20010101_20101231.json",
+      "sha256": "5a2db9ddee16717a76cb3a3229bd94fc92213bbeabd34bd75fc029f860267f61",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.99000&latitude=34.06000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:10.107267+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "morocco_fez_20110101_20201231.json",
+      "sha256": "a8569a43eade75fac2247c6ffd7ac33f5357ba3f50196e1d3068d0a81dff0c9e",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.99000&latitude=34.06000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:10.761500+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "morocco_fez_20210101_20251231.json",
+      "sha256": "da3a6b89ed91dec7a4be1a2409b1f38da882f3f449b7a0efe5ab5e54ec402c01",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-4.99000&latitude=34.06000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:11.409514+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:11.894683+00:00"
+}

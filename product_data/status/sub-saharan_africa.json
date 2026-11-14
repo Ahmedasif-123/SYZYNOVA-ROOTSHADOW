@@ -1,0 +1,18 @@
+{
+  "region": "Sub-Saharan Africa",
+  "selected": 10,
+  "verified": [
+    "ethiopia_addis_ababa",
+    "kenya_nakuru",
+    "uganda_kampala",
+    "nigeria_kano",
+    "ghana_kumasi",
+    "senegal_thies",
+    "zambia_lusaka",
+    "zimbabwe_bulawayo",
+    "south_africa_pretoria",
+    "madagascar_antananarivo"
+  ],
+  "failed": {},
+  "finished_utc": "2026-11-14T20:30:45.456503+00:00"
+}

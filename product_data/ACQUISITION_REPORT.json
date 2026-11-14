@@ -1,0 +1,22 @@
+{
+  "selected_new_locations": 91,
+  "verified_new_locations": 91,
+  "existing_research_sites_unchanged": 6,
+  "total_verified_if_combined": 97,
+  "new_daily_records": 1495676,
+  "verified_by_region": {
+    "Middle East": 25,
+    "North Africa": 6,
+    "Sub-Saharan Africa": 10,
+    "South and East Asia": 15,
+    "Central Asia": 2,
+    "Europe": 10,
+    "North America": 9,
+    "South America": 8,
+    "Oceania": 6
+  },
+  "unverified_sites": [],
+  "failures": {},
+  "scientific_validation": "Not performed for the new locations",
+  "frontend_status": "No change; the six-site research website remains unchanged"
+}

@@ -1,0 +1,23 @@
+{
+  "region": "South and East Asia",
+  "selected": 15,
+  "verified": [
+    "india_delhi",
+    "india_nagpur",
+    "india_hyderabad",
+    "pakistan_lahore",
+    "pakistan_multan",
+    "bangladesh_rajshahi",
+    "nepal_kathmandu",
+    "china_beijing",
+    "china_chengdu",
+    "japan_sapporo",
+    "south_korea_daejeon",
+    "thailand_chiang_mai",
+    "vietnam_hanoi",
+    "indonesia_yogyakarta",
+    "philippines_davao"
+  ],
+  "failed": {},
+  "finished_utc": "2026-11-14T20:31:16.279009+00:00"
+}

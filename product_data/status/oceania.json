@@ -1,0 +1,14 @@
+{
+  "region": "Oceania",
+  "selected": 6,
+  "verified": [
+    "australia_melbourne",
+    "australia_perth",
+    "australia_toowoomba",
+    "australia_wagga_wagga",
+    "new_zealand_hamilton",
+    "new_zealand_christchurch"
+  ],
+  "failed": {},
+  "finished_utc": "2026-11-14T20:31:46.021821+00:00"
+}

@@ -1,0 +1,69 @@
+{
+  "site": "bolivia_cochabamba",
+  "name": "Cochabamba",
+  "country": "Bolivia",
+  "region": "South America",
+  "latitude": -17.39,
+  "longitude": -66.16,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/bolivia_cochabamba_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "5aeb5115ec3aae6f03c1159b03d966dd1471d8d612041d7cff1839805a121e83",
+  "csv_gzip_sha256": "800c47222cc25e7f613da8a26c0262e88a737ad4073b974b3cdd065f45e29928",
+  "source_archive": "product_data/gate0/raw_archives/bolivia_cochabamba_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "e7eac0624b791dd53aa2a3037e7ca83a778f5e75307ea344ade641ca4c9c8933",
+  "source_chunks": [
+    {
+      "name": "bolivia_cochabamba_19810101_19901231.json",
+      "sha256": "bcb4f35fee3732ecb688774090bb1c240d0b8ee61d79fdd1354d276ac803cadd",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-66.16000&latitude=-17.39000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:25.690102+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "bolivia_cochabamba_19910101_20001231.json",
+      "sha256": "e6d46799314614889442479dfd31fa04e0eca91e4dc7474e063bbe8109693895",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-66.16000&latitude=-17.39000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:26.580401+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "bolivia_cochabamba_20010101_20101231.json",
+      "sha256": "9435f763c106ca6dc4c3aa91ec5d76a29d4d918af2264d289f663131c08d9248",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-66.16000&latitude=-17.39000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:27.291879+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "bolivia_cochabamba_20110101_20201231.json",
+      "sha256": "93183206fc2f27ad7be67bd29de9bb6e2b7516fed49e4da35b52ea4131c5a6e9",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-66.16000&latitude=-17.39000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:28.221344+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "bolivia_cochabamba_20210101_20251231.json",
+      "sha256": "3fb9680c11d71ae155109e699dcbbe371480b3fd29cfa4e14afa8e2dbeb1d3d9",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-66.16000&latitude=-17.39000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:28.852183+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:29.226506+00:00"
+}

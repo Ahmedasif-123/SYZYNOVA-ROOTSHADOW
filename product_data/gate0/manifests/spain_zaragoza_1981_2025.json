@@ -1,0 +1,69 @@
+{
+  "site": "spain_zaragoza",
+  "name": "Zaragoza",
+  "country": "Spain",
+  "region": "Europe",
+  "latitude": 41.65,
+  "longitude": -0.88,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/spain_zaragoza_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "85db967cf02b2547190ce354c31ce32fb66120c1dd22c0310c3089c8c3707338",
+  "csv_gzip_sha256": "31ae8673699c53eb77e01217da500081aab52147d604cd9f7aec78dabb7566b7",
+  "source_archive": "product_data/gate0/raw_archives/spain_zaragoza_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "44948bbaa4c123fa037ad3137ba1920e21cd5fe8d4317c646f1974d1bb49686c",
+  "source_chunks": [
+    {
+      "name": "spain_zaragoza_19810101_19901231.json",
+      "sha256": "d5c11dc36a3414aa5ca2bdf4f2c4421b3ace60bd227c932a2c468e372d367e9a",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-0.88000&latitude=41.65000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:49.783780+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "spain_zaragoza_19910101_20001231.json",
+      "sha256": "648a244dfecb6d5d93f61504e58dd3be0c83a02de1a262f110809c9ce5fe7481",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-0.88000&latitude=41.65000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:50.473879+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "spain_zaragoza_20010101_20101231.json",
+      "sha256": "970f27ade22244a4b49dd828bc5d9ffdae9b71c5fbb2f5c21b28a729ffd2f05f",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-0.88000&latitude=41.65000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:51.119135+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "spain_zaragoza_20110101_20201231.json",
+      "sha256": "cd6eb32c565c7670a93eabca53d66ad0dfe260812db9d8bfddb22a90cd5a64df",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-0.88000&latitude=41.65000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:51.529023+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "spain_zaragoza_20210101_20251231.json",
+      "sha256": "c609f8c2fc68d1513cfbfacdfc1a85fa29e1cdfa154a5a21a1469c34238de02a",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=-0.88000&latitude=41.65000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:51.874806+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:52.418761+00:00"
+}

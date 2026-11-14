@@ -1,0 +1,69 @@
+{
+  "site": "australia_toowoomba",
+  "name": "Toowoomba",
+  "country": "Australia",
+  "region": "Oceania",
+  "latitude": -27.56,
+  "longitude": 151.95,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/australia_toowoomba_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "455ca390371a55f1766847c69220217f47494725b3f4bcbdd3d206037dfd66e4",
+  "csv_gzip_sha256": "787251f2fba1b8330c3fdc6f4be30c10793d3d9b2d0849a11730384f961ac90c",
+  "source_archive": "product_data/gate0/raw_archives/australia_toowoomba_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "754ba349b77668455b448169277d8506205cacca73b77cf7a85e81dad02d2fad",
+  "source_chunks": [
+    {
+      "name": "australia_toowoomba_19810101_19901231.json",
+      "sha256": "f497b5a6aaa11afd0e3d32175abcdea742ab2789b9c11b6240283df6a5ee0b50",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=151.95000&latitude=-27.56000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:27.906426+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "australia_toowoomba_19910101_20001231.json",
+      "sha256": "ab4ae089389b61667cc1afd3b41e569b57a56ab111bffebc5a25159b0498d75d",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=151.95000&latitude=-27.56000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:28.941828+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "australia_toowoomba_20010101_20101231.json",
+      "sha256": "fa8d451e75fe9dd337bbc0bbc39626ac39e1825fbcf159e28aa0ede2f328317a",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=151.95000&latitude=-27.56000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:29.879076+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "australia_toowoomba_20110101_20201231.json",
+      "sha256": "a65a0d2ccd239aef2cf89f5e649349c243ba7a3b8cf81ca2648ed1b380eaa30f",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=151.95000&latitude=-27.56000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:30.921160+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "australia_toowoomba_20210101_20251231.json",
+      "sha256": "8e749e047b0c050e95e654e9f8c67356dad1c51aa3c286a0fc71e54031592158",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=151.95000&latitude=-27.56000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:31.470824+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:31.845200+00:00"
+}

@@ -1,0 +1,69 @@
+{
+  "site": "syria_aleppo",
+  "name": "Aleppo",
+  "country": "Syria",
+  "region": "Middle East",
+  "latitude": 36.2,
+  "longitude": 37.16,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/syria_aleppo_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "6561588a6d1ec32bc7c572daaa1846b7209caed7a5bb72aadf568f90daf8291b",
+  "csv_gzip_sha256": "14e91c581875bffe64b764414f90d060a3b715dae4630b2cfaaee28efef41131",
+  "source_archive": "product_data/gate0/raw_archives/syria_aleppo_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "ca9bb5057d62a6e9d2235aa46eea6a6047db1d22f1ab910191080203fa887fd8",
+  "source_chunks": [
+    {
+      "name": "syria_aleppo_19810101_19901231.json",
+      "sha256": "844d2809d4493d4330f675bd9e1ca20c609ab7d6a0c54d939c84765a57d7866a",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=37.16000&latitude=36.20000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:08.195731+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "syria_aleppo_19910101_20001231.json",
+      "sha256": "a9042656666cf399f7f0a3e06bbb7ad8471026c6733731eb03a16584dbc98d47",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=37.16000&latitude=36.20000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:08.625039+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "syria_aleppo_20010101_20101231.json",
+      "sha256": "f1779f1add4ba5b2e22a503656c9f7a5424b8ecc76c8f35d7972f44b128d70eb",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=37.16000&latitude=36.20000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:09.400657+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "syria_aleppo_20110101_20201231.json",
+      "sha256": "4c4321db87174b57f0a43f256c7fd2c86646a84075bf2916412ccf799df929d2",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=37.16000&latitude=36.20000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:10.208499+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "syria_aleppo_20210101_20251231.json",
+      "sha256": "fbdae37afeca93ce7d6876e05c742983c338fa49261f3eb978bdcea1432b8d27",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=37.16000&latitude=36.20000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:10.881774+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:11.413029+00:00"
+}

@@ -1,0 +1,69 @@
+{
+  "site": "south_korea_daejeon",
+  "name": "Daejeon",
+  "country": "South Korea",
+  "region": "South and East Asia",
+  "latitude": 36.35,
+  "longitude": 127.38,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/south_korea_daejeon_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "4e403db980e20a77df1e9c4551144fff6f8a47c09b4818f5c0dcb7c8ff516160",
+  "csv_gzip_sha256": "89c566c362a3bba47e3ac2a84cc983bb16e5de56bb4d5360fab84f3ffcb78d40",
+  "source_archive": "product_data/gate0/raw_archives/south_korea_daejeon_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "837a1c303c8266ce89749c67e24bd0b166baf2f4f83a2bdcce5ce1eb0fd15acb",
+  "source_chunks": [
+    {
+      "name": "south_korea_daejeon_19810101_19901231.json",
+      "sha256": "ade32dc4c81804683125147037bc2cc267a2ab73de3a5870914cec349526062f",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=127.38000&latitude=36.35000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:55.554820+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "south_korea_daejeon_19910101_20001231.json",
+      "sha256": "fff6f203f95bd2bce59b3db501b8cd70903930167f7986eb7889bd263857b5ad",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=127.38000&latitude=36.35000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:56.326691+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "south_korea_daejeon_20010101_20101231.json",
+      "sha256": "9791c07925e957ab5d8c45ac9d71e0e56bbda15c7b5ef9de355f4c2df2b7234e",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=127.38000&latitude=36.35000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:56.764890+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "south_korea_daejeon_20110101_20201231.json",
+      "sha256": "0f3599ca978c28bc750fa7dbc12e8425084f0301f7c8aa9d51ba75e4cb522094",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=127.38000&latitude=36.35000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:57.261229+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "south_korea_daejeon_20210101_20251231.json",
+      "sha256": "5962d9db7e6c3ef410c91cf98f92221da252b1230068c80859e312e4e7cdd99f",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=127.38000&latitude=36.35000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:57.850996+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:58.400890+00:00"
+}

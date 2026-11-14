@@ -1,0 +1,18 @@
+{
+  "region": "Europe",
+  "selected": 10,
+  "verified": [
+    "uk_cambridge",
+    "france_toulouse",
+    "germany_hanover",
+    "netherlands_wageningen",
+    "italy_bologna",
+    "spain_zaragoza",
+    "portugal_evora",
+    "greece_larissa",
+    "poland_lublin",
+    "romania_cluj"
+  ],
+  "failed": {},
+  "finished_utc": "2026-11-14T20:31:08.164698+00:00"
+}

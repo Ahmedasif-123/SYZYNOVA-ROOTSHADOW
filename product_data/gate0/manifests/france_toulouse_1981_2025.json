@@ -1,0 +1,69 @@
+{
+  "site": "france_toulouse",
+  "name": "Toulouse",
+  "country": "France",
+  "region": "Europe",
+  "latitude": 43.6,
+  "longitude": 1.44,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/france_toulouse_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "9dcda7ecd28d83b613f02dede21390107a5d4e5e71a23c3fbca262c04f65795b",
+  "csv_gzip_sha256": "bc9750704f25a976d1af6aa20fdd7f29b6cdeaa7db73c6ba9c2cac0514387b05",
+  "source_archive": "product_data/gate0/raw_archives/france_toulouse_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "6b814568a5d34a454bab563ee0b87459232d97b879d013e9b81398b08513e7ff",
+  "source_chunks": [
+    {
+      "name": "france_toulouse_19810101_19901231.json",
+      "sha256": "75a9643bac43de8cd9289b3455c16310ebb9b33ed073f54959dd0f5e9677885c",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=1.44000&latitude=43.60000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:33.829878+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "france_toulouse_19910101_20001231.json",
+      "sha256": "219302b9dc19fecf7a02d07394f05af4738b8a12d1232eec9b678d95e1fab78d",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=1.44000&latitude=43.60000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:34.663542+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "france_toulouse_20010101_20101231.json",
+      "sha256": "c2ae412bd24c420829087683716c1b6ac81981eb6ba2e5421a6e303b8ad9e74e",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=1.44000&latitude=43.60000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:35.391188+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "france_toulouse_20110101_20201231.json",
+      "sha256": "1ca97d2ee262cbf5d9fd6b6d664abf20658fdfc71a7dfa58c537df6cdc5b07d5",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=1.44000&latitude=43.60000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:36.019230+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "france_toulouse_20210101_20251231.json",
+      "sha256": "0a9a2282f229ea43078737606247c8a758eb53d0da2e20d722a665f5c64add5a",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=1.44000&latitude=43.60000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:36.621078+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:37.204306+00:00"
+}

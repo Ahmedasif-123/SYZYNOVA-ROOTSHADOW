@@ -1,0 +1,69 @@
+{
+  "site": "yemen_sanaa",
+  "name": "Sana'a",
+  "country": "Yemen",
+  "region": "Middle East",
+  "latitude": 15.3694,
+  "longitude": 44.191,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/yemen_sanaa_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "8015f8ffee93e08d45e9454902fd28e464b3e260fad9e557b334b161ffadf398",
+  "csv_gzip_sha256": "1cad10d1cb79328fd1028e8a013c589d091a5e82b39148e68fe306e64d838d34",
+  "source_archive": "product_data/gate0/raw_archives/yemen_sanaa_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "fac6846bf6c82e9f3235a7f0eac2d0040fe7018da8be8ed6d3d45e2621c077cf",
+  "source_chunks": [
+    {
+      "name": "yemen_sanaa_19810101_19901231.json",
+      "sha256": "87dbd03b8386590776714524154d02f8b77337d656686866ca5f875d9f285fa9",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=44.19100&latitude=15.36940&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:12.012487+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "yemen_sanaa_19910101_20001231.json",
+      "sha256": "fc81f0aff1ce27977f45a30bbe4e3f1d5fc2521e536a786e4f378eeb64e71bfc",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=44.19100&latitude=15.36940&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:12.770299+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "yemen_sanaa_20010101_20101231.json",
+      "sha256": "1f4241d56e2f050e5ff31143f3028bd4beaaaaea73f59486dfdba0ee49082806",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=44.19100&latitude=15.36940&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:13.553871+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "yemen_sanaa_20110101_20201231.json",
+      "sha256": "bc7583c12c40d889e9106da8d0ee0fc6e3c3edb8ca0e1b6b6b6d7d0367342947",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=44.19100&latitude=15.36940&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:14.223080+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "yemen_sanaa_20210101_20251231.json",
+      "sha256": "e39c1215951b71b379ba4f7d1b98ed0d3ffcf343948e58a3c58a358ba93f118d",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=44.19100&latitude=15.36940&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:14.903909+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:15.353454+00:00"
+}

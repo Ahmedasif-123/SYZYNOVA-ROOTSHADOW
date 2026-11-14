@@ -1,0 +1,69 @@
+{
+  "site": "philippines_davao",
+  "name": "Davao",
+  "country": "Philippines",
+  "region": "South and East Asia",
+  "latitude": 7.07,
+  "longitude": 125.61,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/philippines_davao_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "12253a064e2657c12e26693fc9ef9d752215d91c101fcda4ec8e86dcfcd8897a",
+  "csv_gzip_sha256": "e9d70d52ebc13636c71fff8f30709bb5dbdb4f99d3f16db62218fde347d5cb22",
+  "source_archive": "product_data/gate0/raw_archives/philippines_davao_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "0794f8504fb66b8b45244ca1c405ef9708ee011774e8f1c9adf01b6591927cc9",
+  "source_chunks": [
+    {
+      "name": "philippines_davao_19810101_19901231.json",
+      "sha256": "c147403fb3272618c4205da70881d0573eb5dd066d2876748edb88c2a6f9f4f9",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=125.61000&latitude=7.07000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:12.465238+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "philippines_davao_19910101_20001231.json",
+      "sha256": "bed3653322e5f20f7f493cd3e7cc8cf3b9a32ba8060d4d6f39942f6188830ea8",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=125.61000&latitude=7.07000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:13.477398+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "philippines_davao_20010101_20101231.json",
+      "sha256": "48925a7bce7e21eb7481cbed25d0a1a4723bed212c20e0be200272b42590d27d",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=125.61000&latitude=7.07000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:14.172151+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "philippines_davao_20110101_20201231.json",
+      "sha256": "c0e8795a669553d0f1d24b7b043906bb545c2d89ed5a78b39997d9c297a597b9",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=125.61000&latitude=7.07000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:15.005329+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "philippines_davao_20210101_20251231.json",
+      "sha256": "576e58bdf43c2633cba62f7082c10af22ef499f0a4b1083d439ce81119ae99d8",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=125.61000&latitude=7.07000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:15.708421+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:16.278211+00:00"
+}

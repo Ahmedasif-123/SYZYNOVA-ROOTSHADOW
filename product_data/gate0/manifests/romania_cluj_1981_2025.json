@@ -1,0 +1,69 @@
+{
+  "site": "romania_cluj",
+  "name": "Cluj-Napoca",
+  "country": "Romania",
+  "region": "Europe",
+  "latitude": 46.77,
+  "longitude": 23.6,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/romania_cluj_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "1a8efc01e8350539dcf355699c2da285293aa665c3dabfe29caf82552b0f715b",
+  "csv_gzip_sha256": "a575c98411c771e033b9d4063ffd5462b3290bcd7dd733663884b714d15c7e1c",
+  "source_archive": "product_data/gate0/raw_archives/romania_cluj_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "b5aa75a269169e50b3f63f5a4ac771c0ab6316b17593d587ec165d7fb62fcfc5",
+  "source_chunks": [
+    {
+      "name": "romania_cluj_19810101_19901231.json",
+      "sha256": "0217d40c78c25acbd327224811a5d10448547b627fdaf08e022a3999d816eb9d",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=23.60000&latitude=46.77000&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:05.521900+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "romania_cluj_19910101_20001231.json",
+      "sha256": "8f5052834130f2e968235a24a949e561515066919f73a23dc781e8088a3a3784",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=23.60000&latitude=46.77000&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:05.906956+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "romania_cluj_20010101_20101231.json",
+      "sha256": "adc6c80c75bd479f4605b63d2a0b81ee1573772a1a35613d1cc5faf364e8788a",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=23.60000&latitude=46.77000&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:06.346467+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "romania_cluj_20110101_20201231.json",
+      "sha256": "f0ec8a3608824ee1ce99425bfd8f3a5dcc8745b3c66953c7e8ca1144c497a475",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=23.60000&latitude=46.77000&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:07.012227+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "romania_cluj_20210101_20251231.json",
+      "sha256": "9471a7807e1f6de04b35ffbf5aa525eb7f00acbe3fd72055cf5a0318fdfb3b48",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=23.60000&latitude=46.77000&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:31:07.594395+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:31:08.163622+00:00"
+}

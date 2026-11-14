@@ -1,0 +1,69 @@
+{
+  "site": "uae_abu_dhabi",
+  "name": "Abu Dhabi",
+  "country": "United Arab Emirates",
+  "region": "Middle East",
+  "latitude": 24.4539,
+  "longitude": 54.3773,
+  "period_start": "1981-01-01",
+  "period_end": "2025-12-31",
+  "daily_records": 16436,
+  "paired_wetness_coverage": 1.0,
+  "variables": [
+    "GWETTOP",
+    "GWETROOT",
+    "PRECTOT",
+    "T2M"
+  ],
+  "csv_gzip_file": "product_data/gate0/processed/uae_abu_dhabi_1981_2025.csv.gz",
+  "csv_uncompressed_sha256": "ed8b905e57a6dc43d365e68cd317af053ada06bec56e93b54d545def0d92bafe",
+  "csv_gzip_sha256": "bd5bb876d3bb2ade34b74c96d277a1bae0f9fe3549998cca8fad039a79e31b3f",
+  "source_archive": "product_data/gate0/raw_archives/uae_abu_dhabi_1981_2025_raw.tar.gz",
+  "source_archive_sha256": "5a7f1a8e76c66cfb8ac7517e1e4fe8add10779ce485d55fb39aa7d985621c95c",
+  "source_chunks": [
+    {
+      "name": "uae_abu_dhabi_19810101_19901231.json",
+      "sha256": "7fc0b3fb6af0935dbc34eca5167f79a3ab98c211e6d01cfe16c5cfd3434fb514",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=54.37730&latitude=24.45390&start=19810101&end=19901231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:26.866800+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "uae_abu_dhabi_19910101_20001231.json",
+      "sha256": "14589cfff6cdaa86a40f1ba6e871b2fc9bd50e03b811bc93cac68220875ddb13",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=54.37730&latitude=24.45390&start=19910101&end=20001231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:27.838982+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "uae_abu_dhabi_20010101_20101231.json",
+      "sha256": "0bbee73968fccefdd8a48aa6e2765d1334b5fc671c4c400c7ffd4f2d1f2aaac9",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=54.37730&latitude=24.45390&start=20010101&end=20101231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:28.602463+00:00",
+      "reported_dates": 3652,
+      "paired_valid_dates": 3652
+    },
+    {
+      "name": "uae_abu_dhabi_20110101_20201231.json",
+      "sha256": "264948b500b32b9b8a04e11f7e3934235dd5788b70d014079b542edaff5da79b",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=54.37730&latitude=24.45390&start=20110101&end=20201231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:29.214258+00:00",
+      "reported_dates": 3653,
+      "paired_valid_dates": 3653
+    },
+    {
+      "name": "uae_abu_dhabi_20210101_20251231.json",
+      "sha256": "c571b761541920427dc3d48578f16c73d293dba5fdcba0e5cfb72adab768e663",
+      "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?community=AG&parameters=GWETTOP%2CGWETROOT%2CPRECTOTCORR%2CT2M&longitude=54.37730&latitude=24.45390&start=20210101&end=20251231&format=JSON&time-standard=UTC",
+      "retrieved_utc": "2026-11-14T20:30:29.576669+00:00",
+      "reported_dates": 1826,
+      "paired_valid_dates": 1826
+    }
+  ],
+  "source_type": "NASA POWER MERRA-2 gridded model output; not in-situ field measurements",
+  "scientific_validation": "NOT_PERFORMED",
+  "product_integration": "NOT_ENABLED",
+  "retrieved_utc": "2026-11-14T20:30:30.063384+00:00"
+}
