@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, ArrowUpRight, ChevronDown, CircleHelp, Download, ExternalLink, Globe2, Layers3, MapPinned, Microscope, RefreshCcw, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChevronDown, CircleHelp, Download, ExternalLink, Globe2, MapPinned, Microscope, RefreshCcw, ShieldCheck } from "lucide-react";
 import { getAnalysis, formatLag, medianPositiveLag, verdictLabel, type Analysis, type RecoveryEvent } from "../lib/api";
 import { findSite, siteCoordinates, sites, type SiteId } from "../lib/sites";
 import { EventInspector } from "./EventInspector";
