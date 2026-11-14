@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { BarChart3, ChevronDown, Download, MapPinned, RefreshCcw, ShieldCheck } from "lucide-react";
+import { ChevronDown, Download, MapPinned, RefreshCcw, ShieldCheck } from "lucide-react";
 import { getAnalysis, medianPositiveLag, verdictLabel, type Analysis } from "../lib/api";
 import { findSite, productSites, researchSites, siteCoordinates, siteRegions, type SiteId } from "../lib/sites";
 import { AnnualChart, MoistureChart } from "./ScientificCharts";
