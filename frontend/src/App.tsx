@@ -55,7 +55,13 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
         <div className="hero-auth"><ShieldCheck size={18} /><span>Authentic NASA POWER records. Model-derived soil wetness. No simulated results in this experience.</span></div>
         <div className="hero-counts"><div><strong>45<span> years</span></strong><small>1981—2025</small></div><div><strong>04<span> sites</span></strong><small>Three countries</small></div><div><strong>65,744</strong><small>Historical site-days</small></div></div>
       </div>
-      <div className="hero-illustration"><div className="hero-visual-label"><span>01 / THE INVISIBLE GAP</span><span>SOIL PROFILE / CONCEPT</span></div><SoilVisual /></div>
+      <div className="hero-map-stage">
+        <div className="hero-map-topline"><span>SYZYNOVA / GLOBAL OBSERVATION SYSTEM</span><span>01 — EARTH</span></div>
+        <Suspense fallback={<div className="map-skeleton">Loading geographic model…</div>}>
+          <GeoExplorer selected={selected} onSelect={(id) => { onSelect(id); navigate("explore"); }} />
+        </Suspense>
+        <div className="hero-map-readout"><span className="readout-ping" /> INTERACTIVE EARTH MODEL <span> / SELECT A LOCATION TO INVESTIGATE</span></div>
+      </div>
     </section>
     <div className="section-divider"><span>RESEARCH OVERVIEW</span><span>SCROLL TO EXPLORE</span></div>
     <section className="section-container intro-triptych" aria-label="How ROOTSHADOW works">
@@ -63,9 +69,9 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
       <div><span className="item-index">02</span><div className="feature-symbol"><Activity size={23} /></div><h3>Compare</h3><p>Find historical droughts and measure which soil layer recovered first.</p></div>
       <div><span className="item-index">03</span><div className="feature-symbol"><ShieldCheck size={23} /></div><h3>Question</h3><p>Inspect trends, sensitivity and uncertainty rather than assuming a confident answer.</p></div>
     </section>
-    <section className="section-container map-home-section">
-      <div className="section-heading"><div><span className="eyebrow">02 / VERIFIED STUDY SITES</span><h2>Explore the evidence, <em>place by place.</em></h2><p>Four NASA POWER point locations. Select a site on the map or list to inspect 45 years of historical data.</p></div><button className="button-quiet" type="button" onClick={() => navigate("explore")}>Open analysis workspace <ArrowUpRight size={17} /></button></div>
-      <Suspense fallback={<div className="map-skeleton">Preparing globe and research locations…</div>}><GeoExplorer selected={selected} onSelect={(id) => { onSelect(id); navigate("explore"); }} /></Suspense>
+    <section className="section-container map-home-section model-story-section">
+      <div className="section-heading"><div><span className="eyebrow">02 / BENEATH THE SURFACE</span><h2>The signal you <em>cannot see.</em></h2><p>Rain can restore a landscape's appearance before the deeper root zone has recovered. Our workflow detects that difference in historical NASA POWER model output, rather than assuming it.</p></div><button className="button-quiet" type="button" onClick={() => navigate("explore")}>Investigate actual events <ArrowUpRight size={17} /></button></div>
+      <div className="model-story-grid"><div className="model-story-explainer"><div className="story-index">MODEL VIEW / ILLUSTRATIVE</div><SoilVisual /><p>Conceptual layer illustration — not satellite imagery or a measured soil profile.</p></div><div className="model-story-steps"><div><span>01 / ABOVE GROUND</span><h3>Rainfall resumes.</h3><p>Shallow soil responds quickly in some historical drought recoveries.</p></div><div><span>02 / BELOW GROUND</span><h3>Roots may still wait.</h3><p>Compare when modeled root-zone wetness crosses the same recovery threshold.</p></div><div><span>03 / SCIENTIFIC CHECK</span><h3>Test the evidence.</h3><p>Inspect every event, trend robustness, provenance and limitations.</p></div></div></div>
     </section>
     <section className="section-container science-statement"><span className="eyebrow">SCIENTIFIC INTEGRITY</span><h2>A convincing visualization is not the same as a proven climate trend.</h2><p>We distinguish historical model estimates from direct soil measurements, and exploratory patterns from statistically confirmed conclusions. This is a research prototype—not an irrigation advisory or drought forecasting service.</p><button className="button-quiet" onClick={() => navigate("method")}>Read the method and limitations <ArrowUpRight size={16} /></button></section>
   </>;
