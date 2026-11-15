@@ -391,7 +391,7 @@ export default function EarthGlobe({ selected, onSelect }: Props) {
           const id = event.target.value as SiteId;
           if (id) { focusSite.current(id); onSelectRef.current(id); }
         }}>
-          <option value="">91 more locations</option>
+          <option value="">Browse all {sites.length - researchSites.length} additional locations</option>
           {siteRegions.map(region => <optgroup key={region} label={region}>{productSites.filter(site => site.region === region).map(site => <option key={site.id} value={site.id}>{site.name} · {site.country}</option>)}</optgroup>)}
         </select>
       </div>
