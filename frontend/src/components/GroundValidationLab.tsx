@@ -199,7 +199,7 @@ export default function ValidationLab() {
           <span className="vld-overline">03 / WHERE THE MODEL AND PROBES DISAGREE</span><h2>Evidence, not optimism.</h2><p className="vld-intro">The bars show monthly counts of days meeting the same surface–root rule in the model and the independent field probes. They are not water-use volumes or irrigation recommendations.</p>
           <EvidenceBars rows={active.monthly_holdout_evidence}/>
 
-          <div className="vld-month-control" aria-label="Explore a recorded NOAA month">
+          <div className="vld-month-control" role="region" aria-label="Explore a recorded NOAA month">
             <span className="vld-overline">INTERACTIVE TIMELINE / CHOOSE AN EVIDENCE MONTH</span>
             <label htmlFor="vld-month-slider">Selected month: {chosenMonth?.month ?? "Unavailable"}</label>
             <input id="vld-month-slider" type="range" aria-label="Select measured comparison month" min={0} max={Math.max(0, monthRows.length - 1)} step={1} value={monthIndex < 0 ? Math.max(0, monthRows.length - 1) : Math.min(monthIndex, Math.max(0, monthRows.length - 1))} disabled={monthRows.length < 2} onChange={event => setMonthIndex(Number(event.target.value))}/>
