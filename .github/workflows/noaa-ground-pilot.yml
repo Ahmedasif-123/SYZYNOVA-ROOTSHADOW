@@ -1,0 +1,31 @@
+name: Independent NOAA ground probe validation pilot
+on:
+  push:
+    branches: [noaa-ground-probe-validation-2026]
+    paths:
+      - 'scripts/validate_noaa_probe.py'
+      - 'tests/test_noaa_probe.py'
+      - '.github/workflows/noaa-ground-pilot.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install ROOTSHADOW scientific dependencies
+        run: pip install -r requirements.txt
+      - name: Verify sensor QA, depth weighting and confusion metrics
+        run: python -m pytest tests/test_noaa_probe.py -q
+      - name: Independently compare model with NOAA soil probes
+        run: python -m scripts.validate_noaa_probe
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rootshadow-noaa-independent-validation
+          path: ground_probe/NOAA_VALIDATION_PILOT.json
+          retention-days: 14
