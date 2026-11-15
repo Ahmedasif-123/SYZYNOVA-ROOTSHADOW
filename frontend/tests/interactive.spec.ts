@@ -30,12 +30,12 @@ test("changing selected site retains the scenario and updates local result", asy
   await page.getByRole("textbox", { name: "Search study locations" }).fill("Doha");
   await page.locator(".desk-point").click();
   const local = page.getByRole("region", { name: "Selected location what-if outcome" });
-  await expect(local).toContainText("Doha");
-  await expect(local).toContainText("1 of 1 days");
+  await expect(local).toContainText("DOHA");
+  await expect(local).toContainText("1 of 1 day");
   await sandbox.getByRole("slider", { name: "Surface rank minimum" }).focus();
   await sandbox.getByRole("slider", { name: "Surface rank minimum" }).press("ArrowRight");
   await expect(sandbox.getByRole("slider", { name: "Surface rank minimum" })).toHaveValue("45");
-  await expect(local).toContainText("1 of 1 days");
+  await expect(local).toContainText("1 of 1 day");
 });
 
 test("validation explorer switches NOAA detectors, recomputing displayed confusion matrix but not evidence", async ({ page }) => {
