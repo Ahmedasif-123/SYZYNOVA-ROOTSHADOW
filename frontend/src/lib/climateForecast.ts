@@ -91,12 +91,12 @@ function vector(prev: MoisturePair[], weather: Weather, norm: Norms, layer: Laye
     includeClimate ? t : 0, includeClimate ? p : 0];
 }
 
-function train(climate: Weather[], moisture: MoisturePair[], norm: Norms, includeClimate: boolean): Regression {
+function train(climate: Weather[], moisture: MoisturePair[], norm: Norms, includeClimate: boolean, trainEnd = 420): Regression {
   const coefficients = (layer: Layer) => {
     const n = 6;
     const gram = Array.from({ length: n }, () => Array(n).fill(0) as number[]);
     const rhs = Array(n).fill(0) as number[];
-    for (let i = 3; i < 420; i++) {
+    for (let i = 3; i < trainEnd; i++) {
       const target = moisture[i]?.[layer];
       if (target === null || target === undefined || !Number.isFinite(target)) continue;
       const x = vector(moisture.slice(0, i), climate[i], norm, layer, includeClimate);
@@ -201,7 +201,8 @@ export function climateForecast(
     };
   };
   const metrics = { surface: errors("surface"), root: errors("root") };
-  const projected = simulate(climateModel, norm, moisture, futureClimate, true);
+  const productionModel = train(climate, moisture, norm, true, 540);
+  const projected = simulate(productionModel, norm, moisture, futureClimate, true);
   const historical = Array.from({ length: 45 }, (_, i) => {
     const year = 1981 + i;
     const same = moisture.filter(m => m.month.startsWith(String(year)));
