@@ -67,7 +67,7 @@ function Chart({ option, className = "", ariaLabel, onSelectIndex, lastIndex = 0
     const old = renderer.getOption()?.dataZoom as Array<{ start?: number; end?: number }> | undefined;
     const existing = old?.[0];
     const retain = priorZoom.current === zoomKey && existing?.start !== undefined && existing?.end !== undefined;
-    renderer.setOption(option, { notMerge: true, lazyUpdate: false });
+    renderer.setOption(option, { notMerge: true, lazyUpdate: false, silent: true });
     if (retain && existing?.start !== undefined && existing?.end !== undefined) renderer.dispatchAction({ type: "dataZoom", start: existing.start, end: existing.end });
     priorZoom.current = zoomKey;
   }, [option, zoomKey]);
@@ -115,7 +115,9 @@ export function MoistureChart({ analysis, event, highlightedMonth, siteId, onMon
   const start = zoom === "event" && event ? startIndex / Math.max(1, months.length - 1) * 100 : 0;
   const end = zoom === "event" && event ? endIndex / Math.max(1, months.length - 1) * 100 : 100;
   const option: echarts.EChartsOption = {
-    animationDuration: 550,
+    animation: false,
+    animationDuration: 0,
+    animationDurationUpdate: 0,
     backgroundColor: "transparent",
     color: ["#62d8e0", "#d3b68d"],
     grid: [
