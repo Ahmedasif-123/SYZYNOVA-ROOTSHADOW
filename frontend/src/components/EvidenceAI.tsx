@@ -40,7 +40,7 @@ export default function EvidenceAI({ selected, onSelect, onExplore, onValidation
       if (!response.ok) throw new Error("Missing AI endpoint");
       return await response.json() as Availability;
     }).then(data => { if (subscribed) setService(data); })
-      .catch(() => { if (subscribed) setService({ enabled: false, model: "gpt-6-astra" }); });
+      .catch(() => { if (subscribed) setService({ enabled: false, model: "Unavailable" }); });
     return () => { subscribed = false; };
   }, []);
 
@@ -72,8 +72,8 @@ export default function EvidenceAI({ selected, onSelect, onExplore, onValidation
 
   return <section className="eai-page" aria-label="Evidence grounded scientific AI">
     <header className="eai-header">
-      <div><span className="eai-eyebrow"><BrainCircuit size={16}/> ROOTSHADOW / EVIDENCE AI</span><h1>Ask harder questions.<br/><em>Demand evidence.</em></h1><p>A high-capability language-model interpreter connected to historical NASA analyses and limited independent NOAA soil-probe measurements. It explains the findings and their limits, not imaginary predictions.</p></div>
-      <aside className="eai-service"><BrainCircuit size={25}/><div><small>REASONING MODEL</small><strong>GPT-6 Astra</strong><p>{service === null ? "Checking secure API…" : service.enabled ? "Private service configured" : "Awaiting private API credentials"}</p></div></aside>
+      <div><span className="eai-eyebrow"><BrainCircuit size={16}/> ROOTSHADOW / EVIDENCE AI</span><h1>Ask ROOTSHADOW.<br/><em>Check the evidence.</em></h1><p>Choose a model location and ask what the NASA historical record actually shows. NOAA field checks are included only for the two Oklahoma model locations with independent probe data.</p></div>
+      <aside className="eai-service"><BrainCircuit size={25}/><div><small>AI EVIDENCE INTERPRETER</small><strong>{service?.model && service.enabled ? service.model : "Secure scientific analysis"}</strong><p>{service === null ? "Checking backend…" : service.enabled ? "Backend configured · Enter presenter code to ask" : "Backend configuration incomplete"}</p></div></aside>
     </header>
     <div className="eai-caution"><ShieldAlert size={20}/><p><strong>Not an AI drought forecast.</strong> The available NASA model data do not establish field-level water stress, safe irrigation amounts, future rainfall, water savings, or validated forecasting skill.</p></div>
     <div className="eai-layout">
@@ -83,9 +83,9 @@ export default function EvidenceAI({ selected, onSelect, onExplore, onValidation
         <div className="eai-field"><span>PROFESSIONAL PERSPECTIVE</span><div className="eai-roles" role="group" aria-label="Scientific AI perspective">{([{ key: "scientist", label: "Scientist" }, { key: "engineer", label: "Agri-engineer" }, { key: "ministry", label: "Ministry" }] as const).map(item => <button type="button" key={item.key} className={role === item.key ? "active" : ""} aria-pressed={role === item.key} onClick={() => { setRole(item.key); setResult(null); }}>{item.label}</button>)}</div></div>
         <div className="eai-presets"><span>RESEARCH QUESTIONS</span>{prompts.map(prompt => <button type="button" key={prompt} onClick={() => { setQuestion(prompt); setError(""); }}>{prompt}<ArrowUpRight size={14}/></button>)}</div>
         <label className="eai-field"><span>YOUR QUESTION</span><textarea aria-label="Ask a question about verified ROOTSHADOW evidence" rows={4} maxLength={700} value={question} onChange={event => setQuestion(event.target.value)} /></label>
-        <label className="eai-field"><span><LockKeyhole size={14}/> PRIVATE PRESENTER ACCESS CODE</span><input aria-label="Private presenter access code" type="password" autoComplete="off" value={code} onChange={event => setCode(event.target.value)} placeholder="Configured privately on Vercel"/><small>The code is verified by our server. It is not submitted to the AI model or stored in your browser.</small></label>
-        <button className="eai-ask" type="button" disabled={busy || !service?.enabled || !code.trim() || question.trim().length < 8} onClick={ask}>{busy ? <RefreshCcw size={16} className="eai-spinner"/> : <BrainCircuit size={17}/>} {busy ? "Interpreting verified evidence…" : "Analyze with GPT-6 Astra"} <ArrowUpRight size={15}/></button>
-        {!service?.enabled && service !== null && <p className="eai-warning" role="status">The private OpenAI API key and presenter code must be configured on Vercel before this service can accept questions. All existing NASA research and NOAA evidence remain available.</p>}
+        <label className="eai-field"><span><LockKeyhole size={14}/> PRIVATE PRESENTER ACCESS CODE</span><input aria-label="Private presenter access code" type="password" autoComplete="off" value={code} onChange={event => setCode(event.target.value)} placeholder="Configured privately on Vercel"/><small>Presenter-only access protects the API budget. The code is checked by Vercel, not sent to the AI model.</small></label>
+        <button className="eai-ask" type="button" disabled={busy || !service?.enabled || !code.trim() || question.trim().length < 8} onClick={ask}>{busy ? <RefreshCcw size={16} className="eai-spinner"/> : <BrainCircuit size={17}/>} {busy ? "Interpreting verified evidence…" : "Analyze evidence"} <ArrowUpRight size={15}/></button>
+        {!service?.enabled && service !== null && <p className="eai-warning" role="status">The server is not ready yet. Check OPENAI_API_KEY and ROOTSHADOW_AI_ACCESS_CODE in Vercel Production settings, then redeploy. Historical analysis remains available.</p>}
         {error && <p className="eai-error" role="alert">{error}</p>}
       </section>
       <div className="eai-outcomes">
