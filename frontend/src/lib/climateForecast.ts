@@ -165,7 +165,7 @@ export function climateForecast(
     surface: { climate: NaN, historyOnly: NaN, climatology: NaN, rmse: NaN },
     root: { climate: NaN, historyOnly: NaN, climatology: NaN, rmse: NaN }
   }, trainingPeriod: "1981–2015", holdoutPeriod: "2016–2025", overlapYears: 0, biasNote: "Not available", sampleMonths: 0 };
-  if (![5, 10, 30].includes(years) || months.length !== rows.length) return empty;
+  if (![5, 10, 20, 30].includes(years) || months.length !== rows.length) return empty;
 
   const historyByMonth = new Map(bundle.history.map(w => [w.month, w]));
   const moistureByMonth = new Map(months.map((month, i) =>
