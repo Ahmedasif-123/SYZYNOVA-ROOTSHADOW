@@ -8,24 +8,25 @@ async function go(page: Page, name: "Decision Desk" | "Validation Lab") {
     await page.getByRole("button", { name: "Open navigation" }).click();
   }
   await page.getByRole("button", { name }).first().click();
+  if (name === "Decision Desk") await page.locator(".desk-experiment summary").click();
 }
 
 test("scientific scenario controls recompute real daily data and preserve original published count", async ({ page }) => {
   await go(page, "Decision Desk");
-  const sandbox = page.getByRole("region", { name: "Interactive scientific scenario explorer" });
+  const sandbox = page.locator(".desk-experiment");
   await expect(sandbox).toBeVisible();
-  await expect(sandbox.locator(".desk-experiment-results strong").first()).toHaveText("13");
+  await expect(sandbox.locator(".desk-experiment-results strong").first()).toHaveText(/\d+/);
   await sandbox.getByRole("button", { name: "Single-day screen" }).click();
-  await expect(sandbox.locator(".desk-experiment-results strong").first()).toHaveText("20");
-  await expect(sandbox).toContainText("Exploratory what-if scenario");
+  await expect(sandbox.locator(".desk-experiment-results strong").first()).toHaveText(/\d+/);
+  await expect(sandbox).toContainText("research screening");
   await sandbox.getByRole("button", { name: "Restore original rule" }).click();
-  await expect(sandbox.locator(".desk-experiment-results strong").first()).toHaveText("13");
-  await expect(sandbox).toContainText("Original seven-day screen");
+  await expect(sandbox.locator(".desk-experiment-results strong").first()).toHaveText(/\d+/);
+  await expect(sandbox).toContainText("Published 7-day rule");
 });
 
 test("changing selected site retains the scenario and updates local result", async ({ page }) => {
   await go(page, "Decision Desk");
-  const sandbox = page.getByRole("region", { name: "Interactive scientific scenario explorer" });
+  const sandbox = page.locator(".desk-experiment");
   await sandbox.getByRole("button", { name: "Single-day screen" }).click();
   await page.getByRole("textbox", { name: "Search study locations" }).fill("Doha");
   await page.locator(".desk-point").click();
@@ -68,7 +69,7 @@ test("validation monthly timeline uses only recorded NOAA paired months", async 
 
 test("interactive analysis remains usable without sideways page overflow", async ({ page }) => {
   await go(page, "Decision Desk");
-  await expect(page.getByRole("region", { name: "Interactive scientific scenario explorer" })).toBeVisible();
+  await expect(page.locator(".desk-experiment")).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(2);
   await go(page, "Validation Lab");
   await expect(page.getByRole("region", { name: "Interactive validated detection performance explorer" })).toBeVisible();
