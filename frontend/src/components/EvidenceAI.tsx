@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Activity, ArrowUpRight, BookOpenText, BrainCircuit, ExternalLink, LockKeyhole, RefreshCcw, ShieldAlert } from "lucide-react";
+import { Activity, ArrowUpRight, BookOpenText, BrainCircuit, ExternalLink, RefreshCcw, ShieldAlert } from "lucide-react";
 import { findSite, productSites, researchSites, siteRegions, sites, type SiteId } from "../lib/sites";
 
 type Role = "scientist" | "engineer" | "ministry";
@@ -27,7 +27,6 @@ const prompts = [
 export default function EvidenceAI({ selected, onSelect, onExplore, onValidation }: Props) {
   const [service, setService] = useState<Availability | null>(null);
   const [role, setRole] = useState<Role>("scientist");
-  const [code, setCode] = useState("");
   const [question, setQuestion] = useState(prompts[0]);
   const [result, setResult] = useState<Answer | null>(null);
   const [error, setError] = useState("");
@@ -45,7 +44,7 @@ export default function EvidenceAI({ selected, onSelect, onExplore, onValidation
   }, []);
 
   async function ask() {
-    if (busy || !service?.enabled || question.trim().length < 8 || !code.trim()) return;
+    if (busy || !service?.enabled || question.trim().length < 8) return;
     setBusy(true);
     setResult(null);
     setError("");
@@ -55,7 +54,7 @@ export default function EvidenceAI({ selected, onSelect, onExplore, onValidation
       const response = await fetch("/api/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ siteId: selected, perspective: role, question: question.trim(), accessCode: code }),
+        body: JSON.stringify({ siteId: selected, perspective: role, question: question.trim() }),
         signal: controller.signal
       });
       const body = await response.json() as Answer & { error?: string };
@@ -73,7 +72,7 @@ export default function EvidenceAI({ selected, onSelect, onExplore, onValidation
   return <section className="eai-page" aria-label="Evidence grounded scientific AI">
     <header className="eai-header">
       <div><span className="eai-eyebrow"><BrainCircuit size={16}/> ROOTSHADOW / EVIDENCE AI</span><h1>Ask ROOTSHADOW.<br/><em>Check the evidence.</em></h1><p>Choose a model location and ask what the NASA historical record actually shows. NOAA field checks are included only for the two Oklahoma model locations with independent probe data.</p></div>
-      <aside className="eai-service"><BrainCircuit size={25}/><div><small>AI EVIDENCE INTERPRETER</small><strong>{service?.model && service.enabled ? service.model : "Secure scientific analysis"}</strong><p>{service === null ? "Checking backend…" : service.enabled ? "Backend configured · Enter presenter code to ask" : "Backend configuration incomplete"}</p></div></aside>
+      <aside className="eai-service"><BrainCircuit size={25}/><div><small>AI EVIDENCE INTERPRETER</small><strong>{service?.model && service.enabled ? service.model : "Secure scientific analysis"}</strong><p>{service === null ? "Checking backend…" : service.enabled ? "Public access · Ask a research question" : "Backend configuration incomplete"}</p></div></aside>
     </header>
     <div className="eai-caution"><ShieldAlert size={20}/><p><strong>Not an AI drought forecast.</strong> The available NASA model data do not establish field-level water stress, safe irrigation amounts, future rainfall, water savings, or validated forecasting skill.</p></div>
     <div className="eai-layout">
@@ -83,9 +82,9 @@ export default function EvidenceAI({ selected, onSelect, onExplore, onValidation
         <div className="eai-field"><span>PROFESSIONAL PERSPECTIVE</span><div className="eai-roles" role="group" aria-label="Scientific AI perspective">{([{ key: "scientist", label: "Scientist" }, { key: "engineer", label: "Agri-engineer" }, { key: "ministry", label: "Ministry" }] as const).map(item => <button type="button" key={item.key} className={role === item.key ? "active" : ""} aria-pressed={role === item.key} onClick={() => { setRole(item.key); setResult(null); }}>{item.label}</button>)}</div></div>
         <div className="eai-presets"><span>RESEARCH QUESTIONS</span>{prompts.map(prompt => <button type="button" key={prompt} onClick={() => { setQuestion(prompt); setError(""); }}>{prompt}<ArrowUpRight size={14}/></button>)}</div>
         <label className="eai-field"><span>YOUR QUESTION</span><textarea aria-label="Ask a question about verified ROOTSHADOW evidence" rows={4} maxLength={700} value={question} onChange={event => setQuestion(event.target.value)} /></label>
-        <label className="eai-field"><span><LockKeyhole size={14}/> PRIVATE PRESENTER ACCESS CODE</span><input aria-label="Private presenter access code" type="password" autoComplete="off" value={code} onChange={event => setCode(event.target.value)} placeholder="Configured privately on Vercel"/><small>Presenter-only access protects the API budget. The code is checked by Vercel, not sent to the AI model.</small></label>
-        <button className="eai-ask" type="button" disabled={busy || !service?.enabled || !code.trim() || question.trim().length < 8} onClick={ask}>{busy ? <RefreshCcw size={16} className="eai-spinner"/> : <BrainCircuit size={17}/>} {busy ? "Interpreting verified evidence…" : "Analyze evidence"} <ArrowUpRight size={15}/></button>
-        {!service?.enabled && service !== null && <p className="eai-warning" role="status">The server is not ready yet. Check OPENAI_API_KEY and ROOTSHADOW_AI_ACCESS_CODE in Vercel Production settings, then redeploy. Historical analysis remains available.</p>}
+        <button className="eai-ask" type="button" disabled={busy || !service?.enabled || question.trim().length < 8} onClick={ask}>{busy ? <RefreshCcw size={16} className="eai-spinner"/> : <BrainCircuit size={17}/>} {busy ? "Interpreting verified evidence…" : "Analyze evidence"} <ArrowUpRight size={15}/></button>
+        {!service?.enabled && service !== null && <p className="eai-warning" role="status">The server is not ready yet. Check OPENAI_API_KEY in Vercel Production settings, then redeploy. Historical analysis remains available.</p>}
+        {service?.enabled && <p className="eai-public-note">Open to all visitors. Questions are limited to prevent automated abuse; no account or presenter password is required.</p>}
         {error && <p className="eai-error" role="alert">{error}</p>}
       </section>
       <div className="eai-outcomes">
