@@ -54,6 +54,8 @@ export async function GET(request: Request): Promise<Response> {
   const rawScenario = url.searchParams.get("scenario") ?? "ssp245";
   if (rawScenario !== "ssp126" && rawScenario !== "ssp245" && rawScenario !== "ssp370") return reply({ error: "Invalid climate scenario" }, 400);
   const scenario: Scenario = rawScenario;
+  const model = url.searchParams.get("model") ?? "ensemble";
+  if (!["ensemble", "gfdl_esm4", "cesm2", "mpi_esm1_2_lr", "mri_esm2_0"].includes(model)) return reply({ error: "Unsupported climate model" }, 400);
   const site = sites.find(item => item.id === id);
   if (!site) return reply({ error: "Choose one of the 97 supported model locations." }, 400);
 
@@ -75,7 +77,7 @@ export async function GET(request: Request): Promise<Response> {
   future.searchParams.set("start", "201501");
   future.searchParams.set("end", "205512");
   future.searchParams.set("scenario", scenario);
-  future.searchParams.set("model", "ensemble");
+  future.searchParams.set("model", model);
   future.searchParams.set("time-standard", "UTC");
 
   try {
@@ -98,7 +100,7 @@ export async function GET(request: Request): Promise<Response> {
       scenario,
       historicalStart: "1981-01",
       historicalEnd: "2025-12",
-      climateEnsemble: "NASA NEX-GDDP-CMIP6",
+      climateEnsemble: "NASA NEX-GDDP-CMIP6 (" + model + ")",
       history,
       projection,
       coordinates: { lon, lat },
