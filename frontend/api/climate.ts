@@ -42,6 +42,31 @@ function paired(raw: unknown, scenario?: Scenario): ClimateMonth[] {
     .filter(row => row.t2m > -90 && row.t2m < 75 && row.precip >= 0 && row.precip < 200);
 }
 
+
+function aggregateDailyClimate(raw: unknown): ClimateMonth[] {
+  const body = raw as { daily?: { time?: string[]; temperature_2m_mean?: (number | null)[]; precipitation_sum?: (number | null)[] } };
+  const dates = body?.daily?.time ?? [];
+  const temp = body?.daily?.temperature_2m_mean ?? [];
+  const rain = body?.daily?.precipitation_sum ?? [];
+  if (!dates.length || dates.length !== temp.length || dates.length !== rain.length) throw new Error("Alternative climate dataset incomplete");
+  const buckets = new Map<string, { temp: number[]; rain: number[] }>();
+  dates.forEach((date, i) => {
+    const t = temp[i], p = rain[i];
+    if (typeof t !== "number" || !Number.isFinite(t) || t < -90 || t > 75 ||
+      typeof p !== "number" || !Number.isFinite(p) || p < 0 || p > 500) return;
+    const key = date.slice(0, 7);
+    const entry = buckets.get(key) ?? { temp: [], rain: [] };
+    entry.temp.push(t);
+    entry.rain.push(p);
+    buckets.set(key, entry);
+  });
+  return Array.from(buckets, ([month, entry]) => ({
+    month, t2m: entry.temp.reduce((a, b) => a + b, 0) / entry.temp.length,
+    precip: entry.rain.reduce((a, b) => a + b, 0) / entry.rain.length
+  })).filter(row => (buckets.get(row.month)?.temp.length ?? 0) >= 25)
+    .sort((a, b) => a.month.localeCompare(b.month));
+}
+
 async function getPower(url: URL): Promise<unknown> {
   const response = await fetch(url, { headers: { Accept: "application/json" }, signal: AbortSignal.timeout(48000) });
   if (!response.ok) throw new Error("NASA POWER returned HTTP " + response.status);
@@ -81,38 +106,50 @@ export async function GET(request: Request): Promise<Response> {
   future.searchParams.set("time-standard", "UTC");
 
   try {
-    const [rawPast, rawFuture] = await Promise.all([getPower(past), getPower(future)]);
+    const [rawPast, rawFuture] = await Promise.all([getPower(past), getPower(future).catch(() => null)]);
     const history = paired(rawPast).filter(row => row.month >= "1981-01" && row.month <= "2025-12");
-    const projection = paired(rawFuture, scenario).filter(row => row.month >= "2015-01" && row.month <= "2055-12");
-    if (history.length < 480 || projection.length < 400) {
-      const inspect = rawFuture as { properties?: { parameter?: Record<string, Record<string, unknown>> } };
-      const t = inspect?.properties?.parameter?.T2M?.[scenario] as Record<string, unknown> | undefined;
-      const p = inspect?.properties?.parameter?.PRECTOTCORR?.[scenario] as Record<string, unknown> | undefined;
-      return reply({ error: "NASA climate dataset is incomplete at this grid point. No projection has been generated.",
-        historyMonths: history.length, scenarioMonths: projection.length,
-        diagnostic: { tempKeys: Object.keys(t ?? {}).slice(0, 8), rainKeys: Object.keys(p ?? {}).slice(0, 8),
-          tempFirst: Object.entries(t ?? {}).slice(0, 3), rainFirst: Object.entries(p ?? {}).slice(0, 3),
-          tempLast: Object.entries(t ?? {}).slice(-3), nonMissingTemp: Object.entries(t ?? {}).filter(([,v]) => typeof v === 'number' && v > -900).slice(0,3), nonMissingCount: Object.entries(t ?? {}).filter(([,v]) => typeof v === 'number' && v > -900).length } }, 503);
+    if (history.length < 480) return reply({ error: "NASA historical temperature or rainfall is incomplete; no model was fitted." }, 503);
+    let projection: ClimateMonth[] = [];
+    try { if (rawFuture) projection = paired(rawFuture, scenario).filter(row => row.month >= "2015-01" && row.month <= "2055-12"); } catch {}
+    let source = "nasa_nex_cmip6";
+    let modelName = model;
+    let futureUrl = future.toString();
+    let documentation = "https://power.larc.nasa.gov/docs/services/api/projection/";
+    if (projection.length < 400) {
+      const alternative = new URL("https://climate-api.open-meteo.com/v1/climate");
+      alternative.searchParams.set("latitude", String(lat));
+      alternative.searchParams.set("longitude", String(lon));
+      alternative.searchParams.set("start_date", "2015-01-01");
+      alternative.searchParams.set("end_date", "2050-12-31");
+      alternative.searchParams.set("daily", "temperature_2m_mean,precipitation_sum");
+      alternative.searchParams.set("models", "EC_Earth3P_HR");
+      alternative.searchParams.set("timezone", "GMT");
+      projection = aggregateDailyClimate(await getPower(alternative));
+      source = "open_meteo_highresmip";
+      modelName = "EC_Earth3P_HR";
+      futureUrl = alternative.toString();
+      documentation = "https://open-meteo.com/en/docs/climate-api";
     }
+    if (projection.length < 400) return reply({ error: "No complete future climate series is available at this coordinate. Forecast withheld." }, 503);
     return reply({
       schema: 1,
       siteId: site.id,
       scenario,
+      climateSource: source,
+      climateEnsemble: source === "nasa_nex_cmip6" ? "NASA NEX-GDDP-CMIP6 (" + modelName + ")" : "Open-Meteo HighResMIP (EC_Earth3P_HR; not an SSP scenario)",
+      maxProjectionYear: source === "nasa_nex_cmip6" ? 2055 : 2050,
       historicalStart: "1981-01",
       historicalEnd: "2025-12",
-      climateEnsemble: "NASA NEX-GDDP-CMIP6 (" + model + ")",
       history,
       projection,
       coordinates: { lon, lat },
       variables: { t2m: "°C", precip: "mm/day, monthly mean" },
-      sources: {
-        historical: past.toString(),
-        future: future.toString(),
-        documentation: "https://power.larc.nasa.gov/docs/services/api/projection/"
-      },
-      caution: "CMIP6 scenarios are possible climate pathways, not observed future conditions. Model grid cells are not farm measurements."
+      sources: { historical: past.toString(), future: futureUrl, documentation },
+      caution: source === "nasa_nex_cmip6"
+        ? "NASA SSP climate scenarios are possible futures, not field measurements or weather forecasts."
+        : "NASA CMIP6 projection was missing here. Alternative HighResMIP model is NOT selected by SSP1/2/3 labels and only extends through 2050. Do not treat it as a NASA SSP ensemble."
     });
   } catch {
-    return reply({ error: "NASA POWER climate inputs could not be retrieved. Future climate estimates are withheld." }, 503);
+    return reply({ error: "Climate inputs could not be retrieved from trusted sources. Future estimates are withheld." }, 503);
   }
 }
