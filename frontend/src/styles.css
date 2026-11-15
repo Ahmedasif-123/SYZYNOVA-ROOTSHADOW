@@ -925,3 +925,5 @@ main { max-width: none; }
 .climate-sources strong{color:#244737}
 .climate-sources a{color:#245c4b;text-decoration-thickness:1px}
 .forecast-body,.climate-chart-shell,.climate-score,.climate-headline-metrics,.climate-source-status,.forecast-warning,.climate-error,.climate-loading{color:#e4eeeb}
+
+html{overflow-x:clip}body,#root{max-width:100%;overflow-x:clip}.main-shell,main{min-width:0}
