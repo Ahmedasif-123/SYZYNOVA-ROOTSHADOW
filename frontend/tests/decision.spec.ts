@@ -91,9 +91,9 @@ test("every screening flag displays truthful NOAA pilot evidence instead of appa
   await expect(page.locator(".desk-point-pilot")).toHaveCount(97);
   await expect(page.locator(".desk-pilot-key")).toContainText("6.7–10.5%");
   await expect(page.locator(".desk-pilot-key")).toContainText("15.8–27.8%");
-  await expect(page.locator(".desk-selected-validation")).toContainText("not a probability for");
+  await expect(page.locator(".desk-selected-validation")).toContainText("reliability estimates for");
   await page.getByRole("textbox", { name: "Search study locations" }).fill("Doha");
   await expect(page.locator(".desk-point")).toHaveCount(1);
   await page.locator(".desk-point").click();
-  await expect(page.locator(".desk-selected-validation")).toContainText("not a probability for Doha");
+  await expect(page.locator(".desk-selected-validation")).toContainText("reliability estimates for Doha");
 });
