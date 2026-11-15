@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Activity, ArrowUpRight, BookOpenText, BrainCircuit, ExternalLink, LockKeyhole, RefreshCcw, ShieldAlert } from "lucide-react";
-import { findSite, productSites, researchSites, siteRegions, type SiteId } from "../lib/sites";
+import { findSite, productSites, researchSites, siteRegions, sites, type SiteId } from "../lib/sites";
 
 type Role = "scientist" | "engineer" | "ministry";
 type Source = { id: string; label: string; url: string };
@@ -102,6 +102,6 @@ export default function EvidenceAI({ selected, onSelect, onExplore, onValidation
         <section className="eai-box eai-explainer"><span className="eai-eyebrow">03 / RESEARCH BOUNDARIES</span><h3>Explanation is not prediction.</h3><p><strong>NASA:</strong> Model-derived point histories, not readings from individual farms.</p><p><strong>NOAA:</strong> Independent soil probes at four Oklahoma pilot stations, including important disagreements.</p><p><strong>AI:</strong> A reasoning interface for supplied evidence. Predictive ML requires separate chronological testing and independent validation.</p><div className="eai-actions"><button type="button" onClick={onExplore}>Explore NASA records <ArrowUpRight size={14}/></button><button type="button" onClick={onValidation}>Open Validation Lab <ArrowUpRight size={14}/></button></div></section>
       </div>
     </div>
-    <footer className="eai-footnote"><Activity size={15}/> All 97 study locations are gridded model points, not spatially continuous farm measurements. We never infer irrigation volumes or future crop conditions without the required independent inputs.</footer>
+    <footer className="eai-footnote"><Activity size={15}/> All {sites.length} study locations are gridded model points, not spatially continuous farm measurements. We never infer irrigation volumes or future crop conditions without the required independent inputs.</footer>
   </section>;
 }
