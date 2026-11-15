@@ -1,0 +1,2432 @@
+{
+  "status": "INDEPENDENT_IN_SITU_PILOT_NOT_GENERAL_VALIDATION",
+  "created_utc": "2026-11-15T03:24:51.291697+00:00",
+  "protocol": "ROOTSHADOW pilot 2026-11-15, predefined before accessing station outcomes",
+  "model": "NASA POWER / MERRA-2 daily GWETTOP and GWETROOT; existing hashed historical model files",
+  "ground_measurement": "NOAA USCRN 5, 10, 20, 50, 100 cm moisture probes",
+  "reference_window": "2013-2021",
+  "holdout_window": "2022-2025",
+  "rank_definition": "Each source gets its own fixed 2013-2021 seasonal percentile baseline, +/-15 calendar days, identical midrank estimator",
+  "root_profile_weights": {
+    "5cm": 0.075,
+    "10cm": 0.075,
+    "20cm": 0.2,
+    "50cm": 0.4,
+    "100cm": 0.25
+  },
+  "root_profile_weight_note": "Approximate 0-100 cm depth-integrated volumetric water content; all five levels required for paired ground truth.",
+  "primary_outcome": "Whether the observed 0-100 cm probe-based seasonal rank is below the predefined 40th percentile",
+  "independent_comparator": "NOAA USCRN ground observation, not another coupled land-surface model",
+  "sites_proposed": 4,
+  "stations_evaluated": 4,
+  "stations": [
+    {
+      "station": "OK_Goodwell_2_E",
+      "model_site": "us_sgp_goodwell",
+      "station_coordinates": {
+        "latitude": 36.6,
+        "longitude": -101.59
+      },
+      "model_coordinates": {
+        "latitude": 36.597,
+        "longitude": -101.618
+      },
+      "point_separation_km": 2.52,
+      "ground_reference_valid_days": 2626,
+      "holdout_paired_days": 1307,
+      "holdout_field_root_dry_days": 664,
+      "holdout_observed_mismatch_days": 170,
+      "field_truth_source": "NOAA USCRN daily QC measurements, complete weighted 0-100 cm profile and independent 5 cm surface probe",
+      "predictors": {
+        "model_root_low_percentile": {
+          "n": 1307,
+          "true_positive": 479,
+          "false_positive": 65,
+          "true_negative": 578,
+          "false_negative": 185,
+          "precision": 0.8805,
+          "recall": 0.7214,
+          "specificity": 0.8989,
+          "f1": 0.793,
+          "balanced_accuracy": 0.8102,
+          "false_positive_rate": 0.1011,
+          "accuracy": 0.8087
+        },
+        "surface_only_low_percentile": {
+          "n": 1307,
+          "true_positive": 478,
+          "false_positive": 108,
+          "true_negative": 535,
+          "false_negative": 186,
+          "precision": 0.8157,
+          "recall": 0.7199,
+          "specificity": 0.832,
+          "f1": 0.7648,
+          "balanced_accuracy": 0.7759,
+          "false_positive_rate": 0.168,
+          "accuracy": 0.7751
+        },
+        "model_mismatch_vs_probe_mismatch": {
+          "n": 1307,
+          "true_positive": 15,
+          "false_positive": 47,
+          "true_negative": 1090,
+          "false_negative": 155,
+          "precision": 0.2419,
+          "recall": 0.0882,
+          "specificity": 0.9587,
+          "f1": 0.1293,
+          "balanced_accuracy": 0.5234,
+          "false_positive_rate": 0.0413,
+          "accuracy": 0.8454
+        }
+      },
+      "rank_agreement": {
+        "model_root_vs_probe_root_spearman": 0.7428,
+        "model_surface_vs_probe_surface_spearman": 0.773
+      },
+      "potential_additional_detection": {
+        "ground_root_dry_days_surface_only_did_not_flag": 186,
+        "ground_root_dry_days_model_root_caught_but_surface_did_not": 49
+      },
+      "monthly_holdout_evidence": [
+        {
+          "month": "2022-04",
+          "paired_days": 8,
+          "ground_root_dry_days": 8,
+          "model_root_dry_days": 8,
+          "model_surface_dry_days": 7,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 4.0,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2022-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 26,
+          "model_surface_dry_days": 24,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 8,
+          "model_root_median_percentile": 25.3,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2022-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 25,
+          "model_surface_dry_days": 21,
+          "modeled_mismatch_days": 6,
+          "ground_observed_mismatch_days": 30,
+          "model_root_median_percentile": 22.1,
+          "ground_root_median_percentile": 6.0
+        },
+        {
+          "month": "2022-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 18,
+          "model_surface_dry_days": 19,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 17,
+          "model_root_median_percentile": 26.5,
+          "ground_root_median_percentile": 7.4
+        },
+        {
+          "month": "2022-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 18,
+          "model_surface_dry_days": 20,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 7,
+          "model_root_median_percentile": 33.7,
+          "ground_root_median_percentile": 6.9
+        },
+        {
+          "month": "2022-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 29,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 10.9,
+          "ground_root_median_percentile": 4.1
+        },
+        {
+          "month": "2022-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 29,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 4,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 10.2,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2022-11",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 30,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 5.6,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2022-12",
+          "paired_days": 27,
+          "ground_root_dry_days": 27,
+          "model_root_dry_days": 27,
+          "model_surface_dry_days": 27,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 5.6,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-01",
+          "paired_days": 29,
+          "ground_root_dry_days": 29,
+          "model_root_dry_days": 29,
+          "model_surface_dry_days": 29,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.7,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-02",
+          "paired_days": 25,
+          "ground_root_dry_days": 25,
+          "model_root_dry_days": 25,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.7,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-03",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 28,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.0,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-04",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 25,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 5,
+          "model_root_median_percentile": 0.9,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 26,
+          "model_root_dry_days": 3,
+          "model_surface_dry_days": 6,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 26,
+          "model_root_median_percentile": 57.9,
+          "ground_root_median_percentile": 0.5
+        },
+        {
+          "month": "2023-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 95.3,
+          "ground_root_median_percentile": 95.9
+        },
+        {
+          "month": "2023-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 8,
+          "model_root_dry_days": 3,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 3,
+          "model_root_median_percentile": 83.5,
+          "ground_root_median_percentile": 66.4
+        },
+        {
+          "month": "2023-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 25,
+          "model_surface_dry_days": 21,
+          "modeled_mismatch_days": 6,
+          "ground_observed_mismatch_days": 3,
+          "model_root_median_percentile": 25.6,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 14,
+          "model_surface_dry_days": 14,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 19,
+          "model_root_median_percentile": 49.6,
+          "ground_root_median_percentile": 2.8
+        },
+        {
+          "month": "2023-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 8,
+          "model_surface_dry_days": 10,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 12,
+          "model_root_median_percentile": 58.1,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-11",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 23,
+          "model_surface_dry_days": 26,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 22.1,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-12",
+          "paired_days": 31,
+          "ground_root_dry_days": 13,
+          "model_root_dry_days": 13,
+          "model_surface_dry_days": 12,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 1,
+          "model_root_median_percentile": 81.7,
+          "ground_root_median_percentile": 56.3
+        },
+        {
+          "month": "2024-01",
+          "paired_days": 15,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 81.0,
+          "ground_root_median_percentile": 59.8
+        },
+        {
+          "month": "2024-02",
+          "paired_days": 29,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 87.3,
+          "ground_root_median_percentile": 73.0
+        },
+        {
+          "month": "2024-03",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 2,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 49.6,
+          "ground_root_median_percentile": 62.7
+        },
+        {
+          "month": "2024-04",
+          "paired_days": 29,
+          "ground_root_dry_days": 5,
+          "model_root_dry_days": 8,
+          "model_surface_dry_days": 10,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 51.8,
+          "ground_root_median_percentile": 50.0
+        },
+        {
+          "month": "2024-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 20,
+          "model_surface_dry_days": 21,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 7,
+          "model_root_median_percentile": 32.1,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2024-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 18,
+          "model_root_dry_days": 18,
+          "model_surface_dry_days": 14,
+          "modeled_mismatch_days": 6,
+          "ground_observed_mismatch_days": 8,
+          "model_root_median_percentile": 31.9,
+          "ground_root_median_percentile": 19.1
+        },
+        {
+          "month": "2024-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 7,
+          "model_surface_dry_days": 14,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 65.4,
+          "ground_root_median_percentile": 100.0
+        },
+        {
+          "month": "2024-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 7,
+          "model_root_dry_days": 20,
+          "model_surface_dry_days": 15,
+          "modeled_mismatch_days": 7,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 34.8,
+          "ground_root_median_percentile": 58.5
+        },
+        {
+          "month": "2024-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 17,
+          "model_root_dry_days": 17,
+          "model_surface_dry_days": 17,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 30.4,
+          "ground_root_median_percentile": 29.0
+        },
+        {
+          "month": "2024-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 21,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 27.2,
+          "ground_root_median_percentile": 57.6
+        },
+        {
+          "month": "2024-11",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 1,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 98.2,
+          "ground_root_median_percentile": 82.6
+        },
+        {
+          "month": "2024-12",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 86.2,
+          "ground_root_median_percentile": 73.2
+        },
+        {
+          "month": "2025-01",
+          "paired_days": 21,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 76.9,
+          "ground_root_median_percentile": 71.3
+        },
+        {
+          "month": "2025-02",
+          "paired_days": 24,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 79.7,
+          "ground_root_median_percentile": 73.0
+        },
+        {
+          "month": "2025-03",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 69.3,
+          "ground_root_median_percentile": 62.7
+        },
+        {
+          "month": "2025-04",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 61.6,
+          "ground_root_median_percentile": 58.9
+        },
+        {
+          "month": "2025-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 5,
+          "model_surface_dry_days": 7,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 58.4,
+          "ground_root_median_percentile": 76.5
+        },
+        {
+          "month": "2025-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 1,
+          "model_surface_dry_days": 5,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 85.4,
+          "ground_root_median_percentile": 99.5
+        },
+        {
+          "month": "2025-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 3,
+          "model_surface_dry_days": 7,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 69.7,
+          "ground_root_median_percentile": 98.2
+        },
+        {
+          "month": "2025-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 11,
+          "model_root_dry_days": 6,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 4,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 55.4,
+          "ground_root_median_percentile": 45.6
+        },
+        {
+          "month": "2025-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 80.8,
+          "ground_root_median_percentile": 61.3
+        },
+        {
+          "month": "2025-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 26,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 3,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 7,
+          "model_root_median_percentile": 59.9,
+          "ground_root_median_percentile": 34.1
+        },
+        {
+          "month": "2025-11",
+          "paired_days": 29,
+          "ground_root_dry_days": 17,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 17,
+          "model_root_median_percentile": 59.0,
+          "ground_root_median_percentile": 39.2
+        },
+        {
+          "month": "2025-12",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 6,
+          "model_surface_dry_days": 10,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 60.6,
+          "ground_root_median_percentile": 41.8
+        }
+      ],
+      "noaa_source_records": [
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2013/CRND0103-2013-OK_Goodwell_2_E.txt",
+          "sha256": "ae85ef5868be58f362190b551f174450f955f6bf26bf9c4e424c6b696f26f22d",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2014/CRND0103-2014-OK_Goodwell_2_E.txt",
+          "sha256": "9a84f0e369316cf568bcf0e9b19df2c0f6154754b8d5e0c948880a48b0b8a1e9",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2015/CRND0103-2015-OK_Goodwell_2_E.txt",
+          "sha256": "198244c9afb6ea66fad77a31573a68d08f864a048da378f5d8f34cbc2575678e",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2016/CRND0103-2016-OK_Goodwell_2_E.txt",
+          "sha256": "9b70de19b9fb4d9edf2c0a5d5ea9935ef1047bc283131501898e284a8a0b22f9",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2017/CRND0103-2017-OK_Goodwell_2_E.txt",
+          "sha256": "dd5b955d87f8a3f3d1a8f30567db7c78be80532b45f455fa161dc582ae781f3a",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2018/CRND0103-2018-OK_Goodwell_2_E.txt",
+          "sha256": "2391c8c5ff1bd4f85291962712fc35bf0bc40f3931820b1cecee36d618ffe207",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2019/CRND0103-2019-OK_Goodwell_2_E.txt",
+          "sha256": "01ad37bac10b32a82e29a125ccfb80dfe7c01a3e65680bd7ac83a784732697ff",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2020/CRND0103-2020-OK_Goodwell_2_E.txt",
+          "sha256": "862ff29ad5045d6623be7077fd16b9e4c441d2e96989410abc5809a0d4fcde0b",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2021/CRND0103-2021-OK_Goodwell_2_E.txt",
+          "sha256": "14f643601636a682d853fe13bf737d9607f078a90549755ff5321814f4ac7cca",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2022/CRND0103-2022-OK_Goodwell_2_E.txt",
+          "sha256": "faafa8ff0f6144794209b8bc6c83df600e34c17efb1de1a088c4d2f6e756404a",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2023/CRND0103-2023-OK_Goodwell_2_E.txt",
+          "sha256": "7a1754f9200bc3b86d833bcfa943f0a20e1f1e050cf6dfdf48c65f9992f9729a",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2024/CRND0103-2024-OK_Goodwell_2_E.txt",
+          "sha256": "c0dbc640175c8994632320470ddfb328ce21bcffd7b6ac4c30de2b31c1956a96",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2025/CRND0103-2025-OK_Goodwell_2_E.txt",
+          "sha256": "2a16fe07ed04916e70c2d89cf1cdffcff32ce6a65a061b1745ff400cdc123c1d",
+          "rows": 365
+        }
+      ],
+      "source_year_errors": []
+    },
+    {
+      "station": "OK_Goodwell_2_SE",
+      "model_site": "us_sgp_goodwell",
+      "station_coordinates": {
+        "latitude": 36.57,
+        "longitude": -101.61
+      },
+      "model_coordinates": {
+        "latitude": 36.597,
+        "longitude": -101.618
+      },
+      "point_separation_km": 3.09,
+      "ground_reference_valid_days": 3212,
+      "holdout_paired_days": 1433,
+      "holdout_field_root_dry_days": 551,
+      "holdout_observed_mismatch_days": 132,
+      "field_truth_source": "NOAA USCRN daily QC measurements, complete weighted 0-100 cm profile and independent 5 cm surface probe",
+      "predictors": {
+        "model_root_low_percentile": {
+          "n": 1433,
+          "true_positive": 402,
+          "false_positive": 252,
+          "true_negative": 630,
+          "false_negative": 149,
+          "precision": 0.6147,
+          "recall": 0.7296,
+          "specificity": 0.7143,
+          "f1": 0.6672,
+          "balanced_accuracy": 0.722,
+          "false_positive_rate": 0.2857,
+          "accuracy": 0.7202
+        },
+        "surface_only_low_percentile": {
+          "n": 1433,
+          "true_positive": 400,
+          "false_positive": 296,
+          "true_negative": 586,
+          "false_negative": 151,
+          "precision": 0.5747,
+          "recall": 0.726,
+          "specificity": 0.6644,
+          "f1": 0.6415,
+          "balanced_accuracy": 0.6952,
+          "false_positive_rate": 0.3356,
+          "accuracy": 0.6881
+        },
+        "model_mismatch_vs_probe_mismatch": {
+          "n": 1433,
+          "true_positive": 11,
+          "false_positive": 51,
+          "true_negative": 1250,
+          "false_negative": 121,
+          "precision": 0.1774,
+          "recall": 0.0833,
+          "specificity": 0.9608,
+          "f1": 0.1134,
+          "balanced_accuracy": 0.5221,
+          "false_positive_rate": 0.0392,
+          "accuracy": 0.88
+        }
+      },
+      "rank_agreement": {
+        "model_root_vs_probe_root_spearman": 0.5075,
+        "model_surface_vs_probe_surface_spearman": 0.679
+      },
+      "potential_additional_detection": {
+        "ground_root_dry_days_surface_only_did_not_flag": 151,
+        "ground_root_dry_days_model_root_caught_but_surface_did_not": 44
+      },
+      "monthly_holdout_evidence": [
+        {
+          "month": "2022-01",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 31,
+          "model_surface_dry_days": 31,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.7,
+          "ground_root_median_percentile": 30.9
+        },
+        {
+          "month": "2022-02",
+          "paired_days": 28,
+          "ground_root_dry_days": 8,
+          "model_root_dry_days": 28,
+          "model_surface_dry_days": 28,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.7,
+          "ground_root_median_percentile": 47.6
+        },
+        {
+          "month": "2022-03",
+          "paired_days": 31,
+          "ground_root_dry_days": 6,
+          "model_root_dry_days": 31,
+          "model_surface_dry_days": 31,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 0.0,
+          "ground_root_median_percentile": 43.2
+        },
+        {
+          "month": "2022-04",
+          "paired_days": 29,
+          "ground_root_dry_days": 29,
+          "model_root_dry_days": 29,
+          "model_surface_dry_days": 28,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 13,
+          "model_root_median_percentile": 0.7,
+          "ground_root_median_percentile": 32.7
+        },
+        {
+          "month": "2022-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 26,
+          "model_surface_dry_days": 24,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 25.3,
+          "ground_root_median_percentile": 23.8
+        },
+        {
+          "month": "2022-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 25,
+          "model_root_dry_days": 25,
+          "model_surface_dry_days": 21,
+          "modeled_mismatch_days": 6,
+          "ground_observed_mismatch_days": 21,
+          "model_root_median_percentile": 22.1,
+          "ground_root_median_percentile": 33.2
+        },
+        {
+          "month": "2022-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 18,
+          "model_surface_dry_days": 19,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 26.5,
+          "ground_root_median_percentile": 51.6
+        },
+        {
+          "month": "2022-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 18,
+          "model_surface_dry_days": 20,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 33.7,
+          "ground_root_median_percentile": 71.3
+        },
+        {
+          "month": "2022-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 29,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 10.9,
+          "ground_root_median_percentile": 76.2
+        },
+        {
+          "month": "2022-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 29,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 4,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 10.2,
+          "ground_root_median_percentile": 59.5
+        },
+        {
+          "month": "2022-11",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 30,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 5.6,
+          "ground_root_median_percentile": 53.4
+        },
+        {
+          "month": "2022-12",
+          "paired_days": 27,
+          "ground_root_dry_days": 1,
+          "model_root_dry_days": 27,
+          "model_surface_dry_days": 27,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 5.6,
+          "ground_root_median_percentile": 51.7
+        },
+        {
+          "month": "2023-01",
+          "paired_days": 29,
+          "ground_root_dry_days": 27,
+          "model_root_dry_days": 29,
+          "model_surface_dry_days": 29,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.7,
+          "ground_root_median_percentile": 32.9
+        },
+        {
+          "month": "2023-02",
+          "paired_days": 25,
+          "ground_root_dry_days": 25,
+          "model_root_dry_days": 25,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.7,
+          "ground_root_median_percentile": 31.8
+        },
+        {
+          "month": "2023-03",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 28,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.0,
+          "ground_root_median_percentile": 17.7
+        },
+        {
+          "month": "2023-04",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 25,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 5,
+          "model_root_median_percentile": 0.9,
+          "ground_root_median_percentile": 29.1
+        },
+        {
+          "month": "2023-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 27,
+          "model_root_dry_days": 3,
+          "model_surface_dry_days": 6,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 16,
+          "model_root_median_percentile": 57.9,
+          "ground_root_median_percentile": 26.4
+        },
+        {
+          "month": "2023-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 7,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 95.3,
+          "ground_root_median_percentile": 45.3
+        },
+        {
+          "month": "2023-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 9,
+          "model_root_dry_days": 3,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 2,
+          "model_root_median_percentile": 83.5,
+          "ground_root_median_percentile": 43.4
+        },
+        {
+          "month": "2023-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 25,
+          "model_surface_dry_days": 21,
+          "modeled_mismatch_days": 6,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 25.6,
+          "ground_root_median_percentile": 10.4
+        },
+        {
+          "month": "2023-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 14,
+          "model_surface_dry_days": 14,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 16,
+          "model_root_median_percentile": 49.6,
+          "ground_root_median_percentile": 17.0
+        },
+        {
+          "month": "2023-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 8,
+          "model_surface_dry_days": 10,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 58.1,
+          "ground_root_median_percentile": 4.7
+        },
+        {
+          "month": "2023-11",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 23,
+          "model_surface_dry_days": 26,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 22.1,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-12",
+          "paired_days": 31,
+          "ground_root_dry_days": 13,
+          "model_root_dry_days": 13,
+          "model_surface_dry_days": 12,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 81.7,
+          "ground_root_median_percentile": 51.2
+        },
+        {
+          "month": "2024-01",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 79.0,
+          "ground_root_median_percentile": 51.7
+        },
+        {
+          "month": "2024-02",
+          "paired_days": 29,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 87.3,
+          "ground_root_median_percentile": 88.1
+        },
+        {
+          "month": "2024-03",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 2,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 49.6,
+          "ground_root_median_percentile": 77.8
+        },
+        {
+          "month": "2024-04",
+          "paired_days": 29,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 8,
+          "model_surface_dry_days": 10,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 51.8,
+          "ground_root_median_percentile": 60.0
+        },
+        {
+          "month": "2024-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 20,
+          "model_surface_dry_days": 21,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 3,
+          "model_root_median_percentile": 32.1,
+          "ground_root_median_percentile": 24.9
+        },
+        {
+          "month": "2024-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 18,
+          "model_root_dry_days": 18,
+          "model_surface_dry_days": 14,
+          "modeled_mismatch_days": 6,
+          "ground_observed_mismatch_days": 13,
+          "model_root_median_percentile": 31.9,
+          "ground_root_median_percentile": 32.3
+        },
+        {
+          "month": "2024-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 15,
+          "model_root_dry_days": 7,
+          "model_surface_dry_days": 14,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 9,
+          "model_root_median_percentile": 65.4,
+          "ground_root_median_percentile": 42.7
+        },
+        {
+          "month": "2024-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 20,
+          "model_surface_dry_days": 15,
+          "modeled_mismatch_days": 7,
+          "ground_observed_mismatch_days": 10,
+          "model_root_median_percentile": 34.8,
+          "ground_root_median_percentile": 15.4
+        },
+        {
+          "month": "2024-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 17,
+          "model_root_dry_days": 17,
+          "model_surface_dry_days": 17,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 30.4,
+          "ground_root_median_percentile": 13.8
+        },
+        {
+          "month": "2024-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 21,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 27.2,
+          "ground_root_median_percentile": 75.6
+        },
+        {
+          "month": "2024-11",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 1,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 98.2,
+          "ground_root_median_percentile": 99.5
+        },
+        {
+          "month": "2024-12",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 86.2,
+          "ground_root_median_percentile": 88.0
+        },
+        {
+          "month": "2025-01",
+          "paired_days": 27,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 77.8,
+          "ground_root_median_percentile": 91.9
+        },
+        {
+          "month": "2025-02",
+          "paired_days": 21,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 78.3,
+          "ground_root_median_percentile": 98.9
+        },
+        {
+          "month": "2025-03",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 69.3,
+          "ground_root_median_percentile": 82.0
+        },
+        {
+          "month": "2025-04",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 61.6,
+          "ground_root_median_percentile": 74.5
+        },
+        {
+          "month": "2025-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 5,
+          "model_surface_dry_days": 7,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 58.4,
+          "ground_root_median_percentile": 94.2
+        },
+        {
+          "month": "2025-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 1,
+          "model_surface_dry_days": 5,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 85.4,
+          "ground_root_median_percentile": 99.6
+        },
+        {
+          "month": "2025-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 3,
+          "model_surface_dry_days": 7,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 69.7,
+          "ground_root_median_percentile": 71.0
+        },
+        {
+          "month": "2025-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 18,
+          "model_root_dry_days": 6,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 4,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 55.4,
+          "ground_root_median_percentile": 36.9
+        },
+        {
+          "month": "2025-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 80.8,
+          "ground_root_median_percentile": 97.3
+        },
+        {
+          "month": "2025-10",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 3,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 59.9,
+          "ground_root_median_percentile": 71.5
+        },
+        {
+          "month": "2025-11",
+          "paired_days": 27,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 59.0,
+          "ground_root_median_percentile": 55.6
+        },
+        {
+          "month": "2025-12",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 5,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 70.4,
+          "ground_root_median_percentile": 53.8
+        }
+      ],
+      "noaa_source_records": [
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2013/CRND0103-2013-OK_Goodwell_2_SE.txt",
+          "sha256": "ea1703d610adb4d98ad30435e7e8e7311666d5974ac1cdb5484f1516ba885083",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2014/CRND0103-2014-OK_Goodwell_2_SE.txt",
+          "sha256": "0c7ad2f78e72a8e671294e881ad3bbb8d58ca20c955e6f60da0d31f23441371a",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2015/CRND0103-2015-OK_Goodwell_2_SE.txt",
+          "sha256": "8b370e3f317a413abc6d92c44cce2042f8b297178bbb4d9754104f33dfb80fb9",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2016/CRND0103-2016-OK_Goodwell_2_SE.txt",
+          "sha256": "5b652ebd8f40916d1479544dc6abf638aaab0805c5c5d97e362776ec659f0562",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2017/CRND0103-2017-OK_Goodwell_2_SE.txt",
+          "sha256": "8f0281615367cf04de5dc8a0efaff681ce88c32df0cf84a4002f643bd88fa361",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2018/CRND0103-2018-OK_Goodwell_2_SE.txt",
+          "sha256": "5ee8a383a9fe3e64a367e5a622082c649bf7eac8a12eb851cf0f69e9a4761661",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2019/CRND0103-2019-OK_Goodwell_2_SE.txt",
+          "sha256": "14d1f074312c5d335374a6cce30a60d5a83126a6697706635a8cc11ff58e1183",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2020/CRND0103-2020-OK_Goodwell_2_SE.txt",
+          "sha256": "d4eed8e1ca182b7a3e8bd4d4c045260cd46512ae1e3b9f2d97c60eda25bf7e69",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2021/CRND0103-2021-OK_Goodwell_2_SE.txt",
+          "sha256": "86511676443d7f333c0efae78c35537ac2887ed5d1282506bb9b856aa481980a",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2022/CRND0103-2022-OK_Goodwell_2_SE.txt",
+          "sha256": "a5e0f8ffbbf1ef6714f6733c8f3541ce608ff459ed18864b56696c4726e1d14d",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2023/CRND0103-2023-OK_Goodwell_2_SE.txt",
+          "sha256": "cd5693148bffacfcd603084d20b6027f57563ee5d8371d64a8592d07fa98112c",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2024/CRND0103-2024-OK_Goodwell_2_SE.txt",
+          "sha256": "b55a3e8551b8f0ad69a455d4e1c2533c02c8a470973d0767fba46ad06c4bfe11",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2025/CRND0103-2025-OK_Goodwell_2_SE.txt",
+          "sha256": "0b922f4ffbf124e30fbd0ee88a924e1b2b19baa460543479aff8f73be6a1a2b0",
+          "rows": 365
+        }
+      ],
+      "source_year_errors": []
+    },
+    {
+      "station": "OK_Stillwater_2_W",
+      "model_site": "us_sgp_stillwater",
+      "station_coordinates": {
+        "latitude": 36.12,
+        "longitude": -97.09
+      },
+      "model_coordinates": {
+        "latitude": 36.118,
+        "longitude": -97.091
+      },
+      "point_separation_km": 0.24,
+      "ground_reference_valid_days": 3244,
+      "holdout_paired_days": 588,
+      "holdout_field_root_dry_days": 360,
+      "holdout_observed_mismatch_days": 95,
+      "field_truth_source": "NOAA USCRN daily QC measurements, complete weighted 0-100 cm profile and independent 5 cm surface probe",
+      "predictors": {
+        "model_root_low_percentile": {
+          "n": 588,
+          "true_positive": 319,
+          "false_positive": 123,
+          "true_negative": 105,
+          "false_negative": 41,
+          "precision": 0.7217,
+          "recall": 0.8861,
+          "specificity": 0.4605,
+          "f1": 0.7955,
+          "balanced_accuracy": 0.6733,
+          "false_positive_rate": 0.5395,
+          "accuracy": 0.7211
+        },
+        "surface_only_low_percentile": {
+          "n": 588,
+          "true_positive": 309,
+          "false_positive": 115,
+          "true_negative": 113,
+          "false_negative": 51,
+          "precision": 0.7288,
+          "recall": 0.8583,
+          "specificity": 0.4956,
+          "f1": 0.7883,
+          "balanced_accuracy": 0.6769,
+          "false_positive_rate": 0.5044,
+          "accuracy": 0.7177
+        },
+        "model_mismatch_vs_probe_mismatch": {
+          "n": 588,
+          "true_positive": 10,
+          "false_positive": 26,
+          "true_negative": 467,
+          "false_negative": 85,
+          "precision": 0.2778,
+          "recall": 0.1053,
+          "specificity": 0.9473,
+          "f1": 0.1527,
+          "balanced_accuracy": 0.5263,
+          "false_positive_rate": 0.0527,
+          "accuracy": 0.8112
+        }
+      },
+      "rank_agreement": {
+        "model_root_vs_probe_root_spearman": 0.487,
+        "model_surface_vs_probe_surface_spearman": 0.5976
+      },
+      "potential_additional_detection": {
+        "ground_root_dry_days_surface_only_did_not_flag": 51,
+        "ground_root_dry_days_model_root_caught_but_surface_did_not": 18
+      },
+      "monthly_holdout_evidence": [
+        {
+          "month": "2022-01",
+          "paired_days": 31,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 31,
+          "model_surface_dry_days": 30,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 15.6,
+          "ground_root_median_percentile": 34.8
+        },
+        {
+          "month": "2022-02",
+          "paired_days": 28,
+          "ground_root_dry_days": 6,
+          "model_root_dry_days": 28,
+          "model_surface_dry_days": 27,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 7.4,
+          "ground_root_median_percentile": 61.6
+        },
+        {
+          "month": "2022-03",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 26,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 5.3,
+          "ground_root_median_percentile": 56.1
+        },
+        {
+          "month": "2022-04",
+          "paired_days": 28,
+          "ground_root_dry_days": 12,
+          "model_root_dry_days": 28,
+          "model_surface_dry_days": 28,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 11.5,
+          "ground_root_median_percentile": 40.9
+        },
+        {
+          "month": "2022-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 8,
+          "model_root_dry_days": 15,
+          "model_surface_dry_days": 13,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 41.8,
+          "ground_root_median_percentile": 61.6
+        },
+        {
+          "month": "2022-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 9,
+          "model_root_dry_days": 9,
+          "model_surface_dry_days": 12,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 48.7,
+          "ground_root_median_percentile": 56.6
+        },
+        {
+          "month": "2022-07",
+          "paired_days": 29,
+          "ground_root_dry_days": 28,
+          "model_root_dry_days": 28,
+          "model_surface_dry_days": 26,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 2,
+          "model_root_median_percentile": 0.2,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2022-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 29,
+          "model_root_dry_days": 29,
+          "model_surface_dry_days": 28,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 12,
+          "model_root_median_percentile": 0.2,
+          "ground_root_median_percentile": 4.3
+        },
+        {
+          "month": "2022-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 27,
+          "model_surface_dry_days": 26,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 2.3,
+          "ground_root_median_percentile": 3.3
+        },
+        {
+          "month": "2022-10",
+          "paired_days": 8,
+          "ground_root_dry_days": 8,
+          "model_root_dry_days": 8,
+          "model_surface_dry_days": 8,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.0,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-03",
+          "paired_days": 27,
+          "ground_root_dry_days": 27,
+          "model_root_dry_days": 8,
+          "model_surface_dry_days": 10,
+          "modeled_mismatch_days": 4,
+          "ground_observed_mismatch_days": 11,
+          "model_root_median_percentile": 43.5,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-04",
+          "paired_days": 30,
+          "ground_root_dry_days": 25,
+          "model_root_dry_days": 26,
+          "model_surface_dry_days": 26,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 14.0,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-05",
+          "paired_days": 29,
+          "ground_root_dry_days": 13,
+          "model_root_dry_days": 17,
+          "model_surface_dry_days": 16,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 11,
+          "model_root_median_percentile": 36.4,
+          "ground_root_median_percentile": 71.7
+        },
+        {
+          "month": "2023-06",
+          "paired_days": 19,
+          "ground_root_dry_days": 10,
+          "model_root_dry_days": 16,
+          "model_surface_dry_days": 15,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 30.5,
+          "ground_root_median_percentile": 21.5
+        },
+        {
+          "month": "2023-07",
+          "paired_days": 24,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 10,
+          "model_surface_dry_days": 8,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 49.3,
+          "ground_root_median_percentile": 99.3
+        },
+        {
+          "month": "2023-08",
+          "paired_days": 4,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 4,
+          "model_surface_dry_days": 4,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 2.1,
+          "ground_root_median_percentile": 72.6
+        },
+        {
+          "month": "2023-09",
+          "paired_days": 14,
+          "ground_root_dry_days": 14,
+          "model_root_dry_days": 14,
+          "model_surface_dry_days": 12,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 10,
+          "model_root_median_percentile": 13.1,
+          "ground_root_median_percentile": 11.3
+        },
+        {
+          "month": "2023-10",
+          "paired_days": 27,
+          "ground_root_dry_days": 25,
+          "model_root_dry_days": 22,
+          "model_surface_dry_days": 20,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 4,
+          "model_root_median_percentile": 14.9,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2023-12",
+          "paired_days": 11,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 2,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 62.7,
+          "ground_root_median_percentile": 100.0
+        },
+        {
+          "month": "2024-01",
+          "paired_days": 13,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 58.2,
+          "ground_root_median_percentile": 100.0
+        },
+        {
+          "month": "2024-06",
+          "paired_days": 12,
+          "ground_root_dry_days": 11,
+          "model_root_dry_days": 11,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 8.4,
+          "ground_root_median_percentile": 12.2
+        },
+        {
+          "month": "2024-07",
+          "paired_days": 24,
+          "ground_root_dry_days": 24,
+          "model_root_dry_days": 22,
+          "model_surface_dry_days": 22,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 21,
+          "model_root_median_percentile": 4.4,
+          "ground_root_median_percentile": 0.0
+        },
+        {
+          "month": "2024-08",
+          "paired_days": 29,
+          "ground_root_dry_days": 9,
+          "model_root_dry_days": 24,
+          "model_surface_dry_days": 22,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 4.1,
+          "ground_root_median_percentile": 60.4
+        },
+        {
+          "month": "2024-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 23,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 29,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 5.3,
+          "ground_root_median_percentile": 28.9
+        },
+        {
+          "month": "2024-10",
+          "paired_days": 1,
+          "ground_root_dry_days": 1,
+          "model_root_dry_days": 1,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 2.2,
+          "ground_root_median_percentile": 12.0
+        },
+        {
+          "month": "2025-12",
+          "paired_days": 18,
+          "ground_root_dry_days": 18,
+          "model_root_dry_days": 6,
+          "model_surface_dry_days": 6,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 53.0,
+          "ground_root_median_percentile": 2.3
+        }
+      ],
+      "noaa_source_records": [
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2013/CRND0103-2013-OK_Stillwater_2_W.txt",
+          "sha256": "a68b79e1f211212d5175e511f993233dd9cf2950b9ad45fe15bb8c37836b17b1",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2014/CRND0103-2014-OK_Stillwater_2_W.txt",
+          "sha256": "32643ce0061e9fa95244493df0a04d28a25251d4b4c907a0f5e6bc97cc246060",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2015/CRND0103-2015-OK_Stillwater_2_W.txt",
+          "sha256": "95a3e992cc72aa139440f72d660616f112f32757f1656d38226bbbf7146d2a32",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2016/CRND0103-2016-OK_Stillwater_2_W.txt",
+          "sha256": "eec706ae5338c1c7cdc031b281b2f873f568b12249ca16f6928b317f77d3035b",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2017/CRND0103-2017-OK_Stillwater_2_W.txt",
+          "sha256": "65f575eb7b800765307f3fa61c2b8dd1d05fe2d35c7b92564a9c354ba557066e",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2018/CRND0103-2018-OK_Stillwater_2_W.txt",
+          "sha256": "0b7bb03a37a1bf2083f2eb750f24f23814e0c1d46a7efcc0ba54fb807ef7588b",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2019/CRND0103-2019-OK_Stillwater_2_W.txt",
+          "sha256": "083a5ccaf046d6ed6b08dbe983aa7e1ac62bb041c9544ecb3159e86743078efe",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2020/CRND0103-2020-OK_Stillwater_2_W.txt",
+          "sha256": "960e070d46a0135d1d066d3c0b10ae961de96be575446d3f06cc6d9622595c6b",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2021/CRND0103-2021-OK_Stillwater_2_W.txt",
+          "sha256": "6b9647ae36d5f76980488ddbfd5c9246f2bcdc00ed00b8a8d3ab6482a2b16464",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2022/CRND0103-2022-OK_Stillwater_2_W.txt",
+          "sha256": "7a0200b730ec5ac5bf5f159f2568cc41dc92793477b6b94051f37e017d344f41",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2023/CRND0103-2023-OK_Stillwater_2_W.txt",
+          "sha256": "292e4a65a4ba9e802707097b1d232b5466ca36c70798a22dc373144c962d0058",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2024/CRND0103-2024-OK_Stillwater_2_W.txt",
+          "sha256": "e97f5272c5343f888377e9dbdd61ee86b6451f0d19eaadd6789620025d6ca88d",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2025/CRND0103-2025-OK_Stillwater_2_W.txt",
+          "sha256": "3ded9b561f76bbd7120422d8dbd1b9c31e4481f75120e6ec8014bd336347566d",
+          "rows": 365
+        }
+      ],
+      "source_year_errors": []
+    },
+    {
+      "station": "OK_Stillwater_5_WNW",
+      "model_site": "us_sgp_stillwater",
+      "station_coordinates": {
+        "latitude": 36.13,
+        "longitude": -97.11
+      },
+      "model_coordinates": {
+        "latitude": 36.118,
+        "longitude": -97.091
+      },
+      "point_separation_km": 2.17,
+      "ground_reference_valid_days": 3269,
+      "holdout_paired_days": 1451,
+      "holdout_field_root_dry_days": 697,
+      "holdout_observed_mismatch_days": 180,
+      "field_truth_source": "NOAA USCRN daily QC measurements, complete weighted 0-100 cm profile and independent 5 cm surface probe",
+      "predictors": {
+        "model_root_low_percentile": {
+          "n": 1451,
+          "true_positive": 467,
+          "false_positive": 338,
+          "true_negative": 416,
+          "false_negative": 230,
+          "precision": 0.5801,
+          "recall": 0.67,
+          "specificity": 0.5517,
+          "f1": 0.6218,
+          "balanced_accuracy": 0.6109,
+          "false_positive_rate": 0.4483,
+          "accuracy": 0.6085
+        },
+        "surface_only_low_percentile": {
+          "n": 1451,
+          "true_positive": 456,
+          "false_positive": 327,
+          "true_negative": 427,
+          "false_negative": 241,
+          "precision": 0.5824,
+          "recall": 0.6542,
+          "specificity": 0.5663,
+          "f1": 0.6162,
+          "balanced_accuracy": 0.6102,
+          "false_positive_rate": 0.4337,
+          "accuracy": 0.6085
+        },
+        "model_mismatch_vs_probe_mismatch": {
+          "n": 1451,
+          "true_positive": 12,
+          "false_positive": 64,
+          "true_negative": 1207,
+          "false_negative": 168,
+          "precision": 0.1579,
+          "recall": 0.0667,
+          "specificity": 0.9496,
+          "f1": 0.0938,
+          "balanced_accuracy": 0.5081,
+          "false_positive_rate": 0.0504,
+          "accuracy": 0.8401
+        }
+      },
+      "rank_agreement": {
+        "model_root_vs_probe_root_spearman": 0.4263,
+        "model_surface_vs_probe_surface_spearman": 0.6806
+      },
+      "potential_additional_detection": {
+        "ground_root_dry_days_surface_only_did_not_flag": 241,
+        "ground_root_dry_days_model_root_caught_but_surface_did_not": 38
+      },
+      "monthly_holdout_evidence": [
+        {
+          "month": "2022-01",
+          "paired_days": 31,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 31,
+          "model_surface_dry_days": 30,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 15.6,
+          "ground_root_median_percentile": 38.0
+        },
+        {
+          "month": "2022-02",
+          "paired_days": 28,
+          "ground_root_dry_days": 28,
+          "model_root_dry_days": 28,
+          "model_surface_dry_days": 27,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 2,
+          "model_root_median_percentile": 7.4,
+          "ground_root_median_percentile": 33.5
+        },
+        {
+          "month": "2022-03",
+          "paired_days": 31,
+          "ground_root_dry_days": 20,
+          "model_root_dry_days": 27,
+          "model_surface_dry_days": 26,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 2,
+          "model_root_median_percentile": 5.0,
+          "ground_root_median_percentile": 33.3
+        },
+        {
+          "month": "2022-04",
+          "paired_days": 29,
+          "ground_root_dry_days": 3,
+          "model_root_dry_days": 29,
+          "model_surface_dry_days": 29,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 11.5,
+          "ground_root_median_percentile": 47.3
+        },
+        {
+          "month": "2022-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 15,
+          "model_surface_dry_days": 13,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 41.8,
+          "ground_root_median_percentile": 64.9
+        },
+        {
+          "month": "2022-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 9,
+          "model_surface_dry_days": 12,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 48.7,
+          "ground_root_median_percentile": 78.5
+        },
+        {
+          "month": "2022-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 28,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 3,
+          "model_root_median_percentile": 0.0,
+          "ground_root_median_percentile": 1.4
+        },
+        {
+          "month": "2022-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 29,
+          "model_surface_dry_days": 28,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 10,
+          "model_root_median_percentile": 0.2,
+          "ground_root_median_percentile": 10.8
+        },
+        {
+          "month": "2022-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 27,
+          "model_surface_dry_days": 26,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 2.3,
+          "ground_root_median_percentile": 5.7
+        },
+        {
+          "month": "2022-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 31,
+          "model_surface_dry_days": 30,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.0,
+          "ground_root_median_percentile": 1.8
+        },
+        {
+          "month": "2022-11",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 27,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 2.9,
+          "ground_root_median_percentile": 4.3
+        },
+        {
+          "month": "2022-12",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 21,
+          "model_surface_dry_days": 17,
+          "modeled_mismatch_days": 4,
+          "ground_observed_mismatch_days": 7,
+          "model_root_median_percentile": 34.8,
+          "ground_root_median_percentile": 11.9
+        },
+        {
+          "month": "2023-01",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 23,
+          "model_surface_dry_days": 18,
+          "modeled_mismatch_days": 5,
+          "ground_observed_mismatch_days": 2,
+          "model_root_median_percentile": 21.5,
+          "ground_root_median_percentile": 30.8
+        },
+        {
+          "month": "2023-02",
+          "paired_days": 28,
+          "ground_root_dry_days": 28,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 2,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 2,
+          "model_root_median_percentile": 45.6,
+          "ground_root_median_percentile": 33.3
+        },
+        {
+          "month": "2023-03",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 10,
+          "model_surface_dry_days": 13,
+          "modeled_mismatch_days": 4,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 43.2,
+          "ground_root_median_percentile": 28.0
+        },
+        {
+          "month": "2023-04",
+          "paired_days": 30,
+          "ground_root_dry_days": 25,
+          "model_root_dry_days": 26,
+          "model_surface_dry_days": 26,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 1,
+          "model_root_median_percentile": 14.0,
+          "ground_root_median_percentile": 16.2
+        },
+        {
+          "month": "2023-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 19,
+          "model_surface_dry_days": 17,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 36.0,
+          "ground_root_median_percentile": 62.6
+        },
+        {
+          "month": "2023-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 4,
+          "model_root_dry_days": 27,
+          "model_surface_dry_days": 25,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 27.7,
+          "ground_root_median_percentile": 50.0
+        },
+        {
+          "month": "2023-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 13,
+          "model_surface_dry_days": 12,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 47.0,
+          "ground_root_median_percentile": 83.5
+        },
+        {
+          "month": "2023-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 18,
+          "model_surface_dry_days": 20,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 20.6,
+          "ground_root_median_percentile": 86.0
+        },
+        {
+          "month": "2023-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 27,
+          "model_surface_dry_days": 24,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 14.5,
+          "ground_root_median_percentile": 79.0
+        },
+        {
+          "month": "2023-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 4,
+          "model_root_dry_days": 25,
+          "model_surface_dry_days": 23,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 10.0,
+          "ground_root_median_percentile": 57.3
+        },
+        {
+          "month": "2023-11",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 27,
+          "model_surface_dry_days": 22,
+          "modeled_mismatch_days": 5,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 23.7,
+          "ground_root_median_percentile": 59.9
+        },
+        {
+          "month": "2023-12",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 14,
+          "model_surface_dry_days": 14,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 48.0,
+          "ground_root_median_percentile": 60.4
+        },
+        {
+          "month": "2024-01",
+          "paired_days": 26,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 57.7,
+          "ground_root_median_percentile": 55.9
+        },
+        {
+          "month": "2024-02",
+          "paired_days": 29,
+          "ground_root_dry_days": 1,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 1,
+          "model_root_median_percentile": 59.6,
+          "ground_root_median_percentile": 57.8
+        },
+        {
+          "month": "2024-03",
+          "paired_days": 31,
+          "ground_root_dry_days": 24,
+          "model_root_dry_days": 4,
+          "model_surface_dry_days": 9,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 24,
+          "model_root_median_percentile": 46.9,
+          "ground_root_median_percentile": 36.3
+        },
+        {
+          "month": "2024-04",
+          "paired_days": 29,
+          "ground_root_dry_days": 17,
+          "model_root_dry_days": 24,
+          "model_surface_dry_days": 21,
+          "modeled_mismatch_days": 4,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 24.9,
+          "ground_root_median_percentile": 36.2
+        },
+        {
+          "month": "2024-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 7,
+          "model_root_dry_days": 18,
+          "model_surface_dry_days": 14,
+          "modeled_mismatch_days": 6,
+          "ground_observed_mismatch_days": 3,
+          "model_root_median_percentile": 39.2,
+          "ground_root_median_percentile": 51.4
+        },
+        {
+          "month": "2024-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 23,
+          "model_root_dry_days": 26,
+          "model_surface_dry_days": 26,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 6,
+          "model_root_median_percentile": 11.6,
+          "ground_root_median_percentile": 25.4
+        },
+        {
+          "month": "2024-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 20,
+          "model_root_dry_days": 27,
+          "model_surface_dry_days": 27,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 20,
+          "model_root_median_percentile": 5.0,
+          "ground_root_median_percentile": 17.9
+        },
+        {
+          "month": "2024-08",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 26,
+          "model_surface_dry_days": 23,
+          "modeled_mismatch_days": 3,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 4.1,
+          "ground_root_median_percentile": 63.1
+        },
+        {
+          "month": "2024-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 30,
+          "model_surface_dry_days": 29,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 5.3,
+          "ground_root_median_percentile": 52.7
+        },
+        {
+          "month": "2024-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 19,
+          "model_root_dry_days": 31,
+          "model_surface_dry_days": 30,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 0.0,
+          "ground_root_median_percentile": 34.4
+        },
+        {
+          "month": "2024-11",
+          "paired_days": 30,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 2,
+          "model_surface_dry_days": 2,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 85.4,
+          "ground_root_median_percentile": 87.3
+        },
+        {
+          "month": "2024-12",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 70.4,
+          "ground_root_median_percentile": 76.3
+        },
+        {
+          "month": "2025-01",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 58.2,
+          "ground_root_median_percentile": 61.6
+        },
+        {
+          "month": "2025-02",
+          "paired_days": 28,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 53.3,
+          "ground_root_median_percentile": 59.6
+        },
+        {
+          "month": "2025-03",
+          "paired_days": 31,
+          "ground_root_dry_days": 0,
+          "model_root_dry_days": 14,
+          "model_surface_dry_days": 18,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 0,
+          "model_root_median_percentile": 42.5,
+          "ground_root_median_percentile": 60.2
+        },
+        {
+          "month": "2025-04",
+          "paired_days": 30,
+          "ground_root_dry_days": 28,
+          "model_root_dry_days": 11,
+          "model_surface_dry_days": 11,
+          "modeled_mismatch_days": 2,
+          "ground_observed_mismatch_days": 16,
+          "model_root_median_percentile": 52.2,
+          "ground_root_median_percentile": 12.7
+        },
+        {
+          "month": "2025-05",
+          "paired_days": 31,
+          "ground_root_dry_days": 22,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 1,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 12,
+          "model_root_median_percentile": 84.2,
+          "ground_root_median_percentile": 30.2
+        },
+        {
+          "month": "2025-06",
+          "paired_days": 30,
+          "ground_root_dry_days": 3,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 3,
+          "model_root_median_percentile": 85.4,
+          "ground_root_median_percentile": 64.7
+        },
+        {
+          "month": "2025-07",
+          "paired_days": 31,
+          "ground_root_dry_days": 6,
+          "model_root_dry_days": 0,
+          "model_surface_dry_days": 0,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 2,
+          "model_root_median_percentile": 88.7,
+          "ground_root_median_percentile": 53.0
+        },
+        {
+          "month": "2025-08",
+          "paired_days": 29,
+          "ground_root_dry_days": 29,
+          "model_root_dry_days": 6,
+          "model_surface_dry_days": 10,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 7,
+          "model_root_median_percentile": 59.5,
+          "ground_root_median_percentile": 7.9
+        },
+        {
+          "month": "2025-09",
+          "paired_days": 30,
+          "ground_root_dry_days": 30,
+          "model_root_dry_days": 9,
+          "model_surface_dry_days": 10,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 9,
+          "model_root_median_percentile": 45.7,
+          "ground_root_median_percentile": 10.6
+        },
+        {
+          "month": "2025-10",
+          "paired_days": 31,
+          "ground_root_dry_days": 31,
+          "model_root_dry_days": 24,
+          "model_surface_dry_days": 23,
+          "modeled_mismatch_days": 1,
+          "ground_observed_mismatch_days": 8,
+          "model_root_median_percentile": 9.0,
+          "ground_root_median_percentile": 1.8
+        },
+        {
+          "month": "2025-11",
+          "paired_days": 29,
+          "ground_root_dry_days": 22,
+          "model_root_dry_days": 11,
+          "model_surface_dry_days": 13,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 14,
+          "model_root_median_percentile": 59.1,
+          "ground_root_median_percentile": 22.2
+        },
+        {
+          "month": "2025-12",
+          "paired_days": 31,
+          "ground_root_dry_days": 27,
+          "model_root_dry_days": 6,
+          "model_surface_dry_days": 6,
+          "modeled_mismatch_days": 0,
+          "ground_observed_mismatch_days": 20,
+          "model_root_median_percentile": 54.8,
+          "ground_root_median_percentile": 35.9
+        }
+      ],
+      "noaa_source_records": [
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2013/CRND0103-2013-OK_Stillwater_5_WNW.txt",
+          "sha256": "4336d3a660cada083c015b7f18de7205bb1fdd23fa415fd79d8023be495bf153",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2014/CRND0103-2014-OK_Stillwater_5_WNW.txt",
+          "sha256": "e3a729005dc91a303cd0bf43d5783a398b17d8cfbcc9e9bbdafc6ad9e073a2bf",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2015/CRND0103-2015-OK_Stillwater_5_WNW.txt",
+          "sha256": "0b4eb085e17101b88e6181c004a28e1642d481da6648a1d74babb306b55ec5ef",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2016/CRND0103-2016-OK_Stillwater_5_WNW.txt",
+          "sha256": "1b5f7d19127e6cb9f552aad14de0a724a2ae4f321875cb693bed2903077b75f1",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2017/CRND0103-2017-OK_Stillwater_5_WNW.txt",
+          "sha256": "5a822c32b1c30c8251780e6a3fd402d1000eba90f1ca6198be1037b4b812d26a",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2018/CRND0103-2018-OK_Stillwater_5_WNW.txt",
+          "sha256": "ae005a973fd11ba2d1b64a9ae5f575db321cd0e67b19332b174203f64feb73bd",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2019/CRND0103-2019-OK_Stillwater_5_WNW.txt",
+          "sha256": "b98dd66d9f25ba12fe7abce8a373954484c0bbd29adad012441689c495f3e10c",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2020/CRND0103-2020-OK_Stillwater_5_WNW.txt",
+          "sha256": "96caf3d5754bbd5b358b1ec6a75cfb4544554fdc91fc3324d1f9935b423da4cd",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2021/CRND0103-2021-OK_Stillwater_5_WNW.txt",
+          "sha256": "8a315a0d4df9d3b1f84c6c42e3b1d6e8aa716689c05e59c4dc7d62ba53e34267",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2022/CRND0103-2022-OK_Stillwater_5_WNW.txt",
+          "sha256": "8699cef39059582bfe557f6b08dfbd7dfa348e4bf989395a5bd4d60f8d0d9e79",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2023/CRND0103-2023-OK_Stillwater_5_WNW.txt",
+          "sha256": "bda2dfa2386e42315e0749f4e3833bb490f48ac44e853d1be916145ac2ec4e7a",
+          "rows": 365
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2024/CRND0103-2024-OK_Stillwater_5_WNW.txt",
+          "sha256": "5bcfed18cdfbe59349ce4ee4a144463f7cef3439bdf1f093658524226538ab08",
+          "rows": 366
+        },
+        {
+          "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2025/CRND0103-2025-OK_Stillwater_5_WNW.txt",
+          "sha256": "c0403756b9ad8b46a606590a7b3c0b419d137399b113fd47979c50dcbaa7c891",
+          "rows": 365
+        }
+      ],
+      "source_year_errors": []
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "This is a small Oklahoma station pilot, not validation of 97 global points or Qatar farms.",
+    "Daily NASA data use UTC while NOAA daily records use local standard time, potentially shifting an event across one date.",
+    "A station probe cluster is a point observation; MERRA-2 is a much coarser grid-cell mean.",
+    "Ground 0-100 cm integrated profile is reconstructed from depth sensors and may miss horizontal heterogeneity.",
+    "Seasonal percentile comparison avoids mixing physical volumetric moisture units with model-relative wetness.",
+    "The baseline was fixed to 2013-2021 before evaluating 2022-2025 outcomes and intentionally differs from the original site's published 1991-2020 baseline.",
+    "Same-family model and SMAP comparisons are not independent field validation. This pilot uses USCRN probes.",
+    "No model calibration, agricultural intervention, irrigation recommendations, AI forecasting, or causal claims are implied."
+  ]
+}
