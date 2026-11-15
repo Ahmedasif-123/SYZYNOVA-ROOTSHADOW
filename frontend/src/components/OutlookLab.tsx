@@ -81,7 +81,7 @@ export default function OutlookLab({ selected, onSelect }: Props) {
       {query.data && !valid && <p role="alert">Insufficient complete historical years to train and evaluate this location. Prediction withheld.</p>}
       {valid && <><ForecastChart surface={surface} root={root} horizon={horizon}/><div className="forecast-scores"><Score name="Surface model" value={surface}/><Score name="Root-zone model" value={root}/></div>
         <p className="forecast-meaning"><strong>How to interpret:</strong> A lower projected percentile suggests relatively drier modeled conditions against the 1991–2020 seasonal reference, not soil-water volume or crop failure. The trend depends on historical patterns continuing. This model does not predict drought events, yields, farm suitability or irrigation requirements.</p></>}
-    </div>
+    </div>}
     {mode === "historical" && <footer className="forecast-disclaimer">METHOD: Ridge-regression autoregression uses recent annual moisture ranks and calendar trend features, with a 2016–2025 chronological holdout. When its holdout error does not beat the historical-mean baseline by at least 2%, the simple baseline is displayed instead. This single holdout does not establish validated 5–30 year skill, and no result should guide government resource allocation without climate inputs, independent testing and domain review.</footer>}
   </div>;
 }
