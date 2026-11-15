@@ -5,6 +5,8 @@ import type { ReviewCategory } from "../lib/decision";
 import ProbeMoistureChart from "./ProbeMoistureChart";
 
 type Props = { siteId: string; siteName: string; modelCategory: ReviewCategory; modelDate: string | null; perspective: "ministry" | "engineer" | "researcher" };
+type LocalProbeRecord = { savedAt: string; siteId: string; siteName: string; verdict: string; inputs: ProbeInputs; measuredOn: string; notes: string };
+const SAVE_KEY = "rootshadow-probe-records-v1";
 type AiReading = { status: string; model: string; authoritative_verdict: string; explanation: string; next_checks: string[]; scientific_limit: string; provenance: string; confidence: string };
 const depths = [
   { depth: "30", label: "30 cm / shallower root zone" },
@@ -16,6 +18,13 @@ export default function ProbeVerificationCard({ siteId, siteName, modelCategory,
   const [inputs, setInputs] = useState<ProbeInputs>({ ...blankProbeInputs });
   const [measuredOn, setMeasuredOn] = useState("");
   const [notes, setNotes] = useState("");
+  const [savedRecords, setSavedRecords] = useState<LocalProbeRecord[]>(() => {
+    try {
+      const saved: unknown = JSON.parse(localStorage.getItem(SAVE_KEY) || "[]");
+      return Array.isArray(saved) ? saved.filter((v): v is LocalProbeRecord =>
+        v !== null && typeof v === "object" && typeof v.savedAt === "string" && typeof v.siteId === "string").slice(0, 25) : [];
+    } catch { return []; }
+  });
   const [ai, setAi] = useState<AiReading | null>(null);
   const [aiBusy, setAiBusy] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -63,6 +72,19 @@ export default function ProbeVerificationCard({ siteId, siteName, modelCategory,
     } finally {
       if (!active.signal.aborted) setAiBusy(false);
     }
+  }
+  function saveLocally() {
+    if (!complete) return;
+    const entry: LocalProbeRecord = {
+      savedAt: new Date().toISOString(), siteId, siteName, verdict: result.verdict,
+      inputs: { ...inputs }, measuredOn, notes: notes.trim().slice(0, 500)
+    };
+    const updated = [entry, ...savedRecords].slice(0, 25);
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(updated)); setSavedRecords(updated); } catch {}
+  }
+  function clearLocalHistory() {
+    try { localStorage.removeItem(SAVE_KEY); } catch {}
+    setSavedRecords([]);
   }
   function exportReport() {
     const record = {
@@ -131,6 +153,11 @@ export default function ProbeVerificationCard({ siteId, siteName, modelCategory,
         <input type="date" value={measuredOn} onChange={event => setMeasuredOn(event.target.value)}/>
       </label>
     </div>
+    <details className="probe-guidance"><summary>How do I find a refill point or field-capacity target?</summary>
+      <p><strong>Field capacity</strong> describes moisture remaining after excess gravitational water drains. The <strong>refill point</strong> is a management threshold set for crop type, rooting depth, growth stage and the soil's plant-available water, not a universal VWC number.</p>
+      <p><strong>Sandy soil:</strong> drains relatively quickly and generally stores less plant-available water. <strong>Loamy soil:</strong> often retains more available water. <strong>Clay-rich soil:</strong> can hold substantial total moisture but may release less of it to plants. Measure or obtain targets for each field and depth; do not copy a percentage from a different soil.</p>
+      <p>Request soil testing, probe-calibration guidance and crop-specific management allowable depletion from an agronomist. See <a href="https://extension.umn.edu/natural-resources/conservation/agricultural-soil-and-water/irrigation/soil-moisture-sensors-for-irrigation-scheduling" target="_blank" rel="noreferrer">University of Minnesota Extension's sensor guidance</a> and <a href="https://www.nrcs.usda.gov/sites/default/files/2022-10/nrcs142p2_051590.pdf" target="_blank" rel="noreferrer">USDA NRCS available-water-capacity reference</a>. Enter local volumetric percentages, not the NASA percentile ranks.</p>
+    </details>
     <p className="probe-note">Use moisture values expressed as volumetric water content (%), not NASA seasonal percentile ranks. The minimum at each depth must be supplied from local crop/soil guidance; there is no universal safe irrigation threshold. The uncertainty input is your sensor's documented error margin, not a statistically estimated confidence interval.</p>
     <ProbeMoistureChart inputs={inputs}/>
     <div className={"probe-result probe-" + result.verdict} aria-live="polite">
@@ -142,10 +169,22 @@ export default function ProbeVerificationCard({ siteId, siteName, modelCategory,
       </div>}
       <div className="probe-next"><ClipboardCheck size={18}/><div><strong>WHAT TO DO NEXT</strong><span>{result.nextStep}</span></div></div>
     </div>
+    {complete && <div className="probe-model-comparison"><strong>Model vs. measured-depth check</strong>
+      <p>{modelCategory === "unavailable" ? "The NASA model screen is unavailable or outdated. Field measurements remain the only inputs to the conditional reading."
+        : (result.verdict === "adequate" || result.verdict === "recovered") && ["root_dry", "persistent_mismatch", "mismatch"].includes(modelCategory)
+        ? "The regional model flags a possible root-zone issue, while your entered measurements meet the local targets at the sampled depths. These are different scales, not an error in the probe. Confirm the probe and field context."
+        : result.verdict === "not_recovered" && modelCategory === "no_flag"
+        ? "The model has no low-root flag, but your entered field measurements indicate moisture below a local target. The absence of a model flag cannot override the field reading."
+        : "The model and probe screen can be examined side by side, but their different units, spatial scales and verification status prevent a calibrated agreement score."}</p>
+    </div>}
     <div className="probe-ai-panel">
       <div className="probe-ai-intro"><div><span className="desk-eyebrow"><Sparkles size={14}/> OPTIONAL / AI EXPLANATION</span><h4>Explain these readings with AI</h4><p>AI uses your entered probe values, the deterministic result and the selected model screening label. The calculated result cannot be altered by AI. AI wording may contain mistakes and cannot approve an irrigation change. Probe values are sent to the AI provider only when you click this button.</p></div><button type="button" disabled={!complete || aiBusy} onClick={() => { void explainWithAI(); }}><Sparkles size={15}/>{aiBusy ? "Interpreting measurements…" : ai ? "Refresh AI interpretation" : "Explain with AI"}</button></div>
       {aiError && <p className="probe-ai-error" role="alert">{aiError} The measured result above is unchanged.</p>}
       {ai && <div className="probe-ai-answer"><span>AI interpretation · {ai.model} · no calibrated confidence score</span><p>{ai.explanation}</p><strong>Suggested verification steps</strong><ol>{ai.next_checks.map((item, i) => <li key={i}>{item}</li>)}</ol><p className="probe-ai-limit">{ai.scientific_limit}</p></div>}
+    </div>
+    <div className="probe-local-log"><div><strong>Optional field record log</strong><p>Save measurements only in this browser, on this device. Nothing is uploaded to ROOTSHADOW's database. Records can be downloaded above or cleared here; locally saved readings are not independently validated research observations.</p></div>
+      <div className="probe-buttons"><button type="button" disabled={!complete} onClick={saveLocally}>Save privately on this device</button><button type="button" disabled={!savedRecords.length} onClick={clearLocalHistory}>Erase local history ({savedRecords.length})</button></div>
+      {savedRecords.length > 0 && <ul aria-label="Locally saved field readings">{savedRecords.slice(0, 4).map((r, i) => <li key={r.savedAt + i}>{new Date(r.savedAt).toLocaleString("en-GB")} · {r.siteName} · {r.verdict.replaceAll("_", " ")}</li>)}</ul>}
     </div>
     <div className="probe-footer"><p><ShieldAlert size={15}/> There is <strong>no validated farm-level reliability percentage</strong> for this worksheet, and no safe automatic irrigation cutback can be calculated from two depth readings alone.</p><div className="probe-buttons"><button type="button" onClick={clear}><RotateCcw size={14}/> Clear readings</button><button type="button" onClick={exportReport} disabled={!complete}><Download size={15}/> Export field assessment</button></div></div>
     <details className="probe-real-case">
