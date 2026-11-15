@@ -96,7 +96,7 @@ export function buildLayerScenario(annual: AnnualPoint[], layer: "surface" | "ro
   const historical = annual.flatMap(row => typeof row[layer] === "number" ? [{ year: row.year, value: row[layer] }] : []);
   const empty: LayerScenario = { historical, future: [], holdoutMae: NaN, baselineMae: NaN, skillPercent: NaN, trendPerDecade: NaN, modelSelected: "historical_mean", status: "insufficient_data", sampleYears: historical.length };
   if (historical.length !== 45 || historical[0]?.year !== 1981 || historical.at(-1)?.year !== 2025 ||
-    historical.some((point, index) => point.year !== 1981 + index) || ![5, 10, 30].includes(years)) return empty;
+    historical.some((point, index) => point.year !== 1981 + index) || ![5, 10, 20, 30].includes(years)) return empty;
 
   const training = historical.filter(point => point.year <= 2015);
   const testing = historical.filter(point => point.year > 2015);
