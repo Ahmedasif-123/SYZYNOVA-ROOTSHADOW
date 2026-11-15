@@ -1,0 +1,46 @@
+name: Train and evaluate NOAA field-grounded AI calibration
+on:
+  push:
+    branches: [noaa-ai-ground-calibration-2026]
+    paths:
+      - 'scripts/train_noaa_calibration.py'
+      - 'tests/test_noaa_calibration.py'
+      - '.github/workflows/noaa-ai-training.yml'
+permissions:
+  contents: write
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install scientific stack and scikit-learn
+        run: pip install -r requirements.txt 'scikit-learn>=1.5,<2' 'joblib>=1.4,<2'
+      - name: Test no future-data leakage and probability diagnostics
+        run: python -m pytest tests/test_noaa_calibration.py -q
+      - name: Train with NOAA ground truth and evaluate untouched holdout
+        run: python -m scripts.train_noaa_calibration
+      - name: Upload actual model and complete evaluation artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rootshadow-noaa-ground-calibrated-ai
+          path: |
+            research_ai/NOAA_GROUND_CALIBRATION_REPORT.json
+            research_ai/noaa_calibration_model.joblib
+          retention-days: 14
+      - name: Publish source-grounded evaluation to research branch
+        run: |
+          mkdir -p frontend/public/validation
+          cp research_ai/NOAA_GROUND_CALIBRATION_REPORT.json frontend/public/validation/noaa-ai-calibration.json
+          git config user.name "rootshadow-evidence-bot"
+          git config user.email "rootshadow-evidence-bot@users.noreply.github.com"
+          git add frontend/public/validation/noaa-ai-calibration.json
+          if git diff --cached --quiet; then
+            echo "Evaluation report unchanged"
+          else
+            git commit -m "Publish chronological NOAA ground-calibrated AI evaluation"
+            git push origin HEAD:refs/heads/noaa-ai-ground-calibration-2026
+          fi
