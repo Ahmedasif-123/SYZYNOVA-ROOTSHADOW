@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }) => {
 
 test("NOAA validation opens with four source-grounded station selectors", async ({ page }) => {
   await navigateToValidation(page);
-  await expect(page.getByRole("heading", { name: /Can we trust/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /What has actually/i })).toBeVisible();
   await expect(page.getByText("Not ready for field decisions")).toBeVisible();
   const stations = page.getByRole("group", { name: "NOAA station" });
   await expect(stations.getByRole("button")).toHaveCount(4);
