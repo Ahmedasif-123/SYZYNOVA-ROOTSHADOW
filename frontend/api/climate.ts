@@ -38,6 +38,7 @@ function paired(raw: unknown, scenario?: Scenario): ClimateMonth[] {
   return Object.keys(temp).filter(month => month in rain)
     .sort()
     .map(month => ({ month: month.slice(0, 4) + "-" + month.slice(4), t2m: temp[month], precip: rain[month] }))
+    .filter(row => /^\d{4}-(0[1-9]|1[0-2])$/.test(row.month))
     .filter(row => row.t2m > -90 && row.t2m < 75 && row.precip >= 0 && row.precip < 200);
 }
 
@@ -80,7 +81,7 @@ export async function GET(request: Request): Promise<Response> {
   try {
     const [rawPast, rawFuture] = await Promise.all([getPower(past), getPower(future)]);
     const history = paired(rawPast).filter(row => row.month >= "1981-01" && row.month <= "2025-12");
-    const projection = paired(rawFuture).filter(row => row.month >= "2015-01" && row.month <= "2055-12");
+    const projection = paired(rawFuture, scenario).filter(row => row.month >= "2015-01" && row.month <= "2055-12");
     if (history.length < 480 || projection.length < 400) {
       const inspect = rawFuture as { properties?: { parameter?: Record<string, Record<string, unknown>> } };
       const t = inspect?.properties?.parameter?.T2M?.[scenario] as Record<string, unknown> | undefined;
