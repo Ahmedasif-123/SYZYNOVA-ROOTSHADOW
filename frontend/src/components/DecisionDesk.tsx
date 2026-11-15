@@ -4,6 +4,7 @@ import { Activity, AlertCircle, ArrowUpRight, ClipboardCheck, Database, Download
 import { getAtlasHistory, getAtlasLatest, type AtlasRecentDay } from "../lib/atlas";
 import { buildReviewQueue, categoryTitle, evidenceExport, historicalContext, reviewActions, type ReviewCategory } from "../lib/decision";
 import { findSite, isCoreSite, siteRegions, sites, type SiteId } from "../lib/sites";
+import { ORIGINAL_RULE, evaluateScenario, originalScenario, scenarioSummary, type Scenario } from "../lib/interactive";
 
 type Props = { selected: SiteId; onSelect: (id: SiteId) => void; onInvestigate: () => void };
 type Role = "ministry" | "engineer" | "researcher";
@@ -56,6 +57,7 @@ export default function DecisionDesk({ selected, onSelect, onInvestigate }: Prop
   const [region, setRegion] = useState("all");
   const [search, setSearch] = useState("");
   const [role, setRole] = useState<Role>("ministry");
+  const [scenario, setScenario] = useState<Scenario>(ORIGINAL_RULE);
   const latestQuery = useQuery({ queryKey: ["rootshadow-atlas-recent"], queryFn: ({ signal }) => getAtlasLatest(signal), staleTime: 30 * 60_000, refetchInterval: 60 * 60_000, retry: 1 });
   const historyQuery = useQuery({ queryKey: ["rootshadow-atlas-history"], queryFn: ({ signal }) => getAtlasHistory(signal), staleTime: Infinity, retry: 1 });
   const latest = latestQuery.data ?? null;
@@ -66,6 +68,8 @@ export default function DecisionDesk({ selected, onSelect, onInvestigate }: Prop
     (!search.trim() || [item.site.name, item.site.country, item.site.region].some(s => s.toLowerCase().includes(search.toLowerCase().trim())))
   ), [queue, category, region, search]);
   const selectedItem = queue.find(item => item.id === selected) ?? queue[0];
+  const scenarioTotals = useMemo(() => scenarioSummary(queue, scenario), [queue, scenario]);
+  const selectedScenario = selectedItem ? evaluateScenario(selectedItem, scenario) : null;
   const place = findSite(selected);
   const context = historicalContext(historyQuery.data, selected, selectedItem?.latestDate ?? null);
   const categories = {
@@ -95,6 +99,26 @@ export default function DecisionDesk({ selected, onSelect, onInvestigate }: Prop
       <div><small>OTHER ROOT-DRY FLAGS</small><strong>{latest ? categories.dry : "—"}</strong><span>Below 40th percentile</span></div>
     </div>
     <p className="desk-observation">{latest ? <>Data last checked {new Date(latest.retrieval_checked_utc).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })} · Most recent modeled observation: <strong>{latest.latest_observation_date}</strong> · {latest.verified_site_count} of 97 source responses reported verified. <strong>{categories.unavailable}</strong> sites need observation review. {categories.unavailable === 97 ? <strong>All readings are unavailable or too old for the current screening queue.</strong> : null}</> : latestQuery.isPending ? "Loading the source-dated NASA observation atlas…" : "The latest NASA snapshot is unavailable. The desk will not substitute historical or invented readings."}</p>
+
+    <section className="desk-experiment" aria-label="Interactive scientific scenario explorer">
+      <div className="desk-experiment-head"><div><span className="desk-eyebrow">INTERACTIVE SCIENCE / SANDBOX</span><h2>Change the rule. Watch the evidence change.</h2><p>Explore how different screening thresholds affect the 97 NASA model points. These are retrospective model-state comparisons, not AI forecasts or recommendations.</p></div><button type="button" onClick={() => setScenario(ORIGINAL_RULE)}>Restore original rule</button></div>
+      <div className="desk-experiment-presets" role="group" aria-label="Scenario presets">
+        <button type="button" aria-pressed={originalScenario(scenario)} onClick={() => setScenario(ORIGINAL_RULE)}>Published 7-day rule</button>
+        <button type="button" aria-pressed={scenario.surfaceMin === 40 && scenario.rootBelow === 40 && scenario.consecutiveDays === 1} onClick={() => setScenario({ surfaceMin: 40, rootBelow: 40, consecutiveDays: 1 })}>Single-day screen</button>
+        <button type="button" aria-pressed={scenario.surfaceMin === 50 && scenario.rootBelow === 30 && scenario.consecutiveDays === 7} onClick={() => setScenario({ surfaceMin: 50, rootBelow: 30, consecutiveDays: 7 })}>Stricter contrast</button>
+      </div>
+      <div className="desk-experiment-controls">
+        <label><span>Minimum surface rank</span><strong>{scenario.surfaceMin}th percentile</strong><input type="range" min="20" max="70" step="5" aria-label="Surface rank minimum" value={scenario.surfaceMin} onChange={event => setScenario(previous => ({ ...previous, surfaceMin: Number(event.target.value) }))}/></label>
+        <label><span>Root rank below</span><strong>{scenario.rootBelow}th percentile</strong><input type="range" min="15" max="65" step="5" aria-label="Root rank below" value={scenario.rootBelow} onChange={event => setScenario(previous => ({ ...previous, rootBelow: Number(event.target.value) }))}/></label>
+        <label><span>Consecutive qualifying days</span><strong>{scenario.consecutiveDays} {scenario.consecutiveDays === 1 ? "day" : "days"}</strong><input type="range" min="1" max="7" step="1" aria-label="Consecutive days required" value={scenario.consecutiveDays} onChange={event => setScenario(previous => ({ ...previous, consecutiveDays: Number(event.target.value) }))}/></label>
+      </div>
+      <div className="desk-experiment-results" aria-live="polite">
+        <div><strong>{scenarioTotals.matched}</strong><small>Model points meeting your selected rule</small></div>
+        <div><strong>{scenarioTotals.checked}</strong><small>Locations with enough usable daily readings</small></div>
+        <div><strong>{scenarioTotals.unavailable}</strong><small>Locations excluded due to missing or stale data</small></div>
+      </div>
+      <p className="desk-experiment-note"><strong>{originalScenario(scenario) ? "Original seven-day screen." : "Exploratory what-if scenario, not a published scientific finding."}</strong> Every day in the selected window must satisfy both thresholds; no data are interpolated. The underlying NASA records, published historical event detection, and independent NOAA validation results never change when you move these controls.</p>
+    </section>
     <div className="desk-layout">
       <section className="desk-queue" aria-label="Screening investigation queue">
         <div className="desk-queue-head"><div><span className="desk-eyebrow">01 / SELECT EVIDENCE</span><h2>Investigation queue</h2><p>Order reflects pre-defined screening rules, not measured crop risk.</p></div><span className="desk-queue-total">{visible.length} points</span></div>
@@ -105,6 +129,12 @@ export default function DecisionDesk({ selected, onSelect, onInvestigate }: Prop
         <p className="desk-queue-foot">Priority: persistent mismatch → latest mismatch → low root percentile → unavailable → no flag. This is a screening order, not a calibrated impact or severity score.</p>
       </section>
       <div className="desk-detail">
+        <section className="desk-site-experiment" aria-label="Selected location what-if outcome">
+          <span className="desk-eyebrow">YOUR RULE / {place.name.toUpperCase()}</span>
+          <h3>{selectedScenario?.state === "matched" ? "This model point meets the selected rule" : selectedScenario?.state === "not_matched" ? "This model point does not meet the selected rule" : "Not enough recent evidence to classify this point"}</h3>
+          <strong>{selectedScenario?.state === "unavailable" || !selectedScenario ? "Unavailable" : selectedScenario.matchedDays + " of " + selectedScenario.validDays + " days satisfied both conditions"}</strong>
+          <p>{originalScenario(scenario) ? "Showing the original seven-day mismatch rule." : "You changed the research screening rules. This is an educational comparison, not a recalculated or independently validated drought-recovery claim."}</p>
+        </section>
         <section className="desk-evidence" aria-label="Selected location evidence">
           <div className="desk-detail-head"><div><span className="desk-eyebrow">02 / EXAMINE THE REASON</span><h2>{place.name}</h2><p><MapPin size={14}/>{place.region}, {place.country}</p></div><span className={"desk-selected-badge desk-" + selectedItem?.category}>{selectedItem ? categoryTitle(selectedItem.category) : "Unavailable"}</span></div>
           <div className="desk-readings"><div><small>ROOT-ZONE RANK</small><strong>{measurement(selectedItem?.root ?? null, " / 100")}</strong><span>Relative seasonal percentile</span></div><div><small>SURFACE RANK</small><strong>{measurement(selectedItem?.surface ?? null, " / 100")}</strong><span>Relative seasonal percentile</span></div><div><small>LAST 7 VALID DAYS</small><strong>{selectedItem?.sevenDayComplete ? selectedItem.mismatchDays7 + " / 7" : "Unavailable"}</strong><span>Days with modeled mismatch</span></div><div><small>7-DAY MODEL RAIN</small><strong>{measurement(selectedItem?.totalRain7 ?? null, " mm")}</strong><span>Not field-gauge precipitation</span></div></div>
