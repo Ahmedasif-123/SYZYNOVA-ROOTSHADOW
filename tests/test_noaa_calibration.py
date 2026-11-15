@@ -5,21 +5,22 @@ from scripts.train_noaa_calibration import build_features, diagnostics, splits
 
 
 def test_features_use_only_current_and_prior_nasa_inputs():
-    dates = pd.date_range("2014-01-01", periods=90)
+    dates = pd.date_range("2013-01-01", "2025-12-31")
+    ordinal = np.arange(len(dates))
     data = pd.DataFrame({
-        "GWETROOT": np.linspace(0.2, 0.8, len(dates)),
-        "GWETTOP": np.linspace(0.1, 0.9, len(dates)),
+        "GWETROOT": 0.5 + 0.15 * np.sin(ordinal * 2 * np.pi / 365.25),
+        "GWETTOP": 0.5 + 0.25 * np.cos(ordinal * 2 * np.pi / 365.25),
         "PRECTOT": np.ones(len(dates)),
         "T2M": np.ones(len(dates)) * 25
     }, index=dates)
-    original = build_features(data).iloc[40].copy()
-    data.iloc[41:, :] = 0
-    modified = build_features(data).iloc[40].copy()
+    original = build_features(data).loc["2022-06-15"].copy()
+    data.loc["2022-06-16":, :] = 0
+    modified = build_features(data).loc["2022-06-15"].copy()
     pd.testing.assert_series_equal(original, modified)
 
 
 def test_chronological_splits_are_disjoint():
-    index = pd.date_range("2018-12-29", "2022-01-03")
+    index = pd.date_range("2019-12-29", "2022-01-03")
     frame = pd.DataFrame({"year": index.year}, index=index)
     masks = splits(frame)
     assert not (masks["train"] & masks["validation"]).any()

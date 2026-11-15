@@ -23,7 +23,7 @@ from scripts.build_moisture_atlas import CORE, historical
 from scripts.validate_noaa_probe import STATIONS, download_noaa_station, root_profile, binary_metrics
 
 REFERENCE_START = 2013
-TRAIN_END = 2018
+TRAIN_END = 2019
 VALIDATION_END = 2021
 TEST_END = 2025
 TARGET_PERCENTILE = 0.4
@@ -185,8 +185,8 @@ def train_and_test(station_frames):
     }
     return {
         "splits": {
-            "train": {"date_range": "2013-01-01 to 2018-12-31", "rows": len(train)},
-            "validation": {"date_range": "2019-01-01 to 2021-12-31", "rows": len(validation)},
+            "train": {"date_range": "2013-01-01 to 2019-12-31", "rows": len(train)},
+            "validation": {"date_range": "2020-01-01 to 2021-12-31", "rows": len(validation)},
             "test": {"date_range": "2022-01-01 to 2025-12-31", "rows": len(test)}
         },
         "selection_rule": "Pick lowest validation Brier score across three fixed candidate models; never tune on 2022-2025 test.",

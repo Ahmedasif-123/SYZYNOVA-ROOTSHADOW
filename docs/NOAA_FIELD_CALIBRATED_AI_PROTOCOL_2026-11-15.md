@@ -12,10 +12,10 @@ This is model-to-field **nowcast calibration research**, not irrigation advice o
 
 Station inputs: Goodwell 2 E, Goodwell 2 SE, Stillwater 2 W, Stillwater 5 WNW. Each uses NOAA recorded 5/10/20/50/100 cm volumetric moisture data. A record must have all five depths to be eligible.
 
-The seasonal reference is 2013–2018 only, computed separately for NOAA probes and NASA modeled series. It intentionally differs from the published ROOTSHADOW 1991–2020 historical reference.
+The seasonal reference is 2013–2019 only, computed separately for NOAA probes and NASA modeled series. It intentionally differs from the published ROOTSHADOW 1991–2020 historical reference.
 
-- **Training:** 2013–2018.
-- **Model selection validation:** 2019–2021.
+- **Training:** 2013–2019.
+- **Model selection validation:** 2020–2021.
 - **Final untouched test:** 2022–2025.
 - **Additional spatial transfer:** fit on Goodwell training data and score Stillwater test, then reverse.
 
