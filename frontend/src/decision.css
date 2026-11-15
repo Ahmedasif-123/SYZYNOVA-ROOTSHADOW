@@ -182,3 +182,11 @@
 .probe-local-log ul{padding-left:20px;font:500 11px/1.8 Manrope,sans-serif;color:#3d5a45}
 .probe-local-log .probe-buttons button{background:#e8eee4;color:#285038;border-color:#a4bba8}
 .probe-local-log .probe-buttons button:disabled{opacity:.5}
+
+
+.desk-pilot-key{background:#f6f1e5;margin:6px 22px 16px;padding:13px 15px;border-left:3px solid #8c673e;color:#41563f;font:500 11px/1.7 Manrope,sans-serif}
+.desk-pilot-key strong{color:#344d37}.desk-pilot-key a{text-decoration:underline;text-underline-offset:3px;color:#275a40}
+.desk-point-pilot{grid-column:1/-1;display:block;line-height:1.5;font:600 9px/1.5 Manrope,sans-serif;color:#5b654d;white-space:normal;overflow-wrap:anywhere}
+.desk-selected-validation{padding:14px 17px;margin:17px 0 4px;background:#f3eee0;border:1px solid #d3c3a8;border-left:3px solid #927344;color:#30483b}
+.desk-selected-validation strong{font:700 12px/1.6 Manrope,sans-serif;color:#31513f}
+.desk-selected-validation p{font:500 11px/1.75 Manrope,sans-serif;color:#465744;margin:6px 0 0}
