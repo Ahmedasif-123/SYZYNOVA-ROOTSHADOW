@@ -913,3 +913,15 @@ main { max-width: none; }
 
 .climate-source-status{padding:13px 17px;margin:15px 0;border:1px solid #486b68;background:#183e3d;color:#d1e8df;font:500 12px/1.8 Manrope,sans-serif}
 .climate-source-status strong{color:#f1ebd9}
+
+
+.forecast-lab,.climate-lab{color:#243c32}
+.forecast-heading h1,.climate-intro h2,.climate-score-heading h3{color:#1d362d}
+.forecast-heading>span,.climate-intro>span{color:#365d4d}
+.forecast-heading p,.climate-intro p,.climate-score-heading p,.climate-maturity{color:#40594e}
+.forecast-controls label{color:#2d5142}
+.climate-scenario-note{color:#3b5449;border-left-color:#946b39}
+.climate-sources{color:#3a5548;border-top-color:#b9c9bf}
+.climate-sources strong{color:#244737}
+.climate-sources a{color:#245c4b;text-decoration-thickness:1px}
+.forecast-body,.climate-chart-shell,.climate-score,.climate-headline-metrics,.climate-source-status,.forecast-warning,.climate-error,.climate-loading{color:#e4eeeb}
