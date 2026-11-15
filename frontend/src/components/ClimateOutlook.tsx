@@ -79,6 +79,7 @@ export default function ClimateOutlook({ selected, horizon, name }: Props) {
     return climateForecast(archive.data.months, archive.data.sites[selected] ?? [], climate.data, horizon);
   }, [archive.data, climate.data, horizon, selected]);
   const complete = result?.status === "ready";
+  const alternative = climate.data?.climateSource === "open_meteo_highresmip";
   const last = complete ? result.future.at(-1) : null;
   const referenceTemp = useMemo(() => {
     if (!climate.data) return null;
@@ -89,18 +90,18 @@ export default function ClimateOutlook({ selected, horizon, name }: Props) {
     <header className="climate-intro">
       <span>ADDITIONAL MODEL / CLIMATE DRIVERS</span>
       <h2>What if the climate changes?</h2>
-      <p>Instead of using soil moisture alone, this model learns from historical temperature, rainfall, and previous soil conditions. Future inputs come from NASA NEX-GDDP-CMIP6 emissions scenarios for <strong>{name}</strong>. It does not assume that the last 45 years will repeat unchanged.</p>
+      <p>Instead of using soil moisture alone, this model learns from historical temperature, rainfall, and previous soil conditions. Future inputs come from NASA NEX-GDDP-CMIP6 where coverage exists, or a separately identified Open-Meteo HighResMIP climate simulation for <strong>{name}</strong> where NASA scenario cells are missing. It does not assume that the last 45 years will repeat unchanged.</p>
     </header>
-    <div className="climate-scenarios" role="group" aria-label="Choose a NASA future climate scenario">
+    {!alternative ? <div className="climate-scenarios" role="group" aria-label="Choose a NASA future climate scenario">
       {scenarios.map(item => <button key={item.value} type="button" aria-pressed={scenario === item.value} className={scenario === item.value ? "selected" : ""} onClick={() => setScenario(item.value)}>
         <strong>{item.title}</strong><span>{item.subtitle}</span>
       </button>)}
-    </div>
-    <p className="climate-scenario-note"><strong>Scenario, not prediction:</strong> SSPs represent different possible global emissions pathways. They do not say which future will happen. NASA supplies location-specific gridded temperature and rainfall, not crop-yield or irrigation outcomes.</p>
+    </div> : <div className="climate-scenario-note"><strong>Global climate fallback:</strong> NASA CMIP6 gridded climate values are missing for this location. Open-Meteo HighResMIP (EC_Earth3P_HR) provides an alternative downscaled simulation through 2050. It is not an SSP-specific scenario; the NASA emissions buttons are therefore unavailable here.</div>}
+    {!alternative && <p className="climate-scenario-note"><strong>Scenario, not prediction:</strong> SSPs represent different possible global emissions pathways. They do not say which future will happen. NASA supplies location-specific gridded temperature and rainfall, not crop-yield or irrigation outcomes.</p>}
     {(archive.isPending || climate.isPending) && <p className="climate-loading" role="status">Requesting historical temperature, rainfall and CMIP6 scenario data from NASA POWER for this location…</p>}
     {(archive.isError || climate.isError) && <div className="climate-error" role="alert"><strong>Climate model unavailable</strong><p>{climate.error instanceof Error ? climate.error.message : "Historical soil-moisture dataset could not be loaded."} No substitute temperatures or rainfall values have been invented.</p><button type="button" onClick={() => { void climate.refetch(); void archive.refetch(); }}>Retry NASA sources</button></div>}
-    {result && !complete && <div className="climate-error"><strong>Insufficient aligned climate observations</strong><p>The NASA climate and soil series did not provide the complete 1981–2025 paired history and 2015–2025 calibration overlap required. Forecast withheld.</p></div>}
-    {complete && last && <>
+    {result && !complete && <div className="climate-error"><strong>Insufficient aligned climate observations</strong><p>{alternative && horizon === 30 ? "The alternative HighResMIP provider stops at 2050, so a 2026–2055 forecast is not supported. Select 5 or 10 years above." : "Aligned climate observations or the calibration overlap were incomplete. Forecast withheld."}</p></div>}
+    {complete && last && <><div className="climate-source-status"><strong>Climate model:</strong> {climate.data?.climateEnsemble ?? "NASA climate projection"} · {alternative ? "Global HighResMIP alternative" : "NASA SSP-specific projection"} · Future climate is modeled, not observed</div>
       <div className="climate-headline-metrics">
         <div><small>CLIMATE DATA INPUT</small><strong>{result.sampleMonths}</strong><span>paired historical months</span></div>
         <div><small>FUTURE ENSEMBLE TEMPERATURE</small><strong>{last.temp.toFixed(1)}°C</strong><span>modeled annual mean in {last.year}</span></div>
@@ -115,7 +116,7 @@ export default function ClimateOutlook({ selected, horizon, name }: Props) {
       <div className="climate-score-heading"><h3>Did climate inputs make it better?</h3><p>Train 1981–2015. Predict 2016–2025 without access to that decade's soil-moisture outcomes. Compare mean absolute error (MAE); lower is better. Historical weather is known during this test, so these scores do not measure the additional uncertainty in future CMIP6 weather scenarios.</p></div>
       <div className="climate-scores"><Metric title="Surface soil" values={result.errors.surface}/><Metric title="Root-zone soil" values={result.errors.root}/></div>
       <p className="climate-maturity"><strong>Scientific status:</strong> Site-specific exploratory model, not an operational agricultural forecast. Projected temperature and precipitation are seasonally bias-adjusted using {result.overlapYears} overlapping historical years. Future soil moisture also depends on irrigation, soil properties, vegetation, groundwater and climate variability not resolved here. A 30-year soil-moisture forecast has not been independently validated.</p>
-      <div className="climate-sources"><strong>Source data</strong><a href={climate.data?.sources.historical} target="_blank" rel="noreferrer">NASA POWER historical weather</a><a href={climate.data?.sources.future} target="_blank" rel="noreferrer">NASA NEX-GDDP-CMIP6 future scenarios</a><a href="https://power.larc.nasa.gov/docs/services/api/projection/" target="_blank" rel="noreferrer">NASA projection documentation</a></div>
+      <div className="climate-sources"><strong>Source data</strong><a href={climate.data?.sources.historical} target="_blank" rel="noreferrer">NASA POWER historical weather</a><a href={climate.data?.sources.future} target="_blank" rel="noreferrer">{alternative ? "Open-Meteo HighResMIP simulation" : "NASA NEX-GDDP-CMIP6 future scenarios"}</a><a href={climate.data?.sources.documentation} target="_blank" rel="noreferrer">Climate-model documentation</a></div>
     </>}
   </section>;
 }
