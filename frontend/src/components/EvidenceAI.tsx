@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Activity, ArrowUpRight, BookOpenText, BrainCircuit, CheckCircle2, ExternalLink, LockKeyhole, RefreshCcw, ShieldAlert } from "lucide-react";
+import { Activity, ArrowUpRight, BookOpenText, BrainCircuit, ExternalLink, LockKeyhole, RefreshCcw, ShieldAlert } from "lucide-react";
 import { findSite, productSites, researchSites, siteRegions, type SiteId } from "../lib/sites";
 
 type Role = "scientist" | "engineer" | "ministry";
