@@ -6,9 +6,9 @@ const parse = (v: string) => v.trim() === "" ? NaN : Number(v);
 export default function ProbeMoistureChart({ inputs }: { inputs: ProbeInputs }) {
   const readings: Reading[] = (["30", "60"] as const).map(depth => ({
     depth,
-    before: parse(inputs["before" + depth]),
-    after: parse(inputs["after" + depth]),
-    threshold: parse(inputs["threshold" + depth])
+    before: parse(inputs[("before" + depth) as keyof ProbeInputs]),
+    after: parse(inputs[("after" + depth) as keyof ProbeInputs]),
+    threshold: parse(inputs[("threshold" + depth) as keyof ProbeInputs])
   }));
   if (!readings.every(r => [r.before, r.after, r.threshold].every(v => Number.isFinite(v) && v >= 0 && v <= 100))) return null;
   const maximum = Math.min(100, Math.max(40, Math.ceil(Math.max(...readings.flatMap(r => [r.before, r.after, r.threshold])) / 10) * 10 + 10));
