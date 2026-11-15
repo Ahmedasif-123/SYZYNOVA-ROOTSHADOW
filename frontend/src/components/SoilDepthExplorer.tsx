@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, RotateCcw } from "lucide-react";
 import type { Analysis } from "../lib/api";
 
@@ -18,9 +18,19 @@ export default function SoilDepthExplorer({ analysis, synchronizedMonth, onMonth
   }, [samples]);
 
   const [index, setIndex] = useState(startingIndex);
+  const position = useRef(startingIndex);
   const [playing, setPlaying] = useState(false);
 
+  function chooseMonth(nextIndex: number) {
+    const next = Math.max(0, Math.min(samples.length - 1, nextIndex));
+    if (!samples[next]) return;
+    position.current = next;
+    setIndex(next);
+    onMonthChange?.(samples[next].month);
+  }
+
   useEffect(() => {
+    position.current = startingIndex;
     setIndex(startingIndex);
     setPlaying(false);
   }, [startingIndex, samples]);
@@ -28,23 +38,21 @@ export default function SoilDepthExplorer({ analysis, synchronizedMonth, onMonth
   useEffect(() => {
     if (!synchronizedMonth) return;
     const found = samples.findIndex(sample => sample.month === synchronizedMonth);
-    if (found >= 0) setIndex(current => current === found ? current : found);
+    if (found >= 0 && found !== position.current) {
+      position.current = found;
+      setIndex(found);
+    }
   }, [synchronizedMonth, samples]);
 
   useEffect(() => {
     if (!playing || samples.length < 2) return;
     const timer = window.setInterval(() => {
-      setIndex(previous => {
-        const next = previous + 3;
-        if (next >= samples.length - 1) {
-          setPlaying(false);
-          return samples.length - 1;
-        }
-        return next;
-      });
-    }, 120);
+      const next = Math.min(samples.length - 1, position.current + 3);
+      chooseMonth(next);
+      if (next >= samples.length - 1) setPlaying(false);
+    }, 360);
     return () => window.clearInterval(timer);
-  }, [playing, samples.length]);
+  }, [playing, samples, onMonthChange]);
 
   const point = samples[Math.min(index, samples.length - 1)];
   const top = point?.top_percentile ?? null;
@@ -52,7 +60,6 @@ export default function SoilDepthExplorer({ analysis, synchronizedMonth, onMonth
   const difference = top !== null && root !== null ? top - root : null;
   const year = point?.month.slice(0, 4) ?? "—";
   const selectedMonth = point ? new Date(`${point.month}-01T00:00:00Z`).toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" }) : "Unavailable";
-  useEffect(() => { if (point?.month) onMonthChange?.(point.month); }, [point?.month, onMonthChange]);
   const firstYear = samples[0]?.month.slice(0, 4) ?? "1981";
   const finalYear = samples[samples.length - 1]?.month.slice(0, 4) ?? "2025";
 
@@ -60,12 +67,12 @@ export default function SoilDepthExplorer({ analysis, synchronizedMonth, onMonth
     const found = samples.findIndex(entry => Number(entry.month.slice(0, 4)) >= target);
     if (found < 0) return;
     setPlaying(false);
-    setIndex(found);
+    chooseMonth(found);
   }
 
   function move(delta: number) {
     setPlaying(false);
-    setIndex(previous => Math.max(0, Math.min(samples.length - 1, previous + delta)));
+    chooseMonth(position.current + delta);
   }
 
   return (
@@ -107,17 +114,17 @@ export default function SoilDepthExplorer({ analysis, synchronizedMonth, onMonth
       </div>
       <div className="depth-lens-timeline">
         <div className="depth-timeline-header"><span>ARCHIVE TRANSECT <strong>{firstYear} — {finalYear}</strong></span><span>FRAME {String(index + 1).padStart(3, "0")} / {String(samples.length).padStart(3, "0")}</span></div>
-        <input aria-label="Select month in historical soil record" className="depth-timeline-slider" type="range" min={0} max={Math.max(0, samples.length - 1)} value={Math.min(index, Math.max(0, samples.length - 1))} onChange={event => { setPlaying(false); setIndex(Number(event.target.value)); }} disabled={!samples.length} />
+        <input aria-label="Select month in historical soil record" className="depth-timeline-slider" type="range" min={0} max={Math.max(0, samples.length - 1)} value={Math.min(index, Math.max(0, samples.length - 1))} onChange={event => { setPlaying(false); chooseMonth(Number(event.target.value)); }} disabled={!samples.length} />
         <div className="depth-timeline-years">
           {[1981, 1990, 2000, 2010, 2020, 2025].map(yr => <button type="button" key={yr} onClick={() => jumpToYear(yr)} className={Number(year) === yr ? "current" : ""}>{yr}</button>)}
         </div>
         <div className="depth-timeline-controls">
           <button type="button" onClick={() => move(-1)} disabled={index === 0} aria-label="Previous month"><ChevronLeft size={17} /></button>
-          <button type="button" className="depth-play-button" onClick={() => { if (index >= samples.length - 1) setIndex(0); setPlaying(value => !value); }} disabled={samples.length < 2}>
+          <button type="button" className="depth-play-button" onClick={() => { if (index >= samples.length - 1) chooseMonth(0); setPlaying(value => !value); }} disabled={samples.length < 2}>
             {playing ? <Pause size={16} /> : <Play size={16} />} {playing ? "PAUSE SCAN" : "SCAN HISTORY"}
           </button>
           <button type="button" onClick={() => move(1)} disabled={index >= samples.length - 1} aria-label="Next month"><ChevronRight size={17} /></button>
-          <button type="button" className="depth-reset" onClick={() => { setPlaying(false); setIndex(startingIndex); }}><RotateCcw size={14} /> LARGEST MONTHLY CONTRAST</button>
+          <button type="button" className="depth-reset" onClick={() => { setPlaying(false); chooseMonth(startingIndex); }}><RotateCcw size={14} /> LARGEST MONTHLY CONTRAST</button>
         </div>
       </div>
       <p className="depth-lens-note">Each value is the median of model-derived daily seasonal wetness percentiles within the selected month. The 40th-percentile guide is a visual reference; qualifying drought recovery is determined separately from sustained daily values, not these monthly medians. This is not physical soil depth or an irrigation instruction.</p>
