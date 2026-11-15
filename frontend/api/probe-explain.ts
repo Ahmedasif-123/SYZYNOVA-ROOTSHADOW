@@ -1,6 +1,6 @@
 export const maxDuration = 40;
 
-const MODEL = "gpt-5-mini";
+const MODEL = "gpt-6-luna";
 const MAX_REQUESTS = 12;
 const requests = new Map<string, { count: number; since: number }>();
 type Perspective = "engineer" | "ministry" | "researcher";
@@ -113,7 +113,7 @@ async function handler(request: Request): Promise<Response> {
   if (!input || typeof input !== "object" || Array.isArray(input)) return json({ error: "Invalid request" }, 400);
   const measurements = parseMeasurements(input.measurements);
   const perspective: Perspective | null = input.perspective === "engineer" || input.perspective === "ministry" || input.perspective === "researcher" ? input.perspective : null;
-  const location = typeof input.siteId === "string" && /^[a-z0-9_]{3,55}$/.test(input.siteId) ? input.siteId : null;
+  const location = typeof input.siteId === "string" && /^[\p{L}\p{N}_-]{3,55}$/u.test(input.siteId) ? input.siteId : null;
   const category = typeof input.modelCategory === "string" && ["persistent_mismatch", "mismatch", "root_dry", "no_flag", "unavailable"].includes(input.modelCategory) ? input.modelCategory : "unavailable";
   if (!measurements || !perspective || !location) return json({ error: "Complete the measured depths, documented local thresholds and sensor margin." }, 400);
   const verdict = evaluate(measurements);
