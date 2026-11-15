@@ -1,0 +1,2122 @@
+{
+  "status": "INDEPENDENT_GROUND_TRUTH_ML_EVALUATION_NOT_OPERATIONAL",
+  "created_utc": "2026-11-15T04:08:49.353907+00:00",
+  "goal": "Estimate present-day observed root-zone low-percentile status (<40th percentile) from same-day NASA model inputs, not future rainfall or moisture.",
+  "ground_truth": "NOAA USCRN 5, 10, 20, 50 and 100 cm probe-based depth-weighted soil water content",
+  "modeled_input": "NASA POWER/MERRA-2 modeled GWETTOP/GWETROOT and historical precipitation/temperature at Goodwell and Stillwater",
+  "fixed_training_only_baseline": "2013-2018 plus or minus 15 calendar days, independently for NOAA and NASA",
+  "training_observation_sites": [
+    "us_sgp_goodwell",
+    "us_sgp_stillwater"
+  ],
+  "station_count": 4,
+  "station_ids": [
+    "OK_Goodwell_2_E",
+    "OK_Goodwell_2_SE",
+    "OK_Stillwater_2_W",
+    "OK_Stillwater_5_WNW"
+  ],
+  "features_used": [
+    "root_rank",
+    "surface_rank",
+    "root_mean_7",
+    "root_change_7",
+    "surface_mean_7",
+    "rain_past_7_mm",
+    "rain_past_14_mm",
+    "temp_mean_7_c",
+    "season_sin",
+    "season_cos"
+  ],
+  "evaluation": {
+    "splits": {
+      "train": {
+        "date_range": "2013-01-01 to 2019-12-31",
+        "rows": 10033
+      },
+      "validation": {
+        "date_range": "2020-01-01 to 2021-12-31",
+        "rows": 2271
+      },
+      "test": {
+        "date_range": "2022-01-01 to 2025-12-31",
+        "rows": 4779
+      }
+    },
+    "selection_rule": "Pick lowest validation Brier score across three fixed candidate models; never tune on 2022-2025 test.",
+    "validation": {
+      "model_root_only_logistic": {
+        "count": 2271,
+        "observed_dry_days": 204,
+        "observed_dry_frequency": 0.08983,
+        "brier": 0.227844,
+        "log_loss": 0.644318,
+        "roc_auc": 0.79545,
+        "average_precision": 0.23016,
+        "expected_calibration_error": 0.35079,
+        "at_probability_0_5": {
+          "n": 2271,
+          "true_positive": 166,
+          "false_positive": 742,
+          "true_negative": 1325,
+          "false_negative": 38,
+          "precision": 0.1828,
+          "recall": 0.8137,
+          "specificity": 0.641,
+          "f1": 0.2986,
+          "balanced_accuracy": 0.7273,
+          "false_positive_rate": 0.359,
+          "accuracy": 0.6565
+        },
+        "calibration_bins": [
+          {
+            "probability_bin": 0,
+            "count": 244,
+            "predicted_probability": 0.06744,
+            "observed_frequency": 0.0041
+          },
+          {
+            "probability_bin": 1,
+            "count": 276,
+            "predicted_probability": 0.16004,
+            "observed_frequency": 0.01449
+          },
+          {
+            "probability_bin": 2,
+            "count": 329,
+            "predicted_probability": 0.24502,
+            "observed_frequency": 0.00608
+          },
+          {
+            "probability_bin": 3,
+            "count": 259,
+            "predicted_probability": 0.34602,
+            "observed_frequency": 0.02703
+          },
+          {
+            "probability_bin": 4,
+            "count": 255,
+            "predicted_probability": 0.45174,
+            "observed_frequency": 0.09412
+          },
+          {
+            "probability_bin": 5,
+            "count": 124,
+            "predicted_probability": 0.54634,
+            "observed_frequency": 0.09677
+          },
+          {
+            "probability_bin": 6,
+            "count": 235,
+            "predicted_probability": 0.65521,
+            "observed_frequency": 0.14894
+          },
+          {
+            "probability_bin": 7,
+            "count": 294,
+            "predicted_probability": 0.74974,
+            "observed_frequency": 0.14966
+          },
+          {
+            "probability_bin": 8,
+            "count": 255,
+            "predicted_probability": 0.83313,
+            "observed_frequency": 0.29412
+          }
+        ]
+      },
+      "multi_input_logistic": {
+        "count": 2271,
+        "observed_dry_days": 204,
+        "observed_dry_frequency": 0.08983,
+        "brier": 0.236592,
+        "log_loss": 0.678036,
+        "roc_auc": 0.77199,
+        "average_precision": 0.1928,
+        "expected_calibration_error": 0.34771,
+        "at_probability_0_5": {
+          "n": 2271,
+          "true_positive": 162,
+          "false_positive": 716,
+          "true_negative": 1351,
+          "false_negative": 42,
+          "precision": 0.1845,
+          "recall": 0.7941,
+          "specificity": 0.6536,
+          "f1": 0.2994,
+          "balanced_accuracy": 0.7238,
+          "false_positive_rate": 0.3464,
+          "accuracy": 0.6662
+        },
+        "calibration_bins": [
+          {
+            "probability_bin": 0,
+            "count": 309,
+            "predicted_probability": 0.04698,
+            "observed_frequency": 0.01618
+          },
+          {
+            "probability_bin": 1,
+            "count": 259,
+            "predicted_probability": 0.15521,
+            "observed_frequency": 0.00772
+          },
+          {
+            "probability_bin": 2,
+            "count": 274,
+            "predicted_probability": 0.25264,
+            "observed_frequency": 0.0073
+          },
+          {
+            "probability_bin": 3,
+            "count": 330,
+            "predicted_probability": 0.35332,
+            "observed_frequency": 0.02727
+          },
+          {
+            "probability_bin": 4,
+            "count": 221,
+            "predicted_probability": 0.44853,
+            "observed_frequency": 0.1086
+          },
+          {
+            "probability_bin": 5,
+            "count": 147,
+            "predicted_probability": 0.54499,
+            "observed_frequency": 0.12925
+          },
+          {
+            "probability_bin": 6,
+            "count": 143,
+            "predicted_probability": 0.65555,
+            "observed_frequency": 0.22378
+          },
+          {
+            "probability_bin": 7,
+            "count": 243,
+            "predicted_probability": 0.75515,
+            "observed_frequency": 0.13992
+          },
+          {
+            "probability_bin": 8,
+            "count": 308,
+            "predicted_probability": 0.85333,
+            "observed_frequency": 0.24026
+          },
+          {
+            "probability_bin": 9,
+            "count": 37,
+            "predicted_probability": 0.91357,
+            "observed_frequency": 0.08108
+          }
+        ]
+      },
+      "multi_input_gradient_boosting": {
+        "count": 2271,
+        "observed_dry_days": 204,
+        "observed_dry_frequency": 0.08983,
+        "brier": 0.251147,
+        "log_loss": 0.718576,
+        "roc_auc": 0.73894,
+        "average_precision": 0.15452,
+        "expected_calibration_error": 0.3469,
+        "at_probability_0_5": {
+          "n": 2271,
+          "true_positive": 172,
+          "false_positive": 814,
+          "true_negative": 1253,
+          "false_negative": 32,
+          "precision": 0.1744,
+          "recall": 0.8431,
+          "specificity": 0.6062,
+          "f1": 0.2891,
+          "balanced_accuracy": 0.7247,
+          "false_positive_rate": 0.3938,
+          "accuracy": 0.6275
+        },
+        "calibration_bins": [
+          {
+            "probability_bin": 0,
+            "count": 464,
+            "predicted_probability": 0.02722,
+            "observed_frequency": 0.00862
+          },
+          {
+            "probability_bin": 1,
+            "count": 155,
+            "predicted_probability": 0.14786,
+            "observed_frequency": 0.0129
+          },
+          {
+            "probability_bin": 2,
+            "count": 206,
+            "predicted_probability": 0.2492,
+            "observed_frequency": 0.01942
+          },
+          {
+            "probability_bin": 3,
+            "count": 277,
+            "predicted_probability": 0.34945,
+            "observed_frequency": 0.0361
+          },
+          {
+            "probability_bin": 4,
+            "count": 183,
+            "predicted_probability": 0.44803,
+            "observed_frequency": 0.06557
+          },
+          {
+            "probability_bin": 5,
+            "count": 190,
+            "predicted_probability": 0.55121,
+            "observed_frequency": 0.16316
+          },
+          {
+            "probability_bin": 6,
+            "count": 190,
+            "predicted_probability": 0.65005,
+            "observed_frequency": 0.14211
+          },
+          {
+            "probability_bin": 7,
+            "count": 244,
+            "predicted_probability": 0.75391,
+            "observed_frequency": 0.2582
+          },
+          {
+            "probability_bin": 8,
+            "count": 264,
+            "predicted_probability": 0.84233,
+            "observed_frequency": 0.18182
+          },
+          {
+            "probability_bin": 9,
+            "count": 98,
+            "predicted_probability": 0.93441,
+            "observed_frequency": 0.03061
+          }
+        ]
+      }
+    },
+    "test": {
+      "model_root_only_logistic": {
+        "count": 4779,
+        "observed_dry_days": 1886,
+        "observed_dry_frequency": 0.39464,
+        "brier": 0.212968,
+        "log_loss": 0.618491,
+        "roc_auc": 0.74224,
+        "average_precision": 0.58369,
+        "expected_calibration_error": 0.10939,
+        "at_probability_0_5": {
+          "n": 4779,
+          "true_positive": 1434,
+          "false_positive": 1058,
+          "true_negative": 1835,
+          "false_negative": 452,
+          "precision": 0.5754,
+          "recall": 0.7603,
+          "specificity": 0.6343,
+          "f1": 0.6551,
+          "balanced_accuracy": 0.6973,
+          "false_positive_rate": 0.3657,
+          "accuracy": 0.684
+        },
+        "calibration_bins": [
+          {
+            "probability_bin": 0,
+            "count": 274,
+            "predicted_probability": 0.07833,
+            "observed_frequency": 0.06204
+          },
+          {
+            "probability_bin": 1,
+            "count": 735,
+            "predicted_probability": 0.14855,
+            "observed_frequency": 0.10476
+          },
+          {
+            "probability_bin": 2,
+            "count": 575,
+            "predicted_probability": 0.24769,
+            "observed_frequency": 0.20696
+          },
+          {
+            "probability_bin": 3,
+            "count": 411,
+            "predicted_probability": 0.35344,
+            "observed_frequency": 0.31387
+          },
+          {
+            "probability_bin": 4,
+            "count": 292,
+            "predicted_probability": 0.44807,
+            "observed_frequency": 0.37671
+          },
+          {
+            "probability_bin": 5,
+            "count": 333,
+            "predicted_probability": 0.5552,
+            "observed_frequency": 0.42042
+          },
+          {
+            "probability_bin": 6,
+            "count": 442,
+            "predicted_probability": 0.65262,
+            "observed_frequency": 0.56109
+          },
+          {
+            "probability_bin": 7,
+            "count": 583,
+            "predicted_probability": 0.75578,
+            "observed_frequency": 0.61578
+          },
+          {
+            "probability_bin": 8,
+            "count": 1134,
+            "predicted_probability": 0.83389,
+            "observed_frequency": 0.60582
+          }
+        ]
+      },
+      "multi_input_logistic": {
+        "count": 4779,
+        "observed_dry_days": 1886,
+        "observed_dry_frequency": 0.39464,
+        "brier": 0.209635,
+        "log_loss": 0.619591,
+        "roc_auc": 0.75771,
+        "average_precision": 0.58204,
+        "expected_calibration_error": 0.10956,
+        "at_probability_0_5": {
+          "n": 4779,
+          "true_positive": 1424,
+          "false_positive": 993,
+          "true_negative": 1900,
+          "false_negative": 462,
+          "precision": 0.5892,
+          "recall": 0.755,
+          "specificity": 0.6568,
+          "f1": 0.6619,
+          "balanced_accuracy": 0.7059,
+          "false_positive_rate": 0.3432,
+          "accuracy": 0.6955
+        },
+        "calibration_bins": [
+          {
+            "probability_bin": 0,
+            "count": 396,
+            "predicted_probability": 0.06726,
+            "observed_frequency": 0.02778
+          },
+          {
+            "probability_bin": 1,
+            "count": 772,
+            "predicted_probability": 0.15,
+            "observed_frequency": 0.09715
+          },
+          {
+            "probability_bin": 2,
+            "count": 513,
+            "predicted_probability": 0.24502,
+            "observed_frequency": 0.24756
+          },
+          {
+            "probability_bin": 3,
+            "count": 384,
+            "predicted_probability": 0.35101,
+            "observed_frequency": 0.34635
+          },
+          {
+            "probability_bin": 4,
+            "count": 297,
+            "predicted_probability": 0.45059,
+            "observed_frequency": 0.39057
+          },
+          {
+            "probability_bin": 5,
+            "count": 309,
+            "predicted_probability": 0.5506,
+            "observed_frequency": 0.43042
+          },
+          {
+            "probability_bin": 6,
+            "count": 330,
+            "predicted_probability": 0.65015,
+            "observed_frequency": 0.56061
+          },
+          {
+            "probability_bin": 7,
+            "count": 519,
+            "predicted_probability": 0.75176,
+            "observed_frequency": 0.61079
+          },
+          {
+            "probability_bin": 8,
+            "count": 1013,
+            "predicted_probability": 0.85961,
+            "observed_frequency": 0.65449
+          },
+          {
+            "probability_bin": 9,
+            "count": 246,
+            "predicted_probability": 0.91294,
+            "observed_frequency": 0.5122
+          }
+        ]
+      },
+      "multi_input_gradient_boosting": {
+        "count": 4779,
+        "observed_dry_days": 1886,
+        "observed_dry_frequency": 0.39464,
+        "brier": 0.228708,
+        "log_loss": 0.714501,
+        "roc_auc": 0.72588,
+        "average_precision": 0.53776,
+        "expected_calibration_error": 0.11229,
+        "at_probability_0_5": {
+          "n": 4779,
+          "true_positive": 1388,
+          "false_positive": 1029,
+          "true_negative": 1864,
+          "false_negative": 498,
+          "precision": 0.5743,
+          "recall": 0.7359,
+          "specificity": 0.6443,
+          "f1": 0.6451,
+          "balanced_accuracy": 0.6901,
+          "false_positive_rate": 0.3557,
+          "accuracy": 0.6805
+        },
+        "calibration_bins": [
+          {
+            "probability_bin": 0,
+            "count": 925,
+            "predicted_probability": 0.03441,
+            "observed_frequency": 0.06054
+          },
+          {
+            "probability_bin": 1,
+            "count": 320,
+            "predicted_probability": 0.14526,
+            "observed_frequency": 0.18438
+          },
+          {
+            "probability_bin": 2,
+            "count": 346,
+            "predicted_probability": 0.25434,
+            "observed_frequency": 0.26301
+          },
+          {
+            "probability_bin": 3,
+            "count": 385,
+            "predicted_probability": 0.34469,
+            "observed_frequency": 0.31429
+          },
+          {
+            "probability_bin": 4,
+            "count": 386,
+            "predicted_probability": 0.45152,
+            "observed_frequency": 0.44301
+          },
+          {
+            "probability_bin": 5,
+            "count": 373,
+            "predicted_probability": 0.54932,
+            "observed_frequency": 0.52815
+          },
+          {
+            "probability_bin": 6,
+            "count": 407,
+            "predicted_probability": 0.65185,
+            "observed_frequency": 0.61916
+          },
+          {
+            "probability_bin": 7,
+            "count": 512,
+            "predicted_probability": 0.7528,
+            "observed_frequency": 0.61719
+          },
+          {
+            "probability_bin": 8,
+            "count": 551,
+            "predicted_probability": 0.84314,
+            "observed_frequency": 0.62432
+          },
+          {
+            "probability_bin": 9,
+            "count": 574,
+            "predicted_probability": 0.95778,
+            "observed_frequency": 0.48606
+          }
+        ]
+      }
+    },
+    "by_station_test": {
+      "model_root_only_logistic": {
+        "OK_Goodwell_2_E": {
+          "count": 1307,
+          "observed_dry_days": 663,
+          "observed_dry_frequency": 0.50727,
+          "brier": 0.129178,
+          "log_loss": 0.418748,
+          "roc_auc": 0.90641,
+          "average_precision": 0.91209,
+          "expected_calibration_error": 0.08435,
+          "at_probability_0_5": {
+            "n": 1307,
+            "true_positive": 523,
+            "false_positive": 85,
+            "true_negative": 559,
+            "false_negative": 140,
+            "precision": 0.8602,
+            "recall": 0.7888,
+            "specificity": 0.868,
+            "f1": 0.823,
+            "balanced_accuracy": 0.8284,
+            "false_positive_rate": 0.132,
+            "accuracy": 0.8279
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 116,
+              "predicted_probability": 0.07696,
+              "observed_frequency": 0.06034
+            },
+            {
+              "probability_bin": 1,
+              "count": 254,
+              "predicted_probability": 0.14394,
+              "observed_frequency": 0.07087
+            },
+            {
+              "probability_bin": 2,
+              "count": 131,
+              "predicted_probability": 0.25026,
+              "observed_frequency": 0.21374
+            },
+            {
+              "probability_bin": 3,
+              "count": 112,
+              "predicted_probability": 0.35296,
+              "observed_frequency": 0.45536
+            },
+            {
+              "probability_bin": 4,
+              "count": 86,
+              "predicted_probability": 0.44542,
+              "observed_frequency": 0.4186
+            },
+            {
+              "probability_bin": 5,
+              "count": 87,
+              "predicted_probability": 0.55999,
+              "observed_frequency": 0.5977
+            },
+            {
+              "probability_bin": 6,
+              "count": 115,
+              "predicted_probability": 0.65041,
+              "observed_frequency": 0.81739
+            },
+            {
+              "probability_bin": 7,
+              "count": 135,
+              "predicted_probability": 0.75873,
+              "observed_frequency": 0.87407
+            },
+            {
+              "probability_bin": 8,
+              "count": 271,
+              "predicted_probability": 0.83342,
+              "observed_frequency": 0.95572
+            }
+          ]
+        },
+        "OK_Goodwell_2_SE": {
+          "count": 1433,
+          "observed_dry_days": 407,
+          "observed_dry_frequency": 0.28402,
+          "brier": 0.253492,
+          "log_loss": 0.721173,
+          "roc_auc": 0.64784,
+          "average_precision": 0.33265,
+          "expected_calibration_error": 0.21453,
+          "at_probability_0_5": {
+            "n": 1433,
+            "true_positive": 306,
+            "false_positive": 411,
+            "true_negative": 615,
+            "false_negative": 101,
+            "precision": 0.4268,
+            "recall": 0.7518,
+            "specificity": 0.5994,
+            "f1": 0.5445,
+            "balanced_accuracy": 0.6756,
+            "false_positive_rate": 0.4006,
+            "accuracy": 0.6427
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 118,
+              "predicted_probability": 0.07715,
+              "observed_frequency": 0.05932
+            },
+            {
+              "probability_bin": 1,
+              "count": 266,
+              "predicted_probability": 0.14505,
+              "observed_frequency": 0.07895
+            },
+            {
+              "probability_bin": 2,
+              "count": 135,
+              "predicted_probability": 0.25181,
+              "observed_frequency": 0.17037
+            },
+            {
+              "probability_bin": 3,
+              "count": 111,
+              "predicted_probability": 0.35334,
+              "observed_frequency": 0.18919
+            },
+            {
+              "probability_bin": 4,
+              "count": 86,
+              "predicted_probability": 0.44542,
+              "observed_frequency": 0.33721
+            },
+            {
+              "probability_bin": 5,
+              "count": 86,
+              "predicted_probability": 0.56011,
+              "observed_frequency": 0.34884
+            },
+            {
+              "probability_bin": 6,
+              "count": 114,
+              "predicted_probability": 0.65011,
+              "observed_frequency": 0.70175
+            },
+            {
+              "probability_bin": 7,
+              "count": 141,
+              "predicted_probability": 0.75929,
+              "observed_frequency": 0.65248
+            },
+            {
+              "probability_bin": 8,
+              "count": 376,
+              "predicted_probability": 0.83535,
+              "observed_frequency": 0.2766
+            }
+          ]
+        },
+        "OK_Stillwater_2_W": {
+          "count": 588,
+          "observed_dry_days": 332,
+          "observed_dry_frequency": 0.56463,
+          "brier": 0.206857,
+          "log_loss": 0.598662,
+          "roc_auc": 0.75821,
+          "average_precision": 0.81358,
+          "expected_calibration_error": 0.08112,
+          "at_probability_0_5": {
+            "n": 588,
+            "true_positive": 276,
+            "false_positive": 141,
+            "true_negative": 115,
+            "false_negative": 56,
+            "precision": 0.6619,
+            "recall": 0.8313,
+            "specificity": 0.4492,
+            "f1": 0.737,
+            "balanced_accuracy": 0.6402,
+            "false_positive_rate": 0.5508,
+            "accuracy": 0.665
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 1,
+              "predicted_probability": 0.09329,
+              "observed_frequency": 0.0
+            },
+            {
+              "probability_bin": 1,
+              "count": 17,
+              "predicted_probability": 0.1634,
+              "observed_frequency": 0.0
+            },
+            {
+              "probability_bin": 2,
+              "count": 61,
+              "predicted_probability": 0.24475,
+              "observed_frequency": 0.21311
+            },
+            {
+              "probability_bin": 3,
+              "count": 58,
+              "predicted_probability": 0.35603,
+              "observed_frequency": 0.43103
+            },
+            {
+              "probability_bin": 4,
+              "count": 34,
+              "predicted_probability": 0.45781,
+              "observed_frequency": 0.52941
+            },
+            {
+              "probability_bin": 5,
+              "count": 50,
+              "predicted_probability": 0.55124,
+              "observed_frequency": 0.46
+            },
+            {
+              "probability_bin": 6,
+              "count": 69,
+              "predicted_probability": 0.6584,
+              "observed_frequency": 0.46377
+            },
+            {
+              "probability_bin": 7,
+              "count": 117,
+              "predicted_probability": 0.75506,
+              "observed_frequency": 0.64103
+            },
+            {
+              "probability_bin": 8,
+              "count": 181,
+              "predicted_probability": 0.83302,
+              "observed_frequency": 0.80663
+            }
+          ]
+        },
+        "OK_Stillwater_5_WNW": {
+          "count": 1451,
+          "observed_dry_days": 484,
+          "observed_dry_frequency": 0.33356,
+          "brier": 0.250899,
+          "log_loss": 0.705039,
+          "roc_auc": 0.6824,
+          "average_precision": 0.53349,
+          "expected_calibration_error": 0.18026,
+          "at_probability_0_5": {
+            "n": 1451,
+            "true_positive": 329,
+            "false_positive": 421,
+            "true_negative": 546,
+            "false_negative": 155,
+            "precision": 0.4387,
+            "recall": 0.6798,
+            "specificity": 0.5646,
+            "f1": 0.5332,
+            "balanced_accuracy": 0.6222,
+            "false_positive_rate": 0.4354,
+            "accuracy": 0.603
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 39,
+              "predicted_probability": 0.08556,
+              "observed_frequency": 0.07692
+            },
+            {
+              "probability_bin": 1,
+              "count": 198,
+              "predicted_probability": 0.15788,
+              "observed_frequency": 0.19192
+            },
+            {
+              "probability_bin": 2,
+              "count": 248,
+              "predicted_probability": 0.24481,
+              "observed_frequency": 0.22177
+            },
+            {
+              "probability_bin": 3,
+              "count": 130,
+              "predicted_probability": 0.35279,
+              "observed_frequency": 0.24615
+            },
+            {
+              "probability_bin": 4,
+              "count": 86,
+              "predicted_probability": 0.44951,
+              "observed_frequency": 0.31395
+            },
+            {
+              "probability_bin": 5,
+              "count": 110,
+              "predicted_probability": 0.54937,
+              "observed_frequency": 0.31818
+            },
+            {
+              "probability_bin": 6,
+              "count": 144,
+              "predicted_probability": 0.6536,
+              "observed_frequency": 0.29167
+            },
+            {
+              "probability_bin": 7,
+              "count": 190,
+              "predicted_probability": 0.75153,
+              "observed_frequency": 0.38947
+            },
+            {
+              "probability_bin": 8,
+              "count": 306,
+              "predicted_probability": 0.83304,
+              "observed_frequency": 0.5817
+            }
+          ]
+        }
+      },
+      "multi_input_logistic": {
+        "OK_Goodwell_2_E": {
+          "count": 1307,
+          "observed_dry_days": 663,
+          "observed_dry_frequency": 0.50727,
+          "brier": 0.109092,
+          "log_loss": 0.362321,
+          "roc_auc": 0.93774,
+          "average_precision": 0.94188,
+          "expected_calibration_error": 0.09085,
+          "at_probability_0_5": {
+            "n": 1307,
+            "true_positive": 530,
+            "false_positive": 67,
+            "true_negative": 577,
+            "false_negative": 133,
+            "precision": 0.8878,
+            "recall": 0.7994,
+            "specificity": 0.896,
+            "f1": 0.8413,
+            "balanced_accuracy": 0.8477,
+            "false_positive_rate": 0.104,
+            "accuracy": 0.847
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 144,
+              "predicted_probability": 0.0695,
+              "observed_frequency": 0.00694
+            },
+            {
+              "probability_bin": 1,
+              "count": 242,
+              "predicted_probability": 0.14885,
+              "observed_frequency": 0.06612
+            },
+            {
+              "probability_bin": 2,
+              "count": 118,
+              "predicted_probability": 0.24382,
+              "observed_frequency": 0.19492
+            },
+            {
+              "probability_bin": 3,
+              "count": 121,
+              "predicted_probability": 0.35561,
+              "observed_frequency": 0.33058
+            },
+            {
+              "probability_bin": 4,
+              "count": 85,
+              "predicted_probability": 0.45093,
+              "observed_frequency": 0.62353
+            },
+            {
+              "probability_bin": 5,
+              "count": 78,
+              "predicted_probability": 0.55481,
+              "observed_frequency": 0.66667
+            },
+            {
+              "probability_bin": 6,
+              "count": 83,
+              "predicted_probability": 0.65198,
+              "observed_frequency": 0.6988
+            },
+            {
+              "probability_bin": 7,
+              "count": 119,
+              "predicted_probability": 0.74866,
+              "observed_frequency": 0.93277
+            },
+            {
+              "probability_bin": 8,
+              "count": 244,
+              "predicted_probability": 0.86249,
+              "observed_frequency": 0.96721
+            },
+            {
+              "probability_bin": 9,
+              "count": 73,
+              "predicted_probability": 0.91548,
+              "observed_frequency": 1.0
+            }
+          ]
+        },
+        "OK_Goodwell_2_SE": {
+          "count": 1433,
+          "observed_dry_days": 407,
+          "observed_dry_frequency": 0.28402,
+          "brier": 0.260136,
+          "log_loss": 0.772554,
+          "roc_auc": 0.67483,
+          "average_precision": 0.34689,
+          "expected_calibration_error": 0.2199,
+          "at_probability_0_5": {
+            "n": 1433,
+            "true_positive": 313,
+            "false_positive": 395,
+            "true_negative": 631,
+            "false_negative": 94,
+            "precision": 0.4421,
+            "recall": 0.769,
+            "specificity": 0.615,
+            "f1": 0.5614,
+            "balanced_accuracy": 0.692,
+            "false_positive_rate": 0.385,
+            "accuracy": 0.6588
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 144,
+              "predicted_probability": 0.0695,
+              "observed_frequency": 0.02083
+            },
+            {
+              "probability_bin": 1,
+              "count": 247,
+              "predicted_probability": 0.14878,
+              "observed_frequency": 0.06073
+            },
+            {
+              "probability_bin": 2,
+              "count": 132,
+              "predicted_probability": 0.24296,
+              "observed_frequency": 0.14394
+            },
+            {
+              "probability_bin": 3,
+              "count": 118,
+              "predicted_probability": 0.35512,
+              "observed_frequency": 0.22881
+            },
+            {
+              "probability_bin": 4,
+              "count": 84,
+              "predicted_probability": 0.45089,
+              "observed_frequency": 0.35714
+            },
+            {
+              "probability_bin": 5,
+              "count": 78,
+              "predicted_probability": 0.55481,
+              "observed_frequency": 0.51282
+            },
+            {
+              "probability_bin": 6,
+              "count": 83,
+              "predicted_probability": 0.65198,
+              "observed_frequency": 0.55422
+            },
+            {
+              "probability_bin": 7,
+              "count": 119,
+              "predicted_probability": 0.74866,
+              "observed_frequency": 0.73109
+            },
+            {
+              "probability_bin": 8,
+              "count": 293,
+              "predicted_probability": 0.86595,
+              "observed_frequency": 0.38908
+            },
+            {
+              "probability_bin": 9,
+              "count": 135,
+              "predicted_probability": 0.91343,
+              "observed_frequency": 0.19259
+            }
+          ]
+        },
+        "OK_Stillwater_2_W": {
+          "count": 588,
+          "observed_dry_days": 332,
+          "observed_dry_frequency": 0.56463,
+          "brier": 0.209926,
+          "log_loss": 0.60591,
+          "roc_auc": 0.74698,
+          "average_precision": 0.77499,
+          "expected_calibration_error": 0.13512,
+          "at_probability_0_5": {
+            "n": 588,
+            "true_positive": 271,
+            "false_positive": 131,
+            "true_negative": 125,
+            "false_negative": 61,
+            "precision": 0.6741,
+            "recall": 0.8163,
+            "specificity": 0.4883,
+            "f1": 0.7384,
+            "balanced_accuracy": 0.6523,
+            "false_positive_rate": 0.5117,
+            "accuracy": 0.6735
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 1,
+              "predicted_probability": 0.09972,
+              "observed_frequency": 0.0
+            },
+            {
+              "probability_bin": 1,
+              "count": 41,
+              "predicted_probability": 0.15177,
+              "observed_frequency": 0.02439
+            },
+            {
+              "probability_bin": 2,
+              "count": 60,
+              "predicted_probability": 0.24564,
+              "observed_frequency": 0.35
+            },
+            {
+              "probability_bin": 3,
+              "count": 42,
+              "predicted_probability": 0.34262,
+              "observed_frequency": 0.66667
+            },
+            {
+              "probability_bin": 4,
+              "count": 42,
+              "predicted_probability": 0.44697,
+              "observed_frequency": 0.2619
+            },
+            {
+              "probability_bin": 5,
+              "count": 49,
+              "predicted_probability": 0.54907,
+              "observed_frequency": 0.38776
+            },
+            {
+              "probability_bin": 6,
+              "count": 46,
+              "predicted_probability": 0.64789,
+              "observed_frequency": 0.73913
+            },
+            {
+              "probability_bin": 7,
+              "count": 106,
+              "predicted_probability": 0.75552,
+              "observed_frequency": 0.53774
+            },
+            {
+              "probability_bin": 8,
+              "count": 190,
+              "predicted_probability": 0.85449,
+              "observed_frequency": 0.80526
+            },
+            {
+              "probability_bin": 9,
+              "count": 11,
+              "predicted_probability": 0.9042,
+              "observed_frequency": 0.72727
+            }
+          ]
+        },
+        "OK_Stillwater_5_WNW": {
+          "count": 1451,
+          "observed_dry_days": 484,
+          "observed_dry_frequency": 0.33356,
+          "brier": 0.250209,
+          "log_loss": 0.705807,
+          "roc_auc": 0.68534,
+          "average_precision": 0.53175,
+          "expected_calibration_error": 0.1818,
+          "at_probability_0_5": {
+            "n": 1451,
+            "true_positive": 310,
+            "false_positive": 400,
+            "true_negative": 567,
+            "false_negative": 174,
+            "precision": 0.4366,
+            "recall": 0.6405,
+            "specificity": 0.5863,
+            "f1": 0.5193,
+            "balanced_accuracy": 0.6134,
+            "false_positive_rate": 0.4137,
+            "accuracy": 0.6044
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 107,
+              "predicted_probability": 0.06095,
+              "observed_frequency": 0.06542
+            },
+            {
+              "probability_bin": 1,
+              "count": 242,
+              "predicted_probability": 0.15209,
+              "observed_frequency": 0.17769
+            },
+            {
+              "probability_bin": 2,
+              "count": 203,
+              "predicted_probability": 0.24688,
+              "observed_frequency": 0.31527
+            },
+            {
+              "probability_bin": 3,
+              "count": 103,
+              "predicted_probability": 0.34433,
+              "observed_frequency": 0.36893
+            },
+            {
+              "probability_bin": 4,
+              "count": 86,
+              "predicted_probability": 0.45174,
+              "observed_frequency": 0.25581
+            },
+            {
+              "probability_bin": 5,
+              "count": 104,
+              "predicted_probability": 0.54502,
+              "observed_frequency": 0.21154
+            },
+            {
+              "probability_bin": 6,
+              "count": 118,
+              "predicted_probability": 0.64847,
+              "observed_frequency": 0.39831
+            },
+            {
+              "probability_bin": 7,
+              "count": 175,
+              "predicted_probability": 0.75371,
+              "observed_frequency": 0.35429
+            },
+            {
+              "probability_bin": 8,
+              "count": 286,
+              "predicted_probability": 0.85406,
+              "observed_frequency": 0.55944
+            },
+            {
+              "probability_bin": 9,
+              "count": 27,
+              "predicted_probability": 0.90718,
+              "observed_frequency": 0.7037
+            }
+          ]
+        }
+      },
+      "multi_input_gradient_boosting": {
+        "OK_Goodwell_2_E": {
+          "count": 1307,
+          "observed_dry_days": 663,
+          "observed_dry_frequency": 0.50727,
+          "brier": 0.122708,
+          "log_loss": 0.382936,
+          "roc_auc": 0.91556,
+          "average_precision": 0.92107,
+          "expected_calibration_error": 0.05908,
+          "at_probability_0_5": {
+            "n": 1307,
+            "true_positive": 533,
+            "false_positive": 84,
+            "true_negative": 560,
+            "false_negative": 130,
+            "precision": 0.8639,
+            "recall": 0.8039,
+            "specificity": 0.8696,
+            "f1": 0.8328,
+            "balanced_accuracy": 0.8367,
+            "false_positive_rate": 0.1304,
+            "accuracy": 0.8363
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 257,
+              "predicted_probability": 0.02727,
+              "observed_frequency": 0.02335
+            },
+            {
+              "probability_bin": 1,
+              "count": 85,
+              "predicted_probability": 0.14898,
+              "observed_frequency": 0.16471
+            },
+            {
+              "probability_bin": 2,
+              "count": 107,
+              "predicted_probability": 0.25456,
+              "observed_frequency": 0.24299
+            },
+            {
+              "probability_bin": 3,
+              "count": 119,
+              "predicted_probability": 0.34262,
+              "observed_frequency": 0.23529
+            },
+            {
+              "probability_bin": 4,
+              "count": 122,
+              "predicted_probability": 0.45087,
+              "observed_frequency": 0.45902
+            },
+            {
+              "probability_bin": 5,
+              "count": 112,
+              "predicted_probability": 0.55048,
+              "observed_frequency": 0.69643
+            },
+            {
+              "probability_bin": 6,
+              "count": 110,
+              "predicted_probability": 0.64927,
+              "observed_frequency": 0.8
+            },
+            {
+              "probability_bin": 7,
+              "count": 120,
+              "predicted_probability": 0.7476,
+              "observed_frequency": 0.79167
+            },
+            {
+              "probability_bin": 8,
+              "count": 123,
+              "predicted_probability": 0.84598,
+              "observed_frequency": 0.97561
+            },
+            {
+              "probability_bin": 9,
+              "count": 152,
+              "predicted_probability": 0.96244,
+              "observed_frequency": 1.0
+            }
+          ]
+        },
+        "OK_Goodwell_2_SE": {
+          "count": 1433,
+          "observed_dry_days": 407,
+          "observed_dry_frequency": 0.28402,
+          "brier": 0.2838,
+          "log_loss": 0.920309,
+          "roc_auc": 0.66574,
+          "average_precision": 0.35809,
+          "expected_calibration_error": 0.2248,
+          "at_probability_0_5": {
+            "n": 1433,
+            "true_positive": 297,
+            "false_positive": 428,
+            "true_negative": 598,
+            "false_negative": 110,
+            "precision": 0.4097,
+            "recall": 0.7297,
+            "specificity": 0.5828,
+            "f1": 0.5247,
+            "balanced_accuracy": 0.6562,
+            "false_positive_rate": 0.4172,
+            "accuracy": 0.6246
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 276,
+              "predicted_probability": 0.02683,
+              "observed_frequency": 0.02536
+            },
+            {
+              "probability_bin": 1,
+              "count": 85,
+              "predicted_probability": 0.14898,
+              "observed_frequency": 0.2
+            },
+            {
+              "probability_bin": 2,
+              "count": 106,
+              "predicted_probability": 0.25432,
+              "observed_frequency": 0.18868
+            },
+            {
+              "probability_bin": 3,
+              "count": 119,
+              "predicted_probability": 0.34262,
+              "observed_frequency": 0.20168
+            },
+            {
+              "probability_bin": 4,
+              "count": 122,
+              "predicted_probability": 0.45087,
+              "observed_frequency": 0.34426
+            },
+            {
+              "probability_bin": 5,
+              "count": 110,
+              "predicted_probability": 0.55001,
+              "observed_frequency": 0.46364
+            },
+            {
+              "probability_bin": 6,
+              "count": 109,
+              "predicted_probability": 0.64952,
+              "observed_frequency": 0.56881
+            },
+            {
+              "probability_bin": 7,
+              "count": 120,
+              "predicted_probability": 0.7476,
+              "observed_frequency": 0.39167
+            },
+            {
+              "probability_bin": 8,
+              "count": 140,
+              "predicted_probability": 0.85,
+              "observed_frequency": 0.47143
+            },
+            {
+              "probability_bin": 9,
+              "count": 246,
+              "predicted_probability": 0.96605,
+              "observed_frequency": 0.28862
+            }
+          ]
+        },
+        "OK_Stillwater_2_W": {
+          "count": 588,
+          "observed_dry_days": 332,
+          "observed_dry_frequency": 0.56463,
+          "brier": 0.256615,
+          "log_loss": 0.811258,
+          "roc_auc": 0.60476,
+          "average_precision": 0.576,
+          "expected_calibration_error": 0.20745,
+          "at_probability_0_5": {
+            "n": 588,
+            "true_positive": 248,
+            "false_positive": 126,
+            "true_negative": 130,
+            "false_negative": 84,
+            "precision": 0.6631,
+            "recall": 0.747,
+            "specificity": 0.5078,
+            "f1": 0.7025,
+            "balanced_accuracy": 0.6274,
+            "false_positive_rate": 0.4922,
+            "accuracy": 0.6429
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 69,
+              "predicted_probability": 0.05307,
+              "observed_frequency": 0.21739
+            },
+            {
+              "probability_bin": 1,
+              "count": 33,
+              "predicted_probability": 0.13789,
+              "observed_frequency": 0.0303
+            },
+            {
+              "probability_bin": 2,
+              "count": 33,
+              "predicted_probability": 0.25814,
+              "observed_frequency": 0.42424
+            },
+            {
+              "probability_bin": 3,
+              "count": 38,
+              "predicted_probability": 0.35308,
+              "observed_frequency": 0.63158
+            },
+            {
+              "probability_bin": 4,
+              "count": 41,
+              "predicted_probability": 0.45383,
+              "observed_frequency": 0.73171
+            },
+            {
+              "probability_bin": 5,
+              "count": 44,
+              "predicted_probability": 0.54572,
+              "observed_frequency": 0.63636
+            },
+            {
+              "probability_bin": 6,
+              "count": 68,
+              "predicted_probability": 0.65607,
+              "observed_frequency": 0.73529
+            },
+            {
+              "probability_bin": 7,
+              "count": 95,
+              "predicted_probability": 0.75931,
+              "observed_frequency": 0.86316
+            },
+            {
+              "probability_bin": 8,
+              "count": 88,
+              "predicted_probability": 0.83993,
+              "observed_frequency": 0.68182
+            },
+            {
+              "probability_bin": 9,
+              "count": 79,
+              "predicted_probability": 0.9428,
+              "observed_frequency": 0.35443
+            }
+          ]
+        },
+        "OK_Stillwater_5_WNW": {
+          "count": 1451,
+          "observed_dry_days": 484,
+          "observed_dry_frequency": 0.33356,
+          "brier": 0.258469,
+          "log_loss": 0.770696,
+          "roc_auc": 0.66164,
+          "average_precision": 0.41259,
+          "expected_calibration_error": 0.17939,
+          "at_probability_0_5": {
+            "n": 1451,
+            "true_positive": 310,
+            "false_positive": 391,
+            "true_negative": 576,
+            "false_negative": 174,
+            "precision": 0.4422,
+            "recall": 0.6405,
+            "specificity": 0.5957,
+            "f1": 0.5232,
+            "balanced_accuracy": 0.6181,
+            "false_positive_rate": 0.4043,
+            "accuracy": 0.6106
+          },
+          "calibration_bins": [
+            {
+              "probability_bin": 0,
+              "count": 323,
+              "predicted_probability": 0.04258,
+              "observed_frequency": 0.08669
+            },
+            {
+              "probability_bin": 1,
+              "count": 117,
+              "predicted_probability": 0.14195,
+              "observed_frequency": 0.23077
+            },
+            {
+              "probability_bin": 2,
+              "count": 100,
+              "predicted_probability": 0.25286,
+              "observed_frequency": 0.31
+            },
+            {
+              "probability_bin": 3,
+              "count": 109,
+              "predicted_probability": 0.34629,
+              "observed_frequency": 0.41284
+            },
+            {
+              "probability_bin": 4,
+              "count": 101,
+              "predicted_probability": 0.45217,
+              "observed_frequency": 0.42574
+            },
+            {
+              "probability_bin": 5,
+              "count": 107,
+              "predicted_probability": 0.54888,
+              "observed_frequency": 0.37383
+            },
+            {
+              "probability_bin": 6,
+              "count": 120,
+              "predicted_probability": 0.65395,
+              "observed_frequency": 0.43333
+            },
+            {
+              "probability_bin": 7,
+              "count": 177,
+              "predicted_probability": 0.75636,
+              "observed_frequency": 0.51977
+            },
+            {
+              "probability_bin": 8,
+              "count": 200,
+              "predicted_probability": 0.838,
+              "observed_frequency": 0.49
+            },
+            {
+              "probability_bin": 9,
+              "count": 97,
+              "predicted_probability": 0.94168,
+              "observed_frequency": 0.28866
+            }
+          ]
+        }
+      }
+    },
+    "raw_nasa_root_below_40_comparator": {
+      "total_test": {
+        "n": 4779,
+        "true_positive": 1467,
+        "false_positive": 1080,
+        "true_negative": 1813,
+        "false_negative": 419,
+        "precision": 0.576,
+        "recall": 0.7778,
+        "specificity": 0.6267,
+        "f1": 0.6619,
+        "balanced_accuracy": 0.7023,
+        "false_positive_rate": 0.3733,
+        "accuracy": 0.6863
+      },
+      "by_station": {
+        "OK_Goodwell_2_E": {
+          "n": 1307,
+          "true_positive": 534,
+          "false_positive": 89,
+          "true_negative": 555,
+          "false_negative": 129,
+          "precision": 0.8571,
+          "recall": 0.8054,
+          "specificity": 0.8618,
+          "f1": 0.8305,
+          "balanced_accuracy": 0.8336,
+          "false_positive_rate": 0.1382,
+          "accuracy": 0.8332
+        },
+        "OK_Goodwell_2_SE": {
+          "n": 1433,
+          "true_positive": 316,
+          "false_positive": 416,
+          "true_negative": 610,
+          "false_negative": 91,
+          "precision": 0.4317,
+          "recall": 0.7764,
+          "specificity": 0.5945,
+          "f1": 0.5549,
+          "balanced_accuracy": 0.6855,
+          "false_positive_rate": 0.4055,
+          "accuracy": 0.6462
+        },
+        "OK_Stillwater_2_W": {
+          "n": 588,
+          "true_positive": 283,
+          "false_positive": 145,
+          "true_negative": 111,
+          "false_negative": 49,
+          "precision": 0.6612,
+          "recall": 0.8524,
+          "specificity": 0.4336,
+          "f1": 0.7447,
+          "balanced_accuracy": 0.643,
+          "false_positive_rate": 0.5664,
+          "accuracy": 0.6701
+        },
+        "OK_Stillwater_5_WNW": {
+          "n": 1451,
+          "true_positive": 334,
+          "false_positive": 430,
+          "true_negative": 537,
+          "false_negative": 150,
+          "precision": 0.4372,
+          "recall": 0.6901,
+          "specificity": 0.5553,
+          "f1": 0.5353,
+          "balanced_accuracy": 0.6227,
+          "false_positive_rate": 0.4447,
+          "accuracy": 0.6003
+        }
+      }
+    },
+    "selected_model": "model_root_only_logistic",
+    "test_relative_brier_improvement_over_root_only_logistic": 0.0,
+    "ground_calibration_demonstrated": false,
+    "qualifier": "Calibration of the NASA model's estimate of present-day probe root-zone percentile at four specific stations only; NOT a future-day forecast and NOT independently validated for other global sites."
+  },
+  "cross_region_transfer": {
+    "us_sgp_goodwell_to_us_sgp_stillwater": {
+      "training_days": 4970,
+      "test_days": 2039,
+      "ground_truth": "NOAA USCRN independent soil profiles",
+      "model": "multi_input_logistic_without_target_site_training",
+      "metrics": {
+        "count": 2039,
+        "observed_dry_days": 816,
+        "observed_dry_frequency": 0.4002,
+        "brier": 0.308481,
+        "log_loss": 0.864905,
+        "roc_auc": 0.64835,
+        "average_precision": 0.52316,
+        "expected_calibration_error": 0.26964,
+        "at_probability_0_5": {
+          "n": 2039,
+          "true_positive": 636,
+          "false_positive": 800,
+          "true_negative": 423,
+          "false_negative": 180,
+          "precision": 0.4429,
+          "recall": 0.7794,
+          "specificity": 0.3459,
+          "f1": 0.5648,
+          "balanced_accuracy": 0.5626,
+          "false_positive_rate": 0.6541,
+          "accuracy": 0.5194
+        },
+        "calibration_bins": [
+          {
+            "probability_bin": 0,
+            "count": 34,
+            "predicted_probability": 0.07062,
+            "observed_frequency": 0.29412
+          },
+          {
+            "probability_bin": 1,
+            "count": 119,
+            "predicted_probability": 0.16321,
+            "observed_frequency": 0.09244
+          },
+          {
+            "probability_bin": 2,
+            "count": 187,
+            "predicted_probability": 0.24793,
+            "observed_frequency": 0.23529
+          },
+          {
+            "probability_bin": 3,
+            "count": 137,
+            "predicted_probability": 0.35704,
+            "observed_frequency": 0.50365
+          },
+          {
+            "probability_bin": 4,
+            "count": 126,
+            "predicted_probability": 0.45201,
+            "observed_frequency": 0.36508
+          },
+          {
+            "probability_bin": 5,
+            "count": 143,
+            "predicted_probability": 0.55579,
+            "observed_frequency": 0.25175
+          },
+          {
+            "probability_bin": 6,
+            "count": 183,
+            "predicted_probability": 0.65993,
+            "observed_frequency": 0.3224
+          },
+          {
+            "probability_bin": 7,
+            "count": 272,
+            "predicted_probability": 0.75398,
+            "observed_frequency": 0.31618
+          },
+          {
+            "probability_bin": 8,
+            "count": 637,
+            "predicted_probability": 0.85749,
+            "observed_frequency": 0.54317
+          },
+          {
+            "probability_bin": 9,
+            "count": 201,
+            "predicted_probability": 0.91952,
+            "observed_frequency": 0.54229
+          }
+        ]
+      }
+    },
+    "us_sgp_stillwater_to_us_sgp_goodwell": {
+      "training_days": 5063,
+      "test_days": 2740,
+      "ground_truth": "NOAA USCRN independent soil profiles",
+      "model": "multi_input_logistic_without_target_site_training",
+      "metrics": {
+        "count": 2740,
+        "observed_dry_days": 1070,
+        "observed_dry_frequency": 0.39051,
+        "brier": 0.193783,
+        "log_loss": 0.597737,
+        "roc_auc": 0.7879,
+        "average_precision": 0.59422,
+        "expected_calibration_error": 0.13083,
+        "at_probability_0_5": {
+          "n": 2740,
+          "true_positive": 886,
+          "false_positive": 512,
+          "true_negative": 1158,
+          "false_negative": 184,
+          "precision": 0.6338,
+          "recall": 0.828,
+          "specificity": 0.6934,
+          "f1": 0.718,
+          "balanced_accuracy": 0.7607,
+          "false_positive_rate": 0.3066,
+          "accuracy": 0.746
+        },
+        "calibration_bins": [
+          {
+            "probability_bin": 0,
+            "count": 230,
+            "predicted_probability": 0.06537,
+            "observed_frequency": 0.01304
+          },
+          {
+            "probability_bin": 1,
+            "count": 429,
+            "predicted_probability": 0.14574,
+            "observed_frequency": 0.09091
+          },
+          {
+            "probability_bin": 2,
+            "count": 309,
+            "predicted_probability": 0.24259,
+            "observed_frequency": 0.08091
+          },
+          {
+            "probability_bin": 3,
+            "count": 181,
+            "predicted_probability": 0.34416,
+            "observed_frequency": 0.22652
+          },
+          {
+            "probability_bin": 4,
+            "count": 193,
+            "predicted_probability": 0.45076,
+            "observed_frequency": 0.39378
+          },
+          {
+            "probability_bin": 5,
+            "count": 161,
+            "predicted_probability": 0.5473,
+            "observed_frequency": 0.50311
+          },
+          {
+            "probability_bin": 6,
+            "count": 120,
+            "predicted_probability": 0.65739,
+            "observed_frequency": 0.64167
+          },
+          {
+            "probability_bin": 7,
+            "count": 222,
+            "predicted_probability": 0.75052,
+            "observed_frequency": 0.67117
+          },
+          {
+            "probability_bin": 8,
+            "count": 558,
+            "predicted_probability": 0.86601,
+            "observed_frequency": 0.70789
+          },
+          {
+            "probability_bin": 9,
+            "count": 337,
+            "predicted_probability": 0.91931,
+            "observed_frequency": 0.54599
+          }
+        ]
+      }
+    }
+  },
+  "noaa_source_manifests": {
+    "OK_Goodwell_2_E": [
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2013/CRND0103-2013-OK_Goodwell_2_E.txt",
+        "sha256": "ae85ef5868be58f362190b551f174450f955f6bf26bf9c4e424c6b696f26f22d",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2014/CRND0103-2014-OK_Goodwell_2_E.txt",
+        "sha256": "9a84f0e369316cf568bcf0e9b19df2c0f6154754b8d5e0c948880a48b0b8a1e9",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2015/CRND0103-2015-OK_Goodwell_2_E.txt",
+        "sha256": "198244c9afb6ea66fad77a31573a68d08f864a048da378f5d8f34cbc2575678e",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2016/CRND0103-2016-OK_Goodwell_2_E.txt",
+        "sha256": "9b70de19b9fb4d9edf2c0a5d5ea9935ef1047bc283131501898e284a8a0b22f9",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2017/CRND0103-2017-OK_Goodwell_2_E.txt",
+        "sha256": "dd5b955d87f8a3f3d1a8f30567db7c78be80532b45f455fa161dc582ae781f3a",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2018/CRND0103-2018-OK_Goodwell_2_E.txt",
+        "sha256": "2391c8c5ff1bd4f85291962712fc35bf0bc40f3931820b1cecee36d618ffe207",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2019/CRND0103-2019-OK_Goodwell_2_E.txt",
+        "sha256": "01ad37bac10b32a82e29a125ccfb80dfe7c01a3e65680bd7ac83a784732697ff",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2020/CRND0103-2020-OK_Goodwell_2_E.txt",
+        "sha256": "862ff29ad5045d6623be7077fd16b9e4c441d2e96989410abc5809a0d4fcde0b",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2021/CRND0103-2021-OK_Goodwell_2_E.txt",
+        "sha256": "14f643601636a682d853fe13bf737d9607f078a90549755ff5321814f4ac7cca",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2022/CRND0103-2022-OK_Goodwell_2_E.txt",
+        "sha256": "faafa8ff0f6144794209b8bc6c83df600e34c17efb1de1a088c4d2f6e756404a",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2023/CRND0103-2023-OK_Goodwell_2_E.txt",
+        "sha256": "7a1754f9200bc3b86d833bcfa943f0a20e1f1e050cf6dfdf48c65f9992f9729a",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2024/CRND0103-2024-OK_Goodwell_2_E.txt",
+        "sha256": "c0dbc640175c8994632320470ddfb328ce21bcffd7b6ac4c30de2b31c1956a96",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2025/CRND0103-2025-OK_Goodwell_2_E.txt",
+        "sha256": "2a16fe07ed04916e70c2d89cf1cdffcff32ce6a65a061b1745ff400cdc123c1d",
+        "rows": 365
+      }
+    ],
+    "OK_Goodwell_2_SE": [
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2013/CRND0103-2013-OK_Goodwell_2_SE.txt",
+        "sha256": "ea1703d610adb4d98ad30435e7e8e7311666d5974ac1cdb5484f1516ba885083",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2014/CRND0103-2014-OK_Goodwell_2_SE.txt",
+        "sha256": "0c7ad2f78e72a8e671294e881ad3bbb8d58ca20c955e6f60da0d31f23441371a",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2015/CRND0103-2015-OK_Goodwell_2_SE.txt",
+        "sha256": "8b370e3f317a413abc6d92c44cce2042f8b297178bbb4d9754104f33dfb80fb9",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2016/CRND0103-2016-OK_Goodwell_2_SE.txt",
+        "sha256": "5b652ebd8f40916d1479544dc6abf638aaab0805c5c5d97e362776ec659f0562",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2017/CRND0103-2017-OK_Goodwell_2_SE.txt",
+        "sha256": "8f0281615367cf04de5dc8a0efaff681ce88c32df0cf84a4002f643bd88fa361",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2018/CRND0103-2018-OK_Goodwell_2_SE.txt",
+        "sha256": "5ee8a383a9fe3e64a367e5a622082c649bf7eac8a12eb851cf0f69e9a4761661",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2019/CRND0103-2019-OK_Goodwell_2_SE.txt",
+        "sha256": "14d1f074312c5d335374a6cce30a60d5a83126a6697706635a8cc11ff58e1183",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2020/CRND0103-2020-OK_Goodwell_2_SE.txt",
+        "sha256": "d4eed8e1ca182b7a3e8bd4d4c045260cd46512ae1e3b9f2d97c60eda25bf7e69",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2021/CRND0103-2021-OK_Goodwell_2_SE.txt",
+        "sha256": "86511676443d7f333c0efae78c35537ac2887ed5d1282506bb9b856aa481980a",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2022/CRND0103-2022-OK_Goodwell_2_SE.txt",
+        "sha256": "a5e0f8ffbbf1ef6714f6733c8f3541ce608ff459ed18864b56696c4726e1d14d",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2023/CRND0103-2023-OK_Goodwell_2_SE.txt",
+        "sha256": "cd5693148bffacfcd603084d20b6027f57563ee5d8371d64a8592d07fa98112c",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2024/CRND0103-2024-OK_Goodwell_2_SE.txt",
+        "sha256": "b55a3e8551b8f0ad69a455d4e1c2533c02c8a470973d0767fba46ad06c4bfe11",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2025/CRND0103-2025-OK_Goodwell_2_SE.txt",
+        "sha256": "0b922f4ffbf124e30fbd0ee88a924e1b2b19baa460543479aff8f73be6a1a2b0",
+        "rows": 365
+      }
+    ],
+    "OK_Stillwater_2_W": [
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2013/CRND0103-2013-OK_Stillwater_2_W.txt",
+        "sha256": "a68b79e1f211212d5175e511f993233dd9cf2950b9ad45fe15bb8c37836b17b1",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2014/CRND0103-2014-OK_Stillwater_2_W.txt",
+        "sha256": "32643ce0061e9fa95244493df0a04d28a25251d4b4c907a0f5e6bc97cc246060",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2015/CRND0103-2015-OK_Stillwater_2_W.txt",
+        "sha256": "95a3e992cc72aa139440f72d660616f112f32757f1656d38226bbbf7146d2a32",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2016/CRND0103-2016-OK_Stillwater_2_W.txt",
+        "sha256": "eec706ae5338c1c7cdc031b281b2f873f568b12249ca16f6928b317f77d3035b",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2017/CRND0103-2017-OK_Stillwater_2_W.txt",
+        "sha256": "65f575eb7b800765307f3fa61c2b8dd1d05fe2d35c7b92564a9c354ba557066e",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2018/CRND0103-2018-OK_Stillwater_2_W.txt",
+        "sha256": "0b7bb03a37a1bf2083f2eb750f24f23814e0c1d46a7efcc0ba54fb807ef7588b",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2019/CRND0103-2019-OK_Stillwater_2_W.txt",
+        "sha256": "083a5ccaf046d6ed6b08dbe983aa7e1ac62bb041c9544ecb3159e86743078efe",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2020/CRND0103-2020-OK_Stillwater_2_W.txt",
+        "sha256": "960e070d46a0135d1d066d3c0b10ae961de96be575446d3f06cc6d9622595c6b",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2021/CRND0103-2021-OK_Stillwater_2_W.txt",
+        "sha256": "6b9647ae36d5f76980488ddbfd5c9246f2bcdc00ed00b8a8d3ab6482a2b16464",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2022/CRND0103-2022-OK_Stillwater_2_W.txt",
+        "sha256": "7a0200b730ec5ac5bf5f159f2568cc41dc92793477b6b94051f37e017d344f41",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2023/CRND0103-2023-OK_Stillwater_2_W.txt",
+        "sha256": "292e4a65a4ba9e802707097b1d232b5466ca36c70798a22dc373144c962d0058",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2024/CRND0103-2024-OK_Stillwater_2_W.txt",
+        "sha256": "e97f5272c5343f888377e9dbdd61ee86b6451f0d19eaadd6789620025d6ca88d",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2025/CRND0103-2025-OK_Stillwater_2_W.txt",
+        "sha256": "3ded9b561f76bbd7120422d8dbd1b9c31e4481f75120e6ec8014bd336347566d",
+        "rows": 365
+      }
+    ],
+    "OK_Stillwater_5_WNW": [
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2013/CRND0103-2013-OK_Stillwater_5_WNW.txt",
+        "sha256": "4336d3a660cada083c015b7f18de7205bb1fdd23fa415fd79d8023be495bf153",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2014/CRND0103-2014-OK_Stillwater_5_WNW.txt",
+        "sha256": "e3a729005dc91a303cd0bf43d5783a398b17d8cfbcc9e9bbdafc6ad9e073a2bf",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2015/CRND0103-2015-OK_Stillwater_5_WNW.txt",
+        "sha256": "0b4eb085e17101b88e6181c004a28e1642d481da6648a1d74babb306b55ec5ef",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2016/CRND0103-2016-OK_Stillwater_5_WNW.txt",
+        "sha256": "1b5f7d19127e6cb9f552aad14de0a724a2ae4f321875cb693bed2903077b75f1",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2017/CRND0103-2017-OK_Stillwater_5_WNW.txt",
+        "sha256": "5a822c32b1c30c8251780e6a3fd402d1000eba90f1ca6198be1037b4b812d26a",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2018/CRND0103-2018-OK_Stillwater_5_WNW.txt",
+        "sha256": "ae005a973fd11ba2d1b64a9ae5f575db321cd0e67b19332b174203f64feb73bd",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2019/CRND0103-2019-OK_Stillwater_5_WNW.txt",
+        "sha256": "b98dd66d9f25ba12fe7abce8a373954484c0bbd29adad012441689c495f3e10c",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2020/CRND0103-2020-OK_Stillwater_5_WNW.txt",
+        "sha256": "96caf3d5754bbd5b358b1ec6a75cfb4544554fdc91fc3324d1f9935b423da4cd",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2021/CRND0103-2021-OK_Stillwater_5_WNW.txt",
+        "sha256": "8a315a0d4df9d3b1f84c6c42e3b1d6e8aa716689c05e59c4dc7d62ba53e34267",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2022/CRND0103-2022-OK_Stillwater_5_WNW.txt",
+        "sha256": "8699cef39059582bfe557f6b08dfbd7dfa348e4bf989395a5bd4d60f8d0d9e79",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2023/CRND0103-2023-OK_Stillwater_5_WNW.txt",
+        "sha256": "bda2dfa2386e42315e0749f4e3833bb490f48ac44e853d1be916145ac2ec4e7a",
+        "rows": 365
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2024/CRND0103-2024-OK_Stillwater_5_WNW.txt",
+        "sha256": "5bcfed18cdfbe59349ce4ee4a144463f7cef3439bdf1f093658524226538ab08",
+        "rows": 366
+      },
+      {
+        "url": "https://www.ncei.noaa.gov/pub/data/uscrn/products/daily01/2025/CRND0103-2025-OK_Stillwater_5_WNW.txt",
+        "sha256": "c0403756b9ad8b46a606590a7b3c0b419d137399b113fd47979c50dcbaa7c891",
+        "rows": 365
+      }
+    ]
+  },
+  "source_download_failures": {
+    "OK_Goodwell_2_E": [],
+    "OK_Goodwell_2_SE": [],
+    "OK_Stillwater_2_W": [],
+    "OK_Stillwater_5_WNW": []
+  },
+  "limitations": [
+    "A train/validation/test split in time does not imply spatial representativeness. Only four NOAA stations near two Oklahoma NASA model sites were used.",
+    "Nearby NOAA stations share nearly the same NASA grid inputs while their local observations can differ.",
+    "The target is present-day observed soil moisture rank, not future root-zone persistence, crop stress, irrigation demand, drought impact or water savings.",
+    "Seasonal percentiles use a short 2013-2018 ground-observation reference, separate from the published 1991-2020 historical ROOTSHADOW baseline.",
+    "All features are current or historical NASA model variables; NOAA probes are labels only, never runtime inputs.",
+    "Low spatial transfer skill would mean calibrated model should not be extrapolated to other locations or irrigated Qatar farms.",
+    "A positive held-out score does not establish general deployment suitability. Further seasons, locations, independent validation and a prospective pilot are necessary.",
+    "Performance differences on overlapping daily observations are serially correlated; naive binomial confidence intervals would overstate certainty."
+  ]
+}
