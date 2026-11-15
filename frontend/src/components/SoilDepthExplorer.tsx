@@ -76,19 +76,19 @@ export default function SoilDepthExplorer({ analysis, synchronizedMonth, onMonth
           <h2>Look beneath the surface.</h2>
           <p>Scrub 45 years of modeled monthly soil-wetness percentiles. The two layers can respond differently even within the same month.</p>
         </div>
-        <div className="depth-lens-source"><span className="depth-source-led" /> LIVE FROM VERIFIED SNAPSHOT <small>Historical model data, not a current sensor</small></div>
+        <div className="depth-lens-source"><span className="depth-source-led" /> VERIFIED HISTORICAL SNAPSHOT <small>Historical model data, not a current sensor</small></div>
       </div>
       <div className="depth-lens-instrument">
         <div className="depth-lens-profile">
           <div className="depth-lens-profile-topline"><span>RELATIVE SOIL WETNESS</span><span>MONTHLY PERCENTILE</span></div>
           <div className="depth-lens-band depth-lens-surface">
-            <div className="depth-band-meta"><span>01 / SURFACE</span><strong>{top === null ? "N/A" : top.toFixed(1)}<small>{top === null ? "" : "th %"}</small></strong></div>
+            <div className="depth-band-meta"><span>01 / SURFACE</span><strong>{top === null ? "N/A" : top.toFixed(1)}<small>{top === null ? "" : " percentile"}</small></strong></div>
             <div className="depth-band-track"><div className="depth-band-fill top" style={{ width: `${Math.max(0, Math.min(100, top ?? 0))}%` }} /><span className="depth-threshold" /></div>
             <span className="depth-band-context">Upper soil layer · MERRA-2 model estimate</span>
           </div>
           <div className="depth-lens-divider"><span>SOIL PROFILE / SCHEMATIC</span><span>↓</span></div>
           <div className="depth-lens-band depth-lens-root">
-            <div className="depth-band-meta"><span>02 / ROOT ZONE</span><strong>{root === null ? "N/A" : root.toFixed(1)}<small>{root === null ? "" : "th %"}</small></strong></div>
+            <div className="depth-band-meta"><span>02 / ROOT ZONE</span><strong>{root === null ? "N/A" : root.toFixed(1)}<small>{root === null ? "" : " percentile"}</small></strong></div>
             <div className="depth-band-track"><div className="depth-band-fill root" style={{ width: `${Math.max(0, Math.min(100, root ?? 0))}%` }} /><span className="depth-threshold" /></div>
             <span className="depth-band-context">Deeper modeled soil reservoir · Not a field probe</span>
           </div>
@@ -100,9 +100,9 @@ export default function SoilDepthExplorer({ analysis, synchronizedMonth, onMonth
           <span className="depth-readout-month">{selectedMonth}</span>
           <div className="depth-readout-rule" />
           <span className="depth-readout-label">SURFACE − ROOT-ZONE</span>
-          <strong className="depth-readout-delta">{difference === null ? "—" : `${difference >= 0 ? "+" : ""}${difference.toFixed(1)}`}<small> pp</small></strong>
+          <strong className="depth-readout-delta">{difference === null ? "—" : `${difference >= 0 ? "+" : "−"}${Math.abs(difference).toFixed(1)}`}<small> percentage-point rank difference</small></strong>
           <p>{difference === null ? "No paired monthly reading for this selection." : difference > 0 ? "The shallow modeled layer ranked wetter than the root zone in this month." : difference < 0 ? "The modeled root zone ranked wetter than the shallow layer in this month." : "Both modeled layers had equal seasonal ranks this month."}</p>
-          <span className="depth-readout-caveat">Difference in percentiles ≠ recovery delay in days.</span>
+          <span className="depth-readout-caveat">A rank gap does not measure actual water-volume difference or recovery delay in days.</span>
         </div>
       </div>
       <div className="depth-lens-timeline">
