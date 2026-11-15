@@ -91,7 +91,7 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
 
     <section className="rs-narrative rs-problem">
       <aside className="rs-side-number">01 — THE QUESTION</aside>
-      <div className="rs-narrative-body"><p className="rs-overline">WHY IT MATTERS FOR AGRICULTURE</p><h2>Green above ground<br/>doesn't always mean<br/><em>recovered below.</em></h2><p>After a drought, the surface and deeper soil can recover at different times. That matters because the shallow layer is only part of the water story. To investigate the difference, we track both layers under the same recovery rule.</p><div className="rs-inline-rule"><span>Rainfall resumes</span><span>Surface responds</span><span>Root-zone response checked</span></div></div>
+      <div className="rs-narrative-body"><p className="rs-overline">WHY IT MATTERS FOR AGRICULTURE</p><h2>Green above ground<br/>doesn't always mean<br/><em>recovered below.</em></h2><p>After rain, surface moisture can rebound while the deeper root zone stays relatively dry. Farmers cannot infer root-zone recovery from surface appearance alone. That uncertainty makes deeper-soil monitoring worth investigating before planning water use, crops or resilience measures.</p><div className="rs-inline-rule"><span>Rainfall resumes</span><span>Surface responds</span><span>Root-zone response checked</span></div></div>
       <figure className="rs-soil-figure"><SoilVisual/><figcaption>Conceptual soil profile. The actual measurements in this study are gridded model estimates, not probes on a farm.</figcaption></figure>
     </section>
 
@@ -106,7 +106,7 @@ function HomePage({ selected, onSelect, navigate }: { selected: SiteId; onSelect
           <span className="rs-find-delay">{item.median} <small>{item.median === 1 ? "day" : "days"}</small><ArrowUpRight size={16}/></span>
         </button>)}
       </div>
-      <p className="rs-finding-limit"><strong>Want the full geographic coverage?</strong> Open Explore Locations or Decision Desk to inspect all {sites.length} model points. <strong>Scientific caution:</strong> No global trend has been demonstrated. Goodwell’s nominal trend fails the six-site multiple-testing threshold. The Southern Africa median is highly threshold-sensitive. Independent evidence is still needed.</p>
+      <p className="rs-finding-limit"><strong>Why the problem matters:</strong> These six cases show that modeled surface recovery and deeper recovery do not always coincide. This motivates a broader screening effort—not a claim of measured crop losses. <strong>Explore the full coverage:</strong> The global workspace contains {sites.length} selected model points; six are highlighted here, not treated as a representative global sample. <strong>Scientific caution:</strong> No global trend has been demonstrated. Goodwell’s nominal trend fails the six-site multiple-testing threshold. The Southern Africa median is highly threshold-sensitive. Independent evidence is still needed.</p>
     </section>
 
     <section className="rs-solution">
@@ -194,7 +194,7 @@ function MethodPage({ navigate }: { navigate: (p: Page) => void }) {
     ].map(item => <div className="method-card" key={item.num}><div className="method-number">{item.num}</div><div className="method-icon">{item.icon}</div><h3>{item.title}</h3><p>{item.desc}</p></div>)}</div>
     <section className="method-protocol" aria-label="Reproducible screening protocol">
       <div className="method-protocol-heading">
-        <div><span className="eyebrow">FIXED SCREENING PROTOCOL</span><h2>From daily model records to testable recovery events.</h2><p>A common method is applied separately to all {sites.length} locations. The original six historical research cases remain featured; the additional {sites.length - 6} locations are exploratory and have not been independently field-validated.</p></div>
+        <div><span className="eyebrow">FIXED SCREENING PROTOCOL</span><h2>From daily model records to testable recovery events.</h2><p>A common method is applied separately to all {sites.length} selected locations using a 45-year historical model archive. This is a substantial temporal record at sampled points, not continuous measurements across every farm or a globally representative survey. The first six research cases remain featured; the additional {sites.length - 6} sites extend geographic screening without independent field validation.</p></div>
         <div className="method-protocol-counter"><strong>{sites.length}</strong><span>MODEL STUDY POINTS<br/>6 FEATURED · {sites.length - 6} ADDITIONAL</span></div>
       </div>
       <div className="method-protocol-parameters">
