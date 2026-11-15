@@ -813,3 +813,14 @@ main { max-width: none; }
 .chart-point-values strong { color:#edf4ef; font-weight:700; }
 .chart-point-explanation p { color:#c6dada; font-size:12px; line-height:1.75; margin:15px 0 0; }
 @media(max-width:730px) { .chart-inspection .moisture-chart { height:420px; }.chart-point-explanation { padding:12px; }.chart-point-values span { flex:1 1 140px; } }
+
+.rs-graph-guide{display:flex;align-items:center;gap:9px 17px;flex-wrap:wrap;margin:10px 0 9px;color:#d3e5e3;font:500 11px/1.5 Manrope,sans-serif}
+.rs-graph-guide>span{display:inline-flex;align-items:center;gap:7px}
+.rs-guide-swatch{display:inline-block;flex:none;width:19px;height:4px;border-radius:5px;background:#62d8e0}
+.rs-guide-root{background:#d3b68d}
+.rs-guide-low{height:10px;background:rgba(195,100,76,.75)}
+.rs-guide-mid{height:10px;background:rgba(218,177,98,.7)}
+.rs-guide-high{height:10px;background:#68a792}
+.rs-graph-interpretation{margin:0 0 11px;color:#c3dad8;font-size:11.5px;line-height:1.65}
+.rs-graph-interpretation strong{color:#f3e2bf}
+@media(max-width:730px){.rs-graph-guide{gap:7px 12px;font-size:10px}.rs-graph-interpretation{font-size:11px}}
