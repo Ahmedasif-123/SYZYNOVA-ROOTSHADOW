@@ -53,7 +53,7 @@ test("well-watered before and after is not confused with uncertain recovery", as
   await openProbe(page);
   await fillProbe(page, { before30: 29, before60: 30, after30: 29.5, after60: 31 });
   await expect(page.locator(".probe-result h4")).toHaveText("Already adequate at both measured depths");
-  await expect(page.locator(".probe-model-comparison")).toContainText("different scales");
+  await expect(page.locator(".probe-model-comparison")).toContainText("spatial scales");
 });
 test("missing or invalid thresholds do not produce a verdict", async ({ page }) => {
   await openProbe(page);
