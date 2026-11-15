@@ -1,0 +1,38 @@
+.mle-panel{background:#fcfaf3;border:1px solid #cbd6c7;padding:clamp(18px,2.8vw,35px);margin:24px 0;color:#2c4b34;font-family:Manrope,"DM Sans",sans-serif}
+.mle-panel *{box-sizing:border-box}.mle-heading{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,.6fr);gap:20px;align-items:end}
+.mle-heading h2{font:500 clamp(28px,3.5vw,46px)/1.09 Georgia,serif;letter-spacing:-.04em;color:#234b33;margin:18px 0}
+.mle-heading h2 em{color:#9b714e}.mle-heading p,.mle-criterion p,.mle-transfer p,.mle-method p{font-size:12px;line-height:1.85;color:#4f6a53}
+.mle-verdict{border:1px solid #ddc7a9;background:#fff5e6;padding:16px;color:#78563a;display:flex;flex-direction:column;gap:10px}
+.mle-verdict strong{font-size:12px}.mle-verdict span{font-size:11px;line-height:1.65}
+.mle-splits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:22px 0;border:1px solid #cfd7c8}
+.mle-splits>div{background:#f5f9f1;padding:17px;border-right:1px solid #cfd7c8;min-width:0}.mle-splits>div:last-child{border:0}
+.mle-splits small{font:700 10px/1.5 "IBM Plex Mono",monospace;color:#526e58;display:block}
+.mle-splits strong{display:block;color:#265139;font:500 clamp(26px,2.8vw,36px) Georgia,serif;margin:8px 0}
+.mle-splits span{font-size:11px;color:#647768}
+.mle-results{background:#fffefb;border:1px solid #d6dfd2;padding:20px}
+.mle-criterion{display:grid;grid-template-columns:1fr minmax(145px,.25fr);gap:20px;align-items:center;margin-bottom:18px}
+.mle-criterion h3,.mle-transfer h3{font:500 clamp(23px,2.8vw,33px) Georgia,serif;letter-spacing:-.025em;color:#29513a;margin:10px 0}
+.mle-criterion>div:last-child{border-left:1px solid #dce5d8;padding-left:20px}
+.mle-criterion>div:last-child strong{font:500 38px Georgia,serif;color:#966544;display:block}
+.mle-criterion>div:last-child span{font-size:11px;color:#647568}
+.mle-table-scroll{overflow-x:auto}.mle-table-scroll table{width:100%;border-collapse:collapse;min-width:600px;font-size:11px}
+.mle-table-scroll caption{text-align:left;font-size:12px;font-weight:750;color:#416449;margin-bottom:8px}
+.mle-table-scroll th,.mle-table-scroll td{padding:13px 10px;border-bottom:1px solid #dce6d8;text-align:left;vertical-align:top}
+.mle-table-scroll thead th{font:700 10px/1.5 "IBM Plex Mono",monospace;color:#537159}.mle-table-scroll tbody th{font-size:11px}
+.mle-winner{background:#e7f1e5}.mle-winner td:last-child{color:#2d6846;font-weight:750}
+.mle-table-scroll td:last-child{white-space:nowrap}.mle-table-scroll td svg{vertical-align:middle}
+.mle-table-note{font-size:11px;line-height:1.75;color:#5a745f}
+.mle-transfer{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.9fr);gap:18px;border-top:1px solid #c9d5c5;margin-top:25px;padding-top:25px}
+.mle-transfer-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.mle-transfer-cards>div{background:#f5f8f0;border:1px solid #d4ddcf;padding:15px;min-width:0;overflow-wrap:anywhere}
+.mle-transfer-cards small{font-size:10px;line-height:1.5;color:#526b53;display:block;text-transform:capitalize}
+.mle-transfer-cards strong{display:block;color:#375f45;font:500 27px Georgia,serif;margin:13px 0}
+.mle-transfer-cards span{font-size:10px;color:#647665}
+.mle-method{margin-top:22px;border-left:3px solid #557d5c;background:#f2f7ed;padding:17px 20px}
+.mle-method>span{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:750;color:#305f3b}
+.mle-method p{margin:12px 0}.mle-actions{display:flex;flex-wrap:wrap;gap:9px}
+.mle-actions button,.mle-actions a{border:1px solid #bbd0bd;background:#fff;color:#2b6240;padding:10px 13px;display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700}
+.mle-actions button{background:#264e35;color:#fff}
+.mle-message{font-size:12px;line-height:1.8;color:#6b523d;padding:20px 0}
+@media(max-width:950px){.mle-heading,.mle-transfer,.mle-criterion{grid-template-columns:1fr}.mle-criterion>div:last-child{border-left:0;border-top:1px solid #dce5d8;padding:15px 0 0}.mle-transfer-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.mle-panel{padding:17px}.mle-splits{grid-template-columns:1fr}.mle-splits>div{border-right:0;border-bottom:1px solid #cfd7c8}.mle-transfer-cards{grid-template-columns:1fr}}
