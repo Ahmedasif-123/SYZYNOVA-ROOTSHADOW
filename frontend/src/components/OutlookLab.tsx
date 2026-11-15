@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAtlasHistory } from "../lib/atlas";
 import { annualize, buildLayerScenario, type LayerScenario } from "../lib/forecast";
 import { findSite, researchSites, siteRegions, sites, type SiteId } from "../lib/sites";
+import ClimateOutlook from "./ClimateOutlook";
 
 type Props = { selected: SiteId; onSelect: (id: SiteId) => void };
 
@@ -52,6 +53,7 @@ function Score({ name, value }: { name: string; value: LayerScenario }) {
 
 export default function OutlookLab({ selected, onSelect }: Props) {
   const [horizon, setHorizon] = useState<5 | 10 | 30>(10);
+  const [mode, setMode] = useState<"historical" | "climate">("climate");
   const [region, setRegion] = useState("all");
   const [search, setSearch] = useState("");
   const query = useQuery({ queryKey: ["outlook-history"], queryFn: ({ signal }) => getAtlasHistory(signal), staleTime: Infinity });
@@ -62,15 +64,17 @@ export default function OutlookLab({ selected, onSelect }: Props) {
   const valid = surface.future.length === horizon && root.future.length === horizon;
   const filtered = sites.filter(item => (region === "all" || (region === "featured" ? researchSites.some(s => s.id === item.id) : item.region === region)) && (item.name + " " + item.country).toLowerCase().includes(search.toLowerCase()));
   return <div className="forecast-lab">
-    <header className="forecast-heading"><span>ROOTSHADOW / EXPERIMENTAL MACHINE LEARNING</span><h1>Future soil-moisture scenarios.</h1><p>Explore historical NASA model records and cautiously extend statistical patterns at any of {sites.length} sampled global locations. A backtest evaluates whether machine learning improves on a simple historical average.</p></header>
-    <div className="forecast-warning"><strong>EXPERIMENTAL MODEL — NOT AN OPERATIONAL FORECAST</strong><p>Dashed curves show extrapolated annual seasonal-percentile ranks, not observations or verified future moisture. Dotted lines are illustrative error ranges, not calibrated prediction intervals. No future rainfall, irrigation, climate scenario or crop behavior is modeled. Thirty-year results are especially speculative.</p></div>
+    <header className="forecast-heading"><span>ROOTSHADOW / EXPERIMENTAL MACHINE LEARNING</span><h1>Future soil-moisture scenarios.</h1><p>Explore two research models across {sites.length} global locations: a historical-only benchmark and a climate-informed model driven by actual NASA temperature, precipitation and CMIP6 future climate scenarios.</p></header>
+    <div className="forecast-mode-tabs" role="tablist" aria-label="Choose forecasting method"><button role="tab" aria-selected={mode === "climate"} type="button" className={mode === "climate" ? "active" : ""} onClick={() => setMode("climate")}>Climate-aware ML <small>NASA warming and rainfall scenarios</small></button><button role="tab" aria-selected={mode === "historical"} type="button" className={mode === "historical" ? "active" : ""} onClick={() => setMode("historical")}>Historical-only ML <small>Original autoregressive benchmark</small></button></div>
+    {mode === "historical" && <div className="forecast-warning"><strong>EXPERIMENTAL HISTORICAL BENCHMARK — NOT AN OPERATIONAL FORECAST</strong><p>This original method uses past soil-moisture trends only; it does not incorporate temperature or future rainfall. Dashed curves are extrapolations. Dotted ranges are illustrative, not calibrated uncertainty intervals.</p></div>}
     <div className="forecast-controls">
       <label>REGION<select value={region} onChange={event => setRegion(event.target.value)}><option value="all">All {sites.length} locations</option><option value="featured">Six featured research points</option>{siteRegions.map(value => <option key={value} value={value}>{value}</option>)}</select></label>
       <label>SEARCH<input placeholder="Search locations" value={search} onChange={event => setSearch(event.target.value)} /></label>
       <label>LOCATION<select value={selected} onChange={event => onSelect(event.target.value as SiteId)}>{!filtered.some(item => item.id === selected) && <option value={selected}>{site.name} · currently selected</option>}{filtered.map(item => <option value={item.id} key={item.id}>{item.name} · {item.country}</option>)}</select></label>
       <label>PROJECTION WINDOW<select value={horizon} onChange={event => setHorizon(Number(event.target.value) as 5 | 10 | 30)}><option value={5}>5 years · 2026–2030</option><option value={10}>10 years · 2026–2035</option><option value={30}>30 years · 2026–2055</option></select></label>
     </div>
-    <div className="forecast-body">
+    {mode === "climate" && <ClimateOutlook selected={selected} name={site.name} horizon={horizon}/>}
+    {mode === "historical" && <div className="forecast-body">
       <div className="forecast-subtitle"><strong>{site.name}, {site.country}</strong><span>Solid: historical 1981–2025 · Dashed: experimental model · Dotted: approximate error range</span></div>
       {query.isPending && <p>Loading verified historical model archive…</p>}
       {query.isError && <p role="alert">Historical data unavailable. No prediction is shown.</p>}
@@ -78,6 +82,6 @@ export default function OutlookLab({ selected, onSelect }: Props) {
       {valid && <><ForecastChart surface={surface} root={root} horizon={horizon}/><div className="forecast-scores"><Score name="Surface model" value={surface}/><Score name="Root-zone model" value={root}/></div>
         <p className="forecast-meaning"><strong>How to interpret:</strong> A lower projected percentile suggests relatively drier modeled conditions against the 1991–2020 seasonal reference, not soil-water volume or crop failure. The trend depends on historical patterns continuing. This model does not predict drought events, yields, farm suitability or irrigation requirements.</p></>}
     </div>
-    <footer className="forecast-disclaimer">METHOD: Ridge-regression autoregression uses recent annual moisture ranks and calendar trend features, with a 2016–2025 chronological holdout. When its holdout error does not beat the historical-mean baseline by at least 2%, the simple baseline is displayed instead. This single holdout does not establish validated 5–30 year skill, and no result should guide government resource allocation without climate inputs, independent testing and domain review.</footer>
+    {mode === "historical" && <footer className="forecast-disclaimer">METHOD: Ridge-regression autoregression uses recent annual moisture ranks and calendar trend features, with a 2016–2025 chronological holdout. When its holdout error does not beat the historical-mean baseline by at least 2%, the simple baseline is displayed instead. This single holdout does not establish validated 5–30 year skill, and no result should guide government resource allocation without climate inputs, independent testing and domain review.</footer>}
   </div>;
 }
