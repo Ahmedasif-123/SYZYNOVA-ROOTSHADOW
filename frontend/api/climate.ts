@@ -82,8 +82,13 @@ export async function GET(request: Request): Promise<Response> {
     const history = paired(rawPast).filter(row => row.month >= "1981-01" && row.month <= "2025-12");
     const projection = paired(rawFuture).filter(row => row.month >= "2015-01" && row.month <= "2055-12");
     if (history.length < 480 || projection.length < 400) {
+      const inspect = rawFuture as { properties?: { parameter?: Record<string, Record<string, unknown>> } };
+      const t = inspect?.properties?.parameter?.T2M?.[scenario] as Record<string, unknown> | undefined;
+      const p = inspect?.properties?.parameter?.PRECTOTCORR?.[scenario] as Record<string, unknown> | undefined;
       return reply({ error: "NASA climate dataset is incomplete at this grid point. No projection has been generated.",
-        historyMonths: history.length, scenarioMonths: projection.length }, 503);
+        historyMonths: history.length, scenarioMonths: projection.length,
+        diagnostic: { tempKeys: Object.keys(t ?? {}).slice(0, 8), rainKeys: Object.keys(p ?? {}).slice(0, 8),
+          tempFirst: Object.entries(t ?? {}).slice(0, 3), rainFirst: Object.entries(p ?? {}).slice(0, 3) } }, 503);
     }
     return reply({
       schema: 1,
