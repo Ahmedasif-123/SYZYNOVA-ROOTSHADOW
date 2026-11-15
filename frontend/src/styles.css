@@ -910,3 +910,6 @@ main { max-width: none; }
 .climate-sources a{color:#abd8cf;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:1100px){.climate-headline-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.forecast-mode-tabs,.climate-scores{grid-template-columns:1fr}.climate-scenarios{gap:6px}.climate-scenarios button{padding:11px 8px}.climate-scenarios strong{font-size:11px}.climate-scenarios span{font-size:9px}.climate-headline-metrics>div{padding:12px}.climate-score>div{align-items:start;flex-direction:column;gap:4px}}
+
+.climate-source-status{padding:13px 17px;margin:15px 0;border:1px solid #486b68;background:#183e3d;color:#d1e8df;font:500 12px/1.8 Manrope,sans-serif}
+.climate-source-status strong{color:#f1ebd9}
