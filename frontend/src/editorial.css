@@ -314,3 +314,10 @@ body { color:var(--rs-ink); }
   .method-protocol-evidence { grid-template-columns:1fr; }
   .method-page .method-card { min-height:unset; }
 }
+
+
+.rs-null-contrast{display:grid;gap:8px;max-width:580px;margin-top:17px;border-left:3px solid #927344;padding:11px 15px;background:#eae9df}
+.rs-null-contrast strong{font:700 10px/1.5 "IBM Plex Mono",monospace;color:#465944;letter-spacing:.6px}
+.rs-null-contrast span{font:600 12px/1.7 Manrope,sans-serif;color:#294d39}
+.rs-null-contrast small{font:500 11px/1.65 Manrope,sans-serif;color:#4c5d4e}
+.rs-null-contrast a{font:700 10px/1.5 Manrope,sans-serif;color:#24573e;text-decoration:underline;text-underline-offset:3px}
