@@ -137,7 +137,7 @@ export async function GET(request: Request): Promise<Response> {
       scenario,
       climateSource: source,
       climateEnsemble: source === "nasa_nex_cmip6" ? "NASA NEX-GDDP-CMIP6 (" + modelName + ")" : "Open-Meteo HighResMIP (EC_Earth3P_HR; not an SSP scenario)",
-      maxProjectionYear: source === "nasa_nex_cmip6" ? 2055 : 2050,
+      maxProjectionYear: source === "nasa_nex_cmip6" ? 2055 : 2049,
       historicalStart: "1981-01",
       historicalEnd: "2025-12",
       history,
@@ -147,7 +147,7 @@ export async function GET(request: Request): Promise<Response> {
       sources: { historical: past.toString(), future: futureUrl, documentation },
       caution: source === "nasa_nex_cmip6"
         ? "NASA SSP climate scenarios are possible futures, not field measurements or weather forecasts."
-        : "NASA CMIP6 projection was missing here. Alternative HighResMIP model is NOT selected by SSP1/2/3 labels and only extends through 2050. Do not treat it as a NASA SSP ensemble."
+        : "NASA CMIP6 projection was missing here. Alternative HighResMIP model is NOT selected by SSP1/2/3 labels and currently supplies complete years only through 2049. Do not treat it as a NASA SSP ensemble."
     });
   } catch {
     return reply({ error: "Climate inputs could not be retrieved from trusted sources. Future estimates are withheld." }, 503);
