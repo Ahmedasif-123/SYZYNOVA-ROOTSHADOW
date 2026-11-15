@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
-    "build": "npm run verify:data && tsc --noEmit && vite build",
+    "build": "npm run verify:data && npm run test:probe && tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test:e2e": "playwright test",
-    "verify:data": "node scripts/verify-snapshots.mjs"
+    "verify:data": "node scripts/verify-snapshots.mjs",
+    "test:probe": "node --test tests/probe-logic.test.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.85.0",
