@@ -927,3 +927,9 @@ main { max-width: none; }
 .forecast-body,.climate-chart-shell,.climate-score,.climate-headline-metrics,.climate-source-status,.forecast-warning,.climate-error,.climate-loading{color:#e4eeeb}
 
 html{overflow-x:clip}body,#root{max-width:100%;overflow-x:clip}.main-shell,main{min-width:0}
+
+
+.forecast-validation-alert{background:#f1ede0;color:#2c4938;border-color:#aa8760;margin:15px 0 20px;padding:16px 20px}
+.forecast-validation-alert strong{color:#694a2a;font:700 12px/1.5 "IBM Plex Mono",monospace}
+.forecast-validation-alert p{font:500 12px/1.8 Manrope,sans-serif;color:#3c5142;margin:7px 0}
+.forecast-validation-alert p strong{font:700 12px/1.8 Manrope,sans-serif;color:#274a36}
