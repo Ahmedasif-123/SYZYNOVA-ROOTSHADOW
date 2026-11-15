@@ -21,7 +21,7 @@ const ORIGIN = "https://rootshadow-frontend-preview.vercel.app";
 const RAW_ATLAS = "https://raw.githubusercontent.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW/moisture-atlas-daily-2026/frontend/public/atlas/latest.json";
 const MAX_QUESTION = 700;
 const MAX_OUTPUT = 2000;
-const REQUESTS_PER_HOUR = 10;
+const REQUESTS_PER_HOUR = 40;
 const requests = new Map<string, { started: number; count: number }>();
 
 function json(body: unknown, status = 200): Response {
