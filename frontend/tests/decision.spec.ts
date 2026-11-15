@@ -1,5 +1,11 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
+
+async function openDesk(page: Page) {
+  await page.goto("/");
+  if ((page.viewportSize()?.width ?? 1400) < 600) await page.getByRole("button", { name: "Open navigation" }).click();
+  await page.getByRole("button", { name: "Decision Desk" }).first().click();
+}
 
 test.beforeEach(async ({ page }) => {
   await page.route("https://raw.githubusercontent.com/**", route => route.abort());
@@ -8,8 +14,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("decision desk uses the 97 source-dated NASA model locations and avoids forecast claims", async ({ page }) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: "Decision Desk" }).first().click();
+  await openDesk(page);
   await expect(page.getByRole("heading", { name: /Know where to/i })).toBeVisible();
   await expect(page.locator(".desk-point")).toHaveCount(97);
   await expect(page.getByText("Screening, not a forecast")).toBeVisible();
@@ -18,8 +23,7 @@ test("decision desk uses the 97 source-dated NASA model locations and avoids for
 });
 
 test("selected sites switch both source readings and historical context without invented figures", async ({ page }) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: "Decision Desk" }).first().click();
+  await openDesk(page);
   await expect(page.locator(".desk-point")).toHaveCount(97);
   await page.getByRole("textbox", { name: "Search study locations" }).fill("Doha");
   await expect(page.locator(".desk-point")).toHaveCount(1);
@@ -34,8 +38,7 @@ test("selected sites switch both source readings and historical context without 
 });
 
 test("screening evidence export includes real observations, provenance and limitations", async ({ page }) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: "Decision Desk" }).first().click();
+  await openDesk(page);
   await page.getByRole("textbox", { name: "Search study locations" }).fill("Doha");
   await page.locator(".desk-point").click();
   const action = page.waitForEvent("download");
