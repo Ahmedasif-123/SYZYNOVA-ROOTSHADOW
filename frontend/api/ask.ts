@@ -256,7 +256,7 @@ function responseText(payload: Record<string, unknown>): string | null {
   return null;
 }
 
-export default async function handler(request: Request): Promise<Response> {
+async function handler(request: Request): Promise<Response> {
   if (request.method === "GET") {
     return json({
       enabled: Boolean(process.env.OPENAI_API_KEY && process.env.ROOTSHADOW_AI_ACCESS_CODE),
@@ -404,3 +404,6 @@ export default async function handler(request: Request): Promise<Response> {
     }
   });
 }
+
+export const GET = handler;
+export const POST = handler;
