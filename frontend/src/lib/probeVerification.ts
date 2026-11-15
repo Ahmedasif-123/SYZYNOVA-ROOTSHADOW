@@ -8,7 +8,7 @@ export type ProbeInputs = {
   threshold60: string;
   tolerance: string;
 };
-export type ProbeVerdict = "incomplete" | "not_recovered" | "recovered" | "unclear";
+export type ProbeVerdict = "incomplete" | "not_recovered" | "adequate" | "recovered" | "unclear";
 export type ProbeResult = {
   verdict: ProbeVerdict;
   label: string;
@@ -27,6 +27,20 @@ export const blankProbeInputs: ProbeInputs = {
   threshold60: "",
   tolerance: ""
 };
+export function normalizeProbeInputs(value: unknown): ProbeInputs | null {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) return null;
+  const fields: (keyof ProbeInputs)[] = ["before30", "after30", "before60", "after60", "threshold30", "threshold60", "tolerance"];
+  const raw = value as Record<string, unknown>;
+  const normalized = { ...blankProbeInputs };
+  for (const field of fields) {
+    const entry = raw[field];
+    if ((typeof entry !== "number" && typeof entry !== "string") || String(entry).trim() === "") return null;
+    const number = Number(entry);
+    if (!Number.isFinite(number) || number < 0 || number > 100) return null;
+    normalized[field] = String(number);
+  }
+  return normalized;
+}
 function parse(raw: string): number | null {
   if (raw.trim() === "") return null;
   const v = Number(raw);
@@ -65,10 +79,14 @@ export function evaluateProbe(inputs: ProbeInputs): ProbeResult {
     return result("not_recovered", "Not recovered at the sampled depths", "Post-rain moisture remains below the user-supplied minimum at " + affected + ", beyond the specified measurement margin. This is a comparison of user-entered field measurements, not NASA model validation.", "Do not infer that rain has replenished the whole root zone. Confirm the probe calibration, measure additional representative depths, and review the irrigation plan with the farm adviser.");
   }
   const above = after30 > threshold30 + tolerance && after60 > threshold60 + tolerance;
+  const adequateBefore = before30 > threshold30 + tolerance && before60 > threshold60 + tolerance;
+  if (above && adequateBefore) {
+    return result("adequate", "Already adequate at both measured depths", "Both depths were above the site-supplied minimum before and after rain, outside the entered measurement margin. Rain-triggered recovery cannot be inferred. No statement is made about the rest of the field.", "Continue field monitoring. Confirm crop rooting depth, moisture targets and probe placement with an agronomist before changing irrigation.");
+  }
   const rose = after30 > before30 + tolerance && after60 > before60 + tolerance;
   const deficitBefore = before30 < threshold30 - tolerance || before60 < threshold60 - tolerance;
   if (above && rose && deficitBefore) {
     return result("recovered", "Measured recovery supported at 30 and 60 cm", "Both measured depths rose beyond the stated sensor margin and are above the site-supplied local targets, after at least one depth had been below its target. Recovery is indicated only at these sampled depths, not across the entire field.", "Have an agronomist check crop rooting depth, field representativeness, forecast evapotranspiration and repeat readings before changing irrigation. This result is not permission to reduce irrigation automatically.");
   }
-  return result("unclear", "Unclear — verify before changing irrigation", "The two-depth readings do not establish a pre-rain deficit followed by a sufficiently large, consistent increase above both local targets. Values near the threshold, different responses by depth, or previously adequate soil conditions require more context.", "Retake readings after allowing for infiltration, check sensor calibration and soil heterogeneity, and request crop-specific irrigation advice. Do not change irrigation on this result alone.");
+  return result("unclear", "Unclear — verify before changing irrigation", "The readings do not establish a clear recovery or consistently adequate conditions. Values exactly at the uncertainty boundary, conflicting depth responses or insufficient pre-rain evidence require verification.", "Retake readings after allowing for infiltration, check sensor calibration and soil heterogeneity, and request crop-specific irrigation advice. Do not change irrigation on this result alone.");
 }
