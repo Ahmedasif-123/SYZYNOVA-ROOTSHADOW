@@ -7,6 +7,7 @@ import "./editorial.css";
 import "./conclusion.css";
 import "./guided.css";
 import "./accessibility.css";
+import "./decision.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {
