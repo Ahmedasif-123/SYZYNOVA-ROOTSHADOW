@@ -88,7 +88,8 @@ export async function GET(request: Request): Promise<Response> {
       return reply({ error: "NASA climate dataset is incomplete at this grid point. No projection has been generated.",
         historyMonths: history.length, scenarioMonths: projection.length,
         diagnostic: { tempKeys: Object.keys(t ?? {}).slice(0, 8), rainKeys: Object.keys(p ?? {}).slice(0, 8),
-          tempFirst: Object.entries(t ?? {}).slice(0, 3), rainFirst: Object.entries(p ?? {}).slice(0, 3) } }, 503);
+          tempFirst: Object.entries(t ?? {}).slice(0, 3), rainFirst: Object.entries(p ?? {}).slice(0, 3),
+          tempLast: Object.entries(t ?? {}).slice(-3), nonMissingTemp: Object.entries(t ?? {}).filter(([,v]) => typeof v === 'number' && v > -900).slice(0,3), nonMissingCount: Object.entries(t ?? {}).filter(([,v]) => typeof v === 'number' && v > -900).length } }, 503);
     }
     return reply({
       schema: 1,
