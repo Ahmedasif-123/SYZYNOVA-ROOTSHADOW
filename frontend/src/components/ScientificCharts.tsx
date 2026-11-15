@@ -139,9 +139,10 @@ export function MoistureChart({ analysis, event, highlightedMonth, siteId, onMon
     ],
     series: [
       { name: "Surface", type: "line", data: analysis.monthly.map(row => row.top_percentile), showSymbol: false, smooth: 0.16, lineStyle: { width: 2.3 }, areaStyle: { opacity: 0.045 }, connectNulls: false,
-        markLine: { silent: true, symbol: ["none", "none"], label: { color: "#a4b7bf", fontSize: 10, show: false }, lineStyle: { color: "#8b9da3", opacity: .4, type: "dashed", width: 1 }, data: [{ yAxis: 20 }, { yAxis: 40 }, ...(inspected ? [{ xAxis: inspected, label: { show: true, color: "#e8c79b", formatter: inspected }, lineStyle: { color: "#e8c79b", opacity: .75, type: "solid" as const, width: 1 } }] : [])] },
+        markLine: { silent: true, symbol: ["none", "none"], label: { show: true, position: "insideEndTop", color: "#c6d9d9", fontSize: 10 }, lineStyle: { color: "#8b9da3", opacity: .7, type: "dashed", width: 1 }, data: [{ yAxis: 20, label: { formatter: "20 · dry guide" } }, { yAxis: 40, label: { formatter: "40 · recovery guide" } }, ...(inspected ? [{ xAxis: inspected, label: { show: true, color: "#e8c79b", formatter: inspected }, lineStyle: { color: "#e8c79b", opacity: .75, type: "solid" as const, width: 1 } }] : [])] },
         markArea: event ? { silent: true, itemStyle: { color: "rgba(215,173,113,0.075)" }, data: [[{ xAxis: event.drought_start.slice(0, 7) }, { xAxis: (event.root_recovery ?? event.window_end).slice(0, 7) }]] } : undefined },
-      { name: "Root zone", type: "line", data: analysis.monthly.map(row => row.root_percentile), showSymbol: false, smooth: 0.16, lineStyle: { width: 2.3 }, areaStyle: { opacity: 0.025 }, connectNulls: false },
+      { name: "Root zone", type: "line", data: analysis.monthly.map(row => row.root_percentile), showSymbol: false, smooth: 0.16, lineStyle: { width: 2.3 }, areaStyle: { opacity: 0.025 }, connectNulls: false,
+        markArea: { silent: true, label: { show: false }, data: [[{ yAxis: 0, itemStyle: { color: "rgba(195,100,76,0.095)" } }, { yAxis: 20 }], [{ yAxis: 20, itemStyle: { color: "rgba(218,177,98,0.055)" } }, { yAxis: 40 }]] } },
       ...(precipitation ? [{ name: "Rainfall", type: "bar" as const, xAxisIndex: 1, yAxisIndex: 1, data: precipitation, barMaxWidth: 9, itemStyle: { color: "#74a5c6", opacity: 0.7 } }] : [])
     ]
   };
@@ -150,6 +151,14 @@ export function MoistureChart({ analysis, event, highlightedMonth, siteId, onMon
       <div className="chart-toolbar"><span>1991–2020 seasonal reference · Monthly medians</span>
         <div className="chart-actions"><button type="button" onClick={() => setZoom("full")} title="Reset to entire record"><RefreshCcw size={14} /> All years</button><button type="button" disabled={!event} onClick={() => setZoom("event")}><Maximize2 size={14} /> Selected event</button></div>
       </div>
+      <div className="rs-graph-guide" aria-label="How to read the percentile graph">
+        <span><i className="rs-guide-swatch rs-guide-surface" />Blue: surface model wetness</span>
+        <span><i className="rs-guide-swatch rs-guide-root" />Gold: deeper root-zone wetness</span>
+        <span><i className="rs-guide-swatch rs-guide-low" />0–20: unusually dry</span>
+        <span><i className="rs-guide-swatch rs-guide-mid" />20–40: below recovery guide</span>
+        <span><i className="rs-guide-swatch rs-guide-high" />40–100: above recovery guide</span>
+      </div>
+      <p className="rs-graph-interpretation"><strong>Signal to inspect:</strong> blue at or above 40 while gold remains below 40. A wider gap suggests the surface looks wetter than deeper soil, but only the daily event test establishes a sustained recovery delay. Higher is <em>relatively wetter</em>, not necessarily better for every crop.</p>
       <Chart option={option} className="moisture-chart" onSelectIndex={selectMonth} lastIndex={months.length - 1} categories={months} zoomKey={[siteId ?? "", zoom, event?.drought_start ?? ""].join("|")} ariaLabel="Interactive monthly surface and root-zone soil moisture lines and rainfall bars. Click or drag the upper graph to explain a month." />
       <section className="chart-point-explanation" role="region" aria-label="Explanation of selected monthly graph reading">
         <header><span>SELECTED MONTH</span><strong>{inspected ?? "Unavailable"}</strong></header>
@@ -161,7 +170,7 @@ export function MoistureChart({ analysis, event, highlightedMonth, siteId, onMon
         <p>{interpretMonth(chosenMonth?.top_percentile ?? null, chosenMonth?.root_percentile ?? null)}</p>
         {event && <p>Selected drought event: began {event.drought_start}; surface recovery {event.surface_recovery ?? "not observed"}; root recovery {event.root_recovery ?? "not observed"}. Event dates come from daily, not monthly data.</p>}
       </section>
-      <div className="chart-footnote">Click to explain a month; hold and drag across the upper curve to scrub. Rainfall bars show historical NASA monthly precipitation totals when available. Percentiles are seasonal ranks, not percentages of water content; daily sustained recovery is assessed separately.</div>
+      <div className="chart-footnote">X-axis: months, 1981–2025 · Left Y-axis: seasonal rank (0–100), compared with the 1991–2020 baseline · Lower bars: monthly rainfall in mm, when available. The shaded bands and dashed lines are research screening guides, not farm safety limits. Percentiles are not percentages of soil water. Click a month to inspect its values.</div>
     </div>
   );
 }
