@@ -9,6 +9,10 @@ export type ClimateBundle = {
   history: ClimateMonth[];
   projection: ClimateMonth[];
   sources: { historical: string; future: string; documentation: string };
+  climateSource?: "nasa_nex_cmip6" | "open_meteo_highresmip";
+  climateEnsemble?: string;
+  maxProjectionYear?: number;
+  caution?: string;
   variables: { t2m: string; precip: string };
 };
 type MoisturePair = { month: string; surface: number | null; root: number | null };
