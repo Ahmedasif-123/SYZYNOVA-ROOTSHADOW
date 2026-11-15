@@ -864,3 +864,49 @@ main { max-width: none; }
 .depth-timeline-controls .depth-reset{margin-left:0}
 @media(max-width:1100px){.depth-lens-heading{flex-wrap:wrap}.depth-lens-instrument{grid-template-columns:minmax(0,1fr)}.depth-lens-readout{border-left:0;border-top:1px solid #355360}}
 @media(max-width:600px){.depth-band-meta strong{font-size:29px}.depth-band-meta strong small{display:block;font-size:10px;text-align:right}.depth-lens-profile-topline{flex-wrap:wrap}.depth-timeline-header{flex-wrap:wrap}}
+
+.forecast-mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0 20px}
+.forecast-mode-tabs button{border:1px solid #3a5861;background:#102832;color:#b9ced0;border-radius:3px;padding:17px 19px;text-align:left;font:700 15px Manrope,sans-serif}
+.forecast-mode-tabs button.active{background:#d4e8dd;color:#183a31;border-color:#d4e8dd}
+.forecast-mode-tabs button small{display:block;font:500 11px/1.6 Manrope,sans-serif;margin-top:5px;opacity:.8}
+.climate-lab{color:#e6f0e9}
+.climate-intro>span{font:600 10px "IBM Plex Mono",monospace;color:#94bdaa;letter-spacing:1.5px}
+.climate-intro h2{font:600 clamp(25px,3vw,38px)/1.15 Manrope,sans-serif;letter-spacing:-1.2px;margin:11px 0}
+.climate-intro p{font:400 13px/1.8 Manrope,sans-serif;max-width:900px;color:#b4ccc5}
+.climate-scenarios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:21px 0}
+.climate-scenarios button{background:#122d33;border:1px solid #3a5f65;border-radius:4px;padding:16px 13px;text-align:left;color:#b9d4d2}
+.climate-scenarios button.selected{background:#1d423f;border-color:#9ecbb2;box-shadow:inset 0 0 0 1px #88bea8}
+.climate-scenarios strong,.climate-scenarios span{display:block}
+.climate-scenarios strong{font:700 13px Manrope,sans-serif;color:#e0f3e5}
+.climate-scenarios span{font:600 10px "IBM Plex Mono",monospace;margin-top:8px;color:#a7c4b6}
+.climate-scenario-note{border-left:3px solid #c6b18c;padding:8px 13px;margin:14px 0 24px;font:400 12px/1.75 Manrope,sans-serif;color:#b9cdcb}
+.climate-loading,.climate-error{border:1px solid #486772;background:#102a32;padding:20px;margin:22px 0;font-size:13px;line-height:1.75;color:#d0e6e3}
+.climate-error{border-color:#bf9b68}
+.climate-error button{margin-top:8px;color:#142a27;background:#c8e4d4;border:0;padding:11px 18px;border-radius:3px}
+.climate-headline-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#3e5960;border:1px solid #3e5960;margin-bottom:15px}
+.climate-headline-metrics>div{background:#0e2830;padding:20px 14px;display:grid;align-content:start;gap:8px;min-width:0}
+.climate-headline-metrics small{font:700 9px/1.5 "IBM Plex Mono",monospace;letter-spacing:.8px;color:#a7c8c3}
+.climate-headline-metrics strong{font:650 clamp(21px,2.5vw,34px) Manrope,sans-serif;white-space:nowrap;color:#f0f4e9;letter-spacing:-1px}
+.climate-headline-metrics span{font-size:10px;line-height:1.6;color:#a8c1c3}
+.climate-chart-shell{background:#0c222a;border:1px solid #345760;padding:17px 15px 22px}
+.climate-graph-key{display:flex;align-items:center;gap:11px 17px;flex-wrap:wrap;color:#b9cfd0;font:500 11px/1.7 Manrope,sans-serif}
+.climate-key{display:inline-block;width:24px;height:4px;margin-right:6px;vertical-align:middle;background:#62d8e0}
+.climate-key.root{background:#d3b68d}
+.climate-chart-disclaimer{font-size:11px;color:#a9c3bf;line-height:1.7;margin:0}
+.climate-score-heading{margin:27px 0 15px}
+.climate-score-heading h3{font:650 22px Manrope,sans-serif;margin:0 0 9px;color:#e8eee5}
+.climate-score-heading p{font:400 12px/1.8 Manrope,sans-serif;color:#bacdca;margin:0}
+.climate-scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.climate-score{background:#0e2830;border:1px solid #365660;padding:20px;min-width:0}
+.climate-score>strong{display:block;margin-bottom:13px;color:#e8f2e9;font:700 16px Manrope,sans-serif}
+.climate-score>div{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid #294750;font-size:12px;color:#b8d1cf}
+.climate-score b{color:#f0eee2;white-space:nowrap;font-variant-numeric:tabular-nums}
+.climate-score p{font:600 11px/1.7 Manrope,sans-serif;margin:14px 0 0}
+.climate-good{color:#addbc0}.climate-caution{color:#e8c18a}
+.climate-maturity{margin:21px 0;font:400 12px/1.9 Manrope,sans-serif;color:#bbcfca}
+.climate-maturity strong{color:#e7dbc3}
+.climate-sources{display:flex;flex-wrap:wrap;gap:12px 19px;align-items:center;border-top:1px solid #34535e;padding:15px 0;font-size:11px;color:#b1c8c5}
+.climate-sources strong{color:#d6e7d8}
+.climate-sources a{color:#abd8cf;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:1100px){.climate-headline-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.forecast-mode-tabs,.climate-scores{grid-template-columns:1fr}.climate-scenarios{gap:6px}.climate-scenarios button{padding:11px 8px}.climate-scenarios strong{font-size:11px}.climate-scenarios span{font-size:9px}.climate-headline-metrics>div{padding:12px}.climate-score>div{align-items:start;flex-direction:column;gap:4px}}
