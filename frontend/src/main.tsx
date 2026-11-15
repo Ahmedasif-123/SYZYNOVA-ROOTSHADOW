@@ -9,6 +9,7 @@ import "./guided.css";
 import "./accessibility.css";
 import "./decision.css";
 import "./validation.css";
+import "./evidence-ai.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {
