@@ -1,4 +1,4 @@
-import { evaluateProbe, normalizeProbeInputs } from "../src/lib/probeVerification.ts";
+import { evaluateProbe, normalizeProbeInputs } from "../shared/probeVerification.js";
 export const maxDuration = 40;
 
 const MODEL = "gpt-6-luna";
