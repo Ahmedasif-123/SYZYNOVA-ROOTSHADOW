@@ -4,7 +4,28 @@
 
 ROOTSHADOW investigates whether apparent recovery in surface soil moisture can conceal continued root-zone water stress after drought, using NASA POWER gridded environmental data.
 
-## Current six-site release — 14 November 2026
+## Current judge-facing application — 15 November 2026
+
+**Live app:** https://rootshadow-frontend-preview.vercel.app/
+
+**Active production branch:** [`interactive-evidence-labs-2026`](https://github.com/Ahmedasif-123/SYZYNOVA-ROOTSHADOW/tree/interactive-evidence-labs-2026). The `main` branch and older static GitHub Pages material are **not** the current Vercel production release.
+
+**Official challenge:** [NASA Space Apps 2026 — Be An Earth System Trend Detective!](https://www.spaceappschallenge.org/2026/challenges/earth-system-trend-detective/).
+
+**Scientific scope:** 97 **selected model points**, not 97 countries or field observations, with NASA POWER/MERRA-2 histories from 1981–2025. The original six historical research cases produced 158 candidate drought episodes and 73 surface-first completed recoveries (46.2% **in those six points only**). These results do not establish that the observed lag exceeds normal smoothing within the shared NASA land model, nor demonstrate a global agricultural impact.
+
+**Built features:** geographic atlas, historical depth-aware investigation and statistical sensitivity analysis, interactive research summaries, Decision Desk, field-probe verification prototype, NOAA Validation Lab, source-grounded Evidence AI, and an experimental climate-aware versus historical-only ML comparison. The public ML interface exposes **5- and 10-year illustrative scenarios**, not verified forecast skill. The climate model's 2016–2025 holdout used **observed historical weather**, not a predicted weather forecast; NASA CMIP6 projections are used where available and an explicitly labeled Open-Meteo HighResMIP alternative otherwise.
+
+**Independent evidence:** Four NOAA USCRN probe stations near Goodwell and Stillwater (Oklahoma), **not 97-site independent validation**. Across the four pilot stations, the model mismatch screen's measured recall was 6.7–10.5% and precision 15.8–27.8%. The model must not be presented as a reliable field alert. The Goodwell surrogate null model provides a descriptive lag comparison but is not proof of causation or significance.
+
+**Field action prototype:** Decision Desk lets users enter actual moisture readings at 30 and 60 cm, farm-supplied local targets and a sensor margin. The software returns a **conditional measured-depth assessment** and verification steps, but it **does not determine safe irrigation changes**. Any optional AI explanation is subordinate to the deterministic verdict. Field readings are locally saved only on explicit request; the project has no centrally collected field-validation dataset.
+
+**Reproducibility:** `frontend/npm run build` performs snapshot integrity verification, the probe-rule boundary tests, TypeScript checking and the Vite build; `frontend/npm run test:e2e` runs Playwright. API integrations run as Vercel Node endpoints and read `OPENAI_API_KEY` only on the server. A configured endpoint is not proof that paid API responses work; check the separate live POST smoke workflow.
+
+**Data and citations:** [NASA POWER](https://power.larc.nasa.gov/), [NOAA USCRN](https://www.ncei.noaa.gov/access/crn/products.html), [Independent pilot protocol](docs/NOAA_GROUND_VALIDATION_PROTOCOL_2026-11-15.md), [Research six-site audit](docs/SIX_SITE_RELEASE_AUDIT_2026-11-14.md). Full NASA POWER dataset attribution is required for the competition submission.
+
+## Historical six-site release — 14 November 2026 (superseded)
+
 
 **Judge-facing version:** the `farm-decision-clarity-six-sites` branch includes a guided, six-point React research workspace; a completed static build is available in the `gh-pages` branch. The six published NASA POWER/MERRA-2 model-derived analysis snapshots cover **1981–2025**, totaling **98,616 site-days**, **158 candidate drought episodes**, and **73 completed surface-first recovery episodes**. Argentina and South Africa are included. See [six-site research report](docs/EXPLORATORY_6_SITE_EXTENSION.md) and [release audit](docs/SIX_SITE_RELEASE_AUDIT_2026-11-14.md).
 
