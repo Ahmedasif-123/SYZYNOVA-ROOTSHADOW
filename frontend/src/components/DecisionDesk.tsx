@@ -132,7 +132,7 @@ export default function DecisionDesk({ selected, onSelect, onInvestigate }: Prop
         <section className="desk-site-experiment" aria-label="Selected location what-if outcome">
           <span className="desk-eyebrow">YOUR RULE / {place.name.toUpperCase()}</span>
           <h3>{selectedScenario?.state === "matched" ? "This model point meets the selected rule" : selectedScenario?.state === "not_matched" ? "This model point does not meet the selected rule" : "Not enough recent evidence to classify this point"}</h3>
-          <strong>{selectedScenario?.state === "unavailable" || !selectedScenario ? "Unavailable" : selectedScenario.matchedDays + " of " + selectedScenario.validDays + " days satisfied both conditions"}</strong>
+          <strong>{selectedScenario?.state === "unavailable" || !selectedScenario ? "Unavailable" : selectedScenario.matchedDays + " of " + selectedScenario.validDays + (selectedScenario.validDays === 1 ? " day" : " days") + " satisfied both conditions"}</strong>
           <p>{originalScenario(scenario) ? "Showing the original seven-day mismatch rule." : "You changed the research screening rules. This is an educational comparison, not a recalculated or independently validated drought-recovery claim."}</p>
         </section>
         <section className="desk-evidence" aria-label="Selected location evidence">
