@@ -40,3 +40,22 @@
 .vld-month-results strong{font:500 27px Georgia,serif;display:block;color:#28543a}
 .vld-month-results small{font-size:10px;line-height:1.5;color:#576c58}
 @media(max-width:760px){.desk-experiment-controls{grid-template-columns:1fr;gap:15px}.desk-experiment-results strong{font-size:27px}.desk-experiment-results>div{padding:10px}.vld-confusion-cell{padding:12px}.vld-month-results{grid-template-columns:1fr}}
+
+
+/* Light-background readability refinement */
+:where(.explorer-page,.summary-page,.method-page,.desk-page,.vld-page,.rs-editorial,.rs-conclusion){--paper-muted:#42584b;--paper-label:#365545}
+.rs-editorial :is(.rs-kicker,.rs-overline,.rs-topline,.rs-hero-foot,.rs-side-number,.rs-findings-labels,.rs-find-place small,.rs-finding-limit,.rs-signature),
+.rs-conclusion :is(.rs-conclusion-head,.rs-conclusion-plain,.rs-conclusion-aside-label),
+.explorer-page :is(.explorer-header p,.explorer-header .eyebrow,.metric-label,.metric-note,.explorer-endnote,.selection-caption),
+.summary-page :is(.summary-heading p,.summary-selector>label),
+.method-page :is(.method-intro p),
+.desk-page :is(.desk-heading p,.desk-method p,.desk-quick-guide span,.desk-signal-key),
+.vld-page :is(.vld-head p,.vld-coverage p,.vld-footnote){color:var(--paper-muted,#42584b)}
+.explorer-page :is(.explorer-toolbar label,.toolbar-period span,.toolbar-period small),
+.rs-editorial :is(.rs-finding-interpretation>span,.rs-soil-figure figcaption),
+.vld-page :is(.vld-overline),
+.desk-page :is(.desk-kicker,.desk-eyebrow){color:var(--paper-label,#365545)}
+.rs-editorial :is(.rs-hero-intro,.rs-narrative-body>p:not(.rs-overline),.rs-findings-header>p),
+.rs-conclusion :is(.rs-conclusion-lead,.rs-outcome-details p),
+.vld-page .vld-coverage-result span{color:#314c3e}
+.rs-solution .rs-overline,.rs-solution .rs-solution-notes p{color:#c8dccd}
