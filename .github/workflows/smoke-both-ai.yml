@@ -1,0 +1,60 @@
+name: Smoke test production OpenAI models (one call each)
+on:
+  push:
+    branches: [interactive-evidence-labs-2026]
+    paths:
+      - ".github/workflows/smoke-both-ai.yml"
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: POST one grounded request per production AI endpoint
+        run: |
+          python - <<'PY'
+          import json
+          import urllib.error
+          import urllib.request
+
+          base = "https://rootshadow-frontend-preview.vercel.app"
+          endpoints = [
+              ("/api/ask", "gpt-6-astra", {
+                  "siteId": "us_sgp_goodwell",
+                  "perspective": "scientist",
+                  "question": "What does the NOAA pilot establish about missed model mismatch flags?"
+              }),
+              ("/api/probe-explain", "gpt-6-luna", {
+                  "siteId": "us_sgp_goodwell",
+                  "modelCategory": "mismatch",
+                  "perspective": "engineer",
+                  "measurements": {
+                      "before30": "10", "after30": "25", "threshold30": "20",
+                      "before60": "10", "after60": "27", "threshold60": "20",
+                      "tolerance": "1"
+                  }
+              })
+          ]
+          for path, expected_model, data in endpoints:
+              request = urllib.request.Request(
+                  base + path,
+                  data=json.dumps(data).encode("utf-8"),
+                  method="POST",
+                  headers={"Content-Type": "application/json", "Accept": "application/json"}
+              )
+              try:
+                  with urllib.request.urlopen(request, timeout=80) as reply:
+                      payload = json.load(reply)
+                      status = reply.status
+              except urllib.error.HTTPError as error:
+                  status = error.code
+                  payload = json.loads(error.read().decode("utf-8") or "{}")
+              print(json.dumps({"endpoint": path, "http": status, "model": payload.get("model"), "result": payload.get("status"), "provider_status": payload.get("provider_status"), "error": payload.get("error")}))
+              assert status == 200, path + " did not respond successfully"
+              assert payload.get("model") == expected_model, path + " returned unexpected model"
+              assert payload.get("status") == ("answered" if path == "/api/ask" else "explained"), path + " did not return completed AI output"
+          PY
