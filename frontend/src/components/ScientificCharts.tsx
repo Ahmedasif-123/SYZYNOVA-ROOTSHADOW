@@ -67,7 +67,7 @@ function Chart({ option, className = "", ariaLabel, onSelectIndex, lastIndex = 0
     const old = renderer.getOption()?.dataZoom as Array<{ start?: number; end?: number }> | undefined;
     const existing = old?.[0];
     const retain = priorZoom.current === zoomKey && existing?.start !== undefined && existing?.end !== undefined;
-    renderer.setOption(option, { notMerge: true, lazyUpdate: false, silent: true });
+    renderer.setOption({ ...option, animation: false, animationDuration: 0, animationDurationUpdate: 0 }, { notMerge: true, lazyUpdate: false, silent: true });
     if (retain && existing?.start !== undefined && existing?.end !== undefined) renderer.dispatchAction({ type: "dataZoom", start: existing.start, end: existing.end });
     priorZoom.current = zoomKey;
   }, [option, zoomKey]);
