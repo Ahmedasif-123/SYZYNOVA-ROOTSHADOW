@@ -1,0 +1,42 @@
+.desk-experiment,.vld-experiment{background:#fffcf4;border:1px solid #c9d5c5;padding:23px;margin:0 0 20px;color:#2e4d38}
+.desk-experiment-head,.vld-experiment-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.desk-experiment h2,.vld-experiment h3{font:500 clamp(23px,2.1vw,31px)/1.2 Georgia,serif;color:#204a33;margin:8px 0 12px}
+.desk-experiment p,.vld-experiment p{color:#506b58;font-size:12px;line-height:1.75;max-width:730px}
+.desk-experiment-head button,.vld-experiment button{border:1px solid #8aa792;color:#244a32;background:#fff;padding:9px 13px;font-size:11px;font-weight:700}
+.desk-experiment-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:20px 0}
+.desk-experiment-controls label{display:flex;flex-direction:column;gap:9px;min-width:0}
+.desk-experiment-controls label>span{color:#506952;text-transform:uppercase;font:700 10px/1.5 "IBM Plex Mono",monospace}
+.desk-experiment-controls label>strong{font:500 27px Georgia,serif;color:#1c4933}
+.desk-experiment-controls input[type=range],.vld-month-control input[type=range]{width:100%;accent-color:#32674b;cursor:pointer}
+.desk-experiment-presets{display:flex;gap:7px;flex-wrap:wrap}
+.desk-experiment-presets button{border:1px solid #cad6cb;color:#315940;background:#f7faf6;padding:9px 12px;font-size:11px}
+.desk-experiment-presets button[aria-pressed=true]{background:#234c35;color:#fff;border-color:#234c35}
+.desk-experiment-results{margin-top:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid #cbd8cb}
+.desk-experiment-results>div{padding:18px;border-right:1px solid #cbd8cb;background:#f6faf4}.desk-experiment-results>div:last-child{border-right:0}
+.desk-experiment-results strong{display:block;font:500 34px Georgia,serif;color:#24543a}
+.desk-experiment-results small{font-size:11px;line-height:1.55;color:#4e6654;display:block;margin-top:8px}
+.desk-experiment-note{font-size:11px!important;padding-top:11px;border-top:1px solid #d7e1d4;max-width:none!important}
+.desk-site-experiment{padding:19px 22px;margin-bottom:15px;border:1px solid #c9d6ca;background:#f5f9f2}
+.desk-site-experiment h3{color:#26513b;font:500 22px Georgia,serif;margin:7px 0 11px}
+.desk-site-experiment strong{font-size:14px;color:#214a36}
+.desk-site-experiment p{font-size:11px;color:#48634f;line-height:1.7;margin:9px 0 0}
+.vld-experiment{margin:20px 0;background:#f7faf3}
+.vld-mode-buttons{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.vld-mode-buttons button{padding:10px 13px;font-size:11px;border:1px solid #bad0bd;background:#fff;color:#385a42}
+.vld-mode-buttons button[aria-pressed=true]{background:#264e37;color:white;border-color:#264e37}
+.vld-confusion-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:19px 0}
+.vld-confusion-cell{padding:15px;background:#edf4e9;border:1px solid #cbdac7;min-width:0}
+.vld-confusion-cell.false{background:#f8ede6;border-color:#e0cbbd}
+.vld-confusion-cell strong{display:block;font:500 33px Georgia,serif;color:#27543a;margin:6px 0}
+.vld-confusion-cell.false strong{color:#7b4c34}
+.vld-confusion-cell span{display:block;font-size:12px;color:#344f3e;font-weight:650}
+.vld-confusion-cell small{display:block;color:#637765;font-size:10px;line-height:1.6;margin-top:8px}
+.vld-cm-metrics{display:flex;flex-wrap:wrap;gap:9px}
+.vld-cm-metrics span{background:#e8eee3;color:#2d5838;padding:8px 11px;font-size:11px}
+.vld-month-control{margin-top:21px;border-top:1px solid #d1dbcd;padding-top:16px;display:flex;flex-direction:column;gap:10px}
+.vld-month-control label{font-size:11px;color:#3b5d43;font-weight:700}
+.vld-month-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.vld-month-results>div{padding:13px;background:#eff4eb}
+.vld-month-results strong{font:500 27px Georgia,serif;display:block;color:#28543a}
+.vld-month-results small{font-size:10px;line-height:1.5;color:#576c58}
+@media(max-width:760px){.desk-experiment-controls{grid-template-columns:1fr;gap:15px}.desk-experiment-results strong{font-size:27px}.desk-experiment-results>div{padding:10px}.vld-confusion-cell{padding:12px}.vld-month-results{grid-template-columns:1fr}}
