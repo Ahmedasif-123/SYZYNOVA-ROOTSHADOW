@@ -824,3 +824,28 @@ main { max-width: none; }
 .rs-graph-interpretation{margin:0 0 11px;color:#c3dad8;font-size:11.5px;line-height:1.65}
 .rs-graph-interpretation strong{color:#f3e2bf}
 @media(max-width:730px){.rs-graph-guide{gap:7px 12px;font-size:10px}.rs-graph-interpretation{font-size:11px}}
+
+.forecast-lab{padding:34px 42px 72px;max-width:1450px;margin:0 auto;color:#e4eeeb}
+.forecast-heading>span{color:#99c5b4;font:600 11px "IBM Plex Mono",monospace;letter-spacing:.1em}
+.forecast-heading h1{font:600 clamp(30px,4vw,52px)/1.12 Manrope,sans-serif;letter-spacing:-.045em;margin:14px 0}
+.forecast-heading p{font-size:14px;line-height:1.8;max-width:760px;color:#b8cfca}
+.forecast-warning{margin:28px 0 23px;padding:19px 22px;border:1px solid #b1966d;background:#322c24}
+.forecast-warning strong{font:700 11px "IBM Plex Mono",monospace;color:#f0d7a6}
+.forecast-warning p{font-size:12px;line-height:1.8;color:#e3d3ba;margin:8px 0 0}
+.forecast-controls{display:grid;grid-template-columns:1fr 1fr 1.4fr 1fr;gap:12px;margin-bottom:22px}
+.forecast-controls label{font:600 10px "IBM Plex Mono",monospace;color:#a3c7c3;display:grid;gap:8px}
+.forecast-controls select,.forecast-controls input{width:100%;min-width:0;background:#102932;border:1px solid #42606a;border-radius:4px;padding:12px 10px;color:#f1f5f0;font:500 12px Manrope,sans-serif}
+.forecast-body{background:#10272e;border:1px solid #29454e;padding:25px}
+.forecast-subtitle{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.forecast-subtitle strong{font:600 18px Manrope,sans-serif}
+.forecast-subtitle span{font-size:11px;color:#aec4c3}
+.forecast-chart{width:100%;height:420px;margin:14px 0}
+.forecast-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.forecast-score{border:1px solid #36555a;padding:15px;background:#0b2029;display:grid;gap:7px;font-size:12px}
+.forecast-score strong{color:#f1f1e9}
+.forecast-score span{color:#bdd8d4}
+.forecast-score small{color:#a0b9bb;line-height:1.6}
+.forecast-meaning{margin:20px 0 0;font-size:12px;line-height:1.8;color:#c7ddd7}
+.forecast-disclaimer{margin:17px 0;color:#aec8c3;font-size:11px;line-height:1.9}
+@media(max-width:900px){.forecast-controls{grid-template-columns:1fr 1fr}.forecast-lab{padding:26px 21px 60px}}
+@media(max-width:600px){.forecast-controls,.forecast-scores{grid-template-columns:1fr}.forecast-chart{height:340px}.forecast-body{padding:14px}}
