@@ -1,0 +1,41 @@
+name: Smoke test gated AI production endpoint
+on:
+  push:
+    branches: [grounded-ai-scientific-advisor-2026]
+    paths:
+      - '.github/workflows/smoke-ai-api.yml'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check real deployed API route without secrets or OpenAI charges
+        run: |
+          python - <<'PY'
+          import json
+          import urllib.error
+          import urllib.request
+
+          origin = "https://rootshadow-frontend-preview.vercel.app/api/ask"
+          with urllib.request.urlopen(urllib.request.Request(origin, headers={"Accept": "application/json"}), timeout=25) as response:
+              body = json.load(response)
+              assert response.status == 200
+              assert body["model"] == "gpt-6-astra"
+              assert body["requires_access_code"] is True
+              assert isinstance(body["enabled"], bool)
+              print({"http_status": response.status, "model": body["model"], "configured": body["enabled"]})
+
+          payload = json.dumps({"siteId":"us_sgp_goodwell","perspective":"scientist","question":"What do NOAA probes say about mismatch detection?","accessCode":"incorrect-test-code"}).encode()
+          req = urllib.request.Request(origin, data=payload, method="POST", headers={"Content-Type":"application/json","Accept":"application/json"})
+          try:
+              with urllib.request.urlopen(req, timeout=25) as response:
+                  raise AssertionError("The protected endpoint unexpectedly accepted an unauthenticated request")
+          except urllib.error.HTTPError as error:
+              assert error.code in (401, 503), "Unexpected status from protected server-side AI endpoint: " + str(error.code)
+              print({"unauthenticated_post_http_status":error.code,"protected":True})
+          PY
