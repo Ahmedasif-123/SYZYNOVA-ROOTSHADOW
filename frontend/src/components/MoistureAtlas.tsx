@@ -70,7 +70,7 @@ export default function MoistureAtlas({ selected, onSelect, layer }: Props) {
   return <section className="moisture-atlas" aria-label={label(layer) + " model-point map"}>
     <div className="moisture-atlas-heading">
       <div><span className="moisture-atlas-eyebrow">NASA POWER / MERRA-2 · SELECTED GRID POINTS</span><h3>{label(layer)}</h3></div>
-      <span className="moisture-atlas-count">{seen} / 97 readings{layer === "mismatch" ? ` · ${mismatches} screen-positive` : ""}</span>
+      <span className="moisture-atlas-count">{seen} / {sites.length} readings{layer === "mismatch" ? ` · ${mismatches} screen-positive` : ""}</span>
     </div>
     <div className="moisture-atlas-controls">
       <button type="button" className={!showingHistorical ? "active" : ""} onClick={() => setPeriod("latest")} aria-pressed={!showingHistorical}><RefreshCcw size={13}/> Latest verified</button>
@@ -115,6 +115,6 @@ export default function MoistureAtlas({ selected, onSelect, layer }: Props) {
       <div><small>{layer === "mismatch" ? "SCREENING STATUS" : "CONTEXT"}</small><strong>{active.text}</strong></div>
       <p>{current?.rain === null || current?.rain === undefined ? "Rainfall unavailable for this selection." : showingHistorical ? "Modeled rainfall this month: "+current.rain.toFixed(1)+" mm." : "Modeled rainfall over the selected recent 7-day window: "+current.rain.toFixed(1)+" mm."} {layer === "mismatch" ? "This threshold contrast is not a confirmed drought-recovery event and does not measure crop loss." : "Percentiles are seasonal ranks, not percentage water content."}</p>
     </div>
-    <div className="moisture-atlas-foot"><Database size={13}/><span>97 sampled MERRA-2 grid points, not a continuous global raster or in-situ sensors.</span><span>{showingHistorical ? "1981–2025 historical model archive" : "Last source check "+(latest?.retrieval_checked_utc.slice(0,16).replace("T"," ") ?? "unknown")+" UTC"}</span></div>
+    <div className="moisture-atlas-foot"><Database size={13}/><span>{sites.length} sampled MERRA-2 grid points, not a continuous global raster or in-situ sensors.</span><span>{showingHistorical ? "1981–2025 historical model archive" : "Last source check "+(latest?.retrieval_checked_utc.slice(0,16).replace("T"," ") ?? "unknown")+" UTC"}</span></div>
   </section>;
 }
