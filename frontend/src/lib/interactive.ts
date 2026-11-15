@@ -21,17 +21,19 @@ function valid(value: number | null | undefined): value is number {
 
 export function evaluateScenario(item: ReviewItem, scenario: Scenario): ScenarioResult {
   const n = scenario.consecutiveDays;
+  const latestDate = item.latestDate;
+  const observation = item.latestObservation;
   const empty: ScenarioResult = { state: "unavailable", matchedDays: 0, validDays: 0, consecutiveDays: n };
-  if (item.category === "unavailable" || !item.latestDate || !item.latestObservation ||
+  if (item.category === "unavailable" || !latestDate || !observation ||
       !Number.isInteger(n) || n < 1 || n > 7 ||
       !Number.isFinite(scenario.surfaceMin) || !Number.isFinite(scenario.rootBelow) ||
       scenario.surfaceMin < 0 || scenario.surfaceMin > 100 ||
       scenario.rootBelow < 0 || scenario.rootBelow > 100) return empty;
 
-  const time = Date.parse(item.latestDate + "T00:00:00Z");
+  const time = Date.parse(latestDate + "T00:00:00Z");
   if (!Number.isFinite(time)) return empty;
-  const rows = [...item.latestObservation.history_45d]
-    .filter(row => row.date <= item.latestDate)
+  const rows = [...observation.history_45d]
+    .filter(row => row.date <= latestDate)
     .sort((a, b) => a.date.localeCompare(b.date))
     .slice(-n);
   if (rows.length !== n) return empty;
