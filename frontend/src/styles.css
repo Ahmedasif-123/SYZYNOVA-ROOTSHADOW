@@ -849,3 +849,18 @@ main { max-width: none; }
 .forecast-disclaimer{margin:17px 0;color:#aec8c3;font-size:11px;line-height:1.9}
 @media(max-width:900px){.forecast-controls{grid-template-columns:1fr 1fr}.forecast-lab{padding:26px 21px 60px}}
 @media(max-width:600px){.forecast-controls,.forecast-scores{grid-template-columns:1fr}.forecast-chart{height:340px}.forecast-body{padding:14px}}
+
+.depth-lens,.guided-depth-tool,.guided-step-content{box-sizing:border-box;min-width:0;max-width:100%}
+.depth-lens{width:100%;overflow:hidden}
+.depth-lens-heading,.depth-lens-heading>div{min-width:0}
+.depth-lens-source{flex:0 1 auto;min-width:0;flex-wrap:wrap;overflow-wrap:anywhere}
+.depth-lens-instrument{width:100%;min-width:0;grid-template-columns:minmax(0,1fr) minmax(235px,28%)}
+.depth-lens-profile,.depth-lens-readout,.depth-lens-timeline,.depth-timeline-header,.depth-timeline-controls{min-width:0;max-width:100%}
+.depth-lens-readout{overflow-wrap:anywhere}
+.depth-readout-delta{font-variant-numeric:tabular-nums;overflow-wrap:normal;white-space:normal}
+.depth-readout-delta small{display:block;margin-top:4px;line-height:1.5}
+.depth-timeline-slider{box-sizing:border-box;max-width:100%}
+.depth-timeline-controls{flex-wrap:wrap}
+.depth-timeline-controls .depth-reset{margin-left:0}
+@media(max-width:1100px){.depth-lens-heading{flex-wrap:wrap}.depth-lens-instrument{grid-template-columns:minmax(0,1fr)}.depth-lens-readout{border-left:0;border-top:1px solid #355360}}
+@media(max-width:600px){.depth-band-meta strong{font-size:29px}.depth-band-meta strong small{display:block;font-size:10px;text-align:right}.depth-lens-profile-topline{flex-wrap:wrap}.depth-timeline-header{flex-wrap:wrap}}
