@@ -35,16 +35,21 @@ function continuousWeek(history: AtlasRecentDay[], asOf: string): AtlasRecentDay
 }
 
 function recentIsStale(siteDate: string, atlasDate: string): boolean {
-  const days = (Date.parse(atlasDate + "T00:00:00Z") - Date.parse(siteDate + "T00:00:00Z")) / 86400000;
-  return !Number.isFinite(days) || days > 7 || days < 0;
+  const snapshotTime = Date.parse(atlasDate + "T00:00:00Z");
+  const siteTime = Date.parse(siteDate + "T00:00:00Z");
+  const sinceSnapshotDays = (Date.now() - snapshotTime) / 86400000;
+  const siteLagDays = (snapshotTime - siteTime) / 86400000;
+  return !Number.isFinite(sinceSnapshotDays) || !Number.isFinite(siteLagDays) ||
+    sinceSnapshotDays > 10 || sinceSnapshotDays < -1 ||
+    siteLagDays > 7 || siteLagDays < 0;
 }
 
 export function reviewItem(site: Site, latest: AtlasLatest | null): ReviewItem {
   const raw = latest?.sites[site.id] ?? null;
-  const top = raw && available(raw.surface_percentile) ? raw.surface_percentile : null;
-  const root = raw && available(raw.root_percentile) ? raw.root_percentile : null;
-  const week = raw ? continuousWeek(raw.history_45d ?? [], raw.date) : null;
   const stale = raw && latest ? recentIsStale(raw.date, latest.latest_observation_date) : true;
+  const top = !stale && raw && available(raw.surface_percentile) ? raw.surface_percentile : null;
+  const root = !stale && raw && available(raw.root_percentile) ? raw.root_percentile : null;
+  const week = !stale && raw ? continuousWeek(raw.history_45d ?? [], raw.date) : null;
   const dryDays7 = week ? week.filter(d => (d.root_percentile ?? 100) < 40).length : null;
   const mismatchDays7 = week ? week.filter(d => (d.surface_percentile ?? -1) >= 40 && (d.root_percentile ?? 100) < 40).length : null;
   let category: ReviewCategory = "unavailable";
@@ -61,7 +66,7 @@ export function reviewItem(site: Site, latest: AtlasLatest | null): ReviewItem {
     latestDate: raw?.date ?? null,
     surface: top,
     root,
-    totalRain7: raw?.precip_7d_mm ?? null,
+    totalRain7: !stale ? raw?.precip_7d_mm ?? null : null,
     sevenDayComplete: week !== null,
     dryDays7,
     mismatchDays7,
@@ -165,7 +170,7 @@ export function evidenceExport(item: ReviewItem, context: ReturnType<typeof hist
     limitations: [
       "The 97 points are sampled gridded model estimates, not a continuous farm- or district-scale map.",
       "A low percentile is a relative historical rank, not percent water content or crop stress.",
-      "No independent in-situ soil-probe validation or calibrated forecast is available.",
+      "Independent NOAA soil-probe evidence is available for two Oklahoma model locations only; broader field validation and calibrated forecasts are not available.",
       "MERRA-2 does not resolve farm irrigation practices; do not infer irrigation requirements or water savings.",
       "The seven-day mismatch describes contemporaneous modeled state, not the separate historical sustained recovery-event definition."
     ]

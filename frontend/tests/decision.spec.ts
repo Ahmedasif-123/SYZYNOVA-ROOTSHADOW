@@ -8,6 +8,7 @@ async function openDesk(page: Page) {
 }
 
 test.beforeEach(async ({ page }) => {
+  await page.clock.setFixedTime(new Date("2026-11-15T06:00:00Z"));
   await page.route("https://raw.githubusercontent.com/**", route => route.abort());
   await page.route("https://fonts.googleapis.com/**", route => route.abort());
   await page.route("https://fonts.gstatic.com/**", route => route.abort());
@@ -29,8 +30,8 @@ test("selected sites switch both source readings and historical context without 
   await expect(page.locator(".desk-point")).toHaveCount(1);
   await page.locator(".desk-point").click();
   await expect(page.locator(".desk-detail-head h2")).toHaveText("Doha");
-  await expect(page.locator(".desk-readings")).toContainText("76.1th");
-  await expect(page.locator(".desk-readings")).toContainText("0.0th");
+  await expect(page.locator(".desk-readings")).toContainText("76.1 / 100");
+  await expect(page.locator(".desk-readings")).toContainText("0.0 / 100");
   await expect(page.locator(".desk-history-grid")).toBeVisible();
   await expect(page.locator(".desk-interpretation")).toContainText("model");
   await page.getByRole("button", { name: "Agricultural engineer" }).click();
@@ -63,4 +64,22 @@ test("decision desk stays navigable and avoids horizontal overflow on mobile", a
   await expect(page.locator(".desk-point")).toHaveCount(97);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   expect(overflow).toBeLessThanOrEqual(2);
+});
+
+test("original six filter works without hiding other geographic regions", async ({ page }) => {
+  await openDesk(page);
+  await page.getByRole("combobox", { name: "Filter locations by region" }).selectOption("Original research sites");
+  await expect(page.locator(".desk-point")).toHaveCount(6);
+  await page.getByRole("combobox", { name: "Filter locations by region" }).selectOption("all");
+  await expect(page.locator(".desk-point")).toHaveCount(97);
+});
+
+test("stale source snapshots are refused instead of presenting old readings as current", async ({ page }) => {
+  await page.clock.setFixedTime(new Date("2026-12-14T06:00:00Z"));
+  await openDesk(page);
+  await expect(page.locator(".desk-point")).toHaveCount(97);
+  await expect(page.locator(".desk-metrics")).toContainText("0");
+  await expect(page.locator(".desk-observation")).toContainText("All readings are unavailable or too old");
+  await expect(page.locator(".desk-readings")).toContainText("Unavailable");
+  await expect(page.locator(".desk-point-badge").first()).toHaveText("Observation unavailable");
 });
