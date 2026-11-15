@@ -8,6 +8,7 @@ import "./conclusion.css";
 import "./guided.css";
 import "./accessibility.css";
 import "./decision.css";
+import "./validation.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {

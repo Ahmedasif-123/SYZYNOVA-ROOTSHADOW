@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangle, ArrowUpRight, BarChart3, ClipboardCheck, Database, Download, ExternalLink, MapPin, ShieldAlert } from "lucide-react";
+import { AlertTriangle, ArrowUpRight, ClipboardCheck, Database, Download, ExternalLink, MapPin, ShieldAlert } from "lucide-react";
 
 type Matrix = {
   n: number;
