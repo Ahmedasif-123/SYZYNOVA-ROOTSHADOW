@@ -25,7 +25,7 @@ test.beforeEach(async ({ page }) => {
 
 test("homepage clearly explains model-based historical evidence", async ({ page }, testInfo) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /See what the soil|The drought beneath|ROOTSHADOW/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Better evidence for/i })).toBeVisible();
   await expect(page.locator(".earth-stage")).toBeVisible();
   await expect(page.locator("body")).toContainText("NASA");
   await page.screenshot({ path: testInfo.outputPath("homepage.png"), fullPage: true });
