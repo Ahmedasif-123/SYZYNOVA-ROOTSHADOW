@@ -1,4 +1,5 @@
 import { useState } from "react";
+import GroundCalibrationPanel from "./GroundCalibrationPanel";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, ArrowUpRight, ClipboardCheck, Database, Download, ExternalLink, MapPin, ShieldAlert } from "lucide-react";
 
@@ -174,6 +175,7 @@ export default function ValidationLab() {
           <div className="vld-trace"><span className="vld-overline">SOURCE TRACE</span><div><Database size={16}/><strong>{active.noaa_source_records.length} NOAA yearly source files</strong></div><div><ClipboardCheck size={16}/><strong>{active.ground_reference_valid_days.toLocaleString("en-US")} valid reference-profile days</strong></div><p>Each downloaded NOAA station-year source has a recorded SHA-256 checksum. Failed year requests are also recorded.</p><a href={active.noaa_source_records.at(-1)?.url} target="_blank" rel="noreferrer">Inspect NOAA raw station file <ExternalLink size={15}/></a></div>
         </section>
       </div>
+      <GroundCalibrationPanel/>
       <section className="vld-protocol" aria-label="Ground validation scientific protocol">
         <div><span className="vld-overline">04 / METHODS AND SCIENTIFIC STATUS</span><h2>Reproducible, falsifiable, limited.</h2><p>We computed separate seasonal percentile reference distributions for NASA modeled surface and root-zone moisture and NOAA measured 5 cm and weighted 0–100 cm soil profiles. The reference is fixed to <strong>{report.reference_window}</strong>. Only the untouched <strong>{report.holdout_window}</strong> period is scored.</p><p>For each station, we report both successes and failures using confusion counts, recall, precision, false-positive rate, and rank correlation. Missing probe depth values are not interpolated.</p></div>
         <div className="vld-protocol-right"><h3>Current release decision</h3><p>Keep the 97-location atlas as a <strong>research screen</strong>. Do not represent surface–root model mismatches as confirmed drought, validated early warning, or direct farm management guidance.</p><p>Next: independently benchmark further regions, study disagreements, and only then evaluate calibrated AI correction against held-out ground observations.</p><button type="button" onClick={download}><Download size={17}/> Download complete ground-validation record</button></div>
