@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, ArrowUpRight, ClipboardCheck, Database, Download, ExternalLink, MapPin, ShieldAlert } from "lucide-react";
+import { sites, researchSites, productSites, siteRegions, type SiteId } from "../lib/sites";
 
 type Matrix = {
   n: number;
@@ -122,12 +123,14 @@ function EvidenceBars({ rows }: { rows: MonthRecord[] }) {
 
 export default function ValidationLab() {
   const [stationId, setStationId] = useState("OK_Goodwell_2_E");
+  const [coverageSite, setCoverageSite] = useState<SiteId>("us_sgp_goodwell");
   const [detector, setDetector] = useState<"model_root_low_percentile" | "surface_only_low_percentile" | "model_mismatch_vs_probe_mismatch">("model_mismatch_vs_probe_mismatch");
   const [matrixDisplay, setMatrixDisplay] = useState<"counts" | "share">("counts");
   const [monthIndex, setMonthIndex] = useState(-1);
   const query = useQuery({ queryKey: ["rootshadow-noaa-probe-validation"], queryFn: ({ signal }) => getReport(signal), staleTime: Infinity, retry: 1 });
   const report = query.data;
   const active = report?.stations.find(s => s.station === stationId) ?? report?.stations[0];
+  const pairedStations = report?.stations.filter(station => station.model_site === coverageSite) ?? [];
   const holdoutDays = 1461;
   const matrix = active?.predictors[detector];
   const monthRows = active?.monthly_holdout_evidence ?? [];
@@ -146,12 +149,13 @@ export default function ValidationLab() {
   }
   return <section className="vld-page" aria-label="Independent soil probe validation lab">
     <header className="vld-head">
-      <div><span className="vld-overline"><ClipboardCheck size={15}/> ROOTSHADOW / INDEPENDENT EVIDENCE</span><h1>Can we trust<br/><em>the model?</em></h1><p>We tested the same soil-moisture screening idea against real NOAA ground probes, not just another reanalysis. The goal is to discover where the screen works, where it fails, and when it should not guide a decision.</p></div>
+      <div><span className="vld-overline"><ClipboardCheck size={15}/> ROOTSHADOW / INDEPENDENT EVIDENCE</span><h1>What has actually<br/><em>been validated?</em></h1><p>All {sites.length} locations have NASA model histories. Only two locations currently have independent NOAA field-probe comparisons, using four sensor stations. Here we show the measured evidence and where coverage is missing.</p></div>
       <div className="vld-status"><ShieldAlert size={25}/><div><strong>Not ready for field decisions</strong><span>This is a retrospective four-station Oklahoma research pilot. It does not validate the global atlas or any irrigated Qatari farm.</span></div></div>
     </header>
     {query.isPending && <div className="vld-loading" role="status">Loading versioned NOAA ground-observation evidence…</div>}
     {query.isError && <div className="vld-loading" role="alert">Independent validation evidence unavailable: {query.error.message}. No measurements have been substituted.</div>}
     {report && active && <>
+      <section className="vld-coverage" aria-label="Independent validation coverage across all model locations"><div><span className="vld-overline">GLOBAL COVERAGE / RESEARCH STATUS</span><h2>{sites.length} NASA model locations · 2 locations with NOAA probes</h2><p>These are two different datasets. Historical model screening covers all {sites.length} locations; independent ground-probe validation covers only Goodwell and Stillwater. A location without probe data is <strong>not validated</strong>, not confirmed safe or unsafe.</p></div><label>CHECK A MODEL LOCATION<select value={coverageSite} onChange={event => setCoverageSite(event.target.value as SiteId)}><optgroup label="Six featured research sites">{researchSites.map(item => <option key={item.id} value={item.id}>{item.name} · {item.country}</option>)}</optgroup>{siteRegions.map(region => <optgroup key={region} label={region}>{productSites.filter(item => item.region === region).map(item => <option key={item.id} value={item.id}>{item.name} · {item.country}</option>)}</optgroup>)}</select></label><div className="vld-coverage-result"><strong>{pairedStations.length ? `${pairedStations.length} independent NOAA station${pairedStations.length === 1 ? "" : "s"} paired with this location` : "Independent field validation not available for this location"}</strong><span>{pairedStations.length ? pairedStations.map(station => label(station.station)).join(" · ") + ". See the measured comparisons in the station panel below." : "NASA model records are available in Explore Locations, but this NOAA pilot contains no ground probes here. We do not extrapolate Oklahoma sensor accuracy to this location."}</span></div></section>
       <div className="vld-metrics">
         <div><small>NOAA SENSOR STATIONS</small><strong>4</strong><span>Two NASA model locations</span></div>
         <div><small>HOLDOUT PERIOD</small><strong>2022–25</strong><span>Not used in the percentile reference</span></div>
@@ -160,7 +164,7 @@ export default function ValidationLab() {
       </div>
       <div className="vld-explainer"><AlertTriangle size={19}/><p><strong>Key research finding:</strong> Root-zone rank correlations vary across stations, but the modeled surface–root mismatch catches only a small share of the probe-observed mismatch days. A correlation between two time series is not evidence that an event detector is accurate.</p></div>
       <section className="vld-selector" aria-label="Select NOAA ground station">
-        <div><span className="vld-overline">01 / GROUND TRUTH</span><h2>Four chances to disprove the model.</h2><p>The stations are near Goodwell and Stillwater, Oklahoma. We compare modeled ranks with observations taken at multiple soil depths.</p></div>
+        <div><span className="vld-overline">01 / GROUND TRUTH</span><h2>Four measured NOAA station comparisons.</h2><p>These four stations are near Goodwell and Stillwater, Oklahoma. They are the only independent in-situ validation cases in the current release; the other 95 global model points cannot be presented as field-validated.</p></div>
         <div className="vld-station-buttons" role="group" aria-label="NOAA station">
           {report.stations.map(s => <button key={s.station} type="button" className={active.station === s.station ? "selected" : ""} aria-pressed={active.station === s.station} onClick={() => { setStationId(s.station); setMonthIndex(-1); }}><strong>{label(s.station)}</strong><span>{s.point_separation_km.toFixed(1)} km from study point</span></button>)}
         </div>
