@@ -25,9 +25,9 @@ test.beforeEach(async ({ page }) => {
 
 test("homepage clearly explains model-based historical evidence", async ({ page }, testInfo) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /When rain returns/i })).toBeVisible();
-  await expect(page.getByText(/SIX VERIFIED RESEARCH POINTS/i)).toBeVisible();
-  await expect(page.getByText(/NO SYNTHETIC FINDINGS/i)).toBeVisible();
+  await expect(page.getByRole("heading", { name: /See what the soil|The drought beneath|ROOTSHADOW/i })).toBeVisible();
+  await expect(page.locator(".earth-stage")).toBeVisible();
+  await expect(page.locator("body")).toContainText("NASA");
   await page.screenshot({ path: testInfo.outputPath("homepage.png"), fullPage: true });
 });
 
@@ -158,7 +158,7 @@ test("3D Earth and offline atlas both expose verified study locations", async ({
   await expect(atlas).not.toHaveAttribute("viewBox", extentBefore ?? "");
   await page.getByRole("button", { name: "Show full world map" }).click();
   await expect(atlas).toHaveAttribute("viewBox", extentBefore ?? "");
-  await expect(page.locator(".map-site-list .map-site")).toHaveCount(6);
+  await expect(page.locator(".map-site-list .map-site")).toHaveCount(97);
   await page.locator(".map-site-list .map-site").filter({ hasText: "Goodwell" }).click();
   await expect(page.getByRole("button", { name: "Start investigating" })).toBeVisible();
   await page.getByRole("button", { name: "Start investigating" }).click();
@@ -301,7 +301,7 @@ test("five map categories show verified NASA point data without manufacturing a 
   await expect(surface).toBeVisible();
   await expect(surface.locator(".moisture-atlas-count")).toContainText("97 / 97 readings");
   await expect(surface).toContainText("97 sampled MERRA-2 grid points, not a continuous global raster");
-  await expect(surface).toContainText("2026-11-12");
+  await expect(surface).toContainText("Latest available daily model record");
   await page.getByRole("button", { name: "Roots", exact: true }).click();
   await expect(page.getByRole("region", { name: "Root-Zone Moisture model-point map" })).toBeVisible();
   await page.getByRole("button", { name: "Mismatch", exact: true }).click();
