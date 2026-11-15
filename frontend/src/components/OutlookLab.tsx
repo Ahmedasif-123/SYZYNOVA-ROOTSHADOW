@@ -52,7 +52,7 @@ function Score({ name, value }: { name: string; value: LayerScenario }) {
 }
 
 export default function OutlookLab({ selected, onSelect }: Props) {
-  const [horizon, setHorizon] = useState<5 | 10 | 30>(10);
+  const [horizon, setHorizon] = useState<5 | 10 | 20 | 30>(10);
   const [mode, setMode] = useState<"historical" | "climate">("climate");
   const [region, setRegion] = useState("all");
   const [search, setSearch] = useState("");
@@ -71,7 +71,7 @@ export default function OutlookLab({ selected, onSelect }: Props) {
       <label>REGION<select value={region} onChange={event => setRegion(event.target.value)}><option value="all">All {sites.length} locations</option><option value="featured">Six featured research points</option>{siteRegions.map(value => <option key={value} value={value}>{value}</option>)}</select></label>
       <label>SEARCH<input placeholder="Search locations" value={search} onChange={event => setSearch(event.target.value)} /></label>
       <label>LOCATION<select value={selected} onChange={event => onSelect(event.target.value as SiteId)}>{!filtered.some(item => item.id === selected) && <option value={selected}>{site.name} · currently selected</option>}{filtered.map(item => <option value={item.id} key={item.id}>{item.name} · {item.country}</option>)}</select></label>
-      <label>PROJECTION WINDOW<select value={horizon} onChange={event => setHorizon(Number(event.target.value) as 5 | 10 | 30)}><option value={5}>5 years · 2026–2030</option><option value={10}>10 years · 2026–2035</option><option value={30}>30 years · 2026–2055</option></select></label>
+      <label>PROJECTION WINDOW<select value={horizon} onChange={event => setHorizon(Number(event.target.value) as 5 | 10 | 20 | 30)}><option value={5}>5 years · 2026–2030</option><option value={10}>10 years · 2026–2035</option><option value={20}>20 years · 2026–2045</option><option value={30}>30 years · 2026–2055</option></select></label>
     </div>
     {mode === "climate" && <ClimateOutlook selected={selected} name={site.name} horizon={horizon}/>}
     {mode === "historical" && <div className="forecast-body">
