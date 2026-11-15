@@ -122,10 +122,17 @@ function EvidenceBars({ rows }: { rows: MonthRecord[] }) {
 
 export default function ValidationLab() {
   const [stationId, setStationId] = useState("OK_Goodwell_2_E");
+  const [detector, setDetector] = useState<"model_root_low_percentile" | "surface_only_low_percentile" | "model_mismatch_vs_probe_mismatch">("model_mismatch_vs_probe_mismatch");
+  const [matrixDisplay, setMatrixDisplay] = useState<"counts" | "share">("counts");
+  const [monthIndex, setMonthIndex] = useState(-1);
   const query = useQuery({ queryKey: ["rootshadow-noaa-probe-validation"], queryFn: ({ signal }) => getReport(signal), staleTime: Infinity, retry: 1 });
   const report = query.data;
   const active = report?.stations.find(s => s.station === stationId) ?? report?.stations[0];
   const holdoutDays = 1461;
+  const matrix = active?.predictors[detector];
+  const monthRows = active?.monthly_holdout_evidence ?? [];
+  const chosenMonth = monthRows.length ? monthRows[monthIndex < 0 ? monthRows.length - 1 : Math.min(monthIndex, monthRows.length - 1)] : null;
+  const countsLabel = (value: number) => matrixDisplay === "counts" ? value.toLocaleString("en-US") : percentage(matrix?.n ? value / matrix.n : null);
   function download() {
     if (!report) return;
     const url = URL.createObjectURL(new Blob([JSON.stringify(report, null, 2)], { type: "application/json" }));
@@ -155,8 +162,29 @@ export default function ValidationLab() {
       <section className="vld-selector" aria-label="Select NOAA ground station">
         <div><span className="vld-overline">01 / GROUND TRUTH</span><h2>Four chances to disprove the model.</h2><p>The stations are near Goodwell and Stillwater, Oklahoma. We compare modeled ranks with observations taken at multiple soil depths.</p></div>
         <div className="vld-station-buttons" role="group" aria-label="NOAA station">
-          {report.stations.map(s => <button key={s.station} type="button" className={active.station === s.station ? "selected" : ""} aria-pressed={active.station === s.station} onClick={() => setStationId(s.station)}><strong>{label(s.station)}</strong><span>{s.point_separation_km.toFixed(1)} km from study point</span></button>)}
+          {report.stations.map(s => <button key={s.station} type="button" className={active.station === s.station ? "selected" : ""} aria-pressed={active.station === s.station} onClick={() => { setStationId(s.station); setMonthIndex(-1); }}><strong>{label(s.station)}</strong><span>{s.point_separation_km.toFixed(1)} km from study point</span></button>)}
         </div>
+      </section>
+
+      <section className="vld-experiment" aria-label="Interactive validated detection performance explorer">
+        <div className="vld-experiment-head"><div><span className="vld-overline">EXPERIMENT / EXPLORE THE ERRORS</span><h3>Which method actually detects the measured condition?</h3><p>Select the published detector and inspect the four outcomes for {label(active.station)}. Every number is taken from NOAA-observed holdout comparisons, not from a generative AI model.</p></div><button type="button" onClick={() => { setDetector("model_mismatch_vs_probe_mismatch"); setMatrixDisplay("counts"); }}>Reset comparison</button></div>
+        <div className="vld-mode-buttons" role="group" aria-label="Choose validation detector">
+          <button type="button" aria-pressed={detector === "model_mismatch_vs_probe_mismatch"} onClick={() => setDetector("model_mismatch_vs_probe_mismatch")}>Surface–root mismatch</button>
+          <button type="button" aria-pressed={detector === "model_root_low_percentile"} onClick={() => setDetector("model_root_low_percentile")}>Model root-zone dryness</button>
+          <button type="button" aria-pressed={detector === "surface_only_low_percentile"} onClick={() => setDetector("surface_only_low_percentile")}>Surface-only baseline</button>
+        </div>
+        <div className="vld-mode-buttons" role="group" aria-label="Confusion matrix display">
+          <button type="button" aria-pressed={matrixDisplay === "counts"} onClick={() => setMatrixDisplay("counts")}>Number of days</button>
+          <button type="button" aria-pressed={matrixDisplay === "share"} onClick={() => setMatrixDisplay("share")}>Share of paired days</button>
+        </div>
+        {matrix && <div className="vld-confusion-grid" aria-live="polite">
+          <div className="vld-confusion-cell"><span>True positive</span><strong>{countsLabel(matrix.true_positive)}</strong><small>Observed event, correctly flagged by the model</small></div>
+          <div className="vld-confusion-cell false"><span>False positive</span><strong>{countsLabel(matrix.false_positive)}</strong><small>Model flagged an event not detected by the probes</small></div>
+          <div className="vld-confusion-cell false"><span>False negative</span><strong>{countsLabel(matrix.false_negative)}</strong><small>Actual probe event missed by the model</small></div>
+          <div className="vld-confusion-cell"><span>True negative</span><strong>{countsLabel(matrix.true_negative)}</strong><small>Both model and probes did not flag the event</small></div>
+        </div>}
+        {matrix && <div className="vld-cm-metrics"><span><strong>Recall:</strong> {percentage(matrix.recall)}</span><span><strong>Precision:</strong> {percentage(matrix.precision)}</span><span><strong>False alarms:</strong> {percentage(matrix.false_positive_rate)}</span><span><strong>Balanced accuracy:</strong> {percentage(matrix.balanced_accuracy)}</span></div>}
+        <p><strong>Fixed scientific boundary:</strong> All numbers are from the previously evaluated 2022–2025 holdout using the fixed 40th-percentile rule. Switching detectors does not retrain a model or change thresholds. Different detectors answer different questions; their confusion matrices are not interchangeable.</p>
       </section>
       <div className="vld-two-col">
         <section className="vld-card" aria-label="Measured station performance">
@@ -170,6 +198,18 @@ export default function ValidationLab() {
         <section className="vld-card" aria-label="Monthly mismatch comparison">
           <span className="vld-overline">03 / WHERE THE MODEL AND PROBES DISAGREE</span><h2>Evidence, not optimism.</h2><p className="vld-intro">The bars show monthly counts of days meeting the same surface–root rule in the model and the independent field probes. They are not water-use volumes or irrigation recommendations.</p>
           <EvidenceBars rows={active.monthly_holdout_evidence}/>
+
+          <div className="vld-month-control" aria-label="Explore a recorded NOAA month">
+            <span className="vld-overline">INTERACTIVE TIMELINE / CHOOSE AN EVIDENCE MONTH</span>
+            <label htmlFor="vld-month-slider">Selected month: {chosenMonth?.month ?? "Unavailable"}</label>
+            <input id="vld-month-slider" type="range" aria-label="Select measured comparison month" min={0} max={Math.max(0, monthRows.length - 1)} step={1} value={monthIndex < 0 ? Math.max(0, monthRows.length - 1) : Math.min(monthIndex, Math.max(0, monthRows.length - 1))} disabled={monthRows.length < 2} onChange={event => setMonthIndex(Number(event.target.value))}/>
+            {chosenMonth && <div className="vld-month-results" aria-live="polite">
+              <div><strong>{chosenMonth.ground_observed_mismatch_days}</strong><small>Probe-observed mismatch days</small></div>
+              <div><strong>{chosenMonth.modeled_mismatch_days}</strong><small>Model-flagged mismatch days</small></div>
+              <div><strong>{chosenMonth.paired_days}</strong><small>Days with paired complete records</small></div>
+            </div>}
+            <p>These are counts, not date-by-date overlap. Without the individual paired daily records, the monthly bar difference cannot be treated as the number of false alarms or missed days.</p>
+          </div>
           <div className="vld-interpretation"><h3>Why might the two disagree?</h3><p>NASA model cells average much larger areas than a local probe cluster. Soil texture, vegetation, irrigation, sensor placement and daily time standards can produce different soil-water responses.</p><p>The field measurement combines five depths into a transparent 0–100 cm approximate profile, while the model supplies its own root-zone representation. Both have uncertainty.</p></div>
           <div className="vld-trace"><span className="vld-overline">SOURCE TRACE</span><div><Database size={16}/><strong>{active.noaa_source_records.length} NOAA yearly source files</strong></div><div><ClipboardCheck size={16}/><strong>{active.ground_reference_valid_days.toLocaleString("en-US")} valid reference-profile days</strong></div><p>Each downloaded NOAA station-year source has a recorded SHA-256 checksum. Failed year requests are also recorded.</p><a href={active.noaa_source_records.at(-1)?.url} target="_blank" rel="noreferrer">Inspect NOAA raw station file <ExternalLink size={15}/></a></div>
         </section>
