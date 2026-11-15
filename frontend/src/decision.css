@@ -61,3 +61,15 @@
 @media(max-width:1250px){.desk-layout{grid-template-columns:minmax(265px,.85fr) minmax(0,1.4fr)}.desk-readings{grid-template-columns:repeat(2,minmax(0,1fr))}.desk-readings>div:nth-child(2){border-right:0}.desk-readings>div:nth-child(-n+2){border-bottom:1px solid #d0d9cb}}
 @media(max-width:1000px){.desk-layout,.desk-heading{grid-template-columns:1fr}.desk-queue{position:static}.desk-list{max-height:330px}.desk-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.desk-metrics>div:nth-child(2){border-right:0}.desk-metrics>div:nth-child(-n+2){border-bottom:1px solid #c4cec0}}
 @media(max-width:600px){.desk-page{padding:22px 14px}.desk-heading h1{font-size:49px}.desk-metrics>div{padding:14px}.desk-evidence,.desk-historical,.desk-actions{padding:17px}.desk-point{padding:12px 11px}.desk-queue-head{padding:20px 16px 12px}.desk-controls,.desk-filters{padding-left:15px;padding-right:15px}.desk-data-quality{grid-template-columns:1fr}.desk-history-grid{grid-template-columns:1fr}.desk-detail-head{flex-wrap:wrap}.desk-actions-bottom button{width:100%;justify-content:center}.desk-selected-badge{max-width:none}.desk-readings strong{font-size:22px}}
+
+.desk-quick-guide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:21px 0 16px}
+.desk-quick-guide>div{background:#eaf0e5;border:1px solid #cbd8c9;padding:17px;display:flex;flex-direction:column;gap:6px}
+.desk-quick-guide strong{font:700 13px/1.4 Manrope,sans-serif;color:#254b38}
+.desk-quick-guide span{font:500 11px/1.65 Manrope,sans-serif;color:#4e6756}
+.desk-signal-key{padding:13px 17px;margin:8px 16px 10px;background:#edf2e9;border-left:3px solid #456c52;color:#36573e;font:500 11px/1.8 Manrope,sans-serif}
+.desk-signal-key strong{color:#1c402f}
+.desk-experiment-collapsed{margin:16px 0;padding:0;overflow:hidden}
+.desk-experiment-collapsed>summary{padding:17px 23px;cursor:pointer;color:#244837;font:700 13px/1.5 Manrope,sans-serif;list-style:revert}
+.desk-experiment-collapsed:not([open]){background:#eaf0e5}
+.desk-experiment-collapsed[open]>summary{border-bottom:1px solid #cdd9cf}
+@media(max-width:850px){.desk-quick-guide{grid-template-columns:1fr}}
