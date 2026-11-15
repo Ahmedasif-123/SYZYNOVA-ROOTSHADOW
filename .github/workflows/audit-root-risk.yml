@@ -1,0 +1,30 @@
+name: Audit 97 NASA sites for AI drought-risk forecasting
+on:
+  push:
+    branches: [ai-root-risk-research]
+    paths:
+      - 'scripts/audit_root_risk_data.py'
+      - 'tests/test_root_risk_data.py'
+      - '.github/workflows/audit-root-risk.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install existing ROOTSHADOW analytical dependencies
+        run: pip install -r requirements.txt
+      - name: Check target alignment, chronology and causal input windows
+        run: python -m pytest tests/test_root_risk_data.py -q
+      - name: Audit all 97 historical model locations
+        run: python -m scripts.audit_root_risk_data
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rootshadow-ai-readiness-report
+          path: research_ai/data_readiness_report.json
+          retention-days: 14
