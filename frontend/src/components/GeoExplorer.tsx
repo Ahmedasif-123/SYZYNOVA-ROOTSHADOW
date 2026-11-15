@@ -32,7 +32,7 @@ function focusWindow(site: Site, zoom: number): WindowBox {
 export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Props) {
   const [view, setView] = useState<WindowBox>(fullWorld);
   const [zoom, setZoom] = useState(1);
-  const [region, setRegion] = useState("research");
+  const [region, setRegion] = useState("all");
   const [search, setSearch] = useState("");
   const drag = useRef<{ x: number; y: number; initial: WindowBox } | null>(null);
   const selectedSite = sites.find(site => site.id === selected) ?? sites[0];
@@ -101,7 +101,7 @@ export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Pr
         onPointerUp={pointerUp}
         onPointerCancel={pointerUp}
       >
-        <title>World map with 97 selected historical NASA POWER model locations</title>
+        <title>World map with {sites.length} selected historical NASA POWER model locations</title>
         <image href={variant === "light" ? `${import.meta.env.BASE_URL}world-map-light.svg` : `${import.meta.env.BASE_URL}world-map.svg`} x="0" y="0" width={worldWidth} height={worldHeight} preserveAspectRatio="none" />
         {sites.map(site => {
           const point = sitePoint(site);
@@ -141,10 +141,10 @@ export default function GeoExplorer({ selected, onSelect, variant = "dark" }: Pr
     <div className="map-site-list">
       <div className="map-list-heading">CHOOSE STUDY LOCATION <span>{String(sites.length).padStart(2, "0")} SITES</span></div>
       <div className="map-filter-controls">
-        <input type="search" value={search} placeholder="Search 97 locations" aria-label="Search study locations" onChange={event => setSearch(event.target.value)} />
+        <input type="search" value={search} placeholder={`Search ${sites.length} locations`} aria-label="Search study locations" onChange={event => setSearch(event.target.value)} />
         <select aria-label="Filter study locations by region" value={region} onChange={event => setRegion(event.target.value)}>
-          <option value="research">Original six</option>
-          <option value="all">All locations</option>
+          <option value="research">Featured six historical cases</option>
+          <option value="all">All {sites.length} locations</option>
           {siteRegions.map(item => <option key={item} value={item}>{item}</option>)}
         </select>
       </div>
